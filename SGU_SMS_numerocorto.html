@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <!-- 
+    Proyecto: Plantilla programada - Bitel
+    Creado por: Cristhian Francia
+    Año: 2020
+    Derechos reservados © Cristhian Francia
+  -->
+    <style>
+      body {
+        font-family: Calibri, Calibri, sans-serif;
+      }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 50px;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon-animation {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 2s linear infinite;
+        }
+
+        .icon-animation::before {
+            content: "📱";
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+
+        .input-container:hover {
+            transform: scale(1.00);
+        }
+
+
+      .input-container label {
+        width: 50%;
+      }
+
+
+        .input-container input {
+            width: 50%;
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+
+        .input-container input:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+      /* Estilos responsive */
+      @media screen and (max-width: 600px) {
+        .input-container {
+          flex-direction: column;
+        }
+        .input-container label, .input-container input {
+          width: 100%;
+        }
+      }
+
+
+      .resultado-label {
+        color: #007BFF;
+      }
+      .dark-mode .resultado-label {
+        color: yellow;
+      }
+
+
+        .ruta-container {
+            background-color: #fff5e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border-left: 4px solid #e67a00;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        hr {
+            border: 1px solid #e67a00;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #e67a00;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #004085;
+            transform: scale(0.98);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        #resultado {
+            margin: 15px 0;
+            font-size: 0.9rem;
+            background-color: #fff5e9;
+            padding: 10px;
+            border-left: 4px solid #e67a00;
+            white-space: pre-line;
+            min-height: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+    </style>
+  </head>
+
+
+<p style="color: red"><strong>Tipificación: </strong></p>
+
+<div class="ruta-container">
+Calidad de red / Calidad de red / SMS / No recibe / Números cortos (con check a BO ✅)
+</div>
+
+<hr />
+<div class="icon-animation"></div>
+
+<label style="color: red;"><strong>Plantilla:</strong></label>
+<p></p>
+
+
+
+<center class="code-container">
+<p>
+<input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="color: #007BFF;" />
+// <input type="text" id="label0_1" oninput="updateResultadoOutput()" placeholder="(Consulta del cliente)" style="color: #007BFF;" />
+// Se genera escalamiento
+</p>
+</center>
+
+
+<div class="input-container">
+<label for="label1">- Número del cual reporta el inconveniente:</label>
+<input type="number" id="label1" oninput="checkLength(this)" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+
+<div class="input-container">
+<label for="label2">- Afiliación del servicio (Token BBVA, Banco de la nación, BCP, Google, etc):</label>
+<input type="text" id="label2" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+
+<div class="input-container">
+  <label for="label3">- Fecha y hora de afiliación:</label>
+  <input type="datetime-local" id="label3" oninput="updateResultadoOutput()" />
+</div>
+
+
+<div class="input-container">
+<label for="label4">- Medio de recepción:</label>
+<select id="label4" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="SMS">SMS</option>
+</select>
+</div>
+
+
+<div class="input-container">
+<label for="label5">- Observación:</label>
+<input type="text" id="label5" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+
+<div class="input-container">
+<label for="labelID">- ID de llamada:</label>
+<input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<label style="color: red;"><strong>Resultado</strong></label>
+<p id="resultado" class="dark-mode-text"></p>
+
+<button onclick="copiarResultado()">Copiar</button> <button onclick="limpiarInputs()">Borrar</button>
+<br /><br />
+
+<hr />
+
+
+<p style="color: red"><strong>Speech:</strong></p>
+
+<span style="color: #007BFF">(Nombre del cliente)</span>, hemos escalado su caso, nuestra área especializada se estará haciendo cargo del mismo con lo que le brindaremos una solución a la brevedad posible, por las molestias ocasionadas le pedimos las disculpas del caso"</p>
+
+
+    <script>
+
+window.onload = function() {
+    let fechaLimite = new Date("2025-10-31T23:59:59");
+    let fechaActual = new Date();
+
+    if (fechaActual > fechaLimite) {
+        document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Revisar la variable de mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Requiere actualización)</h5>";
+    }
+};
+
+      const label0Input = document.querySelector("#label0");
+      const label0_1Input = document.querySelector("#label0_1");
+
+      const label1Input = document.querySelector("#label1");
+      const label2Input = document.querySelector("#label2");
+      const label3Input = document.querySelector("#label3");
+      const label4Input = document.querySelector("#label4");
+      const label5Input = document.querySelector("#label5");
+      const labelIDInput = document.querySelector("#labelID");
+      const resultadoOutput = document.querySelector("#resultado");
+
+
+      label0Input.addEventListener("input", updateResultadoOutput);
+      label0_1Input.addEventListener("input", updateResultadoOutput);
+
+      label1Input.addEventListener("input", updateResultadoOutput);
+      label2Input.addEventListener("input", updateResultadoOutput);
+      label3Input.addEventListener("input", updateResultadoOutput);
+      label4Input.addEventListener("change", updateResultadoOutput);
+      label5Input.addEventListener("input", updateResultadoOutput);
+      labelIDInput.addEventListener("input", updateResultadoOutput);
+
+
+function formatDateToDDMMYYYYHHMM(dateString) {
+  if (!dateString) return ""; // Manejo para fechas nulas o no definidas
+
+  const dateParts = dateString.split("T"); // Separar fecha y hora
+  const date = dateParts[0];
+  const time = dateParts[1].slice(0, 5); // Tomar solo las primeras 5 letras para obtener HH:MM
+  const datePartsFormatted = date.split("-");
+  const day = datePartsFormatted[2];
+  const month = datePartsFormatted[1];
+  const year = datePartsFormatted[0];
+  return `${day}/${month}/${year} ${time}`;
+}
+
+
+function updateResultadoOutput() {
+
+const label0 = label0Input.value;
+const label0_1 = capitalizeFirstLetter(label0_1Input.value);
+
+const label1 = capitalizeName(label1Input.value);
+const label2 = label2Input.value;
+const label3 = formatDateToDDMMYYYYHHMM(label3Input.value);
+const label4 = label4Input.value;
+const label5 = label5Input.value;
+const labelID = labelIDInput.value;
+
+
+resultadoOutput.innerHTML = `<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> // Se genera escalamiento
+
+- Número del cual reporta el inconveniente: <span class="resultado-label">${label1}</span>
+- Afiliación del servicio: <span class="resultado-label">${label2}</span>
+- Fecha y hora de afiliación: <span class="resultado-label">${label3}</span>
+- Medio de recepción: <span class="resultado-label">${label4}</span>
+- Observación: <span class="resultado-label">${label5}</span>
+- $$_<span class="resultado-label">${labelID}</span>_&&`;
+}
+
+
+ function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
+
+    function capitalizeName(input) {
+      return input
+        .toLowerCase()
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    }
+
+      function checkLength(input) {
+        if (input.value.length > 9) {
+          input.value = input.value.slice(0, 9);
+        }
+      }
+
+      function copiarResultado() {
+        const resultadoTexto = resultadoOutput.innerText.trim();
+        const textarea = document.createElement("textarea");
+        textarea.value = resultadoTexto;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("Resultado copiado al portapapeles");
+      }
+
+
+      function limpiarInputs() {
+        label0Input.value = "";
+        label0_1Input.value = "";
+
+        label1Input.value = "";
+        label2Input.value = "";
+        label3Input.value = "";
+        label4Input.value = "";
+        label5Input.value = "";
+        labelIDInput.value = "";
+        resultadoOutput.innerHTML = "";
+      }
+
+    </script>
+  </body>
+</html>

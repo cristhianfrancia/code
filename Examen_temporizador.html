@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Regresiva</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+            color: black;
+            text-align: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ecf0f3;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 1em;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: black;
+        }
+
+        #contador {
+            font-size: 1.2em;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tiempo restante para el cierre ⏳</h1>
+        <div id="contador">00:00:00</div>
+    </div>
+
+    <script>
+        function iniciarContador() {
+            const fechaFinal = new Date("2025-07-05T13:00:00").getTime(); // Configura la fecha aquí
+            function actualizarContador() {
+                const ahora = new Date().getTime();
+                const tiempoRestante = fechaFinal - ahora;
+                
+                if (tiempoRestante <= 0) {
+                    document.getElementById("contador").innerHTML = "🚀 ¡Finalizado!";
+                    return;
+                }
+                
+                const dias = Math.floor(tiempoRestante / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((tiempoRestante % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
+                const segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
+                
+                document.getElementById("contador").innerHTML = 
+                    `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+            }
+            
+            setInterval(actualizarContador, 1000);
+            actualizarContador();
+        }
+
+        iniciarContador();
+    </script>
+</body>
+</html>

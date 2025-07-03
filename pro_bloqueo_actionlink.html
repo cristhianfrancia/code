@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Calibri, Arial, sans-serif;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1000px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        padding: 50px;
+        position: relative;
+        transition: box-shadow 0.3s ease;
+      }
+
+      .container:hover {
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+      }
+
+      .icon-animation {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        background-color: #007BFF;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: spin 2s linear infinite;
+      }
+
+      .icon-animation::before {
+        content: "😎";
+        font-size: 1.5rem;
+        color: white;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .input-container {
+        display: flex;
+        align-items: center;
+        transition: transform 0.3s ease;
+      }
+
+      .input-container:hover {
+        transform: scale(1.00);
+      }
+
+      .input-container label {
+        width: 50%;
+      }
+
+      .input-container input {
+        width: 50%;
+        padding: 4px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .input-container input:focus {
+        border-color: #007BFF;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+
+      /* Estilos responsive */
+      @media screen and (max-width: 600px) {
+        .input-container {
+          flex-direction: column;
+        }
+        .input-container label, .input-container input {
+          width: 100%;
+        }
+      }
+
+      .resultado-label {
+        color: #007BFF;
+        font-weight: bold;
+      }
+
+      .ruta-container {
+        background-color: #fff5e9;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        border-left: 4px solid #e67a00;
+        font-size: 0.9rem;
+        color: #333;
+      }
+
+      hr {
+        border: 1px solid #e67a00;
+        margin: 10px 0;
+      }
+
+      button {
+        background-color: #e67a00;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        margin: 5px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+      }
+
+      button:active {
+        background-color: #004085;
+        transform: scale(0.98);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      button:focus {
+        outline: none;
+      }
+
+      #resultado {
+        margin: 15px 0;
+        font-size: 0.9rem;
+        background-color: #fff5e9;
+        padding: 10px;
+        border-left: 4px solid #e67a00;
+        white-space: pre-line;
+        min-height: 50px;
+        transition: background-color 0.3s ease;
+      }
+
+      #resultadoADIC {
+        margin: 15px 0;
+        font-size: 0.9rem;
+        background-color: #fff5e9;
+        padding: 10px;
+        border-left: 4px solid #e67a00;
+        white-space: pre-line;
+        min-height: 50px;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Estilos para el contenedor de la vista previa */
+      #imagePopup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        z-index: 1000; /* Añadido para asegurar que esté por encima de todo */
+      }
+
+      /* Estilos para la imagen de la vista previa */
+      #imagePopup img {
+        max-width: 90%; /* Un poco de margen */
+        max-height: 90vh; /* Un poco de margen */
+        margin-top: 5vh; /* Centrado vertical */
+      }
+
+      /* Estilos para el botón de cerrar */
+      .close-button {
+        position: absolute;
+        top: 20px;
+        right: 20px; /* Mejor posicionado */
+        background-color: white;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      /* Estilos para el contenedor de la vista previa 2 */
+      #imagePopup2 {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        z-index: 1000; /* Añadido para asegurar que esté por encima de todo */
+      }
+
+      /* Estilos para la imagen de la vista previa 2 */
+      #imagePopup2 img {
+        max-width: 90%; /* Un poco de margen */
+        max-height: 90vh; /* Un poco de margen */
+        margin-top: 5vh; /* Centrado vertical */
+      }
+
+      /* Estilos para el botón de cerrar 2 */
+      .close-button2 {
+        position: absolute;
+        top: 20px;
+        right: 20px; /* Mejor posicionado */
+        background-color: white;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+
+
+    <div class="icon-animation"></div>
+    <label style="color: red;"><strong>Plantilla:</strong></label>
+    <p></p>
+    <div class="input-container">
+      <label for="label1">- Solicitante:</label>
+      <select id="label1" onchange="updateResultadoOutput()">
+        <option value="">Seleccionar</option>
+        <option value="Titular">Titular</option>
+        <option value="Usuario">Usuario</option>
+      </select>
+    </div>
+    <div class="input-container">
+      <label for="label2">- Nombres y apellidos de solicitante:</label>
+      <input type="text" id="label2" oninput="capitalizeName(this); updateResultadoOutput()" />
+    </div>
+    <div class="input-container">
+      <label for="label3">- Documento de identidad del solicitante:</label>
+      <input type="number" id="label3" onchange="updateResultadoOutput()" placeholder="Número de documento" />
+    </div>
+    <div class="input-container">
+      <label for="label4">- Número desde el cual se reporta la sustracción o pérdida:</label>
+      <input type="number" id="label4" oninput="checkLength(this); updateResultadoOutput()" />
+    </div>
+    <div class="input-container">
+      <label for="label5">- IMEI bloqueado:</label>
+      <input type="number" id="label5" oninput="updateResultadoOutput()" placeholder="Los 14 dígitos del código IMEI (Block Imei/Line)" />
+    </div>
+    <div class="input-container">
+      <label for="label6">- Equipo a bloquear:</label>
+      <select id="label6" onchange="updateResultadoOutput()">
+        <option value="">Seleccionar</option>
+        <option value="Último">Último</option>
+        <option value="Inmediato Anterior">Inmediato Anterior</option>
+      </select>
+    </div>
+    <div class="input-container">
+      <label for="label7">- ID de llamada:</label>
+      <input type="text" id="label7" placeholder="Solo ID, sin $$_ _&&" oninput="updateResultadoOutput()" />
+    </div>
+    <br />
+    <hr />
+    <br />
+    <label style="color: red;"><strong>Plantilla - Para ejecutar bloqueo (Sin ID de llamada):</strong></label>
+    <a href="#" onclick="return showImagePopup(event)">¿Donde pegar plantilla?</a>
+    <p id="resultado" class="dark-mode-text"></p>
+    <p><button onclick="copiarResultado()">Copiar - Exclusiva para ejecutar bloqueo - Utility (Sin ID de llamada)</button><button onclick="limpiarInputs()">Borrar</button></p>
+    <div id="imagePopup">
+      <button class="close-button" onclick="hideImagePopup()">Cerrar</button>
+      <img src="https://i.postimg.cc/ydfzkRYN/Block-Sin-ID.png" alt="Imagen de vista previa 1">
+    </div>
+<br>
+    <label style="color: red;"><strong>Plantilla - Para tipificación - (Con ID de llamada):</strong></label>
+    <a href="#" onclick="return showImagePopup2(event)">¿Donde pegar plantilla?</a>
+
+<p><strong>- Tipificación por sustracción:</strong> Operación / Operación / Transacciones de la línea / Bloqueo por sustracción / Bloqueo por sustracción de línea y equipo (❌Sin check "tranfer to BO")</p>
+<p><strong>- Tipificación por pérdida:</strong> Operación / Operación / Transacciones de la línea / Bloqueo por pérdida / Bloqueo por pérdida de línea y equipo (❌Sin check "tranfer to BO")</p>
+
+
+    <p id="resultadoADIC" class="dark-mode-text"></p>
+    <p><button onclick="copiarResultadoADIC()">Copiar - Exclusiva para notas de tipificación - (Con ID de llamada)</button><button onclick="limpiarInputs()">Borrar</button></p>
+    <div id="imagePopup2">
+      <button class="close-button2" onclick="hideImagePopup2()">Cerrar</button>
+      <img src="https://i.postimg.cc/tJwQzH6Q/Block-Con-ID.png" alt="Imagen de vista previa 2">
+    </div>
+    <hr />
+
+<script>
+  window.onload = function() {
+    let fechaLimite = new Date("2025-10-31T23:59:59");
+    let fechaActual = new Date();
+    if (fechaActual > fechaLimite) {
+      document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Actualización en proceso)</h5>";
+    }
+  };
+
+  const label1Input = document.querySelector("#label1");
+  const label2Input = document.querySelector("#label2");
+  const label3Input = document.querySelector("#label3");
+  const label4Input = document.querySelector("#label4");
+  const label5Input = document.querySelector("#label5");
+  const label6Input = document.querySelector("#label6");
+  const label7Input = document.querySelector("#label7");
+  const resultadoOutput = document.querySelector("#resultado");
+  const resultadoOutputADIC = document.querySelector("#resultadoADIC");
+
+  function updateResultadoOutput() {
+    const label1 = label1Input.options[label1Input.selectedIndex].value;
+    const label2 = label2Input.value;
+    const label3 = label3Input.value;
+    const label4 = label4Input.value;
+    const label5 = label5Input.value;
+    const label6 = label6Input.options[label6Input.selectedIndex].value;
+    const label7 = label7Input.value;
+
+    resultadoOutput.innerHTML = `- Solicitante: <span class="resultado-label">${label1}</span>
+- Nombres y apellidos de solicitante: <span class="resultado-label">${label2}</span>
+- Documento de identidad del solicitante: <span class="resultado-label">${label3}</span>
+- Número desde el cual se reporta la sustracción o pérdida: <span class="resultado-label">${label4}</span>
+- IMEI bloqueado: <span class="resultado-label">${label5}</span>
+- Equipo a bloquear: <span class="resultado-label">${label6}</span>`;
+
+    resultadoOutputADIC.innerHTML = `- Solicitante: <span class="resultado-label">${label1}</span>
+- Nombres y apellidos de solicitante: <span class="resultado-label">${label2}</span>
+- Documento de identidad del solicitante: <span class="resultado-label">${label3}</span>
+- Número desde el cual se reporta la sustracción o pérdida: <span class="resultado-label">${label4}</span>
+- IMEI bloqueado: <span class="resultado-label">${label5}</span>
+- Equipo a bloquear: <span class="resultado-label">${label6}</span>
+- ID: $$_<span class="resultado-label">${label7}</span>_&&`;
+  }
+  
+  label1Input.addEventListener("change", updateResultadoOutput);
+  label2Input.addEventListener("input", updateResultadoOutput);
+  label3Input.addEventListener("input", updateResultadoOutput);
+  label4Input.addEventListener("input", updateResultadoOutput);
+  label5Input.addEventListener("input", updateResultadoOutput);
+  label6Input.addEventListener("change", updateResultadoOutput);
+  label7Input.addEventListener("input", updateResultadoOutput);
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
+
+  function capitalizeName(inputElement) {
+    const words = inputElement.value.split(" ");
+    const capitalizedWords = words.map((word) => capitalizeFirstLetter(word));
+    inputElement.value = capitalizedWords.join(" ");
+  }
+
+  function checkLength(input) {
+    if (input.value.length > 9) {
+      input.value = input.value.slice(0, 9);
+    }
+  }
+
+  // --- FUNCIÓN DE COPIAR CORREGIDA ---
+  function copiarResultado() {
+    const resultadoTexto = resultadoOutput.innerText.trim();
+    const textarea = document.createElement("textarea");
+    textarea.value = resultadoTexto;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    alert("Resultado copiado al portapapeles");
+  }
+
+  // --- FUNCIÓN DE COPIAR ADICIONAL CORREGIDA ---
+  function copiarResultadoADIC() {
+    const resultadoTextoADIC = resultadoOutputADIC.innerText.trim();
+    const textareaADIC = document.createElement("textarea");
+    textareaADIC.value = resultadoTextoADIC;
+    document.body.appendChild(textareaADIC);
+    textareaADIC.select();
+    document.execCommand("copy");
+    document.body.removeChild(textareaADIC);
+    alert("Resultado ADIC copiado al portapapeles");
+  }
+
+  function limpiarInputs() {
+    label1Input.value = "";
+    label2Input.value = "";
+    label3Input.value = "";
+    label4Input.value = "";
+    label5Input.value = "";
+    label6Input.value = "";
+    label7Input.value = "";
+    updateResultadoOutput();
+  }
+
+  function showImagePopup(event) {
+    event.preventDefault();
+    const imagePopup = document.getElementById("imagePopup");
+    imagePopup.style.display = "block";
+    return false;
+  }
+
+  function hideImagePopup() {
+    const imagePopup = document.getElementById("imagePopup");
+    imagePopup.style.display = "none";
+  }
+
+  function showImagePopup2(event) {
+    event.preventDefault();
+    const imagePopup2 = document.getElementById("imagePopup2");
+    imagePopup2.style.display = "block";
+    return false;
+  }
+
+  function hideImagePopup2() {
+    const imagePopup2 = document.getElementById("imagePopup2");
+    imagePopup2.style.display = "none";
+  }
+</script>

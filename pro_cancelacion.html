@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <!-- 
+    Proyecto: Plantilla programada - Bitel
+    Creado por: Cristhian Francia
+    Año: 2020
+    Derechos reservados © Cristhian Francia
+  -->
+    <style>
+      body {
+        font-family: Calibri, Arial, sans-serif;
+      }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 50px;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon-animation {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 2s linear infinite;
+        }
+
+        .icon-animation::before {
+            content: "😎";
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .input-container:hover {
+            transform: scale(1.00);
+        }
+
+      .input-container label {
+        width: 50%;
+      }
+
+        .input-container input {
+            width: 50%;
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-container input:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+
+
+
+
+      /* Estilos responsive */
+      @media screen and (max-width: 600px) {
+        .input-container {
+          flex-direction: column;
+        }
+        .input-container label, .input-container input {
+          width: 100%;
+        }
+      }
+
+
+      .resultado-label {
+        color: 007BFF;
+      }
+
+
+        .ruta-container {
+            background-color: #fff5e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border-left: 4px solid #e67a00;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        hr {
+            border: 1px solid #e67a00;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #e67a00;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #004085;
+            transform: scale(0.98);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        #resultado {
+            margin: 15px 0;
+            font-size: 0.9rem;
+            background-color: #fff5e9;
+            padding: 10px;
+            border-left: 4px solid #e67a00;
+            white-space: pre-line;
+            min-height: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+    </style>
+  </head>
+
+
+<body>
+
+
+    <center>
+      <table>
+        <tr><td style="text-align: center" class="titulo-cambio"><strong>CANCELACIÓN DE LÍNEA</strong></td></tr>    
+        <tr><td style="text-align: center" class="titulo-plantilla">Completa los datos para el llenado de plantilla</td></tr>
+      </table>     
+    </center>
+
+
+
+<hr />
+
+<p style="color: red"><strong>Tipificación: </strong></p>
+
+
+
+<div class="ruta-container">
+
+<strong>PREPAGO</strong><br>
+Información / Información / Transferencias / Cancelación de línea - Prepago / (Elegir el motivo).
+
+<br><br>
+
+<strong>CONTROL</strong><br>
+Información / Información / Transferencias / Cancelación de línea - Control / (Elegir el motivo).
+
+</div>
+
+
+<div class="icon-animation"></div>
+
+    <hr>
+    <label style="color: red;"><strong>Plantilla:</strong></label>
+    <p></p>
+
+
+<center class="code-container">
+<input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
+
+//
+
+Cliente desea cancelar <input type="text" id="label0_1" oninput="updateResultadoOutput()" placeholder="(Motivo de la baja)" span style="color: #007BFF;">
+
+// Se brinda consideraciones de cancelación y se transfiere
+</p>
+</center>
+
+
+
+  <br />
+
+  <div class="input-container">
+    <label for="label1">- Plan actual:</label>
+    <input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="(Se tomará de los datos de Customer Care)" style="color: #007BFF;" />
+  </div>
+
+  <div class="input-container">
+    <label for="labelID">- ID de llamada:</label>
+    <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="Solo ID, sin $$_ _&&" style="color: #007BFF;" />
+  </div>
+
+  <br/>
+  <hr/>
+  <br/>
+
+
+        <label style="color: red;"><strong>Resultado</strong></label>
+        <p id="resultado"></p>
+
+        <button onclick="copiarResultado()">Copiar</button>
+        <button onclick="limpiarCampos()">Limpiar</button>
+
+<hr />
+
+
+<p style="color: red"><strong>Speech: </strong></p>
+<span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de cancelación, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada.
+
+
+
+        <!-- Textarea oculto para facilitar la copia -->
+        <textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+    </div>
+
+
+    <script>
+
+window.onload = function() {
+    let fechaLimite = new Date("2025-10-31T23:59:59");
+    let fechaActual = new Date();
+
+    if (fechaActual > fechaLimite) {
+        document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Revisar la variable de mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Requiere actualización)</h5>";
+    }
+};
+
+        function updateResultadoOutput() {
+
+            const label0 = document.querySelector("#label0").value;
+            const label0_1 = document.querySelector("#label0_1").value;
+            const label1 = document.querySelector("#label1").value;
+            const labelID = document.querySelector("#labelID").value;
+
+
+ const resultado = `<span style="color: #007BFF;">${label0}</span> // Cliente desea cancelar <span style="color: #007BFF;">${label0_1}</span> // Se brinda consideraciones de cancelación y se transfiere
+
+- Plan actual: <span style="color: #007BFF;">${label1}</span>
+- $$_<span style="color: #007BFF;">${labelID}</span>_&&`;
+
+
+            document.querySelector("#resultado").innerHTML = resultado.replace(/\n/g, "<br>");
+        }
+
+        function limitDigits(event) {
+            const input = event.target;
+            if (input.value.length > 9) {
+                input.value = input.value.slice(0, 9);
+            }
+            updateResultadoOutput();
+        }
+
+        function capitalizeWords(event) {
+            const input = event.target;
+            const words = input.value.split(" ");
+            for (let i = 0; i < words.length; i++) {
+                if (words[i]) {
+                    words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase();
+                }
+            }
+            input.value = words.join(" ");
+        }
+
+        function copiarResultado() {
+            const resultado = document.querySelector("#resultado").innerText;
+            const textarea = document.querySelector("#textareaResultado");
+            textarea.value = resultado;
+            textarea.select();
+            document.execCommand("copy");
+            alert("Resultado copiado al portapapeles!");
+        }
+
+        function limpiarCampos() {
+            document.querySelector("#label0").value = '';
+            document.querySelector("#label0_1").value = '';
+            document.querySelector("#label1").value = '';
+            document.querySelector("#labelID").value = '';
+            document.querySelector("#resultado").innerHTML = '';
+        }
+    </script>
+</body>
+
+</html>

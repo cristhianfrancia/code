@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tipificación Bitel Perú</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      /* Eliminamos el padding general y ponemos padding-top en 0 o un valor menor si deseas un pequeño espacio */
+      padding: 0px; /* o padding-top: 0; y mantener padding-left/right/bottom si es necesario */
+      /* Si quieres asegurarte de que no haya ningún margen por defecto del navegador: */
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      /* Cambiamos margin: auto; a margin: 0 auto; para eliminar el margen superior e inferior */
+      /* y mantener el centrado horizontal. Si quieres un pequeño espacio superior, usa margin-top. */
+      margin: 0 auto;
+      /* Si deseas un pequeño margen superior, puedes usar algo como: */
+      /* margin: 20px auto 0 auto; (20px arriba, auto horizontal, 0 abajo, auto horizontal) */
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 30px;
+      /* Si el h3 tiene un margen superior por defecto, y quieres pegarlo más: */
+      margin-top: 0; /* O un valor pequeño como 10px */
+    }
+
+    .inline-form {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .inline-form input, .inline-form textarea {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .inline-form span {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .output {
+      background: #eef;
+      padding: 15px;
+      margin-top: 25px;
+      border-left: 5px solid #007bff;
+      font-family: monospace;
+      word-break: break-word;
+    }
+
+    .button-group {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .copiar-btn, .limpiar-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .copiar-btn {
+      background-color: #01768b;
+      color: white;
+    }
+
+    .copiar-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .limpiar-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .limpiar-btn:hover {
+      background-color: #a71d2a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="inline-form">
+<input type="text" id="numero" placeholder="Número que llama" maxlength="9" oninput="validarNumero(this)">
+<textarea id="consulta" rows="1" placeholder="Consulta del cliente"></textarea><span>//</span>
+<textarea id="respuesta" rows="1" placeholder="Respuesta brindada"></textarea><span> // $$_</span>
+      <input type="text" id="id" placeholder="ID de llamada"><span>_&&</span>
+    </div>
+
+    <div class="output" id="resultado">Resultado aparecerá aquí...</div>
+
+    <div class="button-group">
+      <button class="copiar-btn" onclick="copiarResultado()">📋 Copiar resultado</button>
+      <button class="limpiar-btn" onclick="limpiarCampos()">🧹 Limpiar resultado</button>
+    </div>
+  </div>
+
+  <script>
+    const inputs = ['numero', 'consulta', 'respuesta', 'id'];
+    inputs.forEach(id => {
+      document.getElementById(id).addEventListener('input', updateOutput);
+    });
+
+    function updateOutput() {
+      const numero = document.getElementById('numero').value.trim();
+      const consulta = document.getElementById('consulta').value.trim();
+      const respuesta = document.getElementById('respuesta').value.trim();
+      const id = document.getElementById('id').value.trim();
+
+      const resultado = (numero || consulta || respuesta || id)
+        ? `${numero} // ${consulta} // ${respuesta} // $$_${id}_&&`
+        : 'Resultado aparecerá aquí...';
+
+      document.getElementById('resultado').innerText = resultado;
+    }
+
+function copiarResultado() {
+  const resultado = document.getElementById('resultado').innerText;
+
+  if (!resultado || resultado === 'Resultado aparecerá aquí...') {
+    alert('No hay nada para copiar.');
+    return;
+  }
+
+  // Intenta copiar con API moderna
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(resultado)
+      .then(() => {
+        alert('✅ Resultado copiado al portapapeles');
+      })
+      .catch(err => {
+        console.error('Error al copiar con clipboard API:', err);
+        copiarConFallback(resultado);
+      });
+  } else {
+    copiarConFallback(resultado);
+  }
+}
+
+function copiarConFallback(texto) {
+  // Método de respaldo (fallback)
+  const areaTemporal = document.createElement('textarea');
+  areaTemporal.value = texto;
+  document.body.appendChild(areaTemporal);
+  areaTemporal.select();
+  try {
+    document.execCommand('copy');
+    alert('✅ Resultado copiado con método alternativo');
+  } catch (err) {
+    alert('❌ No se pudo copiar automáticamente. Selecciona y copia manualmente.');
+  }
+  document.body.removeChild(areaTemporal);
+}
+
+function limpiarCampos() {
+  // Limpiar los campos de entrada
+  document.getElementById('numero').value = '';
+  document.getElementById('consulta').value = '';
+  document.getElementById('respuesta').value = '';
+  document.getElementById('id').value = '';
+
+  // Reiniciar el contenido del resultado
+  document.getElementById('resultado').innerText = 'Resultado aparecerá aquí...';
+}
+
+function validarNumero(input) {
+  input.value = input.value.replace(/[^0-9]/g, '');
+}
+
+  </script>
+
+</body>
+</html>

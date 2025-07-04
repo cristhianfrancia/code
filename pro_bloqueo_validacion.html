@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Línea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding-top: 10px;
+            background-color: #ffffff;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+        table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+
+        .highlight0 {
+            background-color: #01768b;
+            color: white;
+            font-weight: bold;
+        }
+
+        .highlight1 {
+            background-color: #01768b;
+            color: white;
+            font-weight: bold;
+        }
+
+        .highlight1X {
+            background-color: black;
+            color: white;
+            font-weight: bold;
+        }
+
+        .highlight2 {
+            background-color: #203f78;
+            color: white;
+            font-weight: bold;
+        }
+        .highlight3 {
+            background-color: #f4fdff;
+            color: black;
+            font-weight: bold;
+        }
+        .clickable {
+            cursor: pointer;
+            font-weight: bold;
+            background: #f9f9f9;
+            transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+        }
+        .clickable:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.03);
+        }
+        .hidden {
+            display: none;
+        }
+        .blue-text {
+            color: blue;
+        }
+        .red-text {
+            color: red;
+        }
+        .yellow-text {
+            color: yellow;
+            cursor: pointer;
+        }
+
+
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+        }
+        .popup-content {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+        .popup img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .close-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+
+
+      /* Estilos para el contenedor de la vista previa */
+      #imagePopup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+      }
+
+      /* Estilos para la imagen de la vista previa */
+      #imagePopup img {
+        max-width: 100%;
+        max-height: 100vh;
+        margin-top: 20px;
+      }
+
+      /* Estilos para el botón de cerrar */
+      .close-button {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        color: #000;
+        border: none;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+
+      /* Estilos para el contenedor de la vista previa 2 */
+      #imagePopup2 {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+      }
+
+      /* Estilos para la imagen de la vista previa 2 */
+      #imagePopup2 img {
+        max-width: 100%;
+        max-height: 100vh;
+        margin-top: 20px;
+      }
+
+      /* Estilos para el botón de cerrar 2 */
+      .close-button2 {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        color: #000;
+        border: none;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+
+    </style>
+</head>
+
+<body>
+
+
+   
+
+    <div class="container">
+        <table>
+           <tr>
+                <td colspan="2" class="highlight0">¿Es usted titular de la línea?</td>
+            </tr>
+
+            <tr>
+                <td class="clickable" onclick="toggleExclusive('titular')">Titular</td>
+                <td class="clickable" onclick="toggleExclusive('usuario')">Usuario</td>
+            </tr>
+
+<br>
+
+</table>
+        
+        <table id="titular" class="hidden">
+            <tr>
+                <td colspan="2" class="highlight1">Nivel 1</td>
+            </tr>
+            <tr>
+                <td colspan="2">- Nombres y apellidos completos del titular de la línea</td>
+            </tr>
+            <tr>
+                <td colspan="2">- Tipo y número de documento de identidad del titular de la línea</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="highlight2">Nivel 2<br>(Se debe obtener mínimo 1 respuesta correcta) </td>
+            </tr>
+            <tr>
+                <td class="highlight3">PREPAGO</td>
+                <td class="highlight3">CONTROL</td>
+            </tr>
+            <tr>
+                <td>¿Ha hecho una recarga en este mes? <br><span class="red-text">(ver "Refil history")</span></td>
+                <td>¿Su cargo fijo está en el rango entre S/XX y S/XX? <br><br> <span class="red-text">Ejemplo: Cliente tiene Flash 29.90, entonces se le preguntará: ¿Su cargo fijo está en el rango de S/29 y S/30? | Se tomará el rango con la diferencia de S/1 o S/2</span></td>
+            </tr>
+            <tr>
+                <td>¿Contaba con saldo a la fecha del robo o pérdida del equipo? <br><span class="red-text">(ver "OCS" - "Basic Balance")</span></td>
+                <td>¿En el presente año hizo alguna portabilidad? <br><span class="red-text">(ver "Signing date" y "Connection date")</span></td>
+            </tr>
+            <tr>
+                <td>¿En el presente año hizo alguna portabilidad? <br><span class="red-text">(ver "Signing date" y "Connection date")</span></td>
+                <td>¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 06 meses? <br><span class="red-text">(ver "Subscriber history")</span></td>
+            </tr>
+            <tr>
+                <td>¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 06 meses? <br><span class="red-text">(ver "Subscriber service history")</span></td>
+                <td>-</td>
+            </tr>
+        </table>
+
+
+ 
+        <table id="usuario" class="hidden">
+            <tr>
+                <td colspan="2" class="highlight1X">Datos del usuario<br><span class="yellow-text" onclick="abrirVentanaEmergente()">(Obligatorio - Clic para abrir: www.eldni.com)</span></td>
+            </tr>
+            <tr>
+                <td colspan="2">- Tipo y número de documento de identidad del usuario de la línea</td>
+            </tr>
+            <tr>
+                <td colspan="2">- Nombres y apellidos completos del usuario de la línea</td>
+            </tr>
+
+
+
+                <td colspan="2" class="highlight1">Nivel 1</td>
+            </tr>
+            <tr>
+                <td colspan="2">- Nombres y apellidos completos del titular de la línea</td>
+            </tr>
+            <tr>
+                <td colspan="2">- Tipo y número de documento de identidad del titular de la línea</td>
+            </tr>
+            <tr>
+
+                <td colspan="2" class="highlight2">Nivel 2<br>(Se debe obtener mínimo 1 respuesta correcta) </td>
+            </tr>
+            <tr>
+                <td class="highlight3">PREPAGO</td>
+                <td class="highlight3">CONTROL</td>
+            </tr>
+            <tr>
+                <td>¿Ha hecho una recarga en este mes? <br><span class="red-text">(ver "Refil history")</span></td>
+                <td>¿Su cargo fijo está en el rango entre S/XX y S/XX? <br><br> <span class="red-text">Ejemplo: Cliente tiene Flash 29.90, entonces se le preguntará: ¿Su cargo fijo está en el rango de S/29 y S/30? | Se tomará el rango con la diferencia de S/1 o S/2</span></td>
+            </tr>
+            <tr>
+                <td>¿Contaba con saldo a la fecha del robo o pérdida del equipo? <br><span class="red-text">(ver "OCS" - "Basic Balance")</span></td>
+                <td>¿En el presente año hizo alguna portabilidad? <br><span class="red-text">(ver "Signing date" y "Connection date")</span></td>
+            </tr>
+            <tr>
+                <td>¿En el presente año hizo alguna portabilidad? <br><span class="red-text">(ver "Signing date" y "Connection date")</span></td>
+                <td>¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 06 meses? <br><span class="red-text">(ver "Subscriber history")</span></td>
+            </tr>
+            <tr>
+                <td>¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 06 meses? <br><span class="red-text">(ver "Subscriber service history")</span></td>
+                <td>-</td>
+            </tr>
+        </table>
+
+    </div>
+
+
+        </table>
+    </div>
+    
+    <script>
+        function toggleExclusive(id) {
+            var element = document.getElementById(id);
+            var isHidden = element.classList.contains('hidden');
+            document.getElementById('titular').classList.add('hidden');
+            document.getElementById('usuario').classList.add('hidden');
+            if (isHidden) {
+                element.classList.remove('hidden');
+            }
+        }
+
+        function abrirVentanaEmergente() {
+            var url = "https://www.eldni.com";
+            var opciones = "width=1080,height=600,scrollbars=yes,resizable=yes";
+            window.open(url, "EldniPopup", opciones);
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+    // Función para mostrar la ventana emergente de la imagen
+    function showImagePopup(event) {
+      event.preventDefault();
+      const imagePopup = document.getElementById("imagePopup");
+      imagePopup.style.display = "block";
+      return false;
+    }
+
+    // Función para ocultar la ventana emergente de la imagen
+    function hideImagePopup() {
+      const imagePopup = document.getElementById("imagePopup");
+      imagePopup.style.display = "none";
+    }
+
+    // Función para mostrar la ventana emergente de la imagen 2
+    function showImagePopup2(event) {
+      event.preventDefault();
+      const imagePopup2 = document.getElementById("imagePopup2");
+      imagePopup2.style.display = "block";
+      return false;
+    }
+
+    // Función para ocultar la ventana emergente de la imagen 2
+    function hideImagePopup2() {
+      const imagePopup2 = document.getElementById("imagePopup2");
+      imagePopup2.style.display = "none";
+    }
+
+
+    </script>
+</body>
+</html>	

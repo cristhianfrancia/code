@@ -126,7 +126,7 @@
             min-height: 50px;
             transition: background-color 0.3s ease;
         }
-        /* Popup styles - Kept for "Ejemplo" links if needed, but not for Mod 1/2 anymore */
+        /* Popup styles */
         .popup-overlay {
             display: none;
             position: fixed;
@@ -136,10 +136,11 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* CAMBIADO AQUÍ: Alinea el popup-content a la parte superior */
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
+            padding-top: 20px; /* Opcional: Añade un pequeño espacio desde la parte superior de la ventana */
         }
         .popup-overlay.active {
             display: flex;
@@ -158,7 +159,8 @@
             overflow: auto;
             display: flex; /* Usar flexbox para alinear contenido */
             flex-direction: column; /* Apilar elementos verticalmente */
-            align-items: flex-start; /* Alinear elementos a la parte superior */
+            align-items: flex-start; /* Asegura que los elementos dentro del popup se alineen a la parte superior */
+            justify-content: flex-start; /* Asegura que el contenido empiece desde arriba dentro del popup */
         }
         .popup-overlay.active .popup-content {
             transform: scale(1);
@@ -167,7 +169,8 @@
             max-width: 100%;
             height: auto;
             display: block;
-            margin-bottom: 15px; /* Espacio debajo de la imagen */
+            margin-bottom: 0; /* Asegura que no haya margen inferior predeterminado */
+            margin-top: 0; /* Asegura que no haya margen superior predeterminado */
         }
         .close-button {
             position: absolute;
@@ -185,6 +188,7 @@
             justify-content: center;
             align-items: center;
             transition: background-color 0.3s ease;
+            z-index: 1; /* Asegura que el botón esté por encima de la imagen */
         }
         .close-button:hover {
             background-color: #0056b3;
@@ -210,7 +214,6 @@
             display: block;
             opacity: 1;
         }
-
         /* Dropdown styles for Mod 1 and Mod 2 */
 .dropdown-container {
     display: flex;
@@ -227,7 +230,6 @@
             margin-bottom: 5px;
             display: inline-block; /* To allow gap */
         }
-
 .dropdown-content {
     max-height: 0;
     overflow: hidden;
@@ -245,7 +247,6 @@
             max-height: 500px; /* Adjust as needed for image height */
             padding: 10px;
         }
-
         .dropdown-content img {
             max-width: 100%;
             height: auto;
@@ -293,22 +294,17 @@ Other / Información / Transferencias / Upsale / Migración de control a control
 <hr>
 <p style="color: red"><strong>Speech: </strong></p>
 <span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".
-<br><br>
-
-
+<br><br><br><br>
 <div class="dropdown-container">
     <a href="#" class="dropdown-trigger" onclick="toggleDropdown(event, 'dropdownMod1')">Transferencia - Prepago a Control (Clic para ver)</a> | 
     <a href="#" class="dropdown-trigger" onclick="toggleDropdown(event, 'dropdownMod2')">Transferencia - Control a Control (Clic para ver)</a>
 </div>
-
 <div id="dropdownMod1" class="dropdown-content">
     <img src="https://i.postimg.cc/zvqbnbsh/Transferencia-Prepago-a-control.png" alt="Transferencia Prepago a control" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
 </div>
 <div id="dropdownMod2" class="dropdown-content">
     <img src="https://i.postimg.cc/XJfBGcz3/Transferencia-Control-a-control-plan-mayor.png" alt="Transferencia Control a control plan mayor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
 </div>
-
-
     <div id="copyMessageBox" class="message-box">
         Resultado copiado al portapapeles
     </div>
@@ -370,13 +366,11 @@ function openPopup(event, popupId) {
 function closePopup(popupId) {
     document.getElementById(popupId).classList.remove('active');
 }
-
 // Dropdown Toggle Function for Mod 1 and Mod 2
 function toggleDropdown(event, dropdownId) {
     event.preventDefault(); // Prevent default link behavior
     const dropdownContent = document.getElementById(dropdownId);
     dropdownContent.classList.toggle('show');
-
     // Close other dropdowns if open
     const allDropdowns = document.querySelectorAll('.dropdown-content');
     allDropdowns.forEach(dropdown => {
@@ -398,6 +392,5 @@ function toggleDropdown(event, dropdownId) {
             <img src="https://i.postimg.cc/g0s6j5Pq/MIGRACI-N-CONTROL-A-CONTROL-PLAN-MAYOR.png" alt="Migración Control a Control Plan Mayor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
         </div>
     </div>
-
   </body>
 </html>

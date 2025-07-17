@@ -1,18 +1,10 @@
 <!DOCTYPE html>
 <html>
- <head>
-  <!-- 
-    Proyecto: Plantillas
-    Creado por: Cristhian Francia
-    Año: 2025
-    Derechos reservados © Cristhian Francia
-  -->
-    <style>
+<head>
+  <style>
     body {
       font-family: Arial, sans-serif;
-      /* Eliminamos el padding general y ponemos padding-top en 0 o un valor menor si deseas un pequeño espacio */
-      padding: 0px; /* o padding-top: 0; y mantener padding-left/right/bottom si es necesario */
-      /* Si quieres asegurarte de que no haya ningún margen por defecto del navegador: */
+      padding: 0px;
       margin: 0;
     }
 
@@ -22,18 +14,14 @@
       padding: 25px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      /* Cambiamos margin: auto; a margin: 0 auto; para eliminar el margen superior e inferior */
-      /* y mantener el centrado horizontal. Si quieres un pequeño espacio superior, usa margin-top. */
       margin: 0 auto;
-      /* Si deseas un pequeño margen superior, puedes usar algo como: */
-      /* margin: 20px auto 0 auto; (20px arriba, auto horizontal, 0 abajo, auto horizontal) */
+      position: relative;
     }
 
     h3 {
       text-align: center;
       margin-bottom: 30px;
-      /* Si el h3 tiene un margen superior por defecto, y quieres pegarlo más: */
-      margin-top: 0; /* O un valor pequeño como 10px */
+      margin-top: 0;
     }
 
     .inline-form {
@@ -78,6 +66,7 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 14px;
+      transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
     }
 
     .copiar-btn {
@@ -89,6 +78,11 @@
       background-color: #0056b3;
     }
 
+    /* Estilo temporal para el botón de copiar cuando se copia */
+    .copiar-btn.copied {
+      background-color: #28a745; /* Verde para indicar éxito */
+    }
+
     .limpiar-btn {
       background-color: #dc3545;
       color: white;
@@ -97,22 +91,42 @@
     .limpiar-btn:hover {
       background-color: #a71d2a;
     }
+
+    /* Estilos para el botón de PopUp */
+    .popup-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+      z-index: 10;
+    }
+
+    .popup-btn:hover {
+      background-color: #5a6268;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
+    <button class="popup-btn" onclick="abrirPopUp()">Modo PopUp</button>
     <div class="inline-form">
-<input type="text" id="numero" placeholder="Número que llama" maxlength="9" oninput="validarNumero(this)">
-<textarea id="consulta" rows="1" placeholder="Consulta del cliente"></textarea><span>//</span>
-<textarea id="respuesta" rows="1" placeholder="Respuesta brindada"></textarea><span> // $$_</span>
+      <input type="text" id="numero" placeholder="Número que llama" maxlength="9" oninput="validarNumero(this)">
+      <textarea id="consulta" rows="1" placeholder="Consulta del cliente"></textarea><span>//</span>
+      <textarea id="respuesta" rows="1" placeholder="Respuesta brindada"></textarea><span> // $$_</span>
       <input type="text" id="id" placeholder="ID de llamada"><span>_&&</span>
     </div>
 
     <div class="output" id="resultado">Resultado aparecerá aquí...</div>
 
     <div class="button-group">
-      <button class="copiar-btn" onclick="copiarResultado()">📋 Copiar resultado</button>
+      <button class="copiar-btn" id="copiarBtn" onclick="copiarResultado()">📋 Copiar resultado</button>
       <button class="limpiar-btn" onclick="limpiarCampos()">🧹 Limpiar resultado</button>
     </div>
   </div>
@@ -136,59 +150,88 @@
       document.getElementById('resultado').innerText = resultado;
     }
 
-function copiarResultado() {
-  const resultado = document.getElementById('resultado').innerText;
+    // Función para mostrar feedback en el botón
+    function showCopyFeedback(success) {
+      const copyButton = document.getElementById('copiarBtn');
+      const originalText = '📋 Copiar resultado';
+      const successText = '✅ Copiado!';
+      const errorText = '❌ Error al copiar';
+      const noContentText = 'ℹ️ Nada para copiar';
 
-  if (!resultado || resultado === 'Resultado aparecerá aquí...') {
-    alert('No hay nada para copiar.');
-    return;
-  }
+      if (success === 'noContent') {
+        copyButton.innerText = noContentText;
+        copyButton.classList.add('copied'); // Usa la clase 'copied' para el estilo temporal
+        setTimeout(() => {
+          copyButton.innerText = originalText;
+          copyButton.classList.remove('copied');
+        }, 1500); // Vuelve al texto original después de 1.5 segundos
+        return;
+      }
 
-  // Intenta copiar con API moderna
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(resultado)
-      .then(() => {
-        alert('✅ Resultado copiado al portapapeles');
-      })
-      .catch(err => {
-        console.error('Error al copiar con clipboard API:', err);
+      copyButton.innerText = success ? successText : errorText;
+      copyButton.classList.add('copied'); // Agrega una clase para cambiar el color si quieres
+
+      setTimeout(() => {
+        copyButton.innerText = originalText;
+        copyButton.classList.remove('copied');
+      }, 1500); // Vuelve al texto original después de 1.5 segundos
+    }
+
+    function copiarResultado() {
+      const resultado = document.getElementById('resultado').innerText;
+
+      if (!resultado || resultado === 'Resultado aparecerá aquí...') {
+        showCopyFeedback('noContent'); // Notifica que no hay nada para copiar
+        return;
+      }
+
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(resultado)
+          .then(() => {
+            showCopyFeedback(true); // Éxito al copiar
+          })
+          .catch(err => {
+            console.error('Error al copiar con clipboard API:', err);
+            copiarConFallback(resultado);
+          });
+      } else {
         copiarConFallback(resultado);
-      });
-  } else {
-    copiarConFallback(resultado);
-  }
-}
+      }
+    }
 
-function copiarConFallback(texto) {
-  // Método de respaldo (fallback)
-  const areaTemporal = document.createElement('textarea');
-  areaTemporal.value = texto;
-  document.body.appendChild(areaTemporal);
-  areaTemporal.select();
-  try {
-    document.execCommand('copy');
-    alert('✅ Resultado copiado con método alternativo');
-  } catch (err) {
-    alert('❌ No se pudo copiar automáticamente. Selecciona y copia manualmente.');
-  }
-  document.body.removeChild(areaTemporal);
-}
+    function copiarConFallback(texto) {
+      const areaTemporal = document.createElement('textarea');
+      areaTemporal.value = texto;
+      document.body.appendChild(areaTemporal);
+      areaTemporal.select();
+      try {
+        document.execCommand('copy');
+        showCopyFeedback(true); // Éxito al copiar con fallback
+      } catch (err) {
+        showCopyFeedback(false); // Error al copiar con fallback
+      }
+      document.body.removeChild(areaTemporal);
+    }
 
-function limpiarCampos() {
-  // Limpiar los campos de entrada
-  document.getElementById('numero').value = '';
-  document.getElementById('consulta').value = '';
-  document.getElementById('respuesta').value = '';
-  document.getElementById('id').value = '';
+    function limpiarCampos() {
+      document.getElementById('numero').value = '';
+      document.getElementById('consulta').value = '';
+      document.getElementById('respuesta').value = '';
+      document.getElementById('id').value = '';
+      document.getElementById('resultado').innerText = 'Resultado aparecerá aquí...';
+    }
 
-  // Reiniciar el contenido del resultado
-  document.getElementById('resultado').innerText = 'Resultado aparecerá aquí...';
-}
+    function validarNumero(input) {
+      input.value = input.value.replace(/[^0-9]/g, '');
+    }
 
-function validarNumero(input) {
-  input.value = input.value.replace(/[^0-9]/g, '');
-}
+    function abrirPopUp() {
+      const urlDeLaPlantilla = 'https://cristhianfrancia.github.io/code/Tipificacion.html';
+      const nombreVentana = '_blank';
+      const opcionesVentana = 'width=1200,height=400,resizable=yes,scrollbars=yes';
 
+      window.open(urlDeLaPlantilla, nombreVentana, opcionesVentana);
+    }
   </script>
 
 </body>

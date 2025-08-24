@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Calibri, Calibri, sans-serif;
+      }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 50px;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon-animation {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 2s linear infinite;
+        }
+
+        .icon-animation::before {
+            content: "📱";
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+
+        .input-container:hover {
+            transform: scale(1.00);
+        }
+
+
+      .input-container label {
+        width: 50%;
+      }
+
+
+        .input-container input {
+            width: 50%;
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+
+        .input-container input:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+      /* Estilos responsive */
+      @media screen and (max-width: 600px) {
+        .input-container {
+          flex-direction: column;
+        }
+        .input-container label, .input-container input {
+          width: 100%;
+        }
+      }
+
+
+      .resultado-label {
+        color: #007BFF;
+      }
+      .dark-mode .resultado-label {
+        color: yellow;
+      }
+
+
+        .ruta-container {
+            background-color: #fff5e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border-left: 4px solid #e67a00;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        hr {
+            border: 1px solid #e67a00;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #e67a00;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #004085;
+            transform: scale(0.98);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        #resultado {
+            margin: 15px 0;
+            font-size: 0.9rem;
+            background-color: #fff5e9;
+            padding: 10px;
+            border-left: 4px solid #e67a00;
+            white-space: pre-line;
+            min-height: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+    </style>
+  </head>
+
+
+
+
+<p style="color: red"><strong>Tipificación: </strong></p>
+
+<div class="ruta-container">
+- <strong>Address:</strong> Dirección del inconveniente, Referencia del inconveniente
+<br><br>
+- <strong>Ruta:</strong> Pedido SGU / Pedido SGU / Problemas SGU / Portabilidad Numérica / Portabilidad no ejecutada por el receptor - No puede hacer ni recibir llamadas desde el operador receptor (con check a BO ✅)
+</div>
+
+<hr />
+<div class="icon-animation"></div>
+
+<label style="color: red;"><strong>Plantilla:</strong></label>
+<p></p>
+
+
+
+
+
+<center class="code-container">
+<p>
+<input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="color: #007BFF;" />
+// <input type="text" id="label0_1" oninput="updateResultadoOutput()" placeholder="(Problema del cliente)" style="color: #007BFF;" />
+// <input type="text" id="label0_2" oninput="updateResultadoOutput()" placeholder="(Solución brindada)" style="color: #007BFF;" />
+</p>
+</center>
+
+
+<div class="input-container">
+<label for="label1">- Tipo de solicitante:</label>
+<select id="label1" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Titular">Titular</option>
+<option value="Usuario">Usuario</option>
+</select>
+</div>
+
+
+<div class="input-container">
+<label for="label2">- Nombre del solicitante:</label>
+<input type="text" id="label2" oninput="this.value = capitalizeName(this.value)" placeholder="(Ingresar los datos completos)" style="color: #007BFF;" />
+</div>
+
+
+    <div class="input-container">
+      <label for="label3">- Tipo de doc. De identidad:</label>
+      <select id="label3" onchange="updateResultadoOutput()">
+        <option value="">Seleccionar</option>
+        <option value="DNI">DNI</option>
+        <option value="Carnet de extranjería">Carnet de extranjería</option>
+        <option value="Pasaporte">Pasaporte</option>
+        <option value="RUC">RUC</option>
+        <option value="PTP">PTP</option>
+        <option value="CPP">CPP</option>
+      </select>
+    </div>
+
+
+<div class="input-container">
+<label for="label4">- N° de documento de identidad:</label>
+<input type="number" id="label4" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+
+<div class="input-container">
+<label for="label5">- Forma de validación de identidad:</label>
+<select id="label5" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Consultas de validación (vía telefónica)" Selected>Consultas de validación (vía telefónica)</option>
+</select>
+</div>
+
+
+<div class="input-container">
+<label for="label6">- Fecha de la portabilidad:</label>
+<input type="date" id="label6" onchange="updateResultadoOutput()" />
+</div>
+
+
+<div class="input-container">
+<label for="label7">- Canal en el que solicitó la portabilidad:</label>
+<input type="text" id="label7" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+
+<div class="input-container">
+<label for="label8">- Código de operación de portabilidad:</label>
+<input type="text" id="label8" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+
+<div class="input-container">
+<label for="label9">- Empresa operadora de origen:</label>
+<select id="label9" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Claro">Claro</option>
+<option value="Entel">Entel</option>
+<option value="Movistar">Movistar</option>
+</select>
+</div>
+
+
+<div class="input-container">
+<label for="labelID">- ID de llamada:</label>
+<input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
+</div>
+
+
+    <br />
+    <hr />
+    <br />
+
+
+<label style="color: red;"><strong>Resultado:</strong></label>
+<p id="resultado" class="dark-mode-text"></p>
+
+
+
+<button onclick="copiarResultado()">Copiar</button> <button onclick="limpiarInputs()">Borrar</button>
+
+<br /><br />
+<hr />
+
+<p style="color: red"><strong>Speech de pedido SGU:</strong></p>
+
+<span style="color: #007BFF">(Nombre del cliente)</span>, le confirmamos que hemos recibido y registrado su pedido con el código <span style="color: #007BFF">XXXXXXXXXX</span>. El plazo estimado de atención es de 03 días calendario. Nuestra respuesta será enviada vía SMS en 1 día hábil luego del plazo de atención.</p>
+
+
+
+    <script>
+
+      const label0Input = document.querySelector("#label0");
+      const label0_1Input = document.querySelector("#label0_1");
+      const label0_2Input = document.querySelector("#label0_2");
+
+      const label1Input = document.querySelector("#label1");
+      const label2Input = document.querySelector("#label2");
+      const label3Input = document.querySelector("#label3");
+      const label4Input = document.querySelector("#label4");
+      const label5Input = document.querySelector("#label5");
+      const label6Input = document.querySelector("#label6");
+      const label7Input = document.querySelector("#label7");
+      const label8Input = document.querySelector("#label8");
+      const label9Input = document.querySelector("#label9");
+      const labelIDInput = document.querySelector("#labelID");
+      const resultadoOutput = document.querySelector("#resultado");
+
+
+      label0Input.addEventListener("input", updateResultadoOutput);
+      label0_1Input.addEventListener("input", updateResultadoOutput);
+      label0_2Input.addEventListener("input", updateResultadoOutput);
+
+      label1Input.addEventListener("change", updateResultadoOutput);
+      label2Input.addEventListener("input", updateResultadoOutput);
+      label3Input.addEventListener("change", updateResultadoOutput);
+      label4Input.addEventListener("input", updateResultadoOutput);
+      label5Input.addEventListener("change", updateResultadoOutput);
+      label6Input.addEventListener("change", updateResultadoOutput);
+      label7Input.addEventListener("input", updateResultadoOutput);
+      label8Input.addEventListener("input", updateResultadoOutput);
+      label9Input.addEventListener("change", updateResultadoOutput);
+      labelIDInput.addEventListener("input", updateResultadoOutput);
+
+
+  function formatDateToDDMMYYYY(dateString) {
+    const dateParts = dateString.split("-");
+    const day = dateParts[2];
+    const month = dateParts[1];
+    const year = dateParts[0];
+    return `${day}/${month}/${year}`;
+  }
+
+function updateResultadoOutput() {
+
+const label0 = label0Input.value;
+const label0_1 = capitalizeFirstLetter(label0_1Input.value);
+const label0_2 = capitalizeFirstLetter(label0_2Input.value);
+
+const label1 = label1Input.value;
+const label2 = capitalizeName(label2Input.value);
+const label3 = label3Input.value;
+const label4 = label4Input.value;
+const label5 = label5Input.value;
+const label6 = formatDateToDDMMYYYY(label6Input.value);
+const label7 = label7Input.value;
+const label8 = label8Input.value;
+const label9 = label9Input.value;
+const labelID = labelIDInput.value;
+
+
+resultadoOutput.innerHTML = `<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> // <span class="resultado-label">${label0_2}</span>
+
+- Tipo de solicitante: <span class="resultado-label">${label1}</span>
+- Nombre del solicitante: <span class="resultado-label">${label2}</span>
+- Tipo de doc. De identidad: <span class="resultado-label">${label3}</span>
+- N° de documento de identidad: <span class="resultado-label">${label4}</span>
+- Forma de validación de identidad: <span class="resultado-label">${label5}</span>
+- Fecha de la portabilidad: <span class="resultado-label">${label6}</span>
+- Canal en la que solicitó la portabilidad: <span class="resultado-label">${label7}</span>
+- Código de operación de portabilidad: <span class="resultado-label">${label8}</span>
+- Empresa operadora de origen: <span class="resultado-label">${label9}</span>
+- $$_<span class="resultado-label">${labelID}</span>_&&`;
+}
+
+ function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
+
+    function capitalizeName(input) {
+      return input
+        .toLowerCase()
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    }
+
+      function checkLength(input) {
+        if (input.value.length > 9) {
+          input.value = input.value.slice(0, 9);
+        }
+      }
+
+      function copiarResultado() {
+        const resultadoTexto = resultadoOutput.innerText.trim();
+        const textarea = document.createElement("textarea");
+        textarea.value = resultadoTexto;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("Resultado copiado al portapapeles");
+      }
+
+
+      function limpiarInputs() {
+        label0Input.value = "";
+        label0_1Input.value = "";
+        label0_2Input.value = "";
+
+        label1Input.value = "";
+        label2Input.value = "";
+        label3Input.value = "";
+        label4Input.value = "";
+        label5Input.value = "";
+        label6Input.value = "";
+        label7Input.value = "";
+        label8Input.value = "";
+        label9Input.value = "";
+        labelIDInput.value = "";
+        resultadoOutput.innerHTML = "";
+      }
+
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            animation: fadeInUp 0.5s ease;
+            margin: auto;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .card {
+            display: flex;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .brand-logo,
+        .phone-image {
+            width: 40px;
+            margin: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover,
+        .phone-image:hover {
+            transform: scale(1.2);
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            align-items: center;
+        }
+
+        .item h4 {
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 12px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Agregada transición para transformar */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: scale(1.1); /* Cambia el tamaño al pasar el mouse */
+        }
+
+        button span {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        button:hover span {
+            transform: translateX(5px); /* Mueve el texto hacia la derecha al pasar el mouse */
+        }
+
+        .copy-alert {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #27ae60;
+            color: #fff;
+            border-radius: 5px;
+            display: none;
+            text-align: center;
+        }
+
+        .phone-image {
+            width: 60px;
+            margin: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .phone-image:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Media Query para pantallas más pequeñas */
+        @media only screen and (max-width: 600px) {
+            .brand-logo,
+            .phone-image {
+                width: 50px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+    <div class="container">
+
+
+        <div class="card">
+            <img class="brand-logo" src="https://images.vexels.com/media/users/3/204667/isolated/preview/0be285c89368fd2d7b0499db071963ef-icono-de-llamada-azul.png" alt="Llamada">
+            <div class="content">
+                <h4>Enviar comando vía SMS (No indicar verbalmente)</h4>
+                <p>Estimado cliente realizar la siguiente marcación si tienes inconvenientes para llamar: #33*0000# + tecla llamar</p>
+                <button onclick="copyText('Estimado cliente realizar la siguiente marcación si tienes inconvenientes para llamar: #33*0000# + tecla llamar')">Copiar Texto</button>
+            </div>
+            <img class="phone-image" src="https://cdn3d.iconscout.com/3d/premium/thumb/sms-3d-icon-png-download-10033812.png" alt="Llamada phone">
+        </div>
+
+
+    <script>
+        function copyText(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+
+            const copyAlert = document.getElementById('copyAlert');
+            copyAlert.style.display = 'block';
+
+            setTimeout(function () {
+                copyAlert.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

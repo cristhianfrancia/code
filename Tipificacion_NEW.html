@@ -17,7 +17,6 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       margin: 0 auto;
-      position: relative;
     }
 
     h3 {
@@ -82,8 +81,10 @@
     .mas-opciones-btn { background-color: #343a40; color: white; }
     .mas-opciones-btn:hover { background-color: #23272b; }
 
+    /* Ajuste para que los botones extra estén alineados a la derecha */
     .opciones-extra {
       display: none;
+      justify-content: flex-end;
       gap: 10px;
       margin-top: 10px;
     }
@@ -158,25 +159,11 @@
     .historial-copy-btn:hover { background: #0056b3; }
     .historial-copy-btn.copied { background: #28a745; }
 
-    .popup-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 5px 10px;
-      background-color: #6c757d;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 12px;
-      z-index: 10;
-    }
-    .popup-btn:hover { background-color: #5a6268; }
   </style>
 </head>
 <body>
   <div class="container">
-    <button class="popup-btn" onclick="abrirPopUp()">Modo PopUp</button>
+    <!-- Botón popup eliminado -->
 
     <div class="inline-form">
       <input type="text" id="numero" placeholder="Número que llama" maxlength="9" oninput="validarNumero(this)">
@@ -203,13 +190,9 @@
   </div>
 
   <script>
-    // ========= Configuración de sincronización =========
     const HIST_KEY = 'historialResultados';
     const inputs = ['numero', 'consulta', 'respuesta', 'id'];
     let historial = [];
-    let popupRef = null;
-
-    // Canal para sincronizar en tiempo real
     let canal = null;
     try { canal = new BroadcastChannel('sincronizarHistorial'); } catch (err) { canal = null; }
 
@@ -219,23 +202,6 @@
       actualizarHistorial();
     }
     window.addEventListener('load', cargarInicial);
-
-    // Sincronización entre ventanas
-    window.addEventListener('storage', (event) => {
-      if (event.key === HIST_KEY) {
-        historial = event.newValue ? JSON.parse(event.newValue) : [];
-        actualizarHistorial();
-      }
-    });
-    if (canal) {
-      canal.onmessage = (e) => {
-        if (e.data && Array.isArray(e.data.historial)) {
-          historial = e.data.historial.slice();
-          localStorage.setItem(HIST_KEY, JSON.stringify(historial));
-          actualizarHistorial();
-        }
-      };
-    }
 
     inputs.forEach(id => {
       const el = document.getElementById(id);
@@ -254,7 +220,6 @@
       document.getElementById('resultado').innerText = resultado;
     }
 
-    // Feedback visual de copia
     function showCopyFeedback(success, button) {
       const originalText = button.dataset.original || button.innerText;
       const successText = '✅ Copiado!';
@@ -272,7 +237,6 @@
       setTimeout(() => { button.innerText = originalText; button.classList.remove('copied'); }, 1500);
     }
 
-    // Copiar resultado
     function copiarResultado() {
       const resultado = document.getElementById('resultado').innerText;
       const copyButton = document.getElementById('copiarBtn');
@@ -308,14 +272,6 @@
 
     function validarNumero(input) { input.value = input.value.replace(/[^0-9]/g, ''); }
 
-    // PopUp (solo uno permitido)
-    function abrirPopUp() {
-      if (popupRef && !popupRef.closed) { popupRef.focus(); return; }
-      const url = 'https://cristhianfrancia.github.io/code/Tipificacion_NEW.html?popup=1';
-      popupRef = window.open(url, 'TipificacionPopUp', 'width=1200,height=600,resizable=yes,scrollbars=yes');
-    }
-
-    // Opciones / Historial
     function toggleOpciones() {
       const extra = document.getElementById('opcionesExtra');
       extra.style.display = (extra.style.display === 'none' || extra.style.display === '') ? 'flex' : 'none';
@@ -374,20 +330,11 @@
       URL.revokeObjectURL(url);
     }
 
-    // Guardar y sincronizar
     function guardarYSincronizar() {
       localStorage.setItem(HIST_KEY, JSON.stringify(historial));
       actualizarHistorial();
       if (canal) canal.postMessage({ historial: historial.slice() });
     }
-
-    // Ocultar botón popup si ya estoy en popup
-    window.addEventListener('load', () => {
-      const params = new URLSearchParams(window.location.search);
-      if (params.has('popup')) {
-        document.querySelector('.popup-btn').style.display = 'none';
-      }
-    });
   </script>
 </body>
 </html>

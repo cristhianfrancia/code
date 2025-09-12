@@ -114,14 +114,16 @@
 </head>
 <body>
 
-  <div class="container">
-    <button class="popup-btn" onclick="abrirPopUp()">Modo PopUp</button>
-    <div class="inline-form">
-      <input type="text" id="numero" placeholder="Número que llama" maxlength="9" oninput="validarNumero(this)">
-      <textarea id="consulta" rows="1" placeholder="Consulta del cliente"></textarea><span>//</span>
-      <textarea id="respuesta" rows="1" placeholder="Respuesta brindada"></textarea><span> // $$_</span>
-      <input type="text" id="id" placeholder="ID de llamada"><span>_&&</span>
-    </div>
+<div class="container">
+<button class="popup-btn" onclick="abrirPopUp()">Modo PopUp</button>
+<div class="inline-form">
+
+<input type="text" id="numero" placeholder="Número del que llama" maxlength="9" oninput="validarNumero(this)">// 
+<textarea id="consulta" rows="1" placeholder="Consulta del cliente"></textarea>// 
+<textarea id="respuesta" rows="1" placeholder="Respuesta brindada"></textarea>//
+$$_<input type="text" id="id" placeholder="ID de llamada">_&&
+
+</div>
 
     <div class="output" id="resultado">Resultado aparecerá aquí...</div>
 

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Tipificación - Historial sincronizado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 0px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 0 auto;
+      position: relative;
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 0;
+    }
+
+    .inline-form {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .inline-form input, .inline-form textarea {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .inline-form span {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .output {
+      background: #eef;
+      padding: 15px;
+      margin-top: 25px;
+      border-left: 5px solid #007bff;
+      font-family: monospace;
+      word-break: break-word;
+    }
+
+    .button-group {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .copiar-btn, .limpiar-btn, .mas-opciones-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .copiar-btn {
+      background-color: #01768b;
+      color: white;
+    }
+
+    .copiar-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .copiar-btn.copied {
+      background-color: #28a745;
+    }
+
+    .limpiar-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .limpiar-btn:hover {
+      background-color: #a71d2a;
+    }
+
+    .mas-opciones-btn {
+      background-color: #343a40;
+      color: white;
+    }
+
+    .mas-opciones-btn:hover {
+      background-color: #23272b;
+    }
+
+    /* Menú de opciones oculto */
+    .opciones-extra {
+      display: none;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .toggle-historial-btn, .exportar-historial-btn, .borrar-historial-btn {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .toggle-historial-btn { background-color: #6c757d; color: white; }
+    .toggle-historial-btn:hover { background-color: #5a6268; }
+
+    .exportar-historial-btn { background-color: #17a2b8; color: white; }
+    .exportar-historial-btn:hover { background-color: #117a8b; }
+
+    .borrar-historial-btn { background-color: #ff9800; color: white; }
+    .borrar-historial-btn:hover { background-color: #e68900; }
+
+    /* Historial oculto */
+    #historial {
+      display: none;
+      margin-top: 20px;
+      background: #f8f9fa;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      max-height: 250px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    .historial-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      padding: 5px;
+      border-bottom: 1px dashed #aaa;
+      transition: background-color 0.5s ease;
+    }
+
+    .historial-item.highlight {
+      background-color: #c8f7c5; /* Verde claro */
+    }
+
+    .historial-numero {
+      min-width: 28px;
+      text-align: right;
+      color: #555;
+      font-weight: bold;
+      user-select: none; /* evita que el número se seleccione fácilmente */
+    }
+
+    .historial-texto {
+      flex: 1;
+      margin-right: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .historial-copy-btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 9px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background-color 0.3s ease;
+    }
+
+    .historial-copy-btn:hover {
+      background: #0056b3;
+    }
+
+    .historial-copy-btn.copied {
+      background: #28a745;
+    }
+
+    /* Estilos para el botón de PopUp */
+    .popup-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+      z-index: 10;
+    }
+
+    .popup-btn:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <button class="popup-btn" onclick="abrirPopUp()">Modo PopUp</button>
+
+    <div class="inline-form">
+      <input type="text" id="numero" placeholder="Número que llama" maxlength="9" oninput="validarNumero(this)">
+      <textarea id="consulta" rows="1" placeholder="Consulta del cliente"></textarea><span>//</span>
+      <textarea id="respuesta" rows="1" placeholder="Respuesta brindada"></textarea><span> // $$_</span>
+      <input type="text" id="id" placeholder="ID de llamada"><span>_&&</span>
+    </div>
+
+    <div class="output" id="resultado">Resultado aparecerá aquí...</div>
+
+    <div class="button-group">
+      <button class="copiar-btn" id="copiarBtn" onclick="copiarResultado()">📋 Copiar resultado</button>
+      <button class="limpiar-btn" onclick="limpiarCampos()">🧹 Limpiar resultado</button>
+      <button class="mas-opciones-btn" onclick="toggleOpciones()">⚙️ Más opciones</button>
+    </div>
+
+    <div class="opciones-extra" id="opcionesExtra">
+      <button class="toggle-historial-btn" onclick="toggleHistorial()">📂 Ver historial</button>
+      <button class="exportar-historial-btn" onclick="exportarHistorial()">⬇️ Exportar historial</button>
+      <button class="borrar-historial-btn" onclick="borrarHistorial()">🗑️ Borrar historial</button>
+    </div>
+
+    <div id="historial"></div>
+  </div>
+
+  <script>
+    const HIST_KEY = 'historialResultados';
+    const inputs = ['numero', 'consulta', 'respuesta', 'id'];
+    let historial = [];
+
+    // Crear BroadcastChannel con fallback
+    let canal = null;
+    try {
+      canal = new BroadcastChannel('sincronizarHistorial');
+    } catch (err) {
+      canal = null;
+      // no soportado o bloqueado, usaremos solo storage event
+    }
+
+    // Cargar historial guardado al iniciar
+    function cargarInicial() {
+      const guardado = localStorage.getItem(HIST_KEY);
+      if (guardado) {
+        try {
+          historial = JSON.parse(guardado) || [];
+        } catch (e) {
+          historial = [];
+        }
+      } else {
+        historial = [];
+      }
+      actualizarHistorial();
+    }
+
+    window.addEventListener('load', cargarInicial);
+
+    // Escuchar storage (fallback / sincronización adicional)
+    window.addEventListener('storage', function (event) {
+      if (event.key === HIST_KEY) {
+        try {
+          historial = JSON.parse(event.newValue || '[]') || [];
+        } catch (e) {
+          historial = [];
+        }
+        actualizarHistorial();
+      }
+    });
+
+    // Escuchar BroadcastChannel (si está disponible)
+    if (canal) {
+      canal.onmessage = (e) => {
+        if (e && e.data && Array.isArray(e.data.historial)) {
+          historial = e.data.historial.slice();
+          try { localStorage.setItem(HIST_KEY, JSON.stringify(historial)); } catch (err) {}
+          actualizarHistorial();
+        }
+      };
+    }
+
+    inputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', updateOutput);
+    });
+
+    function updateOutput() {
+      const numero = document.getElementById('numero').value.trim();
+      const consulta = document.getElementById('consulta').value.trim();
+      const respuesta = document.getElementById('respuesta').value.trim();
+      const id = document.getElementById('id').value.trim();
+
+      const resultado = (numero || consulta || respuesta || id)
+        ? `${numero} // ${consulta} // ${respuesta} // $$_${id}_&&`
+        : 'Resultado aparecerá aquí...';
+
+      document.getElementById('resultado').innerText = resultado;
+    }
+
+    // Feedback visual para botones
+    function showCopyFeedback(success, button) {
+      const originalText = button.dataset.original || button.innerText;
+      const successText = '✅ Copiado!';
+      const errorText = '❌ Error';
+      const noContentText = 'ℹ️ Nada';
+
+      if (success === 'noContent') {
+        button.innerText = noContentText;
+        button.classList.add('copied');
+        setTimeout(() => {
+          button.innerText = originalText;
+          button.classList.remove('copied');
+        }, 1500);
+        return;
+      }
+
+      button.innerText = success ? successText : errorText;
+      button.classList.add('copied');
+      setTimeout(() => {
+        button.innerText = originalText;
+        button.classList.remove('copied');
+      }, 1500);
+    }
+
+    // Copiar resultado principal y guardar en historial
+    function copiarResultado() {
+      const resultado = document.getElementById('resultado').innerText;
+      const copyButton = document.getElementById('copiarBtn');
+
+      if (!resultado || resultado === 'Resultado aparecerá aquí...') {
+        showCopyFeedback('noContent', copyButton);
+        return;
+      }
+
+      // Agregar al historial y sincronizar
+      historial.push(resultado);
+      guardarYSincronizar();
+
+      // Copiar al portapapeles
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(resultado)
+          .then(() => showCopyFeedback(true, copyButton))
+          .catch(err => {
+            console.error('Error clipboard API:', err);
+            copiarConFallback(resultado, copyButton);
+          });
+      } else {
+        copiarConFallback(resultado, copyButton);
+      }
+    }
+
+    function copiarConFallback(texto, button) {
+      const areaTemporal = document.createElement('textarea');
+      areaTemporal.value = texto;
+      document.body.appendChild(areaTemporal);
+      areaTemporal.select();
+      try {
+        document.execCommand('copy');
+        showCopyFeedback(true, button);
+      } catch (err) {
+        showCopyFeedback(false, button);
+      }
+      document.body.removeChild(areaTemporal);
+    }
+
+    function limpiarCampos() {
+      document.getElementById('numero').value = '';
+      document.getElementById('consulta').value = '';
+      document.getElementById('respuesta').value = '';
+      document.getElementById('id').value = '';
+      document.getElementById('resultado').innerText = 'Resultado aparecerá aquí...';
+    }
+
+    function validarNumero(input) {
+      input.value = input.value.replace(/[^0-9]/g, '');
+    }
+
+    // Abrir Popup — usa la URL de tu plantilla alojada para evitar abrir el contenedor de Google Sites vacío.
+    function abrirPopUp() {
+      const urlDeLaPlantilla = 'https://cristhianfrancia.github.io/code/Tipificacion.html';
+      const nombreVentana = '_blank';
+      const opcionesVentana = 'width=1200,height=600,resizable=yes,scrollbars=yes';
+      window.open(urlDeLaPlantilla, nombreVentana, opcionesVentana);
+    }
+
+    // Opciones / Historial UI
+    function toggleOpciones() {
+      const extra = document.getElementById('opcionesExtra');
+      extra.style.display = (extra.style.display === 'none' || extra.style.display === '') ? 'flex' : 'none';
+    }
+
+    function toggleHistorial() {
+      const historialDiv = document.getElementById('historial');
+      historialDiv.style.display = (historialDiv.style.display === 'none' || historialDiv.style.display === '') ? 'block' : 'none';
+    }
+
+    function actualizarHistorial() {
+      const historialDiv = document.getElementById('historial');
+      historialDiv.innerHTML = '';
+      if (!Array.isArray(historial)) historial = [];
+
+      historial.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'historial-item';
+
+        const numeroSpan = document.createElement('div');
+        numeroSpan.className = 'historial-numero';
+        numeroSpan.textContent = `${index + 1}.`;
+
+        const textoSpan = document.createElement('div');
+        textoSpan.className = 'historial-texto';
+        textoSpan.textContent = item;
+
+        const botonCopiar = document.createElement('button');
+        botonCopiar.className = 'historial-copy-btn';
+        botonCopiar.textContent = '📋 Copiar';
+        botonCopiar.dataset.original = '📋 Copiar';
+        botonCopiar.onclick = () => copiarDelHistorial(item, botonCopiar, div);
+
+        div.appendChild(numeroSpan);
+        div.appendChild(textoSpan);
+        div.appendChild(botonCopiar);
+
+        historialDiv.appendChild(div);
+      });
+    }
+
+    function copiarDelHistorial(texto, boton, divItem) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(texto)
+          .then(() => {
+            showCopyFeedback(true, boton);
+            resaltarItem(divItem);
+          })
+          .catch(err => {
+            console.error('Error al copiar desde historial:', err);
+            copiarConFallback(texto, boton);
+            resaltarItem(divItem);
+          });
+      } else {
+        copiarConFallback(texto, boton);
+        resaltarItem(divItem);
+      }
+    }
+
+    function resaltarItem(divItem) {
+      divItem.classList.add('highlight');
+      setTimeout(() => divItem.classList.remove('highlight'), 1000);
+    }
+
+    function borrarHistorial() {
+      if (!confirm('¿Seguro que deseas borrar todo el historial?')) return;
+      historial = [];
+      guardarYSincronizar();
+    }
+
+    function exportarHistorial() {
+      if (!historial || historial.length === 0) {
+        alert('No hay historial para exportar.');
+        return;
+      }
+      try {
+        const contenido = historial.join('\n');
+        const blob = new Blob([contenido], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'historial.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        alert('Error al exportar historial.');
+      }
+    }
+
+    // Guardar en localStorage y notificar por BroadcastChannel (si existe)
+    function guardarYSincronizar() {
+      try {
+        localStorage.setItem(HIST_KEY, JSON.stringify(historial));
+      } catch (err) {
+        console.error('Error guardando localStorage', err);
+      }
+      actualizarHistorial();
+      if (canal) {
+        try { canal.postMessage({ historial: historial.slice() }); } catch (e) { /* ignore */ }
+      }
+      // También forzamos un "storage" local (no dispara en misma ventana, pero otras ventanas sí ven el cambio)
+      try {
+        // write same value to trigger storage events in some contexts
+        localStorage.setItem(HIST_KEY, JSON.stringify(historial));
+      } catch (e) {}
+    }
+  </script>
+
+</body>
+</html>

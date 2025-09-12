@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Tipificación - Historial sincronizado</title>
+  <title>Tipificación - Historial independiente</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -81,7 +81,6 @@
     .mas-opciones-btn { background-color: #343a40; color: white; }
     .mas-opciones-btn:hover { background-color: #23272b; }
 
-    /* Ajuste para que los botones extra estén alineados a la derecha */
     .opciones-extra {
       display: none;
       justify-content: flex-end;
@@ -158,12 +157,10 @@
     }
     .historial-copy-btn:hover { background: #0056b3; }
     .historial-copy-btn.copied { background: #28a745; }
-
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Botón popup eliminado -->
 
     <div class="inline-form">
       <input type="text" id="numero" placeholder="Número que llama" maxlength="9" oninput="validarNumero(this)">
@@ -193,9 +190,8 @@
     const HIST_KEY = 'historialResultados';
     const inputs = ['numero', 'consulta', 'respuesta', 'id'];
     let historial = [];
-    let canal = null;
-    try { canal = new BroadcastChannel('sincronizarHistorial'); } catch (err) { canal = null; }
 
+    // 🔹 Cargar historial guardado en este navegador
     function cargarInicial() {
       const guardado = localStorage.getItem(HIST_KEY);
       historial = guardado ? JSON.parse(guardado) : [];
@@ -245,7 +241,7 @@
         return;
       }
       historial.push(resultado);
-      guardarYSincronizar();
+      guardarHistorial();
       if (navigator.clipboard) {
         navigator.clipboard.writeText(resultado)
           .then(() => showCopyFeedback(true, copyButton))
@@ -319,7 +315,7 @@
     function borrarHistorial() {
       if (!confirm('¿Seguro que deseas borrar todo el historial?')) return;
       historial = [];
-      guardarYSincronizar();
+      guardarHistorial();
     }
     function exportarHistorial() {
       if (!historial.length) { alert('No hay historial para exportar.'); return; }
@@ -330,10 +326,9 @@
       URL.revokeObjectURL(url);
     }
 
-    function guardarYSincronizar() {
+    function guardarHistorial() {
       localStorage.setItem(HIST_KEY, JSON.stringify(historial));
       actualizarHistorial();
-      if (canal) canal.postMessage({ historial: historial.slice() });
     }
   </script>
 </body>

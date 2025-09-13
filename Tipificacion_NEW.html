@@ -112,7 +112,7 @@
     #historial {
       display: none;
       margin-top: 20px;
-      background: #fff; /* 🔹 Fondo blanco en historial */
+      background: #fff;
       border: 1px solid #ccc;
       padding: 10px;
       border-radius: 8px;
@@ -127,7 +127,7 @@
 
     .historial-fecha {
       font-weight: bold;
-      background: transparent; /* 🔹 Fondo transparente para la fecha */
+      background: transparent;
       padding: 6px 8px;
       margin: 10px 0 5px;
       border-radius: 6px;
@@ -313,13 +313,15 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
         grupos[item.fecha].push({ ...item, index });
       });
 
-      Object.keys(grupos).forEach(fecha => {
+      // 🔹 Invertir fechas (más recientes primero)
+      Object.keys(grupos).reverse().forEach(fecha => {
         const fechaDiv = document.createElement('div');
         fechaDiv.className = 'historial-fecha';
         fechaDiv.textContent = `📅 ${fecha}`;
         historialDiv.appendChild(fechaDiv);
 
-        grupos[fecha].forEach(item => {
+        // 🔹 Invertir los resultados dentro de cada fecha
+        grupos[fecha].slice().reverse().forEach(item => {
           const div = document.createElement('div');
           div.className = 'historial-item';
 
@@ -375,9 +377,10 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
       });
 
       let textoPlano = '';
-      Object.keys(grupos).forEach(fecha => {
+      // 🔹 Exportar fechas y resultados en orden inverso
+      Object.keys(grupos).reverse().forEach(fecha => {
         textoPlano += `📅 ${fecha}\n\n`;
-        textoPlano += grupos[fecha].join('\n') + '\n\n';
+        textoPlano += grupos[fecha].slice().reverse().join('\n') + '\n\n';
       });
 
       const blob = new Blob([textoPlano], { type: 'text/plain' });

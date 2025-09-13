@@ -291,7 +291,7 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
         extra.style.display = 'flex';
       } else {
         extra.style.display = 'none';
-        historialDiv.style.display = 'none'; // 🔹 Ocultar historial también
+        historialDiv.style.display = 'none';
       }
     }
 
@@ -365,14 +365,17 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
     function exportarHistorial() {
       if (!historial.length) { alert('No hay historial para exportar.'); return; }
       const grupos = {};
-      historial.forEach((h, index) => {
+      historial.forEach(h => {
         if (!grupos[h.fecha]) grupos[h.fecha] = [];
-        grupos[h.fecha].push(`${index + 1}. ${h.texto}`);
+        grupos[h.fecha].push(h.texto);
       });
 
       let textoPlano = '';
       Object.keys(grupos).forEach(fecha => {
-        textoPlano += `📅 ${fecha}\n` + grupos[fecha].join('\n') + '\n\n';
+        textoPlano += `📅 ${fecha}
+
+`;
+        textoPlano += grupos[fecha].join('\n') + '\n\n';
       });
 
       const blob = new Blob([textoPlano], { type: 'text/plain' });

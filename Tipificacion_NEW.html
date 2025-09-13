@@ -8,7 +8,7 @@
       font-family: Arial, sans-serif;
       padding: 0;
       margin: 0;
-      background: #f5f5f7;
+      background: #ffffff; /* 🔹 Fondo blanco (antes #f5f5f7) */
     }
 
     .container {
@@ -112,7 +112,7 @@
     #historial {
       display: none;
       margin-top: 20px;
-      background: #f8f9fa;
+      background: #fff; /* 🔹 Fondo blanco en historial (antes #f8f9fa) */
       border: 1px solid #ccc;
       padding: 10px;
       border-radius: 8px;
@@ -127,7 +127,7 @@
 
     .historial-fecha {
       font-weight: bold;
-      background: #e9ecef;
+      background: transparent; /* 🔹 Fondo transparente para la fecha */
       padding: 6px 8px;
       margin: 10px 0 5px;
       border-radius: 6px;
@@ -372,9 +372,7 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
 
       let textoPlano = '';
       Object.keys(grupos).forEach(fecha => {
-        textoPlano += `📅 ${fecha}
-
-`;
+        textoPlano += `📅 ${fecha}\n\n`;
         textoPlano += grupos[fecha].join('\n') + '\n\n';
       });
 

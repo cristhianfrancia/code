@@ -105,26 +105,34 @@
     .borrar-historial-btn { background-color: #ff9800; color: white; }
     .borrar-historial-btn:hover { background-color: #e68900; }
 
-#historial {
-  display: none;
-  margin-top: 20px;
-  background: #f8f9fa;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  max-height: 250px;
-  overflow-y: auto;
-  font-family: monospace;
-  font-size: 14px;
+    #historial {
+      display: none;
+      margin-top: 20px;
+      background: #f8f9fa;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      max-height: 250px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 14px;
 
-  /* 🔹 Scroll invisible pero funcional */
-  scrollbar-width: none;      /* Firefox */
-  -ms-overflow-style: none;   /* IE y Edge */
-}
-#historial::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
+      /* 🔹 Scroll invisible pero funcional */
+      scrollbar-width: none;      /* Firefox */
+      -ms-overflow-style: none;   /* IE y Edge */
+    }
+    #historial::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
 
+    .historial-fecha {
+      font-weight: bold;
+      background: #e9ecef;
+      padding: 6px 8px;
+      margin: 10px 0 5px;
+      border-radius: 4px;
+      color: #333;
+    }
 
     .historial-item {
       display: flex;
@@ -199,7 +207,6 @@
     const inputs = ['numero', 'consulta', 'respuesta', 'id'];
     let historial = [];
 
-    // 🔹 Cargar historial guardado en este navegador
     function cargarInicial() {
       const guardado = localStorage.getItem(HIST_KEY);
       historial = guardado ? JSON.parse(guardado) : [];
@@ -248,7 +255,9 @@
         showCopyFeedback('noContent', copyButton);
         return;
       }
-      historial.push(resultado);
+      const fecha = new Date();
+      const fechaStr = fecha.toLocaleDateString('es-PE'); // formato DD/MM/AAAA
+      historial.push({ texto: resultado, fecha: fechaStr });
       guardarHistorial();
       if (navigator.clipboard) {
         navigator.clipboard.writeText(resultado)
@@ -287,24 +296,43 @@
     function actualizarHistorial() {
       const historialDiv = document.getElementById('historial');
       historialDiv.innerHTML = '';
+
+      // 🔹 Agrupar por fecha
+      const grupos = {};
       historial.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'historial-item';
-        const numeroSpan = document.createElement('div');
-        numeroSpan.className = 'historial-numero';
-        numeroSpan.textContent = `${index + 1}.`;
-        const textoSpan = document.createElement('div');
-        textoSpan.className = 'historial-texto';
-        textoSpan.textContent = item;
-        const botonCopiar = document.createElement('button');
-        botonCopiar.className = 'historial-copy-btn';
-        botonCopiar.textContent = '📋 Copiar';
-        botonCopiar.dataset.original = '📋 Copiar';
-        botonCopiar.onclick = () => copiarDelHistorial(item, botonCopiar, div);
-        div.appendChild(numeroSpan);
-        div.appendChild(textoSpan);
-        div.appendChild(botonCopiar);
-        historialDiv.appendChild(div);
+        if (!grupos[item.fecha]) grupos[item.fecha] = [];
+        grupos[item.fecha].push({ ...item, index });
+      });
+
+      Object.keys(grupos).forEach(fecha => {
+        const fechaDiv = document.createElement('div');
+        fechaDiv.className = 'historial-fecha';
+        fechaDiv.textContent = `📅 ${fecha}`;
+        historialDiv.appendChild(fechaDiv);
+
+        grupos[fecha].forEach((item, i) => {
+          const div = document.createElement('div');
+          div.className = 'historial-item';
+
+          const numeroSpan = document.createElement('div');
+          numeroSpan.className = 'historial-numero';
+          numeroSpan.textContent = `${item.index + 1}.`;
+
+          const textoSpan = document.createElement('div');
+          textoSpan.className = 'historial-texto';
+          textoSpan.textContent = item.texto;
+
+          const botonCopiar = document.createElement('button');
+          botonCopiar.className = 'historial-copy-btn';
+          botonCopiar.textContent = '📋 Copiar';
+          botonCopiar.dataset.original = '📋 Copiar';
+          botonCopiar.onclick = () => copiarDelHistorial(item.texto, botonCopiar, div);
+
+          div.appendChild(numeroSpan);
+          div.appendChild(textoSpan);
+          div.appendChild(botonCopiar);
+          historialDiv.appendChild(div);
+        });
       });
     }
     function copiarDelHistorial(texto, boton, divItem) {
@@ -327,7 +355,8 @@
     }
     function exportarHistorial() {
       if (!historial.length) { alert('No hay historial para exportar.'); return; }
-      const blob = new Blob([historial.join('\n')], { type: 'text/plain' });
+      const textoPlano = historial.map(h => `[${h.fecha}] ${h.texto}`).join('\n');
+      const blob = new Blob([textoPlano], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = 'historial.txt'; a.click();

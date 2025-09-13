@@ -17,19 +17,22 @@
       align-items: center;
       height: 100vh;
       margin: 0;
+      background: #ffffff; /* Fondo blanco */
     }
 
     .btn-container {
       display: flex;
       gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
       animation: popup 0.5s ease-out;
     }
 
     .btn {
-      width: 250px; /* Ancho uniforme */
+      width: 240px;
       background: #ffffff;
       color: black;
-      border: 2px solid #fb8162; /* Color de borde modificado */
+      border: 2px solid #fb8162;
       padding: 10px 20px;
       font-size: 13px;
       font-weight: bold;
@@ -41,8 +44,10 @@
     }
 
     .btn:hover {
-      background: #fb8162; /* Color de fondo al pasar el mouse modificado */
+      background: #fb8162;
       color: #ffffff;
+      transform: translateY(-3px);
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25);
     }
 
     @keyframes popup {
@@ -60,12 +65,49 @@
 <body>
 
   <div class="btn-container">
-    <button class="btn" onclick="abrirRegular()">Bienvenida - Regular y Smart IVR</button>
-    <button class="btn" onclick="abrirEldni()">eldni.com</button>
-    <button class="btn" onclick="Despedida()">Despedida y encuesta</button>
+    <button class="btn" onclick="Estructura()">✍️ Estructura de tipificación</button>
+    <button class="btn" onclick="abrirRegular()">🙋 Bienvenida</button>
+    <button class="btn" onclick="Despedida()">🫂 Despedida</button>
+    <button class="btn" onclick="abrirEldni()">🪪 Eldni.com</button>
   </div>
 
   <script>
+    let popupVentana = null;
+
+    function Estructura() {
+      const url = "https://cristhianfrancia.github.io/code/Tipificacion_NEW.html";
+      const ancho = 1200;
+      const alto = 400;
+
+      // Calcular posición centrada exacta
+      const left = (window.screen.width / 2) - (ancho / 2);
+      const top = (window.screen.height / 2) - (alto / 2);
+
+      const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
+
+      popupVentana = window.open(url, "EstructuraTipificacion", opciones);
+
+      // Inyectar CSS para ocultar scrollbars (si CORS lo permite)
+      popupVentana.onload = () => {
+        try {
+          const style = popupVentana.document.createElement("style");
+          style.textContent = `
+            html, body {
+              margin: 0;
+              padding: 0;
+              overflow: hidden; /* Ocultar scrollbars */
+            }
+            ::-webkit-scrollbar {
+              display: none;
+            }
+          `;
+          popupVentana.document.head.appendChild(style);
+        } catch (e) {
+          console.warn("No se pudo inyectar CSS en el popup (CORS).");
+        }
+      };
+    }
+
     function abrirRegular() {
       window.open(
         "https://drive.google.com/file/d/1Z1vguE7EjPjJYozOY9BE_u_pBy4pC-aF/view?usp=sharing",
@@ -74,18 +116,17 @@
       );
     }
 
-
-    function abrirEldni() {
+    function Despedida() {
       window.open(
-        "https://eldni.com/",
-        "eldni",
+        "https://drive.google.com/file/d/1zhT3U4p4N7_wUFkEilCP6nOsRi5W3SST/view?usp=sharing",
+        "Despedida",
         "width=1600,height=1080"
       );
     }
 
-    function Despedida() {
+    function abrirEldni() {
       window.open(
-        "https://drive.google.com/file/d/1zhT3U4p4N7_wUFkEilCP6nOsRi5W3SST/view?usp=sharing",
+        "https://eldni.com/",
         "eldni",
         "width=1600,height=1080"
       );

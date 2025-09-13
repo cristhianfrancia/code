@@ -8,7 +8,7 @@
       font-family: Arial, sans-serif;
       padding: 0;
       margin: 0;
-      background: #ffffff; /* 🔹 Fondo blanco */
+      background: #ffffff;
     }
 
     .container {
@@ -137,7 +137,7 @@
     .historial-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
       margin-bottom: 8px;
       padding: 5px;
       border-bottom: 1px dashed #aaa;
@@ -145,14 +145,6 @@
     }
 
     .historial-item.highlight { background-color: #c8f7c5; }
-
-    .historial-numero {
-      min-width: 28px;
-      text-align: right;
-      color: #555;
-      font-weight: bold;
-      user-select: none;
-    }
 
     .historial-texto {
       flex: 1;
@@ -308,26 +300,21 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
       const historialDiv = document.getElementById('historial');
       historialDiv.innerHTML = '';
       const grupos = {};
-      historial.forEach((item, index) => {
+      historial.forEach(item => {
         if (!grupos[item.fecha]) grupos[item.fecha] = [];
-        grupos[item.fecha].push({ ...item, index });
+        grupos[item.fecha].push(item);
       });
 
-      // 🔹 Invertir fechas (más recientes primero)
+      // 🔹 Más recientes primero
       Object.keys(grupos).reverse().forEach(fecha => {
         const fechaDiv = document.createElement('div');
         fechaDiv.className = 'historial-fecha';
         fechaDiv.textContent = `📅 ${fecha}`;
         historialDiv.appendChild(fechaDiv);
 
-        // 🔹 Invertir los resultados dentro de cada fecha
         grupos[fecha].slice().reverse().forEach(item => {
           const div = document.createElement('div');
           div.className = 'historial-item';
-
-          const numeroSpan = document.createElement('div');
-          numeroSpan.className = 'historial-numero';
-          numeroSpan.textContent = `${item.index + 1}.`;
 
           const textoSpan = document.createElement('div');
           textoSpan.className = 'historial-texto';
@@ -339,7 +326,6 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
           botonCopiar.dataset.original = '📋 Copiar';
           botonCopiar.onclick = () => copiarDelHistorial(item.texto, botonCopiar, div);
 
-          div.appendChild(numeroSpan);
           div.appendChild(textoSpan);
           div.appendChild(botonCopiar);
           historialDiv.appendChild(div);
@@ -377,7 +363,6 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
       });
 
       let textoPlano = '';
-      // 🔹 Exportar fechas y resultados en orden inverso
       Object.keys(grupos).reverse().forEach(fecha => {
         textoPlano += `📅 ${fecha}\n\n`;
         textoPlano += grupos[fecha].slice().reverse().join('\n') + '\n\n';

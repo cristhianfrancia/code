@@ -42,11 +42,6 @@
       min-width: 180px;
     }
 
-    .inline-form span {
-      font-weight: bold;
-      font-size: 16px;
-    }
-
     .output {
       background: #eef;
       padding: 15px;
@@ -124,6 +119,16 @@
       -ms-overflow-style: none;
     }
     #historial::-webkit-scrollbar { display: none; }
+
+    .historial-aviso {
+      font-size: 12px;
+      color: #444;
+      background: #fff8e1;
+      border-left: 4px solid #ffc107;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
 
     .historial-fecha {
       font-weight: bold;
@@ -299,13 +304,20 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
     function actualizarHistorial() {
       const historialDiv = document.getElementById('historial');
       historialDiv.innerHTML = '';
+
+      // 🔹 Aviso arriba del historial
+      const aviso = document.createElement('div');
+      aviso.className = 'historial-aviso';
+      aviso.textContent = "⚠️ (El historial es temporal y no 100% seguro, no olvides tipificar todas tus llamadas en línea)";
+      historialDiv.appendChild(aviso);
+
       const grupos = {};
       historial.forEach(item => {
         if (!grupos[item.fecha]) grupos[item.fecha] = [];
         grupos[item.fecha].push(item);
       });
 
-      // 🔹 Más recientes primero
+      // 🔹 Mostrar más recientes primero
       Object.keys(grupos).reverse().forEach(fecha => {
         const fechaDiv = document.createElement('div');
         fechaDiv.className = 'historial-fecha';
@@ -362,7 +374,7 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
         grupos[h.fecha].push(h.texto);
       });
 
-      let textoPlano = '';
+      let textoPlano = '(El historial es temporal y no 100% seguro, no olvides tipificar todas tus llamadas en línea)\n\n';
       Object.keys(grupos).reverse().forEach(fecha => {
         textoPlano += `📅 ${fecha}\n\n`;
         textoPlano += grupos[fecha].slice().reverse().join('\n') + '\n\n';

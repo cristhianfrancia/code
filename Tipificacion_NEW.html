@@ -8,7 +8,7 @@
       font-family: Arial, sans-serif;
       padding: 0;
       margin: 0;
-      background: #ffffff; /* 🔹 Fondo blanco (antes #f5f5f7) */
+      background: #ffffff; /* 🔹 Fondo blanco */
     }
 
     .container {
@@ -112,7 +112,7 @@
     #historial {
       display: none;
       margin-top: 20px;
-      background: #fff; /* 🔹 Fondo blanco en historial (antes #f8f9fa) */
+      background: #fff; /* 🔹 Fondo blanco en historial */
       border: 1px solid #ccc;
       padding: 10px;
       border-radius: 8px;
@@ -287,11 +287,15 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
     function toggleOpciones() {
       const extra = document.getElementById('opcionesExtra');
       const historialDiv = document.getElementById('historial');
+      const boton = document.querySelector('.mas-opciones-btn');
+
       if (extra.style.display === 'none' || extra.style.display === '') {
         extra.style.display = 'flex';
+        boton.textContent = "⏹ Ocultar opciones";
       } else {
         extra.style.display = 'none';
         historialDiv.style.display = 'none';
+        boton.textContent = "⚙️ Más opciones";
       }
     }
 

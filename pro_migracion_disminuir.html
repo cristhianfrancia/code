@@ -1,420 +1,352 @@
 <!DOCTYPE html>
 <html>
- <head>
+<head>
+  <meta charset="utf-8">
+  <title>Ruta de Tipificación - Corregido</title>
   <style>
-      body {
-        font-family: Calibri, Arial, sans-serif;
-        background-color: #ffffff; /* Asegura el fondo blanco */
+    body {
+      font-family: Calibri, Arial, sans-serif;
+      background-color: #ffffff;
+    }
+    .container {
+      width: 90%;
+      max-width: 1000px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      padding: 50px;
+      position: relative;
+      transition: box-shadow 0.3s ease;
+    }
+    .container:hover {
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+    }
+    .input-container {
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+    .input-container label {
+      width: 50%;
+    }
+    .input-container input,
+    .input-container select {
+      width: 50%;
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .input-container input:focus,
+    .input-container select:focus {
+      border-color: #007BFF;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    @media screen and (max-width: 600px) {
+      .input-container {
+        flex-direction: column;
       }
-        .container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            padding: 50px;
-            position: relative;
-            transition: box-shadow 0.3s ease;
-        }
-        .container:hover {
-            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
-        }
-        .icon-animation {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 40px;
-            height: 40px;
-            background-color: #007BFF;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: spin 2s linear infinite;
-        }
-        .icon-animation::before {
-            content: "😎";
-            font-size: 1.5rem;
-            color: white;
-        }
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        .input-container {
-            display: flex;
-            align-items: center;
-            transition: transform 0.3s ease;
-        }
-        .input-container:hover {
-            transform: scale(1.00);
-        }
-      .input-container label {
-        width: 50%;
+      .input-container label,
+      .input-container input,
+      .input-container select {
+        width: 100%;
       }
-        .input-container input, .input-container select { /* Añadido select aquí */
-            width: 50%;
-            padding: 4px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .input-container input:focus, .input-container select:focus { /* Añadido select aquí */
-            border-color: #007BFF;
-            outline: none;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-      /* Estilos responsive */
-      @media screen and (max-width: 600px) {
-        .input-container {
-          flex-direction: column;
-        }
-        .input-container label, .input-container input, .input-container select { /* Añadido select aquí */
-          width: 100%;
-        }
-      }
-      .resultado-label {
-        color: #007BFF; /* Corregido a #007BFF */
-      }
-        .ruta-container {
-            background-color: #fff5e9; /* Fondo naranja suave restaurado */
-            padding: 10px;
-            border-radius: 4px;
-            margin: 10px 0;
-            border-left: 4px solid #e67a00; /* Borde naranja original */
-            font-size: 0.9rem;
-            color: #333;
-        }
-        hr {
-            border: 1px solid #e67a00; /* Línea divisoria naranja original */
-            margin: 10px 0;
-        }
-        button {
-            background-color: #e67a00;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            margin: 5px;
-        }
-        button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-        button:active {
-            background-color: #004085;
-            transform: scale(0.98);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        button:focus {
-            outline: none;
-        }
-        #resultado {
-            margin: 15px 0;
-            font-size: 0.9rem;
-            background-color: #fff5e9; /* Fondo naranja suave restaurado */
-            padding: 10px;
-            border-left: 4px solid #e67a00; /* Borde naranja original */
-            white-space: pre-line;
-            min-height: 50px;
-            transition: background-color 0.3s ease;
-        }
-        /* Popup styles */
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: flex-start; /* CAMBIADO AQUÍ: Alinea el popup-content a la parte superior */
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            padding-top: 20px; /* Opcional: Añade un pequeño espacio desde la parte superior de la ventana */
-        }
-        .popup-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-        .popup-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            position: relative;
-            transform: scale(0.8);
-            transition: transform 0.3s ease-in-out;
-            max-width: 90%;
-            max-height: 90%;
-            overflow: auto;
-            display: flex; /* Usar flexbox para alinear contenido */
-            flex-direction: column; /* Apilar elementos verticalmente */
-            align-items: flex-start; /* Asegura que los elementos dentro del popup se alineen a la parte superior */
-            justify-content: flex-start; /* Asegura que el contenido empiece desde arriba dentro del popup */
-        }
-        .popup-overlay.active .popup-content {
-            transform: scale(1);
-        }
-        .popup-content img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin-bottom: 0; /* Asegura que no haya margen inferior predeterminado */
-            margin-top: 0; /* Asegura que no haya margen superior predeterminado */
-        }
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #e67a00; /* Naranja original */
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.3s ease;
-            z-index: 1; /* Asegura que el botón esté por encima de la imagen */
-        }
-        .close-button:hover {
-            background-color: #0056b3;
-        }
-        /* Custom message box for copy confirmation */
-        .message-box {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4CAF50; /* Green background */
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1001;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            font-size: 1rem;
-        }
-        .message-box.show {
-            display: block;
-            opacity: 1;
-        }
-        /* Dropdown styles for Mod 1 and Mod 2 */
-.dropdown-container {
-    display: flex;
-    gap: 10px; /* Space between Mod 1 and Mod 2 links */
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    justify-content: center; /* This will center the items *within* the flex container */
-    margin: 0 auto; /* This will center the flex container itself */
-    max-width: fit-content; /* Adjust as needed, or remove if you want it to take full width and still center content */
-}
-        .dropdown-trigger {
-            color: #007BFF;
-            cursor: pointer;
-            text-decoration: underline;
-            margin-bottom: 5px;
-            display: inline-block; /* To allow gap */
-        }
-.dropdown-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 0 10px; /* Padding for when it's open */
-    margin-top: 5px;
-    width: 100%; /* Take full width below the links */
-    box-sizing: border-box; /* Include padding and border in the width */
-    display: flex; /* Añade esto */
-    justify-content: center; /* Añade esto */
-}
-        .dropdown-content.show {
-            max-height: 500px; /* Adjust as needed for image height */
-            padding: 10px;
-        }
-        .dropdown-content img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-    </style>
-  </head>
-  <body>
-<p style="color: red"><strong>Ruta:</strong></p>
+    }
+    .resultado-label { color: #007BFF; }
+    .ruta-container {
+      background-color: #fff5e9;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+      border-left: 4px solid #e67a00;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    hr {
+      border: 1px solid #e67a00;
+      margin: 10px 0;
+    }
+    button {
+      background-color: #e67a00;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      margin: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+    button:active {
+      background-color: #004085;
+      transform: scale(0.98);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    #resultado {
+      margin: 15px 0;
+      font-size: 0.9rem;
+      background-color: #fff5e9;
+      padding: 10px;
+      border-left: 4px solid #e67a00;
+      white-space: pre-line;
+      min-height: 50px;
+      transition: background-color 0.3s ease;
+    }
+    /* Tarjeta bonita para imágenes visibles */
+    .image-card {
+      margin: 20px auto;
+      max-width: 600px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      padding: 16px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-align: center;
+    }
+    .image-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.22);
+    }
+    .image-card h3 {
+      margin-bottom: 12px;
+      font-size: 1rem;
+      color: #007BFF; /* Título en azul elegante */
+    }
+    .image-card img {
+      max-width: 100%;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto; /* centra la imagen */
+    }
+    /* Popup */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: flex-start; /* aparecen cerca de arriba, centradas horizontalmente */
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      padding-top: 20px;
+    }
+    .popup-overlay.active { display: flex; opacity: 1; }
+    .popup-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      position: relative;
+      transform: scale(0.8);
+      transition: transform 0.3s ease-in-out;
+      max-width: 90%;
+      max-height: 90%;
+      overflow: auto;
+      text-align: center;
+    }
+    .popup-overlay.active .popup-content { transform: scale(1); }
+    .popup-content img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    /* Botón de cierre estilo Apple (blanco, sombra sutil) */
+    .close-button {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: #fff;
+      color: #222;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      transition: transform 0.18s ease, background-color 0.18s ease;
+    }
+    .close-button:hover {
+      background-color: #f1f1f1;
+      transform: scale(1.08);
+    }
+    /* Mensaje de copiado */
+    .message-box {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 1001;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      font-size: 1rem;
+    }
+    .message-box.show { display: block; opacity: 1; }
+  </style>
+</head>
+<body>
 
-<div class="ruta-container">
-<strong>CONTROL A PREPAGO</strong><br>
-Other / Información / Información / Transferencias / Migración de Control a Prepago / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS) (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
+<div class="container">
+  <p style="color: red"><strong>Ruta:</strong></p>
+  <div class="ruta-container">
+    <strong>CONTROL A PREPAGO</strong><br>
+    Other / Información / Información / Transferencias / Migración de Control a Prepago / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS) (❌ sin check a BO) (Ejemplo)
+    (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
+    <br><br>
+    <strong>CONTROL A CONTROL (Plan menor)</strong><br>
+    Other / Información / Información / Transferencias / Migración de Control a Control - Cargo fijo menor / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS) (❌ sin check a BO) (Ejemplo)
+    (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
+  </div>
 
-<br><br>
-
-<strong>CONTROL A CONTROL (Plan menor)</strong><br>
-Información / Información / Transferencias / Migración de Control a Control - Cargo fijo menor / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS)  (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
-
-</div>
-    <hr>
-    <label style="color: red;"><strong>Plantilla:</strong></label>
-    <p></p>
-
-<center>
+  <hr>
+  <label style="color: red;"><strong>Plantilla:</strong></label>
+  <p></p>
+  <center>
     <input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
     // 
-    <select id="label0_1" onchange="updateResultadoOutput()" >
-        <option value="">Seleccionar</option>
-        <option value="Cliente desea migrar a un plan Prepago por motivo de ">Cliente desea migrar a un plan Prepago por motivo de</option>
-        <option value="Cliente desea migrar a un plan Control menor por motivo de">Cliente desea migrar a un plan Control menor por motivo de</option>
+    <select id="label0_1" onchange="updateResultadoOutput()">
+      <option value="">Seleccionar</option>
+      <option value="Cliente desea migrar a un plan Prepago por motivo de ">Cliente desea migrar a un plan Prepago por motivo de</option>
+      <option value="Cliente desea migrar a un plan Control menor por motivo de">Cliente desea migrar a un plan Control menor por motivo de</option>
     </select>
- <input type="text" id="label0_2" oninput="updateResultadoOutput()" placeholder="Motivo de migración" style="color: #007BFF;" />
-// Se transfiere al área de migraciones
-</center>
+    <input type="text" id="label0_2" oninput="updateResultadoOutput()" placeholder="Motivo de migración" style="color: #007BFF;" />
+    // Se transfiere al área de migraciones
+  </center>
 
-<br>
-    <div class="input-container">
-      <label for="label1">- Plan actual:</label>
-      <input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="(Plan que figura en Customer Care)" style="color: #007BFF;" />
-    </div>
-    <div class="input-container">
-      <label for="labelID">- ID de llamada:</label>
-      <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
-    </div>
+  <br>
 
-    <br>
-    <hr>
+  <div class="input-container">
+    <label for="label1">- Plan actual:</label>
+    <input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="(Plan en Customer Care)" style="color: #007BFF;" />
+  </div>
+  <div class="input-container">
+    <label for="labelID">- ID de llamada:</label>
+    <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
+  </div>
 
-    <label style="color: red;"><strong>Resultado:</strong></label>
-    <div id="resultado"></div>
+  <hr>
+  <label style="color: red;"><strong>Resultado:</strong></label>
+  <div id="resultado"></div>
+  <button onclick="copiarResultado()">Copiar</button>
+  <button onclick="limpiarInputs()">Borrar</button>
 
-    <button onclick="copiarResultado()">Copiar</button>
-    <button onclick="limpiarInputs()">Borrar</button>
+  <hr>
+  <p style="color: red"><strong>Speech:</strong></p>
+  <span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor, debe mantenerse en espera, no corte la llamada".
 
-<hr>
+  <!-- Imagen visible siempre con título arriba -->
+  <div class="image-card">
+    <h3>Transferencia - Control a Prepago | Control a control menor</h3>
+    <img src="https://i.postimg.cc/jqF5v1Y2/Transferencia-Disminuir-plan.png" alt="Transferencia - Control a Prepago | Control a control menor">
+  </div>
 
-<p style="color: red"><strong>Speech: </strong></p>
-<span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".
-
-<br><br><br><br>
-
-<div class="dropdown-container">
-    <a href="#" class="dropdown-trigger" onclick="toggleDropdown(event, 'dropdownMod1')">Transferencia - Control a Prepago | Control a control menor (clic para ver)</a>
-
+  <div id="copyMessageBox" class="message-box">Resultado copiado al portapapeles</div>
 </div>
 
-<div id="dropdownMod1" class="dropdown-content">
-    <img src="https://i.postimg.cc/jqF5v1Y2/Transferencia-Disminuir-plan.png" alt="Transferencia - Control a Prepago | Control a control menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
-</div>
-<div id="dropdownMod2" class="dropdown-content">
-    <img src="https://i.postimg.cc/XJfBGcz3/Transferencia-Control-a-control-plan-mayor.png" alt="Transferencia XXXX" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
-</div>
-    <div id="copyMessageBox" class="message-box">
-        Resultado copiado al portapapeles
-    </div>
+<script>
+  function updateResultadoOutput() {
+    const label0 = document.querySelector("#label0").value || "";
+    const label0_1 = document.querySelector("#label0_1").value || "";
+    const label0_2 = document.querySelector("#label0_2").value || "";
+    const label1 = capitalizeName(document.querySelector("#label1").value || "");
+    const labelID = document.querySelector("#labelID").value || "";
 
-    <script>
-window.onload = function() {
-    let fechaLimite = new Date("2025-10-31T23:59:59");
-    let fechaActual = new Date();
-    if (fechaActual > fechaLimite) {
-        document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Actualización en proceso)</h5>";
+    document.querySelector("#resultado").innerHTML = 
+      `<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> <span class="resultado-label">${label0_2}</span> // Se transfiere al área de migraciones
+
+- Plan actual: <span class="resultado-label">${label1}</span>
+- $$_<span class="resultado-label">${labelID}</span>_&&`;
+  }
+
+  function capitalizeName(input) {
+    return input.split(" ").map(w => {
+      return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    }).join(" ");
+  }
+
+  function limitDigits(event) {
+    if (event.target.value.length > 9) event.target.value = event.target.value.slice(0, 9);
+    updateResultadoOutput();
+  }
+
+  function copiarResultado() {
+    const texto = document.querySelector("#resultado").innerText.trim();
+    if (!texto) return;
+    const ta = document.createElement("textarea");
+    ta.value = texto; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch(e) {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value);
     }
-};
-      function updateResultadoOutput() {
-        const label0 = document.querySelector("#label0").value;
-        const label0_1 = document.querySelector("#label0_1").value;
-        const label0_2 = document.querySelector("#label0_2").value;
-        const label1 = capitalizeName(document.querySelector("#label1").value || "");
-        const labelID = document.querySelector("#labelID").value;
+    document.body.removeChild(ta);
+    const msg = document.getElementById('copyMessageBox');
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 3000);
+  }
 
-document.querySelector("#resultado").innerHTML = `<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> <span class="resultado-label">${label0_2}</span> // Se transfiere al área de migraciones
-
-          - Plan actual: <span class="resultado-label">${label1}</span>
-          - $$_<span class="resultado-label">${labelID}</span>_&&`;
-      }
-
-      function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-      }
-
-      function capitalizeName(input) {
-        return input.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
-      }
-
-        function limitDigits(event) {
-            const input = event.target;
-            if (input.value.length > 9) {
-                input.value = input.value.slice(0, 9);
-            }
-
-            updateResultadoOutput();
-        }
-      function copiarResultado() {
-        const resultadoTexto = document.querySelector("#resultado").innerText.trim();
-        const textarea = document.createElement("textarea");
-        textarea.value = resultadoTexto;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textarea);
-        // Show custom message box
-        const messageBox = document.getElementById('copyMessageBox');
-        messageBox.classList.add('show');
-        setTimeout(() => {
-            messageBox.classList.remove('show');
-        }, 3000); // Hide after 3 seconds
-      }
-function limpiarInputs() {
-    document.querySelectorAll("input").forEach(input => input.value = "");
+  function limpiarInputs() {
+    document.querySelectorAll("input").forEach(i => i.value = "");
     document.querySelector("#label0_1").value = "";
-    document.querySelector("#label0_2").value = "";
     document.querySelector("#resultado").innerHTML = "";
-}
-// Popup Functions (still available for "Ejemplo" links)
-function openPopup(event, popupId) {
-    event.preventDefault(); // Prevent the default link behavior
-    document.getElementById(popupId).classList.add('active');
-}
-function closePopup(popupId) {
-    document.getElementById(popupId).classList.remove('active');
-}
-// Dropdown Toggle Function for Mod 1 and Mod 2
-function toggleDropdown(event, dropdownId) {
-    event.preventDefault(); // Prevent default link behavior
-    const dropdownContent = document.getElementById(dropdownId);
-    dropdownContent.classList.toggle('show');
-    // Close other dropdowns if open
-    const allDropdowns = document.querySelectorAll('.dropdown-content');
-    allDropdowns.forEach(dropdown => {
-        if (dropdown.id !== dropdownId && dropdown.classList.contains('show')) {
-            dropdown.classList.remove('show');
-        }
-    });
-}
-    </script>
-    <div id="popup1" class="popup-overlay" onclick="closePopup('popup1')">
-        <div class="popup-content" onclick="event.stopPropagation()">
-            <button class="close-button" onclick="closePopup('popup1')">X</button>
-            <img src="https://i.postimg.cc/nrz1xP3M/MIGRACI-N-CONTROL-A-PREPAGO.png" alt="Migración Control a Prepago" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
-        </div>
-    </div>
-    <div id="popup2" class="popup-overlay" onclick="closePopup('popup2')">
-        <div class="popup-content" onclick="event.stopPropagation()">
-            <button class="close-button" onclick="closePopup('popup2')">X</button>
-            <img src="https://i.postimg.cc/PxKMBjzB/MIGRACI-N-CONTROL-A-CONTROL-PLAN-MENOR.png" alt="Migración Control a Control Plan Menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
-        </div>
-    </div>
-  </body>
+  }
+
+  function openPopup(e, id) {
+    e.preventDefault();
+    const popup = document.getElementById(id);
+    if (popup) popup.classList.add('active');
+    setTimeout(() => {
+      const btn = popup.querySelector('.close-button');
+      if (btn) btn.focus();
+    }, 120);
+  }
+
+  function closePopup(id) {
+    const popup = document.getElementById(id);
+    if (popup) popup.classList.remove('active');
+  }
+
+  // Cerrar con ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.popup-overlay.active').forEach(p => p.classList.remove('active'));
+    }
+  });
+</script>
+
+<!-- Popups -->
+<div id="popup1" class="popup-overlay" onclick="closePopup('popup1')">
+  <div class="popup-content" onclick="event.stopPropagation()">
+    <button class="close-button" onclick="closePopup('popup1')" aria-label="Cerrar">&times;</button>
+    <img src="https://i.postimg.cc/nrz1xP3M/MIGRACI-N-CONTROL-A-PREPAGO.png" alt="Migración Control a Prepago">
+  </div>
+</div>
+
+<div id="popup2" class="popup-overlay" onclick="closePopup('popup2')">
+  <div class="popup-content" onclick="event.stopPropagation()">
+    <button class="close-button" onclick="closePopup('popup2')" aria-label="Cerrar">&times;</button>
+    <img src="https://i.postimg.cc/PxKMBjzB/MIGRACI-N-CONTROL-A-CONTROL-PLAN-MENOR.png" alt="Migración Control a Control Plan Menor">
+  </div>
+</div>
+
+</body>
 </html>

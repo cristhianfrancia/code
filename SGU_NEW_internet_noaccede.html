@@ -297,28 +297,6 @@
 </div>
 
 
-<div class="input-container">
-<label for="label_APN">- Cliente sabe que es APN? (Si/No):</label>
-<select id="label_APN" onchange="updateResultadoOutput()">
-
-<option value="">Seleccionar</option>
-<option value="Si">Si</option>
-<option value="No">No</option>
-      </select>
-    </div>
-
-
-<div class="input-container">
-<label for="label_ConfiguroAPN">- Configuró APN? (Si/No/No sabe como):</label>
-<select id="label_ConfiguroAPN" onchange="updateResultadoOutput()">
-
-<option value="">Seleccionar</option>
-<option value="Si">Si</option>
-<option value="No">No</option>
-<option value="No sabe como">No sabe como</option>
-      </select>
-    </div>
-
 
     <div class="input-container">
       <label for="label_Cobertura">- Cobertura que presenta problema (3G/4G/5G):</label>
@@ -434,8 +412,6 @@ window.onload = function() {
       const label_FechaNoaccedeInput = document.querySelector("#label_FechaNoaccede");
       const label_FechaNavegacionInput = document.querySelector("#label_FechaNavegacion");
       const label_MarcaInput = document.querySelector("#label_Marca");
-      const label_APNInput = document.querySelector("#label_APN");
-      const label_ConfiguroAPNInput = document.querySelector("#label_ConfiguroAPN");
       const label_CoberturaInput = document.querySelector("#label_Cobertura");
       const label_BarringInput = document.querySelector("#label_Barring");
       const label_DireccionInput = document.querySelector("#label_Direccion");
@@ -455,8 +431,6 @@ window.onload = function() {
       label_FechaNoaccedeInput.addEventListener("input", updateResultadoOutput);
       label_FechaNavegacionInput.addEventListener("input", updateResultadoOutput);
       label_MarcaInput.addEventListener("input", updateResultadoOutput);
-      label_APNInput.addEventListener("change", updateResultadoOutput);
-      label_ConfiguroAPNInput.addEventListener("change", updateResultadoOutput);
       label_CoberturaInput.addEventListener("change", updateResultadoOutput);
       label_BarringInput.addEventListener("Change", updateResultadoOutput);
       label_DireccionInput.addEventListener("input", updateResultadoOutput);
@@ -499,8 +473,6 @@ const label_IMEI = label_IMEIInput.value;
 const label_FechaNoaccede = label_FechaNoaccedeInput.value;
 const label_FechaNavegacion = label_FechaNavegacionInput.value;
 const label_Marca = label_MarcaInput.value;
-const label_APN = label_APNInput.value;
-const label_ConfiguroAPN = label_ConfiguroAPNInput.value;
 const label_Cobertura = label_CoberturaInput.value;
 const label_Barring = label_BarringInput.value;
 const label_Direccion = label_DireccionInput.value;
@@ -519,8 +491,6 @@ Existe cambio de IMEI?: <span class="resultado-label">${label_IMEI}</span>
 Fecha desde cuando no accede: <span class="resultado-label">${label_FechaNoaccede}</span>
 Fecha y hora de la ultima navegacion segun consumo: <span class="resultado-label">${label_FechaNavegacion}</span>
 Marca y modelo de equipo: <span class="resultado-label">${label_Marca}</span>
-Cliente sabe que es APN? (Si/No): <span class="resultado-label">${label_APN}</span>
-Configuró APN? (Si/No/No sabe como): <span class="resultado-label">${label_ConfiguroAPN}</span>
 Cobertura que presenta problema (3G/4G/5G): <span class="resultado-label">${label_Cobertura}</span>
 Parámetros correctos (Barring) (Si/No): <span class="resultado-label">Si</span>
 Dirección exacta del inconveniente: <span class="resultado-label">${label_Direccion}</span>
@@ -570,8 +540,6 @@ Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
         label_FechaNoaccedeInput.value = "";
         label_FechaNavegacionInput.value = "";
         label_MarcaInput.value = "";
-        label_APNInput.value = "";
-        label_ConfiguroAPNInput.value = "";
         label_CoberturaInput.value = "";
         label_BarringInput.value = "";
         label_DireccionInput.value = "";
@@ -679,4 +647,3 @@ Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
   </body>
 
 </html>
-

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Línea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+            background-color: #ffffff;
+        }
+        .container {
+            width: 95%;
+            max-width: 800px;
+        }
+        table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        .highlight1 { background-color: #057f91; color: white; font-weight: bold; }
+        .highlight2 { background-color: #000; color: white; font-weight: bold; }
+        .highlight3 { background-color: #efefef; color: black; font-weight: bold; }
+        .clickable {
+            cursor: pointer;
+            font-weight: bold;
+            background: #f9f9f9;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .clickable:hover { background-color: #e0e0e0; transform: scale(1.05); }
+        .hidden { display: none; }
+        .reniec-red { color: red; font-weight: bold; }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <td colspan="2">Seleccione el tipo de abonado:</td>
+            </tr>
+            <tr>
+                <td class="clickable" onclick="toggleExclusive('nacional')">Abonado Nacional</td>
+                <td class="clickable" onclick="toggleExclusive('extranjero')">Abonado Extranjero</td>
+            </tr>
+        </table>
+
+        <table id="nacional" class="hidden">
+            <tr><td colspan="2" class="highlight1">Nivel 1 - Titular</td></tr>
+            <tr><td colspan="2">- Nombres y apellidos completos del titular de la línea</td></tr>
+            <tr><td colspan="2">- Número de documento de identidad del titular</td></tr>
+            <tr><td colspan="2">- ¿Cuál es su tipo de documento de identidad?<br><br><span class="reniec-red">(Si cliente no comprende, podemos indicar posibles tipos de documento "DNI, Pasaporte, CE, etc)</span></td></tr>
+
+            <tr><td colspan="2" class="highlight2">Nivel 2<br>(Se debe hacer las 4 preguntas de forma obligatoria, pero debe validar 2 de forma correcta)</td></tr>
+            <tr>
+                <td colspan="2" class="clickable highlight3" onclick="abrirPopupReniec()">
+                    (Dale clic para abrir página de <span class="reniec-red">RENIEC</span>)
+                </td>
+            </tr>
+            <tr><td colspan="2">a. Fecha de nacimiento</td></tr>
+            <tr><td colspan="2">b. Primer nombre del padre</td></tr>
+            <tr><td colspan="2">c. Primer nombre de la madre</td></tr>
+            <tr><td colspan="2">d. Lugar de nacimiento</td></tr>
+        </table>
+
+        <table id="extranjero" class="hidden">
+            <tr><td colspan="2" class="highlight1">Nivel 1 - Titular</td></tr>
+            <tr><td colspan="2">- Nombres y apellidos completos del titular de la línea</td></tr>
+            <tr><td colspan="2">- Número de documento de identidad del titular</td></tr>
+            <tr><td colspan="2">- ¿Cuál es su tipo de documento de identidad?<br><br><span class="reniec-red">(Si cliente no comprende, podemos indicar posibles tipos de documento "DNI, Pasaporte, CE, etc)</span></td></tr>
+            <tr><td colspan="2" class="highlight2">Nivel 2<br>(Se debe validar 2 datos de forma correcta)</td></tr>
+            <tr><td class="highlight3">PREPAGO</td><td class="highlight3">CONTROL</td></tr>
+            <tr><td>¿Fecha de su última recarga?<br><span class="reniec-red">(Aprox. más o menos 5 días)</span></td><td>¿Cuál es el cargo fijo de su plan?</td></tr>
+            <tr><td>¿Monto de su última recarga?</td><td>¿Cuál es el último importe cancelado?</td></tr>
+            <tr><td>¿Activó o compró algún paquete en este mes?</td><td>¿Activó o compró algún paquete en este mes?</td></tr>
+        </table>
+    </div>
+
+    <script>
+        function toggleExclusive(id) {
+            var element = document.getElementById(id);
+            var isHidden = element.classList.contains('hidden');
+            document.getElementById('nacional').classList.add('hidden');
+            document.getElementById('extranjero').classList.add('hidden');
+            
+            if (isHidden) {
+                element.classList.remove('hidden');
+            }
+        }
+
+        // --- ESTA ES LA FUNCIÓN CLAVE ---
+        function abrirPopupReniec() {
+            const urlReniec = "https://serviciosweb.reniec.gob.pe/aip/logout.do";
+            
+            // Definimos las características de la ventana popup
+            const windowFeatures = "width=1200,height=900,scrollbars=yes,resizable=yes";
+            
+            // El segundo argumento "reniecPopup" es un nombre para la ventana.
+            // Si el usuario vuelve a hacer clic, se reutilizará la misma ventana en lugar de abrir una nueva.
+            window.open(urlReniec, "reniecPopup", windowFeatures);
+        }
+    </script>
+</body>
+</html>

@@ -332,49 +332,66 @@
     </div>
   </div>
 
-  <script>
-  const btnTitular = document.getElementById("btnTitular");
-  const btnUsuario = document.getElementById("btnUsuario");
-  const sectionTitular = document.getElementById("sectionTitular");
-  const sectionUsuario = document.getElementById("sectionUsuario");
+<script>
+const btnTitular = document.getElementById("btnTitular");
+const btnUsuario = document.getElementById("btnUsuario");
+const sectionTitular = document.getElementById("sectionTitular");
+const sectionUsuario = document.getElementById("sectionUsuario");
 
-  btnTitular.addEventListener("click", () => {
+btnTitular.addEventListener("click", () => {
+  // Si ya está visible, lo ocultamos
+  if (sectionTitular.classList.contains("visible")) {
+    btnTitular.classList.remove("active");
+    sectionTitular.classList.remove("visible");
+    sectionTitular.classList.add("hidden");
+  } else {
+    // Mostramos Titular y ocultamos Usuario
     btnTitular.classList.add("active");
     btnUsuario.classList.remove("active");
     sectionTitular.classList.remove("hidden");
     sectionTitular.classList.add("visible");
     sectionUsuario.classList.remove("visible");
     sectionUsuario.classList.add("hidden");
-  });
+  }
+});
 
-  btnUsuario.addEventListener("click", () => {
+btnUsuario.addEventListener("click", () => {
+  // Si ya está visible, lo ocultamos
+  if (sectionUsuario.classList.contains("visible")) {
+    btnUsuario.classList.remove("active");
+    sectionUsuario.classList.remove("visible");
+    sectionUsuario.classList.add("hidden");
+  } else {
+    // Mostramos Usuario y ocultamos Titular
     btnUsuario.classList.add("active");
     btnTitular.classList.remove("active");
     sectionUsuario.classList.remove("hidden");
     sectionUsuario.classList.add("visible");
     sectionTitular.classList.remove("visible");
     sectionTitular.classList.add("hidden");
-  });
-
-  function abrirDNI() {
-    const width = 1200, height = 800;
-    const left = (screen.width - width) / 2;
-    const top = (screen.height - height) / 2;
-    window.open("https://eldni.com", "DNIWindow",
-      `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`);
   }
+});
 
-  function verGuia(url) {
-    const screenW = window.innerWidth;
-    const screenH = window.innerHeight;
-    const width = screenW > 1200 ? 1000 : Math.min(screenW - 100, 900);
-    const height = screenH > 800 ? 720 : Math.min(screenH - 100, 700);
-    const left = (screenW - width) / 2;
-    const top = (screenH - height) / 2;
+function abrirDNI() {
+  const width = 1200, height = 800;
+  const left = (screen.width - width) / 2;
+  const top = (screen.height - height) / 2;
+  window.open("https://eldni.com", "DNIWindow",
+    `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+}
 
-    window.open(url, "Guía",
-      `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,toolbar=no,location=no,status=no,menubar=no`);
-  }
-  </script>
+function verGuia(url) {
+  const screenW = window.innerWidth;
+  const screenH = window.innerHeight;
+  const width = screenW > 1200 ? 1000 : Math.min(screenW - 100, 900);
+  const height = screenH > 800 ? 720 : Math.min(screenH - 100, 700);
+  const left = (screenW - width) / 2;
+  const top = (screenH - height) / 2;
+
+  window.open(url, "Guía",
+    `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,toolbar=no,location=no,status=no,menubar=no`);
+}
+</script>
+
 </body>
 </html>

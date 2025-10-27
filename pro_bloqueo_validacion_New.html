@@ -9,25 +9,14 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: #f5f5f7;
     margin: 0;
-    padding: 0;
+    padding: 40px 0; /* margen superior para que no quede pegado */
     color: #222;
     transition: all 0.4s ease;
   }
 
-  header {
-    background: linear-gradient(90deg, #01768b, #0c477e);
-    color: white;
-    text-align: center;
-    padding: 1rem 0; /* más compacto */
-    font-weight: 600;
-    font-size: 1.05rem; /* antes 1.3rem → más fino */
-    border-bottom: 4px solid #fbf32f;
-    letter-spacing: 0.25px;
-  }
-
   .container {
     max-width: 900px;
-    margin: 40px auto;
+    margin: 0 auto;
     background: #fff;
     border-radius: 18px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
@@ -46,7 +35,7 @@
     padding: 9px 10px;
     border-radius: 10px;
     text-align: center;
-    font-size: 1rem; /* ligeramente más pequeño */
+    font-size: 1rem;
     margin-top: 25px;
     font-weight: 600;
   }
@@ -54,7 +43,7 @@
   .pregunta-principal {
     text-align: center;
     margin-bottom: 25px;
-    font-size: 1.15rem; /* un poco más discreto */
+    font-size: 1.15rem;
     font-weight: 500;
   }
 
@@ -164,7 +153,7 @@
   }
 
   .note {
-    font-size: 0.82rem; /* más pequeño */
+    font-size: 0.82rem;
     font-style: italic;
     color: #444;
     opacity: 0.85;
@@ -197,9 +186,9 @@
 </style>
 </head>
 <body>
-  <header>Validación de Datos - Bloqueo por Robo o Pérdida (Bitel Perú)</header>
 
-  <div class="container">
+
+<div class="container">
     <p class="pregunta-principal">¿Es usted titular de la línea?</p>
     <div class="toggle-buttons">
       <button id="btnTitular">Titular</button>
@@ -339,13 +328,11 @@ const sectionTitular = document.getElementById("sectionTitular");
 const sectionUsuario = document.getElementById("sectionUsuario");
 
 btnTitular.addEventListener("click", () => {
-  // Si ya está visible, lo ocultamos
   if (sectionTitular.classList.contains("visible")) {
     btnTitular.classList.remove("active");
     sectionTitular.classList.remove("visible");
     sectionTitular.classList.add("hidden");
   } else {
-    // Mostramos Titular y ocultamos Usuario
     btnTitular.classList.add("active");
     btnUsuario.classList.remove("active");
     sectionTitular.classList.remove("hidden");
@@ -356,13 +343,11 @@ btnTitular.addEventListener("click", () => {
 });
 
 btnUsuario.addEventListener("click", () => {
-  // Si ya está visible, lo ocultamos
   if (sectionUsuario.classList.contains("visible")) {
     btnUsuario.classList.remove("active");
     sectionUsuario.classList.remove("visible");
     sectionUsuario.classList.add("hidden");
   } else {
-    // Mostramos Usuario y ocultamos Titular
     btnUsuario.classList.add("active");
     btnTitular.classList.remove("active");
     sectionUsuario.classList.remove("hidden");
@@ -392,6 +377,5 @@ function verGuia(url) {
     `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,toolbar=no,location=no,status=no,menubar=no`);
 }
 </script>
-
 </body>
 </html>

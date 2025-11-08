@@ -50,14 +50,15 @@
   .toggle-buttons {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 10px; /* Reducido para 3 botones */
     margin-bottom: 25px;
+    flex-wrap: wrap;
   }
 
   .toggle-buttons button {
     flex: 1;
-    padding: 14px;
-    font-size: 1rem;
+    padding: 14px 10px; /* Ajustado padding horizontal */
+    font-size: 0.95rem; /* Ajustado tamaño de fuente */
     font-weight: 600;
     border: 2px solid #01768b;
     border-radius: 12px;
@@ -65,6 +66,7 @@
     background: #fff;
     color: #01768b;
     transition: 0.3s;
+    min-width: 0; /* Asegura que Flexbox los distribuya bien */
   }
 
   .toggle-buttons button:hover {
@@ -75,6 +77,25 @@
     background: linear-gradient(90deg, #01768b, #0c477e);
     color: #fff;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-color: #0c477e;
+  }
+  
+  /* ESTILO NUEVO: Botón No Valida Datos */
+  #btnNoValida {
+    border-color: #d93025;
+    color: #d93025;
+    background: #fff;
+  }
+  
+  #btnNoValida:hover {
+    background: #ffebeb;
+  }
+  
+  #btnNoValida.active {
+    background: #d93025;
+    color: white;
+    border-color: #d93025;
+    box-shadow: 0 4px 12px rgba(217, 48, 37, 0.3);
   }
 
   .hidden { display: none; opacity: 0; }
@@ -183,6 +204,45 @@
     transform: scale(1.15);
     box-shadow: 0 3px 10px rgba(0,0,0,0.25);
   }
+  
+  /* ESTILO DE LA SECCIÓN NO VALIDA DATOS - ¡AJUSTADO! */
+  .speech-box {
+    background: #fffdf0; /* Más claro, acorde con tu amarillo Bitel */
+    border: 1px solid #fbf32f; /* Borde amarillo Bitel */
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .speech-box h3 {
+    color: #0c477e; /* Azul oscuro de Bitel */
+    margin-top: 0;
+    font-size: 1.1rem;
+    border-bottom: 1px dashed #fbf32f; /* Línea de borde amarilla Bitel */
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .speech-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+  
+  .tipificacion-box {
+    background: #f0f4f7;
+    border-left: 5px solid #0c477e; /* Se mantiene el azul oscuro */
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .color-azul {
+    color: #0c477e;
+    font-weight: 700;
+  }
 </style>
 </head>
 <body>
@@ -193,9 +253,22 @@
     <div class="toggle-buttons">
       <button id="btnTitular">Titular</button>
       <button id="btnUsuario">Usuario</button>
-    </div>
+      <button id="btnNoValida">No valida datos</button> </div>
 
-    <!-- TITULAR -->
+    <div id="sectionNoValida" class="hidden">
+      <div class="speech-box">
+        <h3>🚨 Speech:</h3>
+        
+        <div class="speech-text">
+          <span class="color-azul">(Nombre del cliente)</span>, me encantaría ayudarlo, pero los datos que me ha proporcionado no son los correctos, por tal motivo no sería posible continuar con el proceso de registro, lo invitamos a comunicarse nuevamente con los datos correctos y/o visitar uno de nuestros Centros de Atención más cercanos".
+        </div>
+        
+        <h3>🏷️ Tipificación</h3>
+        <div class="tipificacion-box">
+          Other / Información / Información / Transacciones de la línea / Bloqueo por sustracción - Pérdida / No valida datos completos
+        </div>
+      </div>
+    </div>
     <div id="sectionTitular" class="hidden">
       <h2>Nivel 1</h2>
       <div class="form-section">
@@ -251,7 +324,6 @@
       </div>
     </div>
 
-    <!-- USUARIO -->
     <div id="sectionUsuario" class="hidden">
       <h2>Datos del Usuario</h2>
 
@@ -319,44 +391,64 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
 <script>
+// 1. DECLARACIÓN DE VARIABLES
 const btnTitular = document.getElementById("btnTitular");
 const btnUsuario = document.getElementById("btnUsuario");
+const btnNoValida = document.getElementById("btnNoValida"); 
 const sectionTitular = document.getElementById("sectionTitular");
 const sectionUsuario = document.getElementById("sectionUsuario");
+const sectionNoValida = document.getElementById("sectionNoValida"); 
 
+// 2. FUNCIÓN AUXILIAR PARA OCULTAR TODO
+function ocultarTodasLasSecciones() {
+    [btnTitular, btnUsuario, btnNoValida].forEach(btn => btn.classList.remove("active"));
+    [sectionTitular, sectionUsuario, sectionNoValida].forEach(sec => {
+        sec.classList.remove("visible");
+        sec.classList.add("hidden");
+    });
+}
+
+// 3. LÓGICA para TITULAR
 btnTitular.addEventListener("click", () => {
   if (sectionTitular.classList.contains("visible")) {
-    btnTitular.classList.remove("active");
-    sectionTitular.classList.remove("visible");
-    sectionTitular.classList.add("hidden");
+    ocultarTodasLasSecciones();
   } else {
+    ocultarTodasLasSecciones();
     btnTitular.classList.add("active");
-    btnUsuario.classList.remove("active");
     sectionTitular.classList.remove("hidden");
     sectionTitular.classList.add("visible");
-    sectionUsuario.classList.remove("visible");
-    sectionUsuario.classList.add("hidden");
   }
 });
 
+// 4. LÓGICA para USUARIO
 btnUsuario.addEventListener("click", () => {
   if (sectionUsuario.classList.contains("visible")) {
-    btnUsuario.classList.remove("active");
-    sectionUsuario.classList.remove("visible");
-    sectionUsuario.classList.add("hidden");
+    ocultarTodasLasSecciones();
   } else {
+    ocultarTodasLasSecciones();
     btnUsuario.classList.add("active");
-    btnTitular.classList.remove("active");
     sectionUsuario.classList.remove("hidden");
     sectionUsuario.classList.add("visible");
-    sectionTitular.classList.remove("visible");
-    sectionTitular.classList.add("hidden");
   }
 });
 
+// 5. LÓGICA para NO VALIDA DATOS (NUEVO)
+btnNoValida.addEventListener("click", () => {
+  if (sectionNoValida.classList.contains("visible")) {
+    ocultarTodasLasSecciones();
+  } else {
+    ocultarTodasLasSecciones();
+    btnNoValida.classList.add("active");
+    sectionNoValida.classList.remove("hidden");
+    sectionNoValida.classList.add("visible");
+  }
+});
+
+
+// 6. FUNCIONES DE POP-UP (Originales)
 function abrirDNI() {
   const width = 1200, height = 800;
   const left = (screen.width - width) / 2;
@@ -368,8 +460,8 @@ function abrirDNI() {
 function verGuia(url) {
   const screenW = window.innerWidth;
   const screenH = window.innerHeight;
-  const width = screenW > 1200 ? 1000 : Math.min(screenW - 100, 900);
-  const height = screenH > 800 ? 720 : Math.min(screenH - 100, 700);
+  const width = screenW > 1920 ? 1200 : Math.min(screenW - 100, 1200);
+  const height = screenH > 1080 ? 700 : Math.min(screenH - 100, 700);
   const left = (screenW - width) / 2;
   const top = (screenH - height) / 2;
 
@@ -379,8 +471,3 @@ function verGuia(url) {
 </script>
 </body>
 </html>
-
-
-
-
-

@@ -139,30 +139,6 @@
       min-width: 180px;
     }
 
-    /* Separadores visuales para //, $$, &&, , y - */
-    .separator {
-      flex: 0 0 auto;
-      font-family: monospace;
-      font-size: 0.8rem;
-      color: #777;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: #f2f2f2;
-      align-self: flex-end;
-      margin-bottom: 6px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 26px;
-      text-align: center;
-    }
-
-    .separator-strong {
-      background: #fff3cd;
-      color: #8a6d3b;
-      border: 1px solid #ffe7a3;
-    }
-
     .output {
       background: #e8f7f9;
       padding: 15px 18px;
@@ -405,27 +381,20 @@
         <input id="numero" maxlength="9" oninput="validarNumero(this)" placeholder="9XX XXX XXX">
       </div>
 
-
-
       <div class="fila-campo">
         <label>Consulta del cliente //</label>
         <textarea id="consulta" rows="1" placeholder="Consulta de cliente"></textarea>
       </div>
-
-
 
       <div class="fila-campo">
         <label>Respuesta brindada //</label>
         <textarea id="respuesta" rows="1" placeholder="Respuesta brindada"></textarea>
       </div>
 
-
       <div class="fila-campo">
         <label>$$_ID de llamada_$$</label>
         <input id="id" placeholder="ID de llamada">
       </div>
-
-
 
     </div>
 
@@ -434,12 +403,18 @@
 
       <div class="fila-campo">
         <label>Dirección del problema,</label>
-        <input id="direccion" placeholder="Calle, Número, zona, etc">
+        <input id="direccion" placeholder="Calle, Número, zona, etc" list="listaDireccion">
+        <datalist id="listaDireccion">
+          <option value="Sin Dirección"></option>
+        </datalist>
       </div>
 
       <div class="fila-campo">
         <label>Referencia del problema,</label>
-        <input id="referencia" placeholder="Mercados, paraderos, etc">
+        <input id="referencia" placeholder="Mercados, paraderos, etc" list="listaReferencia">
+        <datalist id="listaReferencia">
+          <option value="Sin Referencia"></option>
+        </datalist>
       </div>
 
       <div class="fila-campo">
@@ -447,12 +422,10 @@
         <input id="departamento" placeholder="Departamento">
       </div>
 
-
       <div class="fila-campo">
         <label>Provincia -</label>
         <input id="provincia" placeholder="Provincia">
       </div>
-
 
       <div class="fila-campo">
         <label>Distrito</label>
@@ -484,10 +457,8 @@
   </div>
 
 <script>
-
     const HIST_KEY = 'historialResultados';
 
-    // Ahora incluimos todos los campos de ambas plantillas
     const inputs = [
       'numero', 'consulta', 'respuesta', 'id',
       'direccion', 'referencia', 'departamento', 'provincia', 'distrito'
@@ -548,8 +519,6 @@
         const provincia   = (document.getElementById('provincia').value || '').trim();
         const distrito    = (document.getElementById('distrito').value || '').trim();
 
-        // Formato solicitado:
-        // Dirección, Referencia, Departamento - Provincia - Distrito
         if (direccion || referencia || departamento || provincia || distrito) {
           resultado = `${direccion}, ${referencia}, ${departamento} - ${provincia} - ${distrito}`;
         } else {

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>Tipificación - Historial independiente</title>
+  <title>Plantilla de comentarios</title>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8NLE2SVR33"></script>
@@ -10,31 +10,89 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-8NLE2SVR33');
   </script>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 0;
-      margin: 0;
-      background: #ffffff;
-    }
+  :root {
+    --bitel-teal: #01768b;
+    --bitel-blue: #0c477e;
+    --bitel-yellow: #fbf32f;
+    --soft-gray: #d1d1d1;
+    --text-main: #434343;
+    --bg-soft: #ffffff;  /* Fondo completamente blanco */
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+    background: #ffffff; /* También lo fuerza a blanco */
+    color: var(--text-main);
+  }
 
     .container {
       max-width: 1000px;
-      background: #fff;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      margin: 20px auto;
+      background: #ffffff;
+      padding: 25px 28px 30px;
+      border-radius: 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+      margin: 28px auto;
+      border: 1px solid rgba(0,0,0,0.03);
     }
 
-    h3 {
+    .titulo-principal {
+      margin: 0 0 4px;
+      font-weight: 700;
+      font-size: 1.4rem;
       text-align: center;
-      margin-bottom: 30px;
-      margin-top: 0;
+      letter-spacing: 0.3px;
+      color: var(--bitel-blue);
+    }
+
+    .subtitulo {
+      margin: 0 0 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #6b6b6b;
+    }
+
+    .barra-titulo {
+      width: 80px;
+      height: 4px;
+      border-radius: 999px;
+      margin: 10px auto 22px;
+      background: linear-gradient(90deg, var(--bitel-yellow), var(--bitel-teal));
+    }
+
+    .template-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .template-selector label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #555;
+    }
+
+    .template-selector select {
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--soft-gray);
+      font-size: 0.9rem;
+      outline: none;
+      background: #fff;
+      min-width: 230px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .template-selector select:focus {
+      border-color: var(--bitel-teal);
+      box-shadow: 0 0 0 2px rgba(1,118,139,0.18);
     }
 
     .inline-form {
@@ -42,25 +100,62 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 10px;
+      margin-bottom: 10px;
     }
 
-    .inline-form input, .inline-form textarea {
-      padding: 8px;
+    .inline-form input,
+    .inline-form textarea {
+      padding: 8px 10px;
       font-size: 14px;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 10px;
+      flex: 1;
+      min-width: 180px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+      background: #fafafa;
+    }
+
+    .inline-form input:focus,
+    .inline-form textarea:focus {
+      border-color: var(--bitel-teal);
+      box-shadow: 0 0 0 2px rgba(1,118,139,0.18);
+      background: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .inline-form label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #666;
+      flex-basis: 100%;
+      margin-top: 4px;
+    }
+
+    .fila-campo {
+      display: flex;
+      flex-direction: column;
       flex: 1;
       min-width: 180px;
     }
 
     .output {
-      background: #eef;
-      padding: 15px;
-      margin-top: 25px;
-      border-left: 5px solid #007bff;
+      background: #e8f7f9;
+      padding: 15px 18px;
+      margin-top: 18px;
+      border-left: 5px solid var(--bitel-teal);
       font-family: monospace;
       word-break: break-word;
-      border-radius: 8px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: #123;
+    }
+
+    .output-titulo {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 4px;
     }
 
     .button-group {
@@ -72,81 +167,136 @@
     }
 
     .copiar-btn, .limpiar-btn, .mas-opciones-btn {
-      padding: 8px 16px;
+      padding: 8px 18px;
       border: none;
-      border-radius: 20px;
+      border-radius: 999px;
       cursor: pointer;
-      font-size: 14px;
-      transition: all 0.3s ease;
+      font-size: 13px;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      white-space: nowrap;
     }
 
-    .copiar-btn { background-color: #01768b; color: white; }
-    .copiar-btn:hover { background-color: #0056b3; }
-    .copiar-btn.copied { background-color: #28a745; }
+    .copiar-btn {
+      background-color: var(--bitel-teal);
+      color: white;
+      box-shadow: 0 6px 14px rgba(1,118,139,0.35);
+    }
+    .copiar-btn:hover {
+      background-color: #015d6b;
+      transform: translateY(-1px);
+      box-shadow: 0 9px 20px rgba(1,118,139,0.45);
+    }
+    .copiar-btn.copied {
+      background-color: #28a745;
+      box-shadow: 0 6px 14px rgba(40,167,69,0.45);
+    }
 
-    .limpiar-btn { background-color: #dc3545; color: white; }
-    .limpiar-btn:hover { background-color: #a71d2a; }
+    .limpiar-btn {
+      background-color: #dc3545;
+      color: white;
+      box-shadow: 0 4px 10px rgba(220,53,69,0.35);
+    }
+    .limpiar-btn:hover {
+      background-color: #b02130;
+      transform: translateY(-1px);
+      box-shadow: 0 7px 16px rgba(220,53,69,0.45);
+    }
 
-    .mas-opciones-btn { background-color: #343a40; color: white; }
-    .mas-opciones-btn:hover { background-color: #23272b; }
+    .mas-opciones-btn {
+      background-color: var(--bitel-blue);
+      color: white;
+      box-shadow: 0 4px 10px rgba(12,71,126,0.35);
+    }
+    .mas-opciones-btn:hover {
+      background-color: #08325e;
+      transform: translateY(-1px);
+      box-shadow: 0 7px 16px rgba(12,71,126,0.45);
+    }
 
     .opciones-extra {
       display: none;
       gap: 10px;
       margin-left: auto;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .toggle-historial-btn, .exportar-historial-btn, .borrar-historial-btn {
       padding: 7px 14px;
-      border-radius: 20px;
+      border-radius: 999px;
       border: none;
       cursor: pointer;
-      font-size: 13px;
-      transition: all 0.3s ease;
+      font-size: 12px;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
     }
 
-    .toggle-historial-btn { background-color: #6c757d; color: white; }
-    .toggle-historial-btn:hover { background-color: #5a6268; }
+    .toggle-historial-btn {
+      background-color: #6c757d;
+      color: white;
+    }
+    .toggle-historial-btn:hover {
+      background-color: #545b62;
+      transform: translateY(-1px);
+    }
 
-    .exportar-historial-btn { background-color: #17a2b8; color: white; }
-    .exportar-historial-btn:hover { background-color: #117a8b; }
+    .exportar-historial-btn {
+      background-color: #17a2b8;
+      color: white;
+    }
+    .exportar-historial-btn:hover {
+      background-color: #107488;
+      transform: translateY(-1px);
+    }
 
-    .borrar-historial-btn { background-color: #ff9800; color: white; }
-    .borrar-historial-btn:hover { background-color: #e68900; }
+    .borrar-historial-btn {
+      background-color: #ff9800;
+      color: white;
+    }
+    .borrar-historial-btn:hover {
+      background-color: #d67c00;
+      transform: translateY(-1px);
+    }
 
     #historial {
       display: none;
       margin-top: 20px;
       background: #fff;
-      border: 1px solid #ccc;
+      border: 1px solid #eee;
       padding: 10px;
-      border-radius: 8px;
+      border-radius: 12px;
       max-height: 250px;
       overflow-y: auto;
       font-family: monospace;
-      font-size: 14px;
+      font-size: 13px;
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
     #historial::-webkit-scrollbar { display: none; }
 
     .historial-aviso {
-      font-size: 12px;
-      color: #444;
+      font-size: 11px;
+      color: #555;
       background: #fff8e1;
       border-left: 4px solid #ffc107;
       padding: 8px 12px;
-      border-radius: 6px;
+      border-radius: 8px;
       margin: 0 auto 12px auto;
       text-align: center;
-      max-width: 90%;
+      max-width: 95%;
     }
 
     .historial-fecha {
       font-weight: bold;
       background: transparent;
-      padding: 6px 8px;
+      padding: 6px 4px;
       margin: 10px 0 5px;
       border-radius: 6px;
       color: #333;
@@ -156,9 +306,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 8px;
-      padding: 5px;
-      border-bottom: 1px dashed #aaa;
+      margin-bottom: 6px;
+      padding: 4px 0;
+      border-bottom: 1px dashed #ccc;
       transition: background-color 0.5s ease;
     }
 
@@ -175,52 +325,152 @@
       background: #007bff;
       color: white;
       border: none;
-      border-radius: 12px;
-      padding: 6px 9px;
+      border-radius: 14px;
+      padding: 5px 9px;
       cursor: pointer;
-      font-size: 12px;
-      transition: background-color 0.3s ease;
+      font-size: 11px;
+      transition: background-color 0.25s ease, transform 0.1s ease;
+      white-space: nowrap;
     }
-    .historial-copy-btn:hover { background: #0056b3; }
-    .historial-copy-btn.copied { background: #28a745; }
+    .historial-copy-btn:hover {
+      background: #0056b3;
+      transform: translateY(-1px);
+    }
+    .historial-copy-btn.copied {
+      background: #28a745;
+    }
+
+    /* Responsivo suave */
+    @media (max-width: 600px) {
+      .container {
+        margin: 16px;
+        padding: 20px 16px 24px;
+      }
+      .template-selector {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .opciones-extra {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
+    <h1 class="titulo-principal">Generador de plantillas 🟡</h1>
+    <p class="subtitulo">Genera comentarios para tipificación y direcciones de calidad de red.</p>
+    <div class="barra-titulo"></div>
 
-<div class="inline-form">
-<input type="text" id="numero" placeholder="Número que llama" maxlength="9" oninput="validarNumero(this)">//
-<textarea id="consulta" rows="1" placeholder="Consulta del cliente"></textarea>//
-<textarea id="respuesta" rows="1" placeholder="Respuesta brindada"></textarea>//
-$$_<input type="text" id="id" placeholder="ID de llamada">_&&
-</div>
+    <!-- Selector -->
+    <div class="template-selector">
+      <label for="plantilla">Tipo de plantilla:</label>
+      <select id="plantilla" onchange="cambiarPlantilla()">
+        <option value="comentario">Comentario de tipificación</option>
+        <option value="calidad">Calidad de red - Address</option>
+      </select>
+    </div>
 
-    <div class="output" id="resultado">Resultado aparecerá aquí...</div>
+    <!-- Comentario -->
+    <div id="plantillaComentario" class="inline-form">
 
+      <div class="fila-campo">
+        <label>Número del que llama //</label>
+        <input id="numero" maxlength="9" oninput="validarNumero(this)" placeholder="9XX XXX XXX">
+      </div>
+
+      <div class="fila-campo">
+        <label>Consulta del cliente //</label>
+        <textarea id="consulta" rows="1" placeholder="Consulta de cliente"></textarea>
+      </div>
+
+      <div class="fila-campo">
+        <label>Respuesta brindada //</label>
+        <textarea id="respuesta" rows="1" placeholder="Respuesta brindada"></textarea>
+      </div>
+
+      <div class="fila-campo">
+        <label>$$_ID de llamada_$$</label>
+        <input id="id" placeholder="ID de llamada">
+      </div>
+
+    </div>
+
+    <!-- Calidad Address -->
+    <div id="plantillaCalidad" class="inline-form" style="display:none;">
+
+      <div class="fila-campo">
+        <label>Dirección del problema,</label>
+        <input id="direccion" placeholder="Calle, Número, zona, etc" list="listaDireccion">
+        <datalist id="listaDireccion">
+          <option value="Sin dirección"></option>
+        </datalist>
+      </div>
+
+      <div class="fila-campo">
+        <label>Referencia del problema,</label>
+        <input id="referencia" placeholder="Mercados, paraderos, etc" list="listaReferencia">
+        <datalist id="listaReferencia">
+          <option value="Sin referencia"></option>
+        </datalist>
+      </div>
+
+      <div class="fila-campo">
+        <label>Departamento -</label>
+        <input id="departamento" placeholder="Departamento">
+      </div>
+
+      <div class="fila-campo">
+        <label>Provincia -</label>
+        <input id="provincia" placeholder="Provincia">
+      </div>
+
+      <div class="fila-campo">
+        <label>Distrito</label>
+        <input id="distrito" placeholder="Distrito">
+      </div>
+
+    </div>
+
+    <!-- Resultado -->
+    <div class="output">
+      <strong>Resultado:</strong><br>
+      <div id="resultadoTexto">Resultado aparecerá aquí...</div>
+    </div>
+
+    <!-- Botones -->
     <div class="button-group">
       <button class="copiar-btn" id="copiarBtn" onclick="copiarResultado()">📋 Copiar</button>
       <button class="limpiar-btn" onclick="limpiarCampos()">🧹 Limpiar</button>
       <button class="mas-opciones-btn" onclick="toggleOpciones()">⚙️ Más opciones</button>
-
-      <div class="opciones-extra" id="opcionesExtra">
-        <button class="toggle-historial-btn" onclick="toggleHistorial()">📂 Historial</button>
-        <button class="exportar-historial-btn" onclick="exportarHistorial()">⬇️ Exportar</button>
-        <button class="borrar-historial-btn" onclick="borrarHistorial()">🗑️ Borrar</button>
+      <div class="opciones-extra" id="opcionesExtra" style="display:none;">
+        <button onclick="toggleHistorial()">📂 Historial</button>
+        <button onclick="exportarHistorial()">⬇️ Exportar</button>
+        <button onclick="borrarHistorial()">🗑️ Borrar</button>
       </div>
     </div>
 
     <div id="historial"></div>
+
   </div>
 
-  <script>
+<script>
     const HIST_KEY = 'historialResultados';
-    const inputs = ['numero', 'consulta', 'respuesta', 'id'];
+
+    const inputs = [
+      'numero', 'consulta', 'respuesta', 'id',
+      'direccion', 'referencia', 'departamento', 'provincia', 'distrito'
+    ];
+
     let historial = [];
 
     function cargarInicial() {
       const guardado = localStorage.getItem(HIST_KEY);
       historial = guardado ? JSON.parse(guardado) : [];
       actualizarHistorial();
+      updateOutput();
     }
     window.addEventListener('load', cargarInicial);
 
@@ -229,16 +479,55 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
       if (el) el.addEventListener('input', updateOutput);
     });
 
-    function updateOutput() {
-      const numero = document.getElementById('numero').value.trim();
-      const consulta = document.getElementById('consulta').value.trim();
-      const respuesta = document.getElementById('respuesta').value.trim();
-      const id = document.getElementById('id').value.trim();
+    function plantillaSeleccionada() {
+      const select = document.getElementById('plantilla');
+      return select ? select.value : 'comentario';
+    }
 
-      const resultado = (numero || consulta || respuesta || id)
-        ? `${numero} // ${consulta} // ${respuesta} // $$_${id}_&&`
-        : 'Resultado aparecerá aquí...';
-      document.getElementById('resultado').innerText = resultado;
+    function cambiarPlantilla() {
+      const modo = plantillaSeleccionada();
+      const cmt = document.getElementById('plantillaComentario');
+      const cal = document.getElementById('plantillaCalidad');
+
+      if (modo === 'comentario') {
+        cmt.style.display = 'flex';
+        cal.style.display = 'none';
+      } else {
+        cmt.style.display = 'none';
+        cal.style.display = 'flex';
+      }
+      updateOutput();
+    }
+
+    function updateOutput() {
+      const modo = plantillaSeleccionada();
+      let resultado = '';
+
+      if (modo === 'comentario') {
+        const numero = (document.getElementById('numero').value || '').trim();
+        const consulta = (document.getElementById('consulta').value || '').trim();
+        const respuesta = (document.getElementById('respuesta').value || '').trim();
+        const id = (document.getElementById('id').value || '').trim();
+
+        resultado = (numero || consulta || respuesta || id)
+          ? `${numero} // ${consulta} // ${respuesta} // $$_${id}_&&`
+          : '';
+      } else {
+        const direccion   = (document.getElementById('direccion').value || '').trim();
+        const referencia  = (document.getElementById('referencia').value || '').trim();
+        const departamento= (document.getElementById('departamento').value || '').trim();
+        const provincia   = (document.getElementById('provincia').value || '').trim();
+        const distrito    = (document.getElementById('distrito').value || '').trim();
+
+        if (direccion || referencia || departamento || provincia || distrito) {
+          resultado = `${direccion}, ${referencia}, ${departamento} - ${provincia} - ${distrito}`;
+        } else {
+          resultado = '';
+        }
+      }
+
+      document.getElementById('resultadoTexto').innerText =
+        resultado || 'Resultado aparecerá aquí...';
     }
 
     function showCopyFeedback(success, button) {
@@ -250,24 +539,33 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
       if (success === 'noContent') {
         button.innerText = noContentText;
         button.classList.add('copied');
-        setTimeout(() => { button.innerText = originalText; button.classList.remove('copied'); }, 1500);
+        setTimeout(() => {
+          button.innerText = originalText;
+          button.classList.remove('copied');
+        }, 1500);
         return;
       }
       button.innerText = success ? successText : errorText;
       button.classList.add('copied');
-      setTimeout(() => { button.innerText = originalText; button.classList.remove('copied'); }, 1500);
+      setTimeout(() => {
+        button.innerText = originalText;
+        button.classList.remove('copied');
+      }, 1500);
     }
 
     function copiarResultado() {
-      const resultado = document.getElementById('resultado').innerText;
+      const resultado = document.getElementById('resultadoTexto').innerText;
       const copyButton = document.getElementById('copiarBtn');
+
       if (!resultado || resultado === 'Resultado aparecerá aquí...') {
         showCopyFeedback('noContent', copyButton);
         return;
       }
+
       const fecha = new Date().toLocaleDateString('es-PE');
       historial.push({ texto: resultado, fecha });
       guardarHistorial();
+
       if (navigator.clipboard) {
         navigator.clipboard.writeText(resultado)
           .then(() => showCopyFeedback(true, copyButton))
@@ -282,17 +580,26 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
       area.value = texto;
       document.body.appendChild(area);
       area.select();
-      try { document.execCommand('copy'); showCopyFeedback(true, button); }
-      catch (err) { showCopyFeedback(false, button); }
+      try {
+        document.execCommand('copy');
+        showCopyFeedback(true, button);
+      } catch (err) {
+        showCopyFeedback(false, button);
+      }
       document.body.removeChild(area);
     }
 
     function limpiarCampos() {
-      inputs.forEach(id => document.getElementById(id).value = '');
-      document.getElementById('resultado').innerText = 'Resultado aparecerá aquí...';
+      inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      document.getElementById('resultadoTexto').innerText = 'Resultado aparecerá aquí...';
     }
 
-    function validarNumero(input) { input.value = input.value.replace(/[^0-9]/g, ''); }
+    function validarNumero(input) {
+      input.value = input.value.replace(/[^0-9]/g, '');
+    }
 
     function toggleOpciones() {
       const extra = document.getElementById('opcionesExtra');
@@ -311,17 +618,17 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
 
     function toggleHistorial() {
       const historialDiv = document.getElementById('historial');
-      historialDiv.style.display = (historialDiv.style.display === 'none' || historialDiv.style.display === '') ? 'block' : 'none';
+      historialDiv.style.display =
+        (historialDiv.style.display === 'none' || historialDiv.style.display === '') ? 'block' : 'none';
     }
 
     function actualizarHistorial() {
       const historialDiv = document.getElementById('historial');
       historialDiv.innerHTML = '';
 
-      // 🔹 Aviso arriba del historial
       const aviso = document.createElement('div');
       aviso.className = 'historial-aviso';
-      aviso.textContent = "⚠️ (El historial es temporal y no 100% seguro, no olvides tipificar todas tus llamadas en línea)";
+      aviso.textContent = "⚠️ El historial es temporal y no 100% seguro; no olvides tipificar todas tus llamadas en línea.";
       historialDiv.appendChild(aviso);
 
       const grupos = {};
@@ -330,7 +637,6 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
         grupos[item.fecha].push(item);
       });
 
-      // 🔹 Mostrar más recientes primero
       Object.keys(grupos).reverse().forEach(fecha => {
         const fechaDiv = document.createElement('div');
         fechaDiv.className = 'historial-fecha';
@@ -380,7 +686,10 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
     }
 
     function exportarHistorial() {
-      if (!historial.length) { alert('No hay historial para exportar.'); return; }
+      if (!historial.length) {
+        alert('No hay historial para exportar.');
+        return;
+      }
       const grupos = {};
       historial.forEach(h => {
         if (!grupos[h.fecha]) grupos[h.fecha] = [];
@@ -396,7 +705,9 @@ $$_<input type="text" id="id" placeholder="ID de llamada">_&&
       const blob = new Blob([textoPlano], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'historial.txt'; a.click();
+      a.href = url;
+      a.download = 'historial.txt';
+      a.click();
       URL.revokeObjectURL(url);
     }
 

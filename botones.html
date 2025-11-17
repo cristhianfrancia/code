@@ -67,8 +67,8 @@
   <div class="btn-container">
     <button class="btn" onclick="abrirRegular()">🙋 Bienvenida</button>
     <button class="btn" onclick="Despedida()">🫂 Despedida</button>
-        <button class="btn" onclick="Estructura()">✍️ Comentario de tipificación</button>
-
+    <button class="btn" onclick="Estructura()">✍️ Comentario de tipificación</button>
+    <button class="btn" onclick="TipiAvanzada()">🏢 Lista de Tiendas</button>
   </div>
 
   <script>
@@ -76,36 +76,7 @@
 
     function Estructura() {
       const url = "https://script.google.com/macros/s/AKfycbzHHcr6MJDtbcbc3tJiO1hGESMdf9NZDagTAPuDJuWgyg_AiYqxCL3k_wLVdZu3PlLCsQ/exec";
-      const ancho = 1200;
-      const alto = 500;
-
-      // Calcular posición centrada exacta
-      const left = (window.screen.width / 2) - (ancho / 2);
-      const top = (window.screen.height / 2) - (alto / 2);
-
-      const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
-
-      popupVentana = window.open(url, "EstructuraTipificacion", opciones);
-
-      // Inyectar CSS para ocultar scrollbars (si CORS lo permite)
-      popupVentana.onload = () => {
-        try {
-          const style = popupVentana.document.createElement("style");
-          style.textContent = `
-            html, body {
-              margin: 0;
-              padding: 0;
-              overflow: hidden; /* Ocultar scrollbars */
-            }
-            ::-webkit-scrollbar {
-              display: none;
-            }
-          `;
-          popupVentana.document.head.appendChild(style);
-        } catch (e) {
-          console.warn("No se pudo inyectar CSS en el popup (CORS).");
-        }
-      };
+      abrirPopup(url, 1200, 500, 1); // zoom 100%
     }
 
     function abrirRegular() {
@@ -124,12 +95,43 @@
       );
     }
 
+    /* ⭐ Nuevo botón: Tipificación Avanzada */
+    function TipiAvanzada() {
+      const url = "https://script.google.com/macros/s/AKfycbyOHFm6zxT5EPUio0OEv2SrKgOvdTAZ6uC1b9ZQmuxCVm17m7mge_u2nFOpKLXZRit_ew/exec";
+      abrirPopup(url, 1600, 800, 0.90); // zoom 90%
+    }
+
+    /* 📌 Función estándar para abrir popups centrados + zoom */
+    function abrirPopup(url, ancho, alto, zoomNivel) {
+      const left = (window.screen.width / 2) - (ancho / 2);
+      const top = (window.screen.height / 2) - (alto / 2);
+
+      const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
+
+      popupVentana = window.open(url, "_blank", opciones);
+
+      popupVentana.onload = () => {
+        try {
+          const style = popupVentana.document.createElement("style");
+          style.textContent = `
+            html, body {
+              margin: 0;
+              padding: 0;
+              overflow: hidden;
+              transform: scale(${zoomNivel});
+              transform-origin: top left;
+              width: ${100 / zoomNivel}%;
+              height: ${100 / zoomNivel}%;
+            }
+            ::-webkit-scrollbar { display: none; }
+          `;
+          popupVentana.document.head.appendChild(style);
+        } catch (e) {
+          console.warn("No se pudo inyectar CSS en el popup (CORS).");
+        }
+      };
+    }
   </script>
 
 </body>
 </html>
-
-
-
-
-

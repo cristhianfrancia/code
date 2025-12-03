@@ -1208,24 +1208,27 @@
     function actualizarContadorSesiones(c) { var el=document.getElementById("contadorOnline"); if(el && typeof c==='number') el.textContent=c; }
     function mostrarErrorContador(e) { console.log('Err presencia', e); document.getElementById("contadorOnline").textContent='⚠'; }
     
-    /* MODIFICADO: Usa GET para evitar bloqueos CORS en GitHub */
+/* MODIFICADO: Usa GET + NO CACHE (Timestamp) */
     function enviarLatidoPresencia() {
       var ua = navigator.userAgent || '';
       
-      // Si estamos dentro de Google Apps Script (modo nativo)
+      // MODO APPSCRIPT (Interno)
       if (typeof google !== 'undefined' && google.script && google.script.run) {
          google.script.run
            .withSuccessHandler(actualizarContadorSesiones)
            .withFailureHandler(mostrarErrorContador)
            .updatePresence(SID_ACTUAL, ua);
       } 
-      // Si estamos en GitHub (modo externo)
+      // MODO GITHUB (Externo)
       else {
-        // Construimos la URL con parámetros GET
+        // 🔥 TRUCO ANTI-CACHÉ: Agregamos el timestamp actual
+        var timestamp = new Date().getTime(); 
+
         var urlConParams = CONST_URL_WEB_APP + 
                            "?action=updatePresence" + 
                            "&sessionId=" + encodeURIComponent(SID_ACTUAL) + 
-                           "&userAgent=" + encodeURIComponent(ua);
+                           "&userAgent=" + encodeURIComponent(ua) +
+                           "&nocache=" + timestamp; // <--- ESTO ES LA CLAVE
 
         fetch(urlConParams, { method: 'GET' }) 
         .then(function(response) { return response.json(); })
@@ -1239,7 +1242,7 @@
         });
       }
     }
-
+    
     function iniciarPresencia() {
       enviarLatidoPresencia();
       setInterval(enviarLatidoPresencia, 10000);
@@ -1271,3 +1274,4 @@
   </script>
 </body>
 </html>
+

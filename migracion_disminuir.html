@@ -2,50 +2,12 @@
 <html>
  <head>
   <style>
-      body {
+    body {
         font-family: Calibri, Arial, sans-serif;
         background-color: #ffffff; /* Asegura el fondo blanco */
       }
-        .container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            padding: 50px;
-            position: relative;
-            transition: box-shadow 0.3s ease;
-        }
-        .container:hover {
-            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
-        }
-        .icon-animation {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 40px;
-            height: 40px;
-            background-color: #007BFF;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: spin 2s linear infinite;
-        }
-        .icon-animation::before {
-            content: "😎";
-            font-size: 1.5rem;
-            color: white;
-        }
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        /* Estilos eliminados: .container, .icon-animation, @keyframes spin */
+        
         .input-container {
             display: flex;
             align-items: center;
@@ -54,9 +16,9 @@
         .input-container:hover {
             transform: scale(1.00);
         }
-      .input-container label {
-        width: 50%;
-      }
+        .input-container label {
+          width: 50%;
+        }
         .input-container input, .input-container select { /* Añadido select aquí */
             width: 50%;
             padding: 4px;
@@ -69,29 +31,29 @@
             outline: none;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
-      /* Estilos responsive */
-      @media screen and (max-width: 600px) {
-        .input-container {
-          flex-direction: column;
+        /* Estilos responsive */
+        @media screen and (max-width: 600px) {
+          .input-container {
+            flex-direction: column;
+          }
+          .input-container label, .input-container input, .input-container select { /* Añadido select aquí */
+            width: 100%;
+          }
         }
-        .input-container label, .input-container input, .input-container select { /* Añadido select aquí */
-          width: 100%;
+        .resultado-label {
+          color: #007BFF; /* Corregido a #007BFF */
         }
-      }
-      .resultado-label {
-        color: #007BFF; /* Corregido a #007BFF */
-      }
         .ruta-container {
-            background-color: #fff5e9; /* Fondo naranja suave restaurado */
+            background-color: #fff5e9;
             padding: 10px;
             border-radius: 4px;
             margin: 10px 0;
-            border-left: 4px solid #e67a00; /* Borde naranja original */
+            border-left: 4px solid #e67a00;
             font-size: 0.9rem;
             color: #333;
         }
         hr {
-            border: 1px solid #e67a00; /* Línea divisoria naranja original */
+            border: 1px solid #e67a00;
             margin: 10px 0;
         }
         button {
@@ -119,9 +81,9 @@
         #resultado {
             margin: 15px 0;
             font-size: 0.9rem;
-            background-color: #fff5e9; /* Fondo naranja suave restaurado */
+            background-color: #fff5e9;
             padding: 10px;
-            border-left: 4px solid #e67a00; /* Borde naranja original */
+            border-left: 4px solid #e67a00;
             white-space: pre-line;
             min-height: 50px;
             transition: background-color 0.3s ease;
@@ -136,11 +98,11 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
             justify-content: center;
-            align-items: flex-start; /* CAMBIADO AQUÍ: Alinea el popup-content a la parte superior */
-            z-index: 1000;
+            align-items: flex-start;
+            z-index: 1100;
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
-            padding-top: 20px; /* Opcional: Añade un pequeño espacio desde la parte superior de la ventana */
+            padding: 40px 20px;
         }
         .popup-overlay.active {
             display: flex;
@@ -152,15 +114,12 @@
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
             position: relative;
-            transform: scale(0.8);
+            transform: scale(0.9);
             transition: transform 0.3s ease-in-out;
             max-width: 90%;
-            max-height: 90%;
+            max-height: 90vh;
             overflow: auto;
-            display: flex; /* Usar flexbox para alinear contenido */
-            flex-direction: column; /* Apilar elementos verticalmente */
-            align-items: flex-start; /* Asegura que los elementos dentro del popup se alineen a la parte superior */
-            justify-content: flex-start; /* Asegura que el contenido empiece desde arriba dentro del popup */
+            text-align: center;
         }
         .popup-overlay.active .popup-content {
             transform: scale(1);
@@ -169,14 +128,14 @@
             max-width: 100%;
             height: auto;
             display: block;
-            margin-bottom: 0; /* Asegura que no haya margen inferior predeterminado */
-            margin-top: 0; /* Asegura que no haya margen superior predeterminado */
+            margin: 0 auto;
+            border-radius: 8px;
         }
         .close-button {
             position: absolute;
             top: 10px;
             right: 10px;
-            background-color: #e67a00; /* Naranja original */
+            background-color: #e67a00;
             color: white;
             border: none;
             border-radius: 50%;
@@ -188,7 +147,7 @@
             justify-content: center;
             align-items: center;
             transition: background-color 0.3s ease;
-            z-index: 1; /* Asegura que el botón esté por encima de la imagen */
+            z-index: 1; 
         }
         .close-button:hover {
             background-color: #0056b3;
@@ -200,12 +159,12 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #4CAF50; /* Green background */
+            background-color: #4CAF50;
             color: white;
             padding: 15px 25px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1001;
+            z-index: 1200;
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
             font-size: 1rem;
@@ -214,64 +173,64 @@
             display: block;
             opacity: 1;
         }
-        /* Dropdown styles for Mod 1 and Mod 2 */
-.dropdown-container {
-    display: flex;
-    gap: 10px; /* Space between Mod 1 and Mod 2 links */
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    justify-content: center; /* This will center the items *within* the flex container */
-    margin: 0 auto; /* This will center the flex container itself */
-    max-width: fit-content; /* Adjust as needed, or remove if you want it to take full width and still center content */
-}
+        /* Dropdown styles for image at the end */
         .dropdown-trigger {
             color: #007BFF;
             cursor: pointer;
             text-decoration: underline;
             margin-bottom: 5px;
-            display: inline-block; /* To allow gap */
+            display: inline-block;
         }
-.dropdown-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 0 10px; /* Padding for when it's open */
-    margin-top: 5px;
-    width: 100%; /* Take full width below the links */
-    box-sizing: border-box; /* Include padding and border in the width */
-    display: flex; /* Añade esto */
-    justify-content: center; /* Añade esto */
-}
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 0 10px;
+            margin-top: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
         .dropdown-content.show {
-            max-height: 500px; /* Adjust as needed for image height */
+            max-height: 600px;
             padding: 10px;
         }
         .dropdown-content img {
             max-width: 100%;
             height: auto;
             display: block;
+            margin: 0 auto;
+            border-radius: 4px;
         }
-    </style>
-  </head>
-  <body>
+        /* Enlaces "Ejemplo" */
+        .ruta-container a {
+          color: #007BFF;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+  </style>
+ </head>
+ <body>
 
+  <div style="max-width: 1000px; margin: 20px auto; padding: 20px;">
     <label style="color: red;"><strong>1. Plantilla:</strong></label>
     <p></p>
 
-<center>
-    <input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
-    // 
-    <select id="label0_1" onchange="updateResultadoOutput()" >
-        <option value="">Seleccionar</option>
-        <option value="Cliente desea migrar a un plan Prepago por motivo de ">Cliente desea migrar a un plan Prepago por motivo de</option>
-        <option value="Cliente desea migrar a un plan Control menor por motivo de">Cliente desea migrar a un plan Control menor por motivo de</option>
-    </select>
- <input type="text" id="label0_2" oninput="updateResultadoOutput()" placeholder="Motivo de migración" style="color: #007BFF;" />
-// Se transfiere al área de migraciones
-</center>
+    <center>
+        <input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
+        // 
+        <select id="label0_1" onchange="updateResultadoOutput()" >
+            <option value="">Seleccionar</option>
+            <option value="Cliente desea migrar a un plan Prepago por motivo de ">Cliente desea migrar a un plan Prepago por motivo de</option>
+            <option value="Cliente desea migrar a un plan Control menor por motivo de">Cliente desea migrar a un plan Control menor por motivo de</option>
+        </select>
+      <input type="text" id="label0_2" oninput="updateResultadoOutput()" placeholder="Motivo de migración" style="color: #007BFF;" />
+      // Se transfiere al área de migraciones
+    </center>
 
-<br>
+    <br>
     <div class="input-container">
       <label for="label1">- Plan actual:</label>
       <input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="(Plan que figura en Customer Care)" style="color: #007BFF;" />
@@ -282,7 +241,7 @@
       <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
     </div>
 
-<br>
+    <br>
 
     <label style="color: red;"><strong>Resultado:</strong></label>
     <div id="resultado"></div>
@@ -290,130 +249,183 @@
     <button onclick="copiarResultado()">Copiar</button>
     <button onclick="limpiarInputs()">Borrar</button>
 
-<hr>
+    <hr>
 
-<p style="color: red"><strong>2. Ruta:</strong></p>
+    <p style="color: red"><strong>2. Ruta:</strong></p>
 
-<div class="ruta-container">
-<strong>CONTROL A PREPAGO:</strong><br>
-Other / Información / Información / Transferencias / Migración de Control a Prepago / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS) (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
+    <div class="ruta-container">
+      <strong>CONTROL A PREPAGO:</strong><br>
+      Other / Información / Información / Transferencias / Migración de Control a Prepago / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS) (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
 
-<br><br>
+      <br><br>
 
-<strong>CONTROL A CONTROL: (Plan menor)</strong><br>
-Other / Información / Información / Transferencias / Migración de Control a Control - Cargo fijo menor / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS)  (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
-</div>
+      <strong>CONTROL A CONTROL: (Plan menor)</strong><br>
+      Other / Información / Información / Transferencias / Migración de Control a Control - Cargo fijo menor / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS)  (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
+    </div>
 
-<br><hr>
+    <br><hr>
 
-<p style="color: red"><strong>3. Speech: </strong></p>
-<span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".
+    <p style="color: red"><strong>3. Speech: </strong></p>
+    <span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".
 
-<br><br>
+    <br><br>
 
-<div class="dropdown-container">
-    <a href="#" class="dropdown-trigger" onclick="toggleDropdown(event, 'dropdownMod1')">Transferencia - Control a Prepago | Control a control menor</a>
-</div>
+    <div style="text-align: center;">
+        <a href="#" class="dropdown-trigger" onclick="toggleDropdown(event, 'dropdownMod1')">Transferencia - Control a Prepago | Control a control menor</a>
+    </div>
 
-<div id="dropdownMod1" class="dropdown-content show">
-    <img src="https://i.postimg.cc/jqF5v1Y2/Transferencia-Disminuir-plan.png" alt="Transferencia - Control a Prepago | Control a control menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
-</div>
+    <div id="dropdownMod1" class="dropdown-content show">
+        <img src="https://i.postimg.cc/jqF5v1Y2/Transferencia-Disminuir-plan.png" alt="Transferencia - Control a Prepago | Control a control menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
+    </div>
 
+  </div>
 
-    <script>
-window.onload = function() {
-    let fechaLimite = new Date("2025-12-31T23:59:59");
-    let fechaActual = new Date();
-    if (fechaActual > fechaLimite) {
-        document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Actualización en proceso)</h5>";
-    }
-};
-      function updateResultadoOutput() {
-        const label0 = document.querySelector("#label0").value;
-        const label0_1 = document.querySelector("#label0_1").value;
-        const label0_2 = document.querySelector("#label0_2").value;
-        const label1 = capitalizeName(document.querySelector("#label1").value || "");
-        const labelID = document.querySelector("#labelID").value;
+  <div id="copyMessageBox" class="message-box">Resultado copiado al portapapeles</div>
+  
+  <div id="popup1" class="popup-overlay" onclick="closePopup('popup1')">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <button class="close-button" onclick="closePopup('popup1')">×</button>
+      <img src="https://i.postimg.cc/nrz1xP3M/MIGRACI-N-CONTROL-A-PREPAGO.png" alt="Migración Control a Prepago | Control a Control (Plan menor)" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
+    </div>
+  </div>
 
-document.querySelector("#resultado").innerHTML = `<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> <span class="resultado-label">${label0_2}</span> // Se transfiere al área de migraciones
+  <div id="popup2" class="popup-overlay" onclick="closePopup('popup2')">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <button class="close-button" onclick="closePopup('popup2')">×</button>
+      <img src="https://i.postimg.cc/PxKMBjzB/MIGRACI-N-CONTROL-A-CONTROL-PLAN-MENOR.png" alt="Migración Control a Control Plan Menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
+    </div>
+  </div>
+  
+  <script>
+    // ===========================================
+    // ⚠️ MEDIDAS DISUASORIAS BÁSICAS (¡NO SON SEGURIDAD REAL!)
+    // ===========================================
 
-          - Plan actual: <span class="resultado-label">${label1}</span>
-          - $$_<span class="resultado-label">${labelID}</span>_&&`;
-      }
+    // 1. Deshabilitar Clic Derecho (Menú Contextual)
+    document.addEventListener('contextmenu', event => {
+        event.preventDefault();
+        alert('El menú contextual (clic derecho) está deshabilitado.'); // Opcional: mostrar un mensaje
+    });
 
-      function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-      }
-
-      function capitalizeName(input) {
-        return input.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
-      }
-
-        function limitDigits(event) {
-            const input = event.target;
-            if (input.value.length > 9) {
-                input.value = input.value.slice(0, 9);
-            }
-
-            updateResultadoOutput();
+    // 2. Deshabilitar Teclas de Desarrollador (F12, Ctrl+Shift+I/J/C, etc.)
+    document.onkeydown = function(e) {
+        // Bloquear F12
+        if (e.key === 'F12' || e.keyCode === 123) {
+            alert('Las herramientas de desarrollador están deshabilitadas.'); // Opcional: mostrar un mensaje
+            return false;
         }
-      function copiarResultado() {
+        // Bloquear Ctrl+Shift+I (Inspeccionar Elemento en Chrome/Edge)
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I')) {
+            return false;
+        }
+        // Bloquear Ctrl+Shift+J (Consola en Chrome/Edge)
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 74 || e.key === 'J')) {
+            return false;
+        }
+        // Bloquear Ctrl+Shift+C (Inspeccionar Elemento en Firefox/Chrome)
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 67 || e.key === 'C')) {
+            return false;
+        }
+        // Bloquear U (Ctrl+U: Ver código fuente)
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+            return false;
+        }
+    };
+    // ===========================================
+
+    // Corrección para que la actualización sea llamada en DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+        // Inicializar el resultado al cargar la página
+        updateResultadoOutput(); 
+    });
+
+    window.onload = function() {
+        let fechaLimite = new Date("2025-12-31T23:59:59");
+        let fechaActual = new Date();
+        if (fechaActual > fechaLimite) {
+            document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Actualización en proceso)</h5>";
+        }
+    };
+    
+    function updateResultadoOutput() {
+        const label0 = document.querySelector("#label0").value || "";
+        const label0_1 = document.querySelector("#label0_1").value || "";
+        const label0_2 = document.querySelector("#label0_2").value || "";
+        const label1 = capitalizeName(document.querySelector("#label1").value || "");
+        const labelID = document.querySelector("#labelID").value || "";
+        
+        if (!label0 && !label0_1 && !label0_2 && !label1 && !labelID) {
+            document.querySelector("#resultado").innerHTML = "";
+            return;
+        }
+
+        document.querySelector("#resultado").innerHTML = 
+            `<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> <span class="resultado-label">${label0_2}</span> // Se transfiere al área de migraciones\n\n` +
+            `- Plan actual: <span class="resultado-label">${label1}</span>\n` +
+            `- $$_<span class="resultado-label">${labelID}</span>_&&`;
+    }
+
+    function capitalizeName(input) {
+        if (!input) return "";
+        return input.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
+    }
+
+    function limitDigits(event) {
+        const input = event.target;
+        if (input.value.length > 9) {
+            input.value = input.value.slice(0, 9);
+        }
+        updateResultadoOutput();
+    }
+    
+    function copiarResultado() {
         const resultadoTexto = document.querySelector("#resultado").innerText.trim();
+        if (!resultadoTexto) return;
+        
         const textarea = document.createElement("textarea");
         textarea.value = resultadoTexto;
         document.body.appendChild(textarea);
         textarea.select();
-        document.execCommand("copy");
+        try {
+          document.execCommand("copy");
+        } catch (e) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(textarea.value);
+          }
+        }
         document.body.removeChild(textarea);
-        // Show custom message box
+        
         const messageBox = document.getElementById('copyMessageBox');
         messageBox.classList.add('show');
         setTimeout(() => {
             messageBox.classList.remove('show');
-        }, 3000); // Hide after 3 seconds
-      }
-function limpiarInputs() {
-    document.querySelectorAll("input").forEach(input => input.value = "");
-    document.querySelector("#label0_1").value = "";
-    document.querySelector("#label0_2").value = "";
-    document.querySelector("#resultado").innerHTML = "";
-}
-// Popup Functions (still available for "Ejemplo" links)
-function openPopup(event, popupId) {
-    event.preventDefault(); // Prevent the default link behavior
-    document.getElementById(popupId).classList.add('active');
-}
-function closePopup(popupId) {
-    document.getElementById(popupId).classList.remove('active');
-}
-// Dropdown Toggle Function for Mod 1 and Mod 2
-function toggleDropdown(event, dropdownId) {
-    event.preventDefault(); // Prevent default link behavior
-    const dropdownContent = document.getElementById(dropdownId);
-    dropdownContent.classList.toggle('show');
-    // Close other dropdowns if open
-    const allDropdowns = document.querySelectorAll('.dropdown-content');
-    allDropdowns.forEach(dropdown => {
-        if (dropdown.id !== dropdownId && dropdown.classList.contains('show')) {
-            dropdown.classList.remove('show');
-        }
-    });
-}
+        }, 3000);
+    }
+    
+    // FUNCIÓN CORREGIDA
+    function limpiarInputs() {
+        document.querySelectorAll("input").forEach(input => input.value = "");
+        document.querySelector("#label0_1").value = "";
+        document.querySelector("#label0_2").value = "";
+        // Llama a updateResultadoOutput() para refrescar el div con los campos vacíos.
+        updateResultadoOutput(); 
+    }
+    
+    // Popup Functions (still available for "Ejemplo" links)
+    function openPopup(event, popupId) {
+        event.preventDefault(); 
+        document.getElementById(popupId).classList.add('active');
+    }
+    function closePopup(popupId) {
+        document.getElementById(popupId).classList.remove('active');
+    }
+    
+    // Dropdown Toggle Function for image at the end
+    function toggleDropdown(event, dropdownId) {
+        event.preventDefault();
+        const dropdownContent = document.getElementById(dropdownId);
+        dropdownContent.classList.toggle('show');
+    }
     </script>
-
-    <div id="popup1" class="popup-overlay" onclick="closePopup('popup1')">
-        <div class="popup-content" onclick="event.stopPropagation()">
-            <button class="close-button" onclick="closePopup('popup1')">X</button>
-            <img src="https://i.postimg.cc/nrz1xP3M/MIGRACI-N-CONTROL-A-PREPAGO.png" alt="Migración Control a Prepago | Control a Control (Plan menor)" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
-        </div>
-    </div>
-
-    <div id="popup2" class="popup-overlay" onclick="closePopup('popup2')">
-        <div class="popup-content" onclick="event.stopPropagation()">
-            <button class="close-button" onclick="closePopup('popup2')">X</button>
-            <img src="https://i.postimg.cc/PxKMBjzB/MIGRACI-N-CONTROL-A-CONTROL-PLAN-MENOR.png" alt="Migración Control a Control Plan Menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
-        </div>
-    </div>
-  </body>
-
+ </body>
 </html>

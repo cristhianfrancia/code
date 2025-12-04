@@ -255,20 +255,8 @@
     </style>
   </head>
   <body>
-<p style="color: red"><strong>Ruta:</strong></p>
 
-<div class="ruta-container">
-<strong>CONTROL A PREPAGO</strong><br>
-Other / Información / Información / Transferencias / Migración de Control a Prepago / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS) (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
-
-<br><br>
-
-<strong>CONTROL A CONTROL (Plan menor)</strong><br>
-Información / Información / Transferencias / Migración de Control a Control - Cargo fijo menor / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS)  (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
-
-</div>
-    <hr>
-    <label style="color: red;"><strong>Plantilla:</strong></label>
+    <label style="color: red;"><strong>1. Plantilla:</strong></label>
     <p></p>
 
 <center>
@@ -288,13 +276,13 @@ Información / Información / Transferencias / Migración de Control a Control -
       <label for="label1">- Plan actual:</label>
       <input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="(Plan que figura en Customer Care)" style="color: #007BFF;" />
     </div>
+
     <div class="input-container">
       <label for="labelID">- ID de llamada:</label>
       <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
     </div>
 
-    <br>
-    <hr>
+<br>
 
     <label style="color: red;"><strong>Resultado:</strong></label>
     <div id="resultado"></div>
@@ -304,25 +292,33 @@ Información / Información / Transferencias / Migración de Control a Control -
 
 <hr>
 
-<p style="color: red"><strong>Speech: </strong></p>
+<p style="color: red"><strong>2. Ruta:</strong></p>
+
+<div class="ruta-container">
+<strong>CONTROL A PREPAGO:</strong><br>
+Other / Información / Información / Transferencias / Migración de Control a Prepago / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS) (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
+
+<br><br>
+
+<strong>CONTROL A CONTROL: (Plan menor)</strong><br>
+Other / Información / Información / Transferencias / Migración de Control a Control - Cargo fijo menor / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS)  (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
+</div>
+
+<br><hr>
+
+<p style="color: red"><strong>3. Speech: </strong></p>
 <span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".
 
-<br><br><br><br>
+<br><br>
 
 <div class="dropdown-container">
-    <a href="#" class="dropdown-trigger" onclick="toggleDropdown(event, 'dropdownMod1')">Transferencia - Control a Prepago | Control a control menor (clic para ver)</a>
-
+    <a href="#" class="dropdown-trigger" onclick="toggleDropdown(event, 'dropdownMod1')">Transferencia - Control a Prepago | Control a control menor</a>
 </div>
 
-<div id="dropdownMod1" class="dropdown-content">
+<div id="dropdownMod1" class="dropdown-content show">
     <img src="https://i.postimg.cc/jqF5v1Y2/Transferencia-Disminuir-plan.png" alt="Transferencia - Control a Prepago | Control a control menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
 </div>
-<div id="dropdownMod2" class="dropdown-content">
-    <img src="https://i.postimg.cc/XJfBGcz3/Transferencia-Control-a-control-plan-mayor.png" alt="Transferencia XXXX" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
-</div>
-    <div id="copyMessageBox" class="message-box">
-        Resultado copiado al portapapeles
-    </div>
+
 
     <script>
 window.onload = function() {
@@ -404,12 +400,14 @@ function toggleDropdown(event, dropdownId) {
     });
 }
     </script>
+
     <div id="popup1" class="popup-overlay" onclick="closePopup('popup1')">
         <div class="popup-content" onclick="event.stopPropagation()">
             <button class="close-button" onclick="closePopup('popup1')">X</button>
-            <img src="https://i.postimg.cc/nrz1xP3M/MIGRACI-N-CONTROL-A-PREPAGO.png" alt="Migración Control a Prepago" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
+            <img src="https://i.postimg.cc/nrz1xP3M/MIGRACI-N-CONTROL-A-PREPAGO.png" alt="Migración Control a Prepago | Control a Control (Plan menor)" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
         </div>
     </div>
+
     <div id="popup2" class="popup-overlay" onclick="closePopup('popup2')">
         <div class="popup-content" onclick="event.stopPropagation()">
             <button class="close-button" onclick="closePopup('popup2')">X</button>

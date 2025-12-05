@@ -15,11 +15,11 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: transparent; /* sin fondo */
+      background: transparent;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh; /* centrado vertical */
+      height: 100vh;
     }
 
     .button-group {
@@ -31,13 +31,13 @@
       padding: 8px;
     }
 
-    /* 🌟 BOTÓN ESTILO BITEL / APPLE */
+    /* 🌟 BOTÓN ESTILO BITEL */
     .abrir-btn {
-      background: transparent;               /* sin fondo */
-      color: var(--bitel-blue);              /* color Bitel */
-      border: 2px solid var(--bitel-blue);   /* borde elegante */
+      background: transparent;
+      color: var(--bitel-blue);
+      border: 2px solid var(--bitel-blue);
       padding: 10px 20px;
-      border-radius: 999px;                  /* estilo pill */
+      border-radius: 999px;
       font-size: 14px;
       font-weight: 600;
       transition: all 0.25s ease;
@@ -51,9 +51,9 @@
     }
 
     .abrir-btn:hover {
-      background: var(--bitel-blue);         /* cambia a azul Bitel */
+      background: var(--bitel-blue);
       color: #ffffff;
-      transform: translateY(-2px);           /* elevación suave */
+      transform: translateY(-2px);
       box-shadow: 0 8px 18px rgba(12,71,126,0.35);
     }
 
@@ -74,6 +74,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="button-group">
@@ -82,74 +83,65 @@
     </button>
   </div>
 
-  <script>
-    let popupVentana = null;
-    function abrirEstructura() {
-      const url = "https://cristhianfrancia.github.io/code/MB.html";
-      const ancho = 1200;
-      const alto = 450;
+<script>
+let popupVentana = null;
 
-      const left = (window.screen.width / 2) - (ancho / 2);
-      const top = (window.screen.height / 2) - (alto / 2);
+function abrirEstructura() {
+  const url = "https://cristhianfrancia.github.io/code/MB.html";
+  const ancho = 1200;
+  const alto = 450;
 
-      const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
+  const left = (window.screen.width / 2) - (ancho / 2);
+  const top = (window.screen.height / 2) - (alto / 2);
 
-      if (!popupVentana || popupVentana.closed) {
-        popupVentana = window.open(url, "EstructuraTipificacion", opciones);
+  const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
 
-        popupVentana.onload = () => {
-          try {
-            const style = popupVentana.document.createElement("style");
-            style.textContent = `
-              html, body {
-                margin: 0;
-                padding: 0;
-                overflow-y: scroll;
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-              }
-              ::-webkit-scrollbar {
-                width: 0 !important;
-                height: 0 !important;
-                display: none;
-              }
-            `;
-            popupVentana.document.head.appendChild(style);
-            popupVentana.scrollTo(0, 0);
-          } catch (e) {
-            console.warn("No se pudo inyectar CSS en el popup (restricción de CORS).");
+  if (!popupVentana || popupVentana.closed) {
+    popupVentana = window.open(url, "EstructuraTipificacion", opciones);
+
+    // 🔥 ZOOM FIJO AL 90%
+    popupVentana.onload = () => {
+      try {
+        const style = popupVentana.document.createElement("style");
+        style.textContent = `
+          html, body {
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+            transform: scale(0.90);        /* 👈 ZOOM 90% */
+            transform-origin: top center;   /* Centrado perfecto */
           }
-        };
-      } else {
-        popupVentana.focus();
+
+          ::-webkit-scrollbar {
+            width: 0 !important;
+            height: 0 !important;
+            display: none;
+          }
+        `;
+        popupVentana.document.head.appendChild(style);
+      } catch (e) {
+        console.warn("No se pudo aplicar el zoom por CORS.");
       }
-    }
+    };
+  } else {
+    popupVentana.focus();
+  }
+}
 
-        // 🔥 FUNCIÓN DE SEGURIDAD: Bloqueo de Teclas
-        document.onkeydown = function(e) {
-            // 1. Bloqueo de F12 (DevTools)
-            if (e.key === 'F12' || e.keyCode === 123) {
-                return false;
-            }
-            // 2. Bloqueo de Ctrl+Shift+I, J, C (Inspeccionar elemento/Consola)
-            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
-                return false;
-            }
-            // 3. Bloqueo de Ctrl+U (Ver código fuente)
-            if (e.ctrlKey && e.key === 'U') {
-                return false;
-            }
-        };
+/* 🔒 BLOQUEO DE SEGURIDAD */
+document.onkeydown = function(e) {
+  if (e.key === 'F12' || e.keyCode === 123) return false;
+  if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key)) return false;
+  if (e.ctrlKey && e.key === 'U') return false;
+};
 
-        // Mensaje de advertencia en la consola (opcional, tomado de tu ejemplo anterior)
-        window.addEventListener('load', function() {
-            console.clear();
-            console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
-            console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
-        });
-    </script>
+/* Mensaje en consola */
+window.addEventListener('load', function() {
+  console.clear();
+  console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
+  console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
+});
+</script>
 
 </body>
-
 </html>
-

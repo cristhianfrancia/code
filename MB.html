@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamaño de Datos - Cristhian Francia</title>
+    <style>
+        /* Estilos Globales y Reset */
+        body {
+            font-family: 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            min-height: 100vh;
+            background: transparent; 
+            color: #434343;
+            overflow-y: auto;
+            padding-top: 50px; 
+        }
+
+        /* Contenedor principal (Card) */
+        .converter-container {
+            background: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(8px) saturate(180%);
+            -webkit-backdrop-filter: blur(8px) saturate(180%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 30px 40px; 
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 850px; 
+            width: 90%;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Títulos y Subtítulos */
+        h1 {
+            font-size: 1.8em; 
+            margin-bottom: 5px;
+            color: #0c477e;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        p {
+            font-size: 0.9em; 
+            margin-top: 5px;
+            margin-bottom: 25px; 
+            color: #434343;
+            font-weight: 300;
+        }
+
+        /* Contenedor de Inputs (Por defecto: Fila para escritorio) */
+        .input-group {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 15px; 
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+
+        .input-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+            min-width: 130px; 
+            position: relative;
+        }
+
+        .input-item label {
+            font-size: 0.8em; 
+            margin-bottom: 5px;
+            color: #434343;
+            font-weight: 500;
+            white-space: nowrap; /* Evita que el texto de las etiquetas se rompa */
+        }
+
+        /* Estilo de los Inputs/Outputs */
+        input[type="number"], .output-display {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px; 
+            padding: 8px 12px; 
+            font-size: 1.2em; 
+            color: #0c477e;
+            text-align: center;
+            outline: none;
+            width: 100%;
+            transition: all 0.3s ease;
+            -webkit-appearance: none; 
+            appearance: none;
+        }
+        
+        .output-display {
+            background: #f0f0f0;
+            cursor: pointer; 
+            font-weight: 600;
+            position: relative;
+        }
+        .output-display:active {
+            transform: scale(0.98); 
+        }
+
+        /* Colores específicos para los bordes */
+        #mbOutput { border-color: #01768b; } 
+        #gbOutput { border-color: #0c477e; } 
+        #kbInput { border-color: #fd8261; }
+
+        /* Flechas de conversión */
+        .arrow {
+            font-size: 2em; 
+            color: #0c477e;
+            margin: 0 10px;
+            user-select: none;
+            /* Propiedad para ocultar en móviles y mostrar en escritorio */
+            display: block; 
+        }
+        
+        /* Tooltip de Copia */
+        .tooltip {
+            visibility: hidden;
+            width: 120px;
+            background-color: #434343;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 10; /* Asegura que esté sobre otros elementos */
+            bottom: 110%; 
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.7em;
+            font-weight: normal;
+        }
+        .tooltip::after {
+            content: " ";
+            position: absolute;
+            top: 100%; 
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #434343 transparent transparent transparent;
+        }
+        .output-display.copied .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Footer - Derechos de Autor */
+        .footer {
+            margin-top: 25px;
+            font-size: 0.8em; 
+            color: #434343;
+            font-weight: 300;
+        }
+        .footer strong {
+            color: #0c477e;
+            font-weight: 500;
+        }
+
+        /* ======================================= */
+        /* MEDIA QUERY: OPTIMIZACIÓN MÓVIL (MAX-WIDTH: 800px) */
+        /* ======================================= */
+        @media (max-width: 800px) {
+            body {
+                padding-top: 20px; /* Menor espacio superior en móvil */
+            }
+            .converter-container {
+                padding: 20px; /* Menor padding en la tarjeta */
+                width: 95%;
+            }
+            
+            /* Apilar elementos verticalmente en móvil */
+            .input-group {
+                flex-direction: column; 
+                align-items: center;
+                gap: 10px;
+                padding: 0;
+            }
+            
+            /* Ocultar las flechas de conversión en la vista apilada */
+            .arrow {
+                display: none; 
+            }
+            
+            /* Los inputs ocupan casi todo el ancho disponible */
+            .input-item {
+                width: 100%;
+                min-width: unset;
+            }
+            
+            /* Tamaño de fuente más apropiado para móviles */
+            h1 { font-size: 1.5em; }
+            p { font-size: 0.85em; }
+            
+            /* Asegurar que el tooltip se vea bien */
+            .tooltip {
+                width: 90px;
+                margin-left: -45px;
+            }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;"> 
+
+    <div class="converter-container">
+        <h1>Tamaño de datos</h1>
+        <p>Conversor de KB a MB y GB para Agentes Bitel</p>
+
+        <div class="input-group">
+            
+            <div class="input-item">
+                <label for="kbInput">Kilobytes (KB)</label>
+                <input type="number" id="kbInput" placeholder="Ingrese KB" min="0">
+            </div>
+
+            <span class="arrow">→</span>
+
+            <div class="input-item">
+                <label for="mbOutput">Megabytes (MB)</label>
+                <div class="output-display" id="mbOutput" onclick="copyToClipboard('mbOutput')">
+                    0.00
+                    <span class="tooltip">¡Copiado!</span>
+                </div>
+            </div>
+
+            <span class="arrow">→</span>
+
+            <div class="input-item">
+                <label for="gbOutput">Gigabytes (GB)</label>
+                <div class="output-display" id="gbOutput" onclick="copyToClipboard('gbOutput')">
+                    0.00
+                    <span class="tooltip">¡Copiado!</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            © Todos los derechos y desarrollo: <strong>Cristhian Francia</strong>.
+        </div>
+    </div>
+
+    <script>
+        const kbInput = document.getElementById('kbInput');
+        const mbOutput = document.getElementById('mbOutput');
+        const gbOutput = document.getElementById('gbOutput');
+
+        // Función de conversión
+        function convertData() {
+            const kbValue = parseFloat(kbInput.value);
+
+            if (isNaN(kbValue) || kbValue < 0 || kbInput.value.trim() === '') {
+                mbOutput.textContent = '0.00';
+                gbOutput.textContent = '0.00';
+                return;
+            }
+
+            const mbValue = kbValue / 1024;
+            const gbValue = mbValue / 1024;
+
+            mbOutput.textContent = mbValue.toFixed(2);
+            gbOutput.textContent = gbValue.toFixed(2);
+        }
+
+        // FUNCIÓN ADICIONAL: Copiar al portapapeles
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            // .trim().replace('¡Copiado!', '') asegura que solo copia el número limpio
+            const textToCopy = element.textContent.trim().replace('¡Copiado!', ''); 
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // Mostrar Tooltip de "¡Copiado!"
+                element.classList.add('copied');
+                setTimeout(() => {
+                    element.classList.remove('copied');
+                }, 1000); // Ocultar después de 1 segundo
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+                alert("No se pudo copiar automáticamente. Intenta seleccionar y copiar manualmente: " + textToCopy);
+            });
+        }
+
+        // Event listener para actualización
+        kbInput.addEventListener('input', convertData);
+
+        // Bloqueo de Teclas y DevTools (Seguridad)
+        document.onkeydown = function(e) {
+            // F12 (DevTools)
+            if (e.key === 'F12' || e.keyCode === 123) {
+                return false;
+            }
+            // Ctrl+Shift+I, J, C (Inspeccionar elemento/Consola)
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+                return false;
+            }
+            // Ctrl+U (Ver código fuente)
+            if (e.ctrlKey && e.key === 'U') {
+                return false;
+            }
+        };
+
+        // Inicializar al cargar la página
+        document.addEventListener('DOMContentLoaded', convertData);
+    </script>
+
+</body>
+</html>

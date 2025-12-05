@@ -28,9 +28,10 @@
             min-height: 100vh;
             background: transparent;
             color: var(--text-main);
-            /* 🔥 CORRECCIÓN: Cambiado de overflow-y: auto; a overflow: hidden; */
             overflow: hidden;
-            padding-top: 50px;
+            
+            /* 🔥🔥🔥 CAMBIO AQUÍ: Aumentado el padding-top para más separación 🔥🔥🔥 */
+            padding-top: 100px;
             
             user-select: none;
             -webkit-user-select: none;
@@ -116,9 +117,10 @@
             color: var(--bitel-blue);
         }
         
-        /* Media Queries para Responsividad (Reforzada) (Sin cambios) */
+        /* Media Queries para Responsividad (Reforzada) */
+        /* Nota: Se ajusta el padding-top para móviles también */
         @media (max-width: 800px) {
-            body { padding-top: 20px; }
+            body { padding-top: 40px; } /* Ajuste de 20px a 40px para móviles */
             .converter-container { padding: 20px; width: 95%; }
             .input-group { flex-direction: column; align-items: center; gap: 10px; padding: 0; }
             .arrow { display: none; }
@@ -234,4 +236,3 @@
     </script>
 </body>
 </html>
-

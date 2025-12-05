@@ -69,7 +69,7 @@
     margin-bottom:20px;
   }
 
-  /* BARRA DERECHA – modo y decimales */
+  /* Barra derecha */
   .toolbar{
     position:absolute;
     right:40px;
@@ -81,17 +81,18 @@
 
   .toggle, .select-dec{
     display:flex;
-    gap:6px;
+    gap:12px;
     background:#fff;
     border:1px solid rgba(0,0,0,0.08);
-    padding:6px;
+    padding:8px;
     border-radius:999px;
   }
 
   .toggle button,
   .select-dec button{
-    border:0;background:none;padding:8px 12px;
+    border:0;background:none;padding:8px 13px;
     font-weight:700;cursor:pointer;border-radius:8px;
+    position:relative;
   }
 
   .toggle button.active,
@@ -100,7 +101,51 @@
     color:white;
   }
 
-  /* Línea principal: Unidad | número | limpiar */
+  /* Tooltip */
+  .tooltip-min {
+    position:absolute;
+    background:#0c477e;
+    color:white;
+    font-size:0.75rem;
+    padding:6px 10px;
+    border-radius:8px;
+    white-space:nowrap;
+    transform:translate(-50%, -6px);
+    left:50%;
+    top:-32px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .18s ease, transform .18s ease;
+    z-index:999;
+  }
+
+  .tooltip-min::after {
+    content:"";
+    position:absolute;
+    bottom:-5px;
+    left:50%;
+    transform:translateX(-50%);
+    border-width:5px;
+    border-style:solid;
+    border-color:#0c477e transparent transparent transparent;
+  }
+
+  .has-tooltip:hover .tooltip-min {
+    opacity:1;
+    transform:translate(-50%, -10px);
+  }
+
+  .info-icon{
+    font-size:.9rem;
+    margin-left:5px;
+    cursor:pointer;
+    color:var(--bitel-teal);
+    opacity:0.8;
+    transition:.2s;
+  }
+  .info-icon:hover{opacity:1}
+
+  /* Main */
   .main-row{
     display:flex;
     align-items:flex-end;
@@ -124,13 +169,11 @@
     height:48px;
   }
 
-  input[type=number]{
-    width:260px;
-  }
+  input[type=number]{width:260px;}
 
-  /* ⭐ NUEVO BOTÓN LIMPIAR MEJORADO */
+  /* Botón limpiar */
   .btn-clean{
-    background: linear-gradient(90deg, var(--bitel-teal), var(--bitel-blue));
+    background:linear-gradient(90deg,var(--bitel-teal),var(--bitel-blue));
     color:white;
     border:0;
     padding:12.5px 16px;
@@ -144,13 +187,8 @@
     justify-content:center;
     transition:.2s ease;
   }
-  .btn-clean:hover{
-    opacity:.9;
-    transform:scale(1.02);
-  }
-  .btn-clean:active{
-    transform:scale(.97);
-  }
+  .btn-clean:hover{opacity:.9;transform:scale(1.03)}
+  .btn-clean:active{transform:scale(.97)}
 
   .three-results{
     display:grid;
@@ -180,16 +218,16 @@
     font-weight:700;
     margin-bottom:6px;
   }
-
   .v{
     font-size:1.2rem;
     color:var(--bitel-blue);
     font-weight:800;
   }
 
-  /* Copiado */
   .copy-tip{
-    position:absolute;right:10px;top:10px;
+    position:absolute;
+    right:10px;
+    top:10px;
     background:var(--bitel-blue);
     color:white;
     padding:6px 8px;
@@ -205,7 +243,6 @@
     transform:translateY(0);
   }
 
-  /* Más resultados */
   #extraContainer{
     display:none;
     margin-top:10px;
@@ -222,25 +259,20 @@
     margin-bottom:14px;
   }
 
-  /* Footer */
-  .footer-autor {
-    text-align: center;
-    margin-top: 30px;
-    padding: 15px;
-    font-size: 0.8rem;
-    color: #aaa;
-    border-top: 1px solid #eee;
-    user-select: none;
+  .footer-autor{
+    text-align:center;
+    margin-top:30px;
+    padding:15px;
+    font-size:.8rem;
+    color:#aaa;
+    border-top:1px solid #eee;
   }
-  .footer-autor strong {
-    color: var(--bitel-blue);
-  }
+  .footer-autor strong{color:var(--bitel-blue)}
 
   @media(max-width:700px){
     .three-results{grid-template-columns:1fr;}
     .toolbar{position:static;justify-content:center;margin-top:10px;}
   }
-
 </style>
 </head>
 
@@ -255,14 +287,25 @@
     </div>
   </div>
 
-  <!-- Barra superior derecha -->
+  <!-- Barra superior -->
   <div class="toolbar">
 
     <div>
       <label>Modo</label>
       <div class="toggle">
-        <button id="btn-1024" class="active">1024</button>
-        <button id="btn-1000">1000</button>
+
+        <div class="has-tooltip" style="position:relative;">
+          <button id="btn-1024" class="active">1024</button>
+          <span class="info-icon">ℹ</span>
+          <div class="tooltip-min">Bitel usa este modo<br>(1 KB = 1024 bytes)</div>
+        </div>
+
+        <div class="has-tooltip" style="position:relative;">
+          <button id="btn-1000">1000</button>
+          <span class="info-icon">ℹ</span>
+          <div class="tooltip-min">Modo comercial<br>(1 KB = 1000 bytes)</div>
+        </div>
+
       </div>
     </div>
 
@@ -270,15 +313,15 @@
       <label>Decimales</label>
       <div class="select-dec">
         <button data-dec="0">0</button>
-        <button data-dec="2" class="active">2</button>
-        <button data-dec="4">4</button>
+        <button data-dec="2">2</button>
+        <button data-dec="4" class="active">4</button>
         <button data-dec="6">6</button>
       </div>
     </div>
 
   </div>
 
-  <!-- Main row: Unidad + Valor + Limpiar -->
+  <!-- Sección principal -->
   <div class="main-row">
 
     <div>
@@ -303,13 +346,10 @@
 
   </div>
 
-  <!-- 3 resultados principales -->
   <div class="three-results" id="primaryResults"></div>
 
-  <!-- Botón expandir -->
   <button id="toggleExtra">Más resultados</button>
 
-  <!-- Resultados extra -->
   <div id="extraContainer"></div>
 
   <div class="footer-autor">
@@ -319,6 +359,7 @@
 </div>
 
 <script>
+/* === UNIDADES === */
 const UNITS = [
   { key:'bit',   label:'Bit (b)',   factorBytes:1/8 },
   { key:'byte',  label:'Byte (B)',  factorBytes:1 },
@@ -330,7 +371,7 @@ const UNITS = [
 ];
 
 const PRIMARY_ORDER = ["KB","MB","GB"];
-const EXTRA_ORDER    = ["bit","byte","TB","PB"];
+const EXTRA_ORDER   = ["bit","byte","TB","PB"];
 
 const primaryResults = document.getElementById("primaryResults");
 const extraContainer = document.getElementById("extraContainer");
@@ -339,10 +380,10 @@ const valueInput     = document.getElementById("valueInput");
 const btnClean       = document.getElementById("btnClean");
 const toggleExtra    = document.getElementById("toggleExtra");
 
-let base = 1024;
-let precision = 2;
+let base = 1024;   // Bitel mode
+let precision = 4; // Default decimales
 
-/* Construir tarjetas */
+/* === TARJETAS === */
 function buildBlocks(){
   primaryResults.innerHTML = "";
   extraContainer.innerHTML = "";
@@ -370,7 +411,7 @@ function makeCard(u){
   return card;
 }
 
-/* Copiado */
+/* === COPIAR === */
 function copyCard(card){
   const txt = card.querySelector("[data-value]").textContent;
   navigator.clipboard.writeText(txt).then(()=>{
@@ -384,7 +425,7 @@ function copyCard(card){
   });
 }
 
-/* Conversiones */
+/* === CONVERSIÓN === */
 function inputToBytes(v, unit){
   if(!isFinite(v)) return 0;
   v = Number(v);
@@ -409,7 +450,6 @@ function formatNumber(num){
   return Number(num).toLocaleString("en-US",{maximumFractionDigits:precision});
 }
 
-/* Render */
 function render(){
   const val = valueInput.value==="" ? 0 : Number(valueInput.value);
   const bytes = inputToBytes(val, unitSelect.value);
@@ -422,7 +462,7 @@ function render(){
   });
 }
 
-/* Modo */
+/* === MODO === */
 document.getElementById("btn-1024").onclick = ()=>{
   base = 1024;
   activeBtn("btn-1024","btn-1000");
@@ -439,7 +479,7 @@ function activeBtn(a,b){
   document.getElementById(b).classList.remove("active");
 }
 
-/* Decimales */
+/* === DECIMALES === */
 document.querySelectorAll(".select-dec button").forEach(btn=>{
   btn.onclick = ()=>{
     document.querySelectorAll(".select-dec button").forEach(b=>b.classList.remove("active"));
@@ -449,7 +489,7 @@ document.querySelectorAll(".select-dec button").forEach(btn=>{
   };
 });
 
-/* Expandir */
+/* === MOSTRAR EXTRA === */
 toggleExtra.onclick=()=>{
   if(extraContainer.style.display==="none" || extraContainer.style.display===""){
     extraContainer.style.display="grid";
@@ -460,24 +500,37 @@ toggleExtra.onclick=()=>{
   }
 };
 
-/* Limpiar */
+/* === LIMPIAR === */
 btnClean.onclick=()=>{
   unitSelect.value="KB";
   valueInput.value="";
-  extraContainer.style.display="none";  
+
+  // Ocultar extra
+  extraContainer.style.display="none";
   toggleExtra.textContent="Más resultados";
+
+  // Reset MODO
+  base = 1024;
+  activeBtn("btn-1024","btn-1000");
+
+  // Reset DECIMALES a 4
+  precision = 4;
+  document.querySelectorAll(".select-dec button").forEach(b=>b.classList.remove("active"));
+  document.querySelector('[data-dec="4"]').classList.add("active");
+
   render();
 };
 
 valueInput.oninput = render;
 unitSelect.onchange = render;
 
+/* === LOAD === */
 window.onload = ()=>{
   buildBlocks();
   render();
 };
 
-/* Bloqueo F12 */
+/* === BLOQUEO INSPECCIÓN === */
 document.addEventListener("keydown", e=>{
   if(e.key==="F12" || (e.ctrlKey&&e.shiftKey&&e.key==="I") || (e.ctrlKey&&e.key==="u")){
     e.preventDefault();

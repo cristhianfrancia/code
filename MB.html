@@ -5,63 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tamaño de Datos - Cristhian Francia</title>
     <style>
-        /* Estilos Globales y Reset */
+        /* Variables de Color (Tomadas de tu ejemplo) */
+        :root {
+            --bitel-teal: #01768b;
+            --bitel-blue: #0c477e;
+            --bitel-yellow: #fbf32f;
+            --bitel-orange: #fd8261; /* Color naranja original de Bitel */
+            --soft-gray: #d1d1d1;
+            --text-main: #434343;
+            --bg-soft: #ffffff;
+            --output-bg: #e8f7f9;
+        }
+
+        /* Estilos Globales y Bloqueo de Selección */
         body {
-            font-family: 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start; 
+            align-items: flex-start;
             min-height: 100vh;
-            background: transparent; 
-            color: #434343;
+            background: transparent;
+            color: var(--text-main);
             overflow-y: auto;
-            padding-top: 50px; 
+            padding-top: 50px;
+            
+            /* 🔥🔥🔥 PROPIEDAD CLAVE: Bloquea la selección en todo el cuerpo 🔥🔥🔥 */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
-        /* Contenedor principal (Card) */
+        /* Contenedor principal (Card) - Estilo Glassmorphism con fondo blanco */
         .converter-container {
-            background: rgba(255, 255, 255, 0.7); 
+            background: rgba(255, 255, 255, 0.9); /* Fondo más sólido para el estilo del ejemplo */
             backdrop-filter: blur(8px) saturate(180%);
             -webkit-backdrop-filter: blur(8px) saturate(180%);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            padding: 30px 40px; 
-            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05); /* Borde sutil */
+            padding: 30px 40px;
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.1); /* Sombra mejorada */
             text-align: center;
-            max-width: 850px; 
+            max-width: 850px;
             width: 90%;
             animation: fadeIn 1s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Títulos y Subtítulos */
         h1 {
-            font-size: 1.8em; 
-            margin-bottom: 5px;
-            color: #0c477e;
-            letter-spacing: 1px;
+            font-size: 1.8em;
+            margin: 0 0 5px;
             font-weight: 700;
+            color: var(--bitel-blue);
+            letter-spacing: 0.3px;
         }
         p {
-            font-size: 0.9em; 
-            margin-top: 5px;
-            margin-bottom: 25px; 
-            color: #434343;
+            font-size: 0.9em;
+            margin: 0 0 25px;
+            color: #6b6b6b;
             font-weight: 300;
         }
 
-        /* Contenedor de Inputs (Por defecto: Fila para escritorio) */
+        /* Contenedor de Inputs (Fila para escritorio) */
         .input-group {
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
-            gap: 15px; 
+            gap: 15px;
             margin-bottom: 25px;
             padding: 0 10px;
         }
@@ -71,150 +85,128 @@
             flex-direction: column;
             align-items: center;
             flex-grow: 1;
-            min-width: 130px; 
+            min-width: 130px;
             position: relative;
         }
 
         .input-item label {
-            font-size: 0.8em; 
+            font-size: 0.8em;
             margin-bottom: 5px;
-            color: #434343;
-            font-weight: 500;
-            white-space: nowrap; /* Evita que el texto de las etiquetas se rompa */
+            color: #666;
+            font-weight: 600;
+            white-space: nowrap;
         }
 
         /* Estilo de los Inputs/Outputs */
         input[type="number"], .output-display {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 8px; 
-            padding: 8px 12px; 
-            font-size: 1.2em; 
-            color: #0c477e;
+            /* Usamos el fondo del ejemplo: blanco suave */
+            background: #fafafa;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 1.2em;
+            color: var(--bitel-blue); /* Texto azul oscuro */
             text-align: center;
             outline: none;
             width: 100%;
             transition: all 0.3s ease;
-            -webkit-appearance: none; 
+            -webkit-appearance: none;
             appearance: none;
+            /* La salida debe ser seleccionable para copiar */
+            user-select: text; 
+            -webkit-user-select: text;
         }
         
+        input[type="number"]:focus {
+            border-color: var(--bitel-teal);
+            box-shadow: 0 0 0 2px rgba(1,118,139,0.18);
+            background: var(--bg-soft);
+        }
+
         .output-display {
-            background: #f0f0f0;
-            cursor: pointer; 
+            background: var(--output-bg); /* Fondo de salida del ejemplo */
+            cursor: pointer;
             font-weight: 600;
             position: relative;
         }
-        .output-display:active {
-            transform: scale(0.98); 
-        }
-
+        
         /* Colores específicos para los bordes */
-        #mbOutput { border-color: #01768b; } 
-        #gbOutput { border-color: #0c477e; } 
-        #kbInput { border-color: #fd8261; }
+        #mbOutput { border-color: var(--bitel-teal); }
+        #gbOutput { border-color: var(--bitel-blue); }
+        #kbInput { border-color: var(--bitel-orange); }
 
         /* Flechas de conversión */
         .arrow {
-            font-size: 2em; 
-            color: #0c477e;
+            font-size: 2em;
+            color: var(--bitel-blue);
             margin: 0 10px;
-            user-select: none;
-            /* Propiedad para ocultar en móviles y mostrar en escritorio */
-            display: block; 
+            display: block;
         }
         
         /* Tooltip de Copia */
         .tooltip {
             visibility: hidden;
             width: 120px;
-            background-color: #434343;
+            background-color: var(--text-main);
             color: #fff;
             text-align: center;
             border-radius: 6px;
             padding: 5px 0;
             position: absolute;
-            z-index: 10; /* Asegura que esté sobre otros elementos */
-            bottom: 110%; 
+            z-index: 10;
+            bottom: 110%;
             left: 50%;
             margin-left: -60px;
             opacity: 0;
             transition: opacity 0.3s;
             font-size: 0.7em;
             font-weight: normal;
+            user-select: none; /* Asegura que el tooltip no sea seleccionable */
         }
         .tooltip::after {
             content: " ";
             position: absolute;
-            top: 100%; 
+            top: 100%;
             left: 50%;
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
-            border-color: #434343 transparent transparent transparent;
+            border-color: var(--text-main) transparent transparent transparent;
         }
         .output-display.copied .tooltip {
             visibility: visible;
             opacity: 1;
         }
 
-        /* Footer - Derechos de Autor */
-        .footer {
-            margin-top: 25px;
-            font-size: 0.8em; 
-            color: #434343;
-            font-weight: 300;
+        /* Footer de Autoría - Adaptado a tu estilo de ejemplo */
+        .footer-autor {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            font-size: 0.8rem;
+            color: #aaa;
+            border-top: 1px solid #eee;
+            user-select: none; /* Bloquea la selección en el footer */
         }
-        .footer strong {
-            color: #0c477e;
-            font-weight: 500;
+        .footer-autor strong {
+            color: var(--bitel-blue);
         }
-
-        /* ======================================= */
-        /* MEDIA QUERY: OPTIMIZACIÓN MÓVIL (MAX-WIDTH: 800px) */
-        /* ======================================= */
+        
+        /* Media Queries para Responsividad (Reforzada) */
         @media (max-width: 800px) {
-            body {
-                padding-top: 20px; /* Menor espacio superior en móvil */
-            }
-            .converter-container {
-                padding: 20px; /* Menor padding en la tarjeta */
-                width: 95%;
-            }
-            
-            /* Apilar elementos verticalmente en móvil */
-            .input-group {
-                flex-direction: column; 
-                align-items: center;
-                gap: 10px;
-                padding: 0;
-            }
-            
-            /* Ocultar las flechas de conversión en la vista apilada */
-            .arrow {
-                display: none; 
-            }
-            
-            /* Los inputs ocupan casi todo el ancho disponible */
-            .input-item {
-                width: 100%;
-                min-width: unset;
-            }
-            
-            /* Tamaño de fuente más apropiado para móviles */
+            body { padding-top: 20px; }
+            .converter-container { padding: 20px; width: 95%; }
+            .input-group { flex-direction: column; align-items: center; gap: 10px; padding: 0; }
+            .arrow { display: none; }
+            .input-item { width: 100%; min-width: unset; }
             h1 { font-size: 1.5em; }
             p { font-size: 0.85em; }
-            
-            /* Asegurar que el tooltip se vea bien */
-            .tooltip {
-                width: 90px;
-                margin-left: -45px;
-            }
+            .tooltip { width: 90px; margin-left: -45px; }
+            .footer-autor { margin-top: 15px; }
         }
     </style>
 </head>
 <body oncontextmenu="return false;"> 
-
     <div class="converter-container">
         <h1>Tamaño de datos</h1>
         <p>Conversor de KB a MB y GB para Agentes Bitel</p>
@@ -247,8 +239,8 @@
             </div>
         </div>
 
-        <div class="footer">
-            © Todos los derechos y desarrollo: <strong>Cristhian Francia</strong>.
+        <div class="footer-autor">
+            Developed by Cristhian Francia &copy; 2025 | All rights reserved.
         </div>
     </div>
 
@@ -277,15 +269,19 @@
         // FUNCIÓN ADICIONAL: Copiar al portapapeles
         function copyToClipboard(elementId) {
             const element = document.getElementById(elementId);
-            // .trim().replace('¡Copiado!', '') asegura que solo copia el número limpio
-            const textToCopy = element.textContent.trim().replace('¡Copiado!', ''); 
+            // El texto a copiar debe ser seleccionado ANTES de usar navigator.clipboard
+            const textToCopy = element.textContent.trim().replace('¡Copiado!', '').replace(/(\r\n|\n|\r)/gm, ""); 
+
+            if (!textToCopy || textToCopy === '0.00') {
+                // Pequeño feedback visual si no hay contenido significativo
+                element.style.borderColor = 'red';
+                setTimeout(() => { element.style.borderColor = elementId.includes('mb') ? 'var(--bitel-teal)' : 'var(--bitel-blue)'; }, 500);
+                return;
+            }
 
             navigator.clipboard.writeText(textToCopy).then(() => {
-                // Mostrar Tooltip de "¡Copiado!"
                 element.classList.add('copied');
-                setTimeout(() => {
-                    element.classList.remove('copied');
-                }, 1000); // Ocultar después de 1 segundo
+                setTimeout(() => { element.classList.remove('copied'); }, 1000); 
             }).catch(err => {
                 console.error('Error al copiar: ', err);
                 alert("No se pudo copiar automáticamente. Intenta seleccionar y copiar manualmente: " + textToCopy);
@@ -295,25 +291,24 @@
         // Event listener para actualización
         kbInput.addEventListener('input', convertData);
 
-        // Bloqueo de Teclas y DevTools (Seguridad)
-        document.onkeydown = function(e) {
-            // F12 (DevTools)
-            if (e.key === 'F12' || e.keyCode === 123) {
-                return false;
-            }
-            // Ctrl+Shift+I, J, C (Inspeccionar elemento/Consola)
-            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
-                return false;
-            }
-            // Ctrl+U (Ver código fuente)
-            if (e.ctrlKey && e.key === 'U') {
-                return false;
-            }
-        };
+        // Bloqueo de Teclas y DevTools (Seguridad - Tomado de tu ejemplo)
+        window.addEventListener('load', function() {
+            console.clear();
+            console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
+            console.log("%cSystem by cefratech.", "color: #0c477e; font-size: 16px;");
 
-        // Inicializar al cargar la página
-        document.addEventListener('DOMContentLoaded', convertData);
+            // Bloqueo de F12, Ctrl+Shift+I, Ctrl+U
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('keydown', e => { 
+                // F12 (123), Ctrl+Shift+I, Ctrl+U
+                if (e.key === 'F12' || e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
+                    e.preventDefault();
+                }
+            });
+            
+            // Inicializar la conversión al cargar
+            convertData();
+        });
     </script>
-
 </body>
 </html>

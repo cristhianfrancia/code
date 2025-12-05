@@ -1,327 +1,489 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Datos - Cristhian Francia</title>
-    <style>
-        /* Variables de Color (Sin cambios) */
-        :root {
-            --bitel-teal: #01768b;
-            --bitel-blue: #0c477e;
-            --bitel-yellow: #fbf32f;
-            --bitel-orange: #fd8261;
-            --soft-gray: #d1d1d1;
-            --text-main: #434343;
-            --bg-soft: #ffffff;
-            --output-bg: #e8f7f9;
-        }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Calculadora de Datos - Cristhian Francia</title>
 
-        /* Estilos Globales y Bloqueo de Selección */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* ⬅ Mantiene el contenido arriba */
-            min-height: 100vh;
-            background: transparent;
-            color: var(--text-main);
-            overflow: hidden;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
+<style>
+  :root{
+    --bitel-teal:#01768b;
+    --bitel-blue:#0c477e;
+    --bitel-yellow:#fbf32f;
+    --bitel-orange:#fd8261;
+    --bg:#ffffff;
+    --muted:#6b6b6b;
+    --card-bg: rgba(255,255,255,0.95);
+    --glass: rgba(255,255,255,0.6);
+  }
 
-        /* Contenedor principal con separación superior */
-        .converter-container {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(8px) saturate(180%);
-            -webkit-backdrop-filter: blur(8px) saturate(180%);
-            border-radius: 20px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 30px 40px;
-            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 850px;
-            width: 90%;
-            animation: fadeIn 1s ease-out;
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    min-height:100vh;
+    background:linear-gradient(180deg,#f7fbfc 0%, #ffffff 100%);
+    color:#333;
+    user-select:none;
+    -webkit-font-smoothing:antialiased;
+  }
 
-            /* 🔥 Espaciado elegante del borde superior */
-            margin-top: 60px;
-        }
+  .container{
+    width:95%;
+    max-width:1000px;
+    margin-top:40px;
+    background:var(--card-bg);
+    border-radius:14px;
+    padding:22px;
+    box-shadow:0 12px 40px rgba(12,71,126,0.08);
+    border:1px solid rgba(12,71,126,0.06);
+    backdrop-filter: blur(6px) saturate(140%);
+    animation:fadeIn .45s cubic-bezier(.2,.9,.2,1);
+  }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+  @keyframes fadeIn{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:none}
+  }
 
-        /* Títulos y Subtítulos */
-        h1 {
-            font-size: 1.8em;
-            margin: 0 0 5px;
-            font-weight: 700;
-            color: var(--bitel-blue);
-            letter-spacing: 0.3px;
-        }
+  h1{
+    margin:0;
+    font-size:1.5rem;
+    color:var(--bitel-blue);
+  }
 
-        p {
-            font-size: 0.9em;
-            margin: 0 0 25px;
-            color: #6b6b6b;
-            font-weight: 300;
-        }
+  .subtitle{
+    margin:0;
+    font-size:.85rem;
+    color:var(--muted);
+  }
 
-        /* Contenedor de Inputs */
-        .input-group {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 15px;
-            margin-bottom: 25px;
-            padding: 0 10px;
-        }
+  .top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+  }
 
-        .input-item {
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            flex-grow: 1; 
-            min-width: 130px; 
-            position: relative;
-        }
+  /* BARRA DERECHA – modo y decimales */
+  .toolbar{
+    position:absolute;
+    right:40px;
+    top:25px;
+    display:flex;
+    gap:20px;
+    align-items:center;
+  }
 
-        .input-item label {
-            font-size: 0.8em;
-            margin-bottom: 5px;
-            color: #666;
-            font-weight: 600;
-            white-space: nowrap;
-        }
+  .toggle, .select-dec{
+    display:flex;
+    gap:6px;
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.08);
+    padding:6px;
+    border-radius:999px;
+  }
 
-        /* Estilo de Inputs y Outputs */
-        input[type="number"], .output-display {
-            background: #fafafa;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-size: 1.2em;
-            color: var(--bitel-blue);
-            text-align: center;
-            outline: none;
-            width: 100%;
-            transition: all 0.3s ease;
-            -webkit-appearance: none;
-            appearance: none;
-            user-select: text;
-            -webkit-user-select: text;
-        }
+  .toggle button,
+  .select-dec button{
+    border:0;background:none;padding:8px 12px;
+    font-weight:700;cursor:pointer;border-radius:8px;
+  }
 
-        input[type="number"]:focus {
-            border-color: var(--bitel-teal);
-            box-shadow: 0 0 0 2px rgba(1,118,139,0.18);
-            background: var(--bg-soft);
-        }
+  .toggle button.active,
+  .select-dec button.active{
+    background:linear-gradient(90deg,var(--bitel-teal),var(--bitel-blue));
+    color:white;
+  }
 
-        .output-display {
-            background: var(--output-bg);
-            cursor: pointer;
-            font-weight: 600;
-            position: relative;
-        }
-        
-        /* Colores específicos */
-        #mbOutput { border-color: var(--bitel-teal); }
-        #gbOutput { border-color: var(--bitel-blue); }
-        #kbInput { border-color: var(--bitel-orange); }
+  /* Línea principal: Unidad | número | limpiar */
+  .main-row{
+    display:flex;
+    align-items:flex-end;
+    gap:14px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+  }
 
-        /* Flechas */
-        .arrow {
-            font-size: 2em;
-            color: var(--bitel-blue);
-            margin: 0 10px;
-            display: block;
-        }
-        
-        /* Tooltip */
-        .tooltip {
-            visibility: hidden;
-            width: 120px;
-            background-color: var(--text-main);
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 10;
-            bottom: 110%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.7em;
-            font-weight: normal;
-            user-select: none;
-        }
+  label{
+    font-size:.82rem;
+    font-weight:600;
+    color:var(--muted);
+  }
 
-        .tooltip::after {
-            content: " ";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: var(--text-main) transparent transparent transparent;
-        }
+  select, input[type=number]{
+    padding:12px 12px;
+    border-radius:8px;
+    border:1px solid #d9e2e6;
+    background:#fbfcfd;
+    font-size:1.05rem;
+    height:48px;
+  }
 
-        .output-display.copied .tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
+  input[type=number]{
+    width:260px;
+  }
 
-        /* Footer */
-        .footer-autor {
-            text-align: center;
-            margin-top: 30px;
-            padding: 15px;
-            font-size: 0.8rem;
-            color: #aaa;
-            border-top: 1px solid #eee;
-            user-select: none;
-        }
+  /* ⭐ NUEVO BOTÓN LIMPIAR MEJORADO */
+  .btn-clean{
+    background: linear-gradient(90deg, var(--bitel-teal), var(--bitel-blue));
+    color:white;
+    border:0;
+    padding:12.5px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+    font-size:1rem;
+    height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.2s ease;
+  }
+  .btn-clean:hover{
+    opacity:.9;
+    transform:scale(1.02);
+  }
+  .btn-clean:active{
+    transform:scale(.97);
+  }
 
-        .footer-autor strong {
-            color: var(--bitel-blue);
-        }
-        
-        /* Responsivo */
-        @media (max-width: 800px) {
+  .three-results{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-bottom:12px;
+  }
 
-            .converter-container {
-                padding: 20px;
-                width: 95%;
-                margin-top: 30px; /* 🔥 Ajustado para móviles */
-            }
+  .card{
+    background:var(--glass);
+    border-radius:10px;
+    padding:15px;
+    border:1px solid rgba(12,71,126,0.08);
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    transition:.15s ease;
+  }
 
-            .input-group {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-                padding: 0;
-            }
+  .card:hover{box-shadow:0 10px 26px rgba(12,71,126,0.08)}
+  .card:active{transform:scale(.98)}
 
-            .arrow { display: none; }
-            .input-item { width: 100%; min-width: unset; }
-            h1 { font-size: 1.5em; }
-            p { font-size: 0.85em; }
-            .tooltip { width: 90px; margin-left: -45px; }
-            .footer-autor { margin-top: 15px; }
-        }
-    </style>
+  .u{
+    font-size:.78rem;
+    color:var(--muted);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+
+  .v{
+    font-size:1.2rem;
+    color:var(--bitel-blue);
+    font-weight:800;
+  }
+
+  /* Copiado */
+  .copy-tip{
+    position:absolute;right:10px;top:10px;
+    background:var(--bitel-blue);
+    color:white;
+    padding:6px 8px;
+    font-size:.72rem;
+    border-radius:6px;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(-8px);
+    transition:.2s ease;
+  }
+  .card.copied .copy-tip{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* Más resultados */
+  #extraContainer{
+    display:none;
+    margin-top:10px;
+  }
+
+  #toggleExtra{
+    background:#fff;
+    border:1px solid var(--bitel-blue);
+    padding:10px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+    color:var(--bitel-blue);
+    margin-bottom:14px;
+  }
+
+  /* Footer */
+  .footer-autor {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    font-size: 0.8rem;
+    color: #aaa;
+    border-top: 1px solid #eee;
+    user-select: none;
+  }
+  .footer-autor strong {
+    color: var(--bitel-blue);
+  }
+
+  @media(max-width:700px){
+    .three-results{grid-template-columns:1fr;}
+    .toolbar{position:static;justify-content:center;margin-top:10px;}
+  }
+
+</style>
 </head>
 
-<body oncontextmenu="return false;"> 
-    <div class="converter-container">
-        <h1>Calculadora de datos</h1>
-        <p>Conversor de KB a MB y GB</p>
+<body oncontextmenu="return false;">
 
-        <div class="input-group">
-            
-            <div class="input-item">
-                <label for="kbInput">Kilobytes (KB)</label>
-                <input type="number" id="kbInput" placeholder="Ingrese KB" min="0">
-            </div>
+<div class="container">
 
-            <span class="arrow">→</span>
+  <div class="top">
+    <div>
+      <h1>Calculadora de Datos</h1>
+      <p class="subtitle">Convierte entre KB, MB y GB</p>
+    </div>
+  </div>
 
-            <div class="input-item">
-                <label for="mbOutput">Megabytes (MB)</label>
-                <div class="output-display" id="mbOutput" onclick="copyToClipboard('mbOutput')">
-                    0.00
-                    <span class="tooltip">¡Copiado!</span>
-                </div>
-            </div>
+  <!-- Barra superior derecha -->
+  <div class="toolbar">
 
-            <span class="arrow">→</span>
-
-            <div class="input-item">
-                <label for="gbOutput">Gigabytes (GB)</label>
-                <div class="output-display" id="gbOutput" onclick="copyToClipboard('gbOutput')">
-                    0.00
-                    <span class="tooltip">¡Copiado!</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-autor">
-            Developed by Cristhian Francia © 2025 | All rights reserved.
-        </div>
+    <div>
+      <label>Modo</label>
+      <div class="toggle">
+        <button id="btn-1024" class="active">1024</button>
+        <button id="btn-1000">1000</button>
+      </div>
     </div>
 
-    <script>
-        const kbInput = document.getElementById('kbInput');
-        const mbOutput = document.getElementById('mbOutput');
-        const gbOutput = document.getElementById('gbOutput');
+    <div>
+      <label>Decimales</label>
+      <div class="select-dec">
+        <button data-dec="0">0</button>
+        <button data-dec="2" class="active">2</button>
+        <button data-dec="4">4</button>
+        <button data-dec="6">6</button>
+      </div>
+    </div>
 
-        function convertData() {
-            const kbValue = parseFloat(kbInput.value);
+  </div>
 
-            if (isNaN(kbValue) || kbValue < 0 || kbInput.value.trim() === '') {
-                mbOutput.textContent = '0.00';
-                gbOutput.textContent = '0.00';
-                return;
-            }
+  <!-- Main row: Unidad + Valor + Limpiar -->
+  <div class="main-row">
 
-            const mbValue = kbValue / 1024;
-            const gbValue = mbValue / 1024;
+    <div>
+      <label>Unidad</label><br>
+      <select id="unitSelect">
+        <option value="KB" selected>Kilobyte (KB)</option>
+        <option value="bit">Bit (b)</option>
+        <option value="byte">Byte (B)</option>
+        <option value="MB">Megabyte (MB)</option>
+        <option value="GB">Gigabyte (GB)</option>
+        <option value="TB">Terabyte (TB)</option>
+        <option value="PB">Petabyte (PB)</option>
+      </select>
+    </div>
 
-            mbOutput.textContent = mbValue.toFixed(2);
-            gbOutput.textContent = gbValue.toFixed(2);
-        }
+    <div>
+      <label>Valor</label><br>
+      <input id="valueInput" type="number" step="any" min="0" placeholder="Ingresa un número" />
+    </div>
 
-        function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            const textToCopy = element.textContent.trim().replace('¡Copiado!', '').replace(/(\r\n|\n|\r)/gm, "");
+    <button class="btn-clean" id="btnClean">Limpiar</button>
 
-            if (!textToCopy || textToCopy === '0.00') {
-                element.style.borderColor = 'red';
-                setTimeout(() => {
-                    element.style.borderColor = elementId.includes('mb') ? 'var(--bitel-teal)' : 'var(--bitel-blue)';
-                }, 500);
-                return;
-            }
+  </div>
 
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                element.classList.add('copied');
-                setTimeout(() => { element.classList.remove('copied'); }, 1000);
-            }).catch(err => {
-                console.error('Error al copiar: ', err);
-                alert("No se pudo copiar automáticamente. Intenta copiar manualmente: " + textToCopy);
-            });
-        }
+  <!-- 3 resultados principales -->
+  <div class="three-results" id="primaryResults"></div>
 
-        kbInput.addEventListener('input', convertData);
+  <!-- Botón expandir -->
+  <button id="toggleExtra">Más resultados</button>
 
-        // Seguridad
-        window.addEventListener('load', function() {
-            console.clear();
-            console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
-            console.log("%cSystem by cefratech.", "color: #0c477e; font-size: 16px;");
+  <!-- Resultados extra -->
+  <div id="extraContainer"></div>
 
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            document.addEventListener('keydown', e => {
-                if (e.key === 'F12' || e.keyCode === 123 || 
-                    (e.ctrlKey && e.shiftKey && e.key === 'I') || 
-                    (e.ctrlKey && e.key === 'u')) {
-                    e.preventDefault();
-                }
-            });
+  <div class="footer-autor">
+    Developed by Cristhian Francia © 2025 | All rights reserved.
+  </div>
 
-            convertData();
-        });
-    </script>
+</div>
+
+<script>
+const UNITS = [
+  { key:'bit',   label:'Bit (b)',   factorBytes:1/8 },
+  { key:'byte',  label:'Byte (B)',  factorBytes:1 },
+  { key:'KB',    label:'Kilobyte (KB)', pow:1 },
+  { key:'MB',    label:'Megabyte (MB)', pow:2 },
+  { key:'GB',    label:'Gigabyte (GB)', pow:3 },
+  { key:'TB',    label:'Terabyte (TB)', pow:4 },
+  { key:'PB',    label:'Petabyte (PB)', pow:5 }
+];
+
+const PRIMARY_ORDER = ["KB","MB","GB"];
+const EXTRA_ORDER    = ["bit","byte","TB","PB"];
+
+const primaryResults = document.getElementById("primaryResults");
+const extraContainer = document.getElementById("extraContainer");
+const unitSelect     = document.getElementById("unitSelect");
+const valueInput     = document.getElementById("valueInput");
+const btnClean       = document.getElementById("btnClean");
+const toggleExtra    = document.getElementById("toggleExtra");
+
+let base = 1024;
+let precision = 2;
+
+/* Construir tarjetas */
+function buildBlocks(){
+  primaryResults.innerHTML = "";
+  extraContainer.innerHTML = "";
+
+  PRIMARY_ORDER.forEach(k=>{
+    const u = UNITS.find(x=>x.key===k);
+    primaryResults.appendChild(makeCard(u));
+  });
+
+  EXTRA_ORDER.forEach(k=>{
+    const u = UNITS.find(x=>x.key===k);
+    extraContainer.appendChild(makeCard(u));
+  });
+}
+
+function makeCard(u){
+  const card = document.createElement("div");
+  card.className="card";
+  card.dataset.unit=u.key;
+  card.innerHTML = `
+    <div class="copy-tip">Copiar</div>
+    <div class="u">${u.label}</div>
+    <div class="v" data-value>0</div>`;
+  card.onclick = ()=>copyCard(card);
+  return card;
+}
+
+/* Copiado */
+function copyCard(card){
+  const txt = card.querySelector("[data-value]").textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    card.classList.add("copied");
+    const tip = card.querySelector(".copy-tip");
+    tip.textContent="¡Copiado!";
+    setTimeout(()=>{
+      card.classList.remove("copied");
+      tip.textContent="Copiar";
+    },1000);
+  });
+}
+
+/* Conversiones */
+function inputToBytes(v, unit){
+  if(!isFinite(v)) return 0;
+  v = Number(v);
+
+  if(unit==="bit") return v/8;
+  if(unit==="byte") return v;
+
+  const u = UNITS.find(x=>x.key===unit);
+  return v * Math.pow(base, u.pow);
+}
+
+function bytesToUnit(bytes, unit){
+  if(unit==="bit") return bytes*8;
+  if(unit==="byte") return bytes;
+
+  const u = UNITS.find(x=>x.key===unit);
+  return bytes / Math.pow(base, u.pow);
+}
+
+function formatNumber(num){
+  if(!isFinite(num)) return "0";
+  return Number(num).toLocaleString("en-US",{maximumFractionDigits:precision});
+}
+
+/* Render */
+function render(){
+  const val = valueInput.value==="" ? 0 : Number(valueInput.value);
+  const bytes = inputToBytes(val, unitSelect.value);
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach(card=>{
+    const unit = card.dataset.unit;
+    const res  = bytesToUnit(bytes, unit);
+    card.querySelector("[data-value]").textContent = formatNumber(res);
+  });
+}
+
+/* Modo */
+document.getElementById("btn-1024").onclick = ()=>{
+  base = 1024;
+  activeBtn("btn-1024","btn-1000");
+  render();
+};
+document.getElementById("btn-1000").onclick = ()=>{
+  base = 1000;
+  activeBtn("btn-1000","btn-1024");
+  render();
+};
+
+function activeBtn(a,b){
+  document.getElementById(a).classList.add("active");
+  document.getElementById(b).classList.remove("active");
+}
+
+/* Decimales */
+document.querySelectorAll(".select-dec button").forEach(btn=>{
+  btn.onclick = ()=>{
+    document.querySelectorAll(".select-dec button").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    precision = Number(btn.dataset.dec);
+    render();
+  };
+});
+
+/* Expandir */
+toggleExtra.onclick=()=>{
+  if(extraContainer.style.display==="none" || extraContainer.style.display===""){
+    extraContainer.style.display="grid";
+    toggleExtra.textContent="Ocultar resultados";
+  } else {
+    extraContainer.style.display="none";
+    toggleExtra.textContent="Más resultados";
+  }
+};
+
+/* Limpiar */
+btnClean.onclick=()=>{
+  unitSelect.value="KB";
+  valueInput.value="";
+  extraContainer.style.display="none";  
+  toggleExtra.textContent="Más resultados";
+  render();
+};
+
+valueInput.oninput = render;
+unitSelect.onchange = render;
+
+window.onload = ()=>{
+  buildBlocks();
+  render();
+};
+
+/* Bloqueo F12 */
+document.addEventListener("keydown", e=>{
+  if(e.key==="F12" || (e.ctrlKey&&e.shiftKey&&e.key==="I") || (e.ctrlKey&&e.key==="u")){
+    e.preventDefault();
+  }
+});
+</script>
+
 </body>
 </html>

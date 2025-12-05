@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tamaño de Datos - Cristhian Francia</title>
     <style>
-        /* Variables de Color (Tomadas de tu ejemplo) */
+        /* Variables de Color (Sin cambios) */
         :root {
             --bitel-teal: #01768b;
             --bitel-blue: #0c477e;
             --bitel-yellow: #fbf32f;
-            --bitel-orange: #fd8261; /* Color naranja original de Bitel */
+            --bitel-orange: #fd8261;
             --soft-gray: #d1d1d1;
             --text-main: #434343;
             --bg-soft: #ffffff;
@@ -28,25 +28,25 @@
             min-height: 100vh;
             background: transparent;
             color: var(--text-main);
-            overflow-y: auto;
+            /* 🔥 CORRECCIÓN: Cambiado de overflow-y: auto; a overflow: hidden; */
+            overflow: hidden;
             padding-top: 50px;
             
-            /* 🔥🔥🔥 PROPIEDAD CLAVE: Bloquea la selección en todo el cuerpo 🔥🔥🔥 */
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
         }
 
-        /* Contenedor principal (Card) - Estilo Glassmorphism con fondo blanco */
+        /* Contenedor principal (Card) (Sin cambios) */
         .converter-container {
-            background: rgba(255, 255, 255, 0.9); /* Fondo más sólido para el estilo del ejemplo */
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(8px) saturate(180%);
             -webkit-backdrop-filter: blur(8px) saturate(180%);
             border-radius: 20px;
-            border: 1px solid rgba(0, 0, 0, 0.05); /* Borde sutil */
+            border: 1px solid rgba(0, 0, 0, 0.05);
             padding: 30px 40px;
-            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.1); /* Sombra mejorada */
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.1);
             text-align: center;
             max-width: 850px;
             width: 90%;
@@ -55,144 +55,68 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Títulos y Subtítulos */
+        /* Títulos y Subtítulos (Sin cambios) */
         h1 {
-            font-size: 1.8em;
-            margin: 0 0 5px;
-            font-weight: 700;
-            color: var(--bitel-blue);
-            letter-spacing: 0.3px;
+            font-size: 1.8em; margin: 0 0 5px; font-weight: 700; color: var(--bitel-blue); letter-spacing: 0.3px;
         }
         p {
-            font-size: 0.9em;
-            margin: 0 0 25px;
-            color: #6b6b6b;
-            font-weight: 300;
+            font-size: 0.9em; margin: 0 0 25px; color: #6b6b6b; font-weight: 300;
         }
 
-        /* Contenedor de Inputs (Fila para escritorio) */
+        /* Contenedor de Inputs (Fila para escritorio) (Sin cambios) */
         .input-group {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 15px;
-            margin-bottom: 25px;
-            padding: 0 10px;
+            display: flex; align-items: flex-end; justify-content: space-between; gap: 15px; margin-bottom: 25px; padding: 0 10px;
         }
 
         .input-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-grow: 1;
-            min-width: 130px;
-            position: relative;
+            display: flex; flex-direction: column; align-items: center; flex-grow: 1; min-width: 130px; position: relative;
         }
 
         .input-item label {
-            font-size: 0.8em;
-            margin-bottom: 5px;
-            color: #666;
-            font-weight: 600;
-            white-space: nowrap;
+            font-size: 0.8em; margin-bottom: 5px; color: #666; font-weight: 600; white-space: nowrap;
         }
 
-        /* Estilo de los Inputs/Outputs */
+        /* Estilo de los Inputs/Outputs (Sin cambios) */
         input[type="number"], .output-display {
-            /* Usamos el fondo del ejemplo: blanco suave */
-            background: #fafafa;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-size: 1.2em;
-            color: var(--bitel-blue); /* Texto azul oscuro */
-            text-align: center;
-            outline: none;
-            width: 100%;
-            transition: all 0.3s ease;
-            -webkit-appearance: none;
-            appearance: none;
-            /* La salida debe ser seleccionable para copiar */
-            user-select: text; 
-            -webkit-user-select: text;
+            background: #fafafa; border: 1px solid #ced4da; border-radius: 8px; padding: 8px 12px; font-size: 1.2em; color: var(--bitel-blue); text-align: center; outline: none; width: 100%; transition: all 0.3s ease; -webkit-appearance: none; appearance: none; user-select: text; -webkit-user-select: text;
         }
-        
         input[type="number"]:focus {
-            border-color: var(--bitel-teal);
-            box-shadow: 0 0 0 2px rgba(1,118,139,0.18);
-            background: var(--bg-soft);
+            border-color: var(--bitel-teal); box-shadow: 0 0 0 2px rgba(1,118,139,0.18); background: var(--bg-soft);
         }
-
         .output-display {
-            background: var(--output-bg); /* Fondo de salida del ejemplo */
-            cursor: pointer;
-            font-weight: 600;
-            position: relative;
+            background: var(--output-bg); cursor: pointer; font-weight: 600; position: relative;
         }
         
-        /* Colores específicos para los bordes */
+        /* Colores específicos para los bordes (Sin cambios) */
         #mbOutput { border-color: var(--bitel-teal); }
         #gbOutput { border-color: var(--bitel-blue); }
         #kbInput { border-color: var(--bitel-orange); }
 
-        /* Flechas de conversión */
+        /* Flechas de conversión (Sin cambios) */
         .arrow {
-            font-size: 2em;
-            color: var(--bitel-blue);
-            margin: 0 10px;
-            display: block;
+            font-size: 2em; color: var(--bitel-blue); margin: 0 10px; display: block;
         }
         
-        /* Tooltip de Copia */
+        /* Tooltip de Copia (Sin cambios) */
         .tooltip {
-            visibility: hidden;
-            width: 120px;
-            background-color: var(--text-main);
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 10;
-            bottom: 110%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.7em;
-            font-weight: normal;
-            user-select: none; /* Asegura que el tooltip no sea seleccionable */
+            visibility: hidden; width: 120px; background-color: var(--text-main); color: #fff; text-align: center; border-radius: 6px; padding: 5px 0; position: absolute; z-index: 10; bottom: 110%; left: 50%; margin-left: -60px; opacity: 0; transition: opacity 0.3s; font-size: 0.7em; font-weight: normal; user-select: none;
         }
         .tooltip::after {
-            content: " ";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: var(--text-main) transparent transparent transparent;
+            content: " "; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: var(--text-main) transparent transparent transparent;
         }
         .output-display.copied .tooltip {
-            visibility: visible;
-            opacity: 1;
+            visibility: visible; opacity: 1;
         }
 
-        /* Footer de Autoría - Adaptado a tu estilo de ejemplo */
+        /* Footer de Autoría (Sin cambios) */
         .footer-autor {
-            text-align: center;
-            margin-top: 30px;
-            padding: 15px;
-            font-size: 0.8rem;
-            color: #aaa;
-            border-top: 1px solid #eee;
-            user-select: none; /* Bloquea la selección en el footer */
+            text-align: center; margin-top: 30px; padding: 15px; font-size: 0.8rem; color: #aaa; border-top: 1px solid #eee; user-select: none;
         }
         .footer-autor strong {
             color: var(--bitel-blue);
         }
         
-        /* Media Queries para Responsividad (Reforzada) */
+        /* Media Queries para Responsividad (Reforzada) (Sin cambios) */
         @media (max-width: 800px) {
             body { padding-top: 20px; }
             .converter-container { padding: 20px; width: 95%; }
@@ -269,11 +193,9 @@
         // FUNCIÓN ADICIONAL: Copiar al portapapeles
         function copyToClipboard(elementId) {
             const element = document.getElementById(elementId);
-            // El texto a copiar debe ser seleccionado ANTES de usar navigator.clipboard
             const textToCopy = element.textContent.trim().replace('¡Copiado!', '').replace(/(\r\n|\n|\r)/gm, ""); 
 
             if (!textToCopy || textToCopy === '0.00') {
-                // Pequeño feedback visual si no hay contenido significativo
                 element.style.borderColor = 'red';
                 setTimeout(() => { element.style.borderColor = elementId.includes('mb') ? 'var(--bitel-teal)' : 'var(--bitel-blue)'; }, 500);
                 return;

@@ -80,7 +80,8 @@
     </style>
 </head>
 
-<body oncontextmenu="return false"> <div class="button-group">
+<body oncontextmenu="return false">
+    <div class="button-group">
         <button class="abrir-btn" onclick="abrirEstructura()">
             📂 Calculadora de datos (Clic para abrir)
         </button>
@@ -100,7 +101,8 @@ function abrirEstructura() {
     const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
 
     if (!popupVentana || popupVentana.closed) {
-        popupVentana = window.open(url, "EstructuraTipificacion", opciones);
+        // 👇 CAMBIADO: Nombre de ventana único para los datos
+        popupVentana = window.open(url, "PopupDatos", opciones); 
 
         // 🔥 ZOOM FIJO AL 90%
         popupVentana.onload = () => {
@@ -133,19 +135,16 @@ function abrirEstructura() {
 
 /* 🔒 BLOQUEO DE SEGURIDAD MEJORADO */
 document.onkeydown = function(e) {
-    // 🚫 Bloquea F12, Ctrl+Shift+I/J/C (Dev Tools), Ctrl+U (Ver Fuente)
     if (e.key === 'F12' || e.keyCode === 123) return false;
     if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) return false;
     if (e.ctrlKey && e.key.toUpperCase() === 'U') return false;
 
-    // 🚫 Bloquea la impresión (Ctrl+P) - opcional
     if (e.ctrlKey && e.key.toUpperCase() === 'P') {
         e.preventDefault();
         alert('La impresión está deshabilitada.');
         return false;
     }
 
-    // 🚫 Bloquea el Guardado de la página (Ctrl+S) - opcional
     if (e.ctrlKey && e.key.toUpperCase() === 'S') {
         e.preventDefault();
         alert('Guardar la página está deshabilitado.');
@@ -171,8 +170,7 @@ window.addEventListener('load', function() {
     console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
     console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
 });
+
 </script>
-
 </body>
-
 </html>

@@ -74,74 +74,74 @@
     }
   </style>
 </head>
-
 <body>
 
-  <div class="button-group">
-    <button class="abrir-btn" onclick="abrirEstructura()">
-      📂 Calculadora de datos (Clic para abrir)
-    </button>
-  </div>
+  <div class="button-group">
+    <button class="abrir-btn" onclick="abrirEstructura()">
+      📂 Calculadora de datos (Clic para abrir)
+    </button>
+  </div>
 
 <script>
 let popupVentana = null;
 
 function abrirEstructura() {
-  const url = "https://cristhianfrancia.github.io/code/datos.html";
-  const ancho = 1200;
-  const alto = 500;
+  const url = "https://cristhianfrancia.github.io/code/datos.html";
+  const ancho = 1200;
+  const alto = 450;
 
-  const left = (window.screen.width / 2) - (ancho / 2);
-  const top = (window.screen.height / 2) - (alto / 2);
+  const left = (window.screen.width / 2) - (ancho / 2);
+  const top = (window.screen.height / 2) - (alto / 2);
 
-  const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
+  const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
 
-  if (!popupVentana || popupVentana.closed) {
-    popupVentana = window.open(url, "EstructuraTipificacion", opciones);
+  if (!popupVentana || popupVentana.closed) {
+    // 🔑 CORRECCIÓN CLAVE: Nombre de ventana único para que no se sobreponga con el otro botón
+    popupVentana = window.open(url, "**PopupDatosIndependiente**", opciones);
 
-    // 🔥 ZOOM FIJO AL 90%
-    popupVentana.onload = () => {
-      try {
-        const style = popupVentana.document.createElement("style");
-        style.textContent = `
-          html, body {
-            margin: 0;
-            padding: 0;
-            overflow-y: auto;
-            transform: scale(0.90);        /* 👈 ZOOM 90% */
-            transform-origin: top center;   /* Centrado perfecto */
-          }
+    // 🔥 ZOOM FIJO AL 90%
+    popupVentana.onload = () => {
+      try {
+        const style = popupVentana.document.createElement("style");
+        style.textContent = `
+          html, body {
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+            transform: scale(0.90);        /* 👈 ZOOM 90% */
+            transform-origin: top center;   /* Centrado perfecto */
+          }
 
-          ::-webkit-scrollbar {
-            width: 0 !important;
-            height: 0 !important;
-            display: none;
-          }
-        `;
-        popupVentana.document.head.appendChild(style);
-      } catch (e) {
-        console.warn("No se pudo aplicar el zoom por CORS.");
-      }
-    };
-  } else {
-    popupVentana.focus();
-  }
+          ::-webkit-scrollbar {
+            width: 0 !important;
+            height: 0 !important;
+            display: none;
+          }
+        `;
+        popupVentana.document.head.appendChild(style);
+      } catch (e) {
+        console.warn("No se pudo aplicar el zoom por CORS.");
+      }
+    };
+  } else {
+    popupVentana.focus();
+  }
 }
 
 /* 🔒 BLOQUEO DE SEGURIDAD */
 document.onkeydown = function(e) {
-  if (e.key === 'F12' || e.keyCode === 123) return false;
-  if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key)) return false;
-  if (e.ctrlKey && e.key === 'U') return false;
+  if (e.key === 'F12' || e.keyCode === 123) return false;
+  if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key)) return false;
+  if (e.ctrlKey && e.key === 'U') return false;
 };
 
 /* Mensaje en consola */
 window.addEventListener('load', function() {
-  console.clear();
-  console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
-  console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
+  console.clear();
+  console.log("%⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
+  console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
 });
-</script>
 
+</script>
 </body>
 </html>

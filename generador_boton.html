@@ -15,12 +15,11 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: transparent; /* sin fondo */
+            background: transparent;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* centrado vertical */
-            /* 🔒 Evitar la selección de texto */
+            height: 100vh;
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -38,11 +37,11 @@
 
         /* 🌟 BOTÓN ESTILO BITEL / APPLE */
         .abrir-btn {
-            background: transparent;                /* sin fondo */
-            color: var(--bitel-blue);               /* color Bitel */
-            border: 2px solid var(--bitel-blue);    /* borde elegante */
+            background: transparent;
+            color: var(--bitel-blue);
+            border: 2px solid var(--bitel-blue);
             padding: 10px 20px;
-            border-radius: 999px;                   /* estilo pill */
+            border-radius: 999px;
             font-size: 14px;
             font-weight: 600;
             transition: all 0.25s ease;
@@ -56,9 +55,9 @@
         }
 
         .abrir-btn:hover {
-            background: var(--bitel-blue);          /* cambia a azul Bitel */
+            background: var(--bitel-blue);
             color: #ffffff;
-            transform: translateY(-2px);            /* elevación suave */
+            transform: translateY(-2px);
             box-shadow: 0 8px 18px rgba(12,71,126,0.35);
         }
 
@@ -79,7 +78,8 @@
         }
     </style>
 </head>
-<body oncontextmenu="return false"> <div class="button-group">
+<body oncontextmenu="return false">
+    <div class="button-group">
         <button class="abrir-btn" onclick="abrirEstructura()">
             📂 Generador (Clic para abrir)
         </button>
@@ -98,7 +98,8 @@
             const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
 
             if (!popupVentana || popupVentana.closed) {
-                popupVentana = window.open(url, "EstructuraTipificacion", opciones);
+                // 👇 CAMBIADO: Nombre de ventana único para el generador
+                popupVentana = window.open(url, "PopupGenerador", opciones); 
 
                 popupVentana.onload = () => {
                     try {
@@ -130,12 +131,9 @@
 
         /* 🔒 BLOQUEO DE SEGURIDAD */
         document.onkeydown = function(e) {
-            // 🚫 Bloquea F12, Ctrl+Shift+I/J/C (Dev Tools), Ctrl+U (Ver Fuente)
             if (e.key === 'F12' || e.keyCode === 123) return false;
             if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) return false;
             if (e.ctrlKey && e.key.toUpperCase() === 'U') return false;
-
-            // 🚫 Bloquea la impresión (Ctrl+P) y Guardado (Ctrl+S) - Opcional
             if (e.ctrlKey && ['P', 'S'].includes(e.key.toUpperCase())) {
                 e.preventDefault();
                 alert('Esa función está deshabilitada.');
@@ -155,7 +153,6 @@
             return false;
         });
 
-
         /* Mensaje en consola */
         window.addEventListener('load', function() {
             console.clear();
@@ -163,6 +160,5 @@
             console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
         });
     </script>
-
 </body>
 </html>

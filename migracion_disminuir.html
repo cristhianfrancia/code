@@ -1,78 +1,105 @@
 <!DOCTYPE html>
 <html>
- <head>
-  <style>
-    body {
-        font-family: Calibri, Arial, sans-serif;
-        background-color: #ffffff;
-        /* Optimizado para ocupar la mayor parte del ancho */
-        max-width: 98%; 
-        margin: 10px auto; 
-    }
-    .main-content {
-        max-width: 100%;
-        margin: 0 auto;
-        padding: 0 10px; /* Pequeño padding para no pegar a los bordes */
-    }
+<head>
+  <!-- 
+    Proyecto: Plantillas
+    Creado por: Cristhian Francia
+    Año: 2020
+    Derechos reservados © Cristhian Francia
+  -->
+    <title>Plantillas - Migración - Elevar</title>
+    <style>
+        body {
+            font-family: Calibri, Arial, sans-serif;
+        }
 
-    .input-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 8px;
-        transition: transform 0.3s ease;
-    }
-    .input-container:hover {
-        transform: scale(1.00);
-    }
-    .input-container label {
-        /* Reducimos el ancho de la etiqueta para que el input sea más grande */
-        width: 35%; 
-        min-width: 150px;
-    }
-    .input-container input, .input-container select {
-        /* Aumentamos el ancho del input */
-        width: 65%; 
-        padding: 4px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .input-container input:focus, .input-container select:focus {
-        border-color: #007BFF;
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    }
-    
-    /* Estilos responsive */
-    @media screen and (max-width: 600px) {
+        .container {
+            width: 95%;
+            max-width: 1000px auto;
+            margin: 10px auto;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-animation {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 2s linear infinite;
+        }
+
+        .icon-animation::before {
+            content: "🟡";
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         .input-container {
-            flex-direction: column;
-            align-items: flex-start;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
         }
-        .input-container label, .input-container input, .input-container select { 
-            width: 100%;
+
+        .input-container:hover {
+            transform: scale(1.00);
         }
-        /* Ajuste para el bloque central de inputs */
-        .center-inputs > * {
-            width: 100% !important;
-            margin-bottom: 5px;
+
+        .input-container label {
+            width: 50%;
         }
-    }
-    .center-inputs {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-bottom: 15px;
-    }
-    .center-inputs input, .center-inputs select {
-        width: 250px; /* Ancho fijo para elementos centrales en escritorio */
-    }
+
+        .input-container input {
+            width: 50%;
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-container input:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        @media screen and (max-width: 600px) {
+            .input-container {
+                flex-direction: column;
+            }
+            .input-container label, .input-container input {
+                width: 100%;
+            }
+        }
 
     .resultado-label {
-        color: #007BFF;
+      color: #007BFF;
     }
+
     .ruta-container {
         background-color: #fff5e9;
         padding: 10px;
@@ -82,10 +109,12 @@
         font-size: 0.9rem;
         color: #333;
     }
+
     hr {
         border: 1px solid #e67a00;
         margin: 10px 0;
     }
+
     button {
         background-color: #e67a00;
         color: white;
@@ -108,6 +137,7 @@
     button:focus {
         outline: none;
     }
+
     #resultado {
         margin: 15px 0;
         font-size: 0.9rem;
@@ -118,42 +148,26 @@
         min-height: 50px;
         transition: background-color 0.3s ease;
     }
-    
-    /* === Estilos para imágenes al final (Restaurados) === */
-    .dropdown-trigger {
+
+
+
+
+    .center-inputs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+    .center-inputs input, .center-inputs select {
+        width: 250px; /* Ancho fijo para elementos centrales en escritorio */
+    }
+
+    .resultado-label {
         color: #007BFF;
-        cursor: pointer;
-        text-decoration: underline;
-        margin-bottom: 5px;
-        display: inline-block;
     }
-    .dropdown-content {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        padding: 0 10px;
-        margin-top: 5px;
-        width: 100%;
-        box-sizing: border-box;
-        text-align: center;
-    }
-    .dropdown-content.show {
-        max-height: 600px;
-        padding: 10px;
-    }
-    .dropdown-content img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-        border-radius: 4px;
-    }
-    /* ================================================= */
 
-
-    /* === Popup styles (RESTAURADOS Y CORREGIDOS) === */
     .popup-overlay {
         display: none;
         position: fixed;
@@ -198,6 +212,7 @@
         display: block;
         margin: 0 auto;
     }
+
     .close-button {
         position: absolute;
         top: 10px;
@@ -216,9 +231,7 @@
         box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     }
     .close-button:hover { background-color: #c85c00; }
-    /* ================================================= */
 
-    /* Custom message box for copy confirmation (sin cambios) */
     .message-box {
         display: none;
         position: fixed;
@@ -237,18 +250,63 @@
     }
     .message-box.show { display: block; opacity: 1; }
     
-    /* Enlaces "Ejemplo" */
     .ruta-container a {
       color: #007BFF;
       text-decoration: underline;
       cursor: pointer;
     }
 
+    .dropdown-trigger {
+        color: #007BFF;
+        cursor: pointer;
+        text-decoration: underline;
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 0 10px;
+        margin-top: 5px;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    .dropdown-content.show {
+        max-height: 600px;
+        padding: 10px;
+    }
+    .dropdown-content img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border-radius: 4px;
+    }
+
+    .footer-autor {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #eee;
+      user-select: none;
+    }
+    .footer-autor strong {
+      color: var(--bitel-blue);
+    }
+
+
   </style>
  </head>
- <body>
+<body oncontextmenu="return false"> <div class="container">
+<div class="icon-animation"></div>
 
-  <div class="main-content">
     <label style="color: red;"><strong>1. Plantilla:</strong></label>
     <p></p>
 
@@ -329,19 +387,24 @@
       <img src="https://i.postimg.cc/PxKMBjzB/MIGRACI-N-CONTROL-A-CONTROL-PLAN-MENOR.png" alt="Migración Control a Control Plan Menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
     </div>
   </div>
-  
-  <script>
-    // ===========================================
-    // ⚠️ MEDIDAS DISUASORIAS BÁSICAS (¡NO SON SEGURIDAD REAL!)
-    // ===========================================
 
-    // 1. Deshabilitar Clic Derecho (Menú Contextual)
+<br><br><br><br><br><br>
+<textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+
+<div class="footer-autor">
+Developed by c&f &copy; 2020 | All rights reserved.
+</div>
+</div>
+  
+
+  <script>
+
+
     document.addEventListener('contextmenu', event => {
         event.preventDefault();
         alert('El menú contextual (clic derecho) está deshabilitado.'); 
     });
 
-    // 2. Deshabilitar Teclas de Desarrollador (F12, Ctrl+Shift+I/J/C, etc.)
     document.onkeydown = function(e) {
         if (e.key === 'F12' || e.keyCode === 123) {
             alert('Las herramientas de desarrollador están deshabilitadas.'); 
@@ -362,7 +425,6 @@
     };
     // ===========================================
 
-    // Corrección para que la actualización sea llamada en DOMContentLoaded
     document.addEventListener('DOMContentLoaded', () => {
         // Inicializar el resultado al cargar la página
         updateResultadoOutput(); 

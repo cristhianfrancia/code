@@ -7,46 +7,47 @@
     Año: 2020
     Derechos reservados © Cristhian Francia
   -->
-  <style>
-      body {
-        font-family: Calibri, Calibri, sans-serif;
-      }
+    <title>Plantillas - SGU - Internet - No accede</title>
+    <style>
+        body {	
+            font-family: Calibri, Arial, sans-serif;
+        }
 
-      .container {
-          width: 90%;
-          max-width: 1000px;
-          margin: 20px auto;
-          background-color: #ffffff;
-          border-radius: 12px;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-          padding: 50px;
-          position: relative;
-          transition: box-shadow 0.3s ease;
-      }
+        .container {
+            width: 95%;
+            max-width: 1000px auto;
+            margin: 10px auto;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
 
-      .container:hover {
-          box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
-      }
+        .container:hover {
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        }
 
-      .icon-animation {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          width: 40px;
-          height: 40px;
-          background-color: #007BFF;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          animation: spin 2s linear infinite;
-      }
+        .icon-animation {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 2s linear infinite;
+        }
 
-      .icon-animation::before {
-          content: "📱";
-          font-size: 1.5rem;
-          color: white;
-      }
+        .icon-animation::before {
+            content: "🟡";
+            font-size: 1.5rem;
+            color: white;
+        }
 
       @keyframes spin {
           from { transform: rotate(0deg); }
@@ -180,29 +181,25 @@
     border-radius: 5px;
 }
 
-  </style>
+    .footer-autor {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #eee;
+      user-select: none;
+    }
+    .footer-autor strong {
+      color: var(--bitel-blue);
+    }
+
+</style>
 </head>
-<body>
-
-
-<p style="color: red"><strong>Tipificación: </strong></p>
-
-<div class="ruta-container">
-- <strong>Address:</strong> DIRECCIÓN DEL PROBLEMA, REFERENCIA DEL PROBLEMA, DEPARTAMENTO - PROVINCIA - DISTRITO
-<br><br>
-- <strong>Ruta:</strong> No full internet access / Pedido SGU / Pedido SGU / Problemas SGU / Calidad / Sin servicio y está al día en sus pagos (con check a BO ✅) 
-<a href="#" onclick="return showImagePopupTip(event)"> 👉Ver ejemplo👈</a>
-
-<div id="imagePopupTip">
-  <button class="close-button" onclick="hideImagePopupTip()">Cerrar</button>
-  <img src="https://i.postimg.cc/yNSkVrd2/Pedido-SGU-Internet-No-accede.png" alt="Imagen de vista previa 1">
-</div>
-</div>
-
-<hr />
+<body oncontextmenu="return false"> <div class="container">
 <div class="icon-animation"></div>
 
-<label style="color: red;"><strong>Plantilla:</strong></label>
+<label style="color: red;"><strong>1. Plantilla:</strong></label>
 <p></p>
 
 <center class="code-container">
@@ -238,12 +235,11 @@
 <input type="text" id="label_LimiteMB" oninput="updateResultadoOutput()" placeholder="(Fecha de expiración en PCRF u OCS)" style="color: #007BFF;" />
 </div>
 
+
 <div id="imagePopupLimiteMB">
 <button class="close-button2" onclick="hideImagePopupLimiteMB()">CERRAR</button>
 <img src="https://i.postimg.cc/qBmz2Jpr/Pedido-SGU-Internet-No-accede-Sistema-Limite-MB.png">
 </div>
-</div>
-
 
 
 <div class="input-container">
@@ -258,11 +254,12 @@
       </select>
     </div>
 
+
 <div id="imagePopupIMEI">
 <button class="close-button3" onclick="hideImagePopupIMEI()">CERRAR</button>
 <img src="https://i.postimg.cc/W4bMs9n6/Pedido-SGU-Internet-No-accede-Sistema-IMEI.png">
 </div>
-</div>
+
 
 
 <div class="input-container">
@@ -281,7 +278,7 @@
 <button class="close-button4" onclick="hideImagePopupNavegacion()">CERRAR</button>
 <img src="https://i.postimg.cc/252JcZ12/Pedido-SGU-Internet-No-accede-Sistema-Ult-Navegacion.png">
 </div>
-</div>
+
 
 
 <div class="input-container">
@@ -294,8 +291,6 @@
 <button class="close-button5" onclick="hideImagePopupMarca()">CERRAR</button>
 <img src="https://i.postimg.cc/rw2vKc6C/Pedido-SGU-Internet-No-accede-Sistema-Marca.png">
 </div>
-</div>
-
 
 
     <div class="input-container">
@@ -326,9 +321,6 @@
 <button class="close-button6" onclick="hideImagePopupBarring()">CERRAR</button>
 <img src="https://i.postimg.cc/hGK4Q6z6/Pedido-SGU-Internet-No-accede-Sistema-Barring.png">
 </div>
-</div>
-
-
 
 
 
@@ -344,11 +336,12 @@
 <input type="text" id="label_GoogleEarth" oninput="updateResultadoOutput()" placeholder="(Ejemplo: -12.111846867998418, -77.00713689016001)" style="color: #007BFF;">
 </div>
 
+
 <div id="imagePopupMaps">
 <button class="close-button8" onclick="hideImagePopupMaps()">CERRAR</button>
 <img src="https://i.postimg.cc/fyJXFWkg/Google-Maps.png">
 </div>
-</div>
+
 
 
 <div class="input-container">
@@ -361,38 +354,78 @@
 <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
 </div>
 
-
-
-<br />
-<hr />
-<br />
-
+<br>
 
 <label style="color: red;"><strong>Resultado</strong></label>
 <p id="resultado" class="dark-mode-text"></p>
 
+<button onclick="copiarResultado()">Copiar</button>
+<button onclick="limpiarInputs()">Borrar</button>
 
+<br>
+<hr>
 
-<button onclick="copiarResultado()">Copiar</button> <button onclick="limpiarInputs()">Borrar</button>
+<p style="color: red"><strong>2. Tipificación: </strong></p>
 
-<br /><br />
-<hr />
+<div class="ruta-container">
+- <strong>Address:</strong> DIRECCIÓN DEL PROBLEMA, REFERENCIA DEL PROBLEMA, LUG@R: DEPARTAMENTO - PROVINCIA - DISTRITO
+<br><br>
+- <strong>Ruta:</strong> No full internet access / Pedido SGU / Pedido SGU / Problemas SGU / Calidad / Sin servicio y está al día en sus pagos (con check a BO ✅) 
+<a href="#" onclick="return showImagePopupTip(event)"> 👉Ver ejemplo👈</a>
 
-<label style="color: red;"><strong>Speech de pedido SGU:</strong></label>
+<div id="imagePopupTip">
+  <button class="close-button" onclick="hideImagePopupTip()">Cerrar</button>
+  <img src="https://i.postimg.cc/yNSkVrd2/Pedido-SGU-Internet-No-accede.png" alt="Imagen de vista previa 1">
+</div>
+</div>
+
+<hr>
+
+<label style="color: red;"><strong>3. Speech:</strong></label>
 
 <p><strong><span style="color: #01768b">🎧 Agente: </span></strong> <span style="color: #007BFF">(Nombre del cliente)</span>, le confirmamos que hemos recibido y registrado su pedido con el código <span style="color: #007BFF">(CASSXXXXXXXXXX) o (CAPVXXXXXXXXXX)</span>. El plazo estimado de atención es de 03 días calendario. Nuestra respuesta será enviada vía mensaje de texto en 1 día hábil luego del plazo de atención.</p>
 
-<label style="color: red;"><strong>Despedida:</strong></label>
+
+<label style="color: red;"><strong>4. Despedida:</strong></label>
 
 <p><strong><span style="color: #01768b">🎧 Agente: </span></strong>  Eso sería todo de mi parte, Muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada. </p>
 
-<br>
-Ejemplo de código de Pedido SGU:
-<br><br>
+<br><br><strong>Ejemplo de código de Pedido SGU:</strong><br><br>
 <img src="https://i.postimg.cc/Y2FYwHwH/COD-Pedido-SGU.png">
 </div>
 
-    <script>
+<br><br><br><br><br><br>
+<textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+
+<div class="footer-autor">
+Developed by c&f &copy; 2020 | All rights reserved.
+</div>
+</div>
+
+<script>
+    document.addEventListener('contextmenu', event => {
+        event.preventDefault();
+        alert('El menú contextual (clic derecho) está deshabilitado.'); 
+    });
+
+    document.onkeydown = function(e) {
+        if (e.key === 'F12' || e.keyCode === 123) {
+            alert('Las herramientas de desarrollador están deshabilitadas.'); 
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I')) {
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 74 || e.key === 'J')) {
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 67 || e.key === 'C')) {
+            return false;
+        }
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+            return false;
+        }
+    };
 
 window.onload = function() {
     let fechaLimite = new Date("2025-12-31T23:59:59");
@@ -645,9 +678,4 @@ Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
 
     </script>
   </body>
-
 </html>
-
-
-
-

@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
- <head>
+<head>
   <!-- 
     Proyecto: Plantillas
     Creado por: Cristhian Francia
     Año: 2020
     Derechos reservados © Cristhian Francia
   -->
+    <title>Plantillas - Cambio de Número</title>
     <style>
-      body {
-        font-family: Calibri, Arial, sans-serif;
-      }
+        body {
+            font-family: Calibri, Arial, sans-serif;
+            /* 💡 HABILITADO: Las propiedades user-select: none; fueron eliminadas. */
+        }
 
         .container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 20px auto;
+            width: 95%;
+            max-width: 1000px auto;
+            margin: 10px auto;
             background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+            padding: 30px;
             position: relative;
             transition: box-shadow 0.3s ease;
         }
 
         .container:hover {
-            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
         }
 
         .icon-animation {
@@ -71,9 +73,9 @@
         }
 
 
-      .input-container label {
-        width: 50%;
-      }
+        .input-container label {
+            width: 50%;
+        }
 
 
         .input-container input {
@@ -91,23 +93,23 @@
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
 
-      /* Estilos responsive */
-      @media screen and (max-width: 600px) {
-        .input-container {
-          flex-direction: column;
+        /* Estilos responsive */
+        @media screen and (max-width: 600px) {
+            .input-container {
+                flex-direction: column;
+            }
+            .input-container label, .input-container input {
+                width: 100%;
+            }
         }
-        .input-container label, .input-container input {
-          width: 100%;
-        }
-      }
 
 
-      .resultado-label {
-        color: blue;
-      }
-      .dark-mode .resultado-label {
-        color: yellow;
-      }
+        .resultado-label {
+            color: blue;
+        }
+        .dark-mode .resultado-label {
+            color: yellow;
+        }
 
 
         .ruta-container {
@@ -162,79 +164,73 @@
             transition: background-color 0.3s ease;
         }
 
-      /* Estilos para el contenedor de la vista previa */
-      #imagePopup {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.8);
-        text-align: center;
-      }
+        /* Estilos para el contenedor de la vista previa */
+        #imagePopup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            text-align: center;
+            z-index: 1000;
+        }
 
-      /* Estilos para la imagen de la vista previa */
-      #imagePopup img {
-        max-width: 100%;
-        max-height: 100vh;
-        margin-top: 20px;
-      }
+        /* Estilos para la imagen de la vista previa */
+        #imagePopup img {
+            max-width: 100%;
+            max-height: 100vh;
+            margin-top: 20px;
+        }
 
-      /* Estilos para el botón de cerrar */
-      .close-button {
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        background-color: #fff;
-        color: #000;
-        border: none;
-        padding: 8px 16px;
-        font-size: 14px;
-        cursor: pointer;
-      }
+        /* Estilos para el botón de cerrar */
+        .close-button {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 1001;
+        }
 
-
-
+    /* FOOTER DE AUTORÍA */
+    .footer-autor {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #eee;
+      user-select: none;
+    }
+    .footer-autor strong {
+      color: var(--bitel-blue);
+    }
     </style>
-  </head>
+</head>
 
-<body>
-
-    <center>
-      <table>
-        <tr><td style="text-align: center" class="titulo-cambio"><strong>CAMBIO DE NÚMERO</strong></td></tr>    
-        <tr><td style="text-align: center" class="titulo-plantilla">Completa los datos para el llenado de plantilla</td></tr>
-      </table>     
-    </center>
-
-
-        <hr />
-
-
-<p style="color: red"><strong>Tipificación: </strong></p>
-
-        <div class="ruta-container">
-         Other / Operación - 9018 / Operación - 9018 / Transacciones de la línea / Transacciones de la línea / Cambio de número (con check a BO ✅)
-        </div>
-
-        <hr />
+<body oncontextmenu="return false">
+    <div class="container">
 
         <div class="icon-animation"></div>
 
+        <label style="color: red;"><strong>1. Plantilla:</strong></label>
+        <br>
 
-    <label style="color: red;"><strong>Plantilla:</strong></label>
-    <p></p>
+        <center class="code-container">
+            <input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
 
+            // Cliente solicita cambio de número
+            // Se procede con el cambio de número</label>
+        </center>
 
-<center class="code-container">
-<input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
-
-// Cliente solicita cambio de número
-// Se procede con el cambio de número</label>
-</center>
-
-<br>
+        <br>
 
         <div class="input-container">
             <label for="label1">Código de tienda:</label>
@@ -251,21 +247,21 @@
             <input type="Text" id="label3" oninput="updateResultadoOutput()" style="color: #007BFF;" placeholder="Ejemplo: DNI - 70027491" style="color: #007BFF;">
         </div>
 
-    <div class="input-container">
-      <label for="label4">Línea:</label>
+        <div class="input-container">
+            <label for="label4">Línea:</label>
             <input type="number" id="label4" oninput="limitDigits(event)" placeholder="(Línea que generará el cambio de número)" style="color: #007BFF;">
-    </div>
+        </div>
 
 
-<div class="input-container">
-<label for="label5">Serial (ICCID): <a href="#" onclick="return showImagePopup(event)">👉Clic para ver donde lo obtienes👈</a></label>
-<input type="number" id="label5" oninput="updateResultadoOutput()" style="color: #007BFF;">
-</div>
+        <div class="input-container">
+            <label for="label5">Serial (ICCID): <a href="#" onclick="return showImagePopup(event)">👉Clic para ver donde lo obtienes👈</a></label>
+            <input type="number" id="label5" oninput="updateResultadoOutput()" style="color: #007BFF;">
+        </div>
 
-<div id="imagePopup">
-<button class="close-button" onclick="hideImagePopup()">CERRAR</button>
-<img src="https://i.postimg.cc/br2XVcYk/Serial-ICCID.png">
-</div>
+        <div id="imagePopup">
+            <button class="close-button" onclick="hideImagePopup()">CERRAR</button>
+            <img src="https://i.postimg.cc/br2XVcYk/Serial-ICCID.png">
+        </div>
 
 
         <div class="input-container">
@@ -283,7 +279,7 @@
             <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" span style="color: #007BFF;">
         </div>
 
-        <hr />
+        <br>
 
         <label style="color: red;"><strong>Resultado</strong></label>
         <p id="resultado"></p>
@@ -291,56 +287,109 @@
         <button onclick="copiarResultado()">Copiar</button>
         <button onclick="limpiarCampos()">Limpiar</button>
 
-<hr />
-<p style="color: red"><strong>Speech - Prepago:</strong></p>
+        <br><br><hr />
 
-<span style="color: #007BFF">(Nombre del cliente)</span>, se procederá a generar el caso por cambio de número de su línea <span style="color: #007BFF">9xxxxxxx</span>, su código de transacción es el siguiente: <span style="color: #007BFF">XXXXXXXX</span>. El plazo máximo de ejecución es de 7 días útiles, dentro del cual estaremos en contacto con usted para indicarle su nuevo número.</label>
+        <p style="color: red"><strong>2 Tipificación: </strong></p>
 
-<p style="color: red"><strong>Speech - Control:</strong></p>
-<span style="color: #007BFF">(Nombre del cliente)</span>, se ha procedido a generar el caso por cambio de número de su línea <span style="color: #007BFF">9xxxxxxx</span>, su código de transacción es el siguiente: <span style="color: #007BFF">XXXXXXXX</span>. Recordarle que el plazo máximo de ejecución es de 7 días útiles, dentro del cual estaremos en contacto con usted para indicarle su nuevo número.</label>
+        <div class="ruta-container">
+            Other / Operación - 9018 / Operación - 9018 / Transacciones de la línea / Transacciones de la línea / Cambio de número (con check a BO ✅)
+        </div>
 
-<br><br>
-<hr />
-<p style="color: red"><strong>Despedida</strong></p>
-
-Eso sería todo de mi parte, muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada.
+        <hr />
 
 
-        <!-- Textarea oculto para facilitar la copia -->
+        <p style="color: red"><strong>3. Speech:</strong></p>
+        <p><strong>Prepago:</strong></p>
+
+        <span style="color: #007BFF">(Nombre del cliente)</span>, se procederá a generar el caso por cambio de número de su línea <span style="color: #007BFF">9xxxxxxx</span>, su código de transacción es el siguiente: <span style="color: #007BFF">XXXXXXXX</span>. El plazo máximo de ejecución es de 7 días útiles, dentro del cual estaremos en contacto con usted para indicarle su nuevo número.</label>
+
+        <p><strong>Control:</strong></p>
+        <span style="color: #007BFF">(Nombre del cliente)</span>, se ha procedido a generar el caso por cambio de número de su línea <span style="color: #007BFF">9xxxxxxx</span>, su código de transacción es el siguiente: <span style="color: #007BFF">XXXXXXXX</span>. Recordarle que el plazo máximo de ejecución es de 7 días útiles, dentro del cual estaremos en contacto con usted para indicarle su nuevo número.</label>
+
+        <br><br>
+        <hr />
+        <p style="color: red"><strong>4. Despedida</strong></p>
+
+        Eso sería todo de mi parte, muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada.
+
+<br><br><br><br><br><br>
         <textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+
+    <div class="footer-autor">
+      Developed by Cristhian Francia &copy; 2020 | All rights reserved.
     </div>
 
-
+    </div>
 
     <script>
+        // ----------------------------------------------------------------------
+        // 🔒 CÓDIGO DE SEGURIDAD (ANTI-COPIA / ANTI-DEVTOOLS)
+        // ----------------------------------------------------------------------
 
-window.onload = function() {
-    let fechaLimite = new Date("2025-12-31T23:59:59");
-    let fechaActual = new Date();
+        /* 🔒 Bloqueo de teclas: F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+P, Ctrl+S */
+        document.onkeydown = function(e) {
+            if (e.key === 'F12' || e.keyCode === 123) return false;
+            if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) return false;
+            if (e.ctrlKey && e.key.toUpperCase() === 'U') return false;
 
-    if (fechaActual > fechaLimite) {
-        document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Revisar la variable de mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Requiere actualización)</h5>";
-    }
-};
+            // Bloquea impresión (Ctrl+P) y Guardado (Ctrl+S)
+            if (e.ctrlKey && ['P', 'S'].includes(e.key.toUpperCase())) {
+                e.preventDefault();
+                alert('Esa función está deshabilitada.');
+                return false;
+            }
+        };
+
+        /* 🚫 Bloquea el menú contextual del clic derecho en el documento completo */
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        /* 🚫 Evita arrastrar o soltar elementos */
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        /* Mensaje en consola */
+        window.addEventListener('load', function() {
+            console.clear();
+            console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
+            console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
+        });
+        
+        // ----------------------------------------------------------------------
+        // CÓDIGO FUNCIONAL ORIGINAL
+        // ----------------------------------------------------------------------
+
+        window.onload = function() {
+            let fechaLimite = new Date("2025-12-31T23:59:59");
+            let fechaActual = new Date();
+
+            if (fechaActual > fechaLimite) {
+                document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Revisar la variable de mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Requiere actualización)</h5>";
+            }
+        };
 
 
-    function updateResultadoOutput() {
-        const label0 = document.querySelector("#label0").value;
-        const label1 = document.querySelector("#label1").value;
-        const label2 = document.querySelector("#label2").value;
-        const label3 = document.querySelector("#label3").value;
-        const label4 = document.querySelector("#label4").value;
-        const label5 = document.querySelector("#label5").value;
-        const label6 = document.querySelector("#label6").value;
-        let label7 = document.querySelector("#label7").value.trim();
-        const labelID = document.querySelector("#labelID").value;
+        function updateResultadoOutput() {
+            const label0 = document.querySelector("#label0").value;
+            const label1 = document.querySelector("#label1").value;
+            const label2 = document.querySelector("#label2").value;
+            const label3 = document.querySelector("#label3").value;
+            const label4 = document.querySelector("#label4").value;
+            const label5 = document.querySelector("#label5").value;
+            const label6 = document.querySelector("#label6").value;
+            let label7 = document.querySelector("#label7").value.trim();
+            const labelID = document.querySelector("#labelID").value;
 
-        // Si label7 no contiene números, establecer "No Indica"
-        if (!/\d/.test(label7)) {
-            label7 = "No Indica";
-        }
+            // Si label7 no contiene números, establecer "No Indica"
+            if (!/\d/.test(label7)) {
+                label7 = "No Indica";
+            }
 
-        const resultado = `<span style="color: #007BFF;">${label0}</span> // Cliente solicita cambio de número // Se procede con el cambio de número
+            const resultado = `<span style="color: #007BFF;">${label0}</span> // Cliente solicita cambio de número // Se procede con el cambio de número
 
 - Código de tienda: <span style="color: #007BFF;">Call Center</span>
 - Nombres y apellidos del titular: <span style="color: #007BFF;">${label2}</span>
@@ -351,8 +400,8 @@ window.onload = function() {
 - Teléfono de referencia: <span style="color: #007BFF;">${label7}</span>
 - $$_<span style="color: #007BFF;">${labelID}</span>_&&`;
 
-        document.querySelector("#resultado").innerHTML = resultado.replace(/\n/g, "<br>");
-    }
+            document.querySelector("#resultado").innerHTML = resultado.replace(/\n/g, "<br>");
+        }
 
 
 
@@ -397,22 +446,22 @@ window.onload = function() {
             document.querySelector("#resultado").innerHTML = '';
         }
 
-    // Función para mostrar la ventana emergente de la imagen
-    function showImagePopup(event) {
-      event.preventDefault();
-      const imagePopup = document.getElementById("imagePopup");
-      imagePopup.style.display = "block";
-      return false;
-    }
+        // Función para mostrar la ventana emergente de la imagen
+        function showImagePopup(event) {
+            event.preventDefault();
+            const imagePopup = document.getElementById("imagePopup");
+            // Ajuste el display para centrar la imagen en la ventana emergente
+            imagePopup.style.display = "flex";
+            imagePopup.style.alignItems = "center";
+            imagePopup.style.justifyContent = "center";
+            return false;
+        }
 
-    // Función para ocultar la ventana emergente de la imagen
-    function hideImagePopup() {
-      const imagePopup = document.getElementById("imagePopup");
-      imagePopup.style.display = "none";
-    }
+        // Función para ocultar la ventana emergente de la imagen
+        function hideImagePopup() {
+            const imagePopup = document.getElementById("imagePopup");
+            imagePopup.style.display = "none";
+        }
     </script>
 </body>
 </html>
-
-
-

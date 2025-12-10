@@ -11,7 +11,6 @@
     <style>
         body {
             font-family: Calibri, Arial, sans-serif;
-            /* 💡 HABILITADO: Las propiedades user-select: none; fueron eliminadas. */
         }
 
         .container {
@@ -45,7 +44,7 @@
         }
 
         .icon-animation::before {
-            content: "😎";
+            content: "🟡";
             font-size: 1.5rem;
             color: white;
         }
@@ -164,7 +163,6 @@
             transition: background-color 0.3s ease;
         }
 
-        /* Estilos para el contenedor de la vista previa */
         #imagePopup {
             display: none;
             position: fixed;
@@ -177,14 +175,12 @@
             z-index: 1000;
         }
 
-        /* Estilos para la imagen de la vista previa */
         #imagePopup img {
             max-width: 100%;
             max-height: 100vh;
             margin-top: 20px;
         }
 
-        /* Estilos para el botón de cerrar */
         .close-button {
             position: absolute;
             top: 10px;
@@ -322,17 +318,12 @@
     </div>
 
     <script>
-        // ----------------------------------------------------------------------
-        // 🔒 CÓDIGO DE SEGURIDAD (ANTI-COPIA / ANTI-DEVTOOLS)
-        // ----------------------------------------------------------------------
 
-        /* 🔒 Bloqueo de teclas: F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+P, Ctrl+S */
         document.onkeydown = function(e) {
             if (e.key === 'F12' || e.keyCode === 123) return false;
             if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) return false;
             if (e.ctrlKey && e.key.toUpperCase() === 'U') return false;
 
-            // Bloquea impresión (Ctrl+P) y Guardado (Ctrl+S)
             if (e.ctrlKey && ['P', 'S'].includes(e.key.toUpperCase())) {
                 e.preventDefault();
                 alert('Esa función está deshabilitada.');
@@ -340,29 +331,22 @@
             }
         };
 
-        /* 🚫 Bloquea el menú contextual del clic derecho en el documento completo */
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
             return false;
         });
 
-        /* 🚫 Evita arrastrar o soltar elementos */
         document.addEventListener('dragstart', function(e) {
             e.preventDefault();
             return false;
         });
 
-        /* Mensaje en consola */
         window.addEventListener('load', function() {
             console.clear();
             console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
             console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
         });
         
-        // ----------------------------------------------------------------------
-        // CÓDIGO FUNCIONAL ORIGINAL
-        // ----------------------------------------------------------------------
-
         window.onload = function() {
             let fechaLimite = new Date("2025-12-31T23:59:59");
             let fechaActual = new Date();
@@ -446,7 +430,6 @@
             document.querySelector("#resultado").innerHTML = '';
         }
 
-        // Función para mostrar la ventana emergente de la imagen
         function showImagePopup(event) {
             event.preventDefault();
             const imagePopup = document.getElementById("imagePopup");
@@ -457,7 +440,6 @@
             return false;
         }
 
-        // Función para ocultar la ventana emergente de la imagen
         function hideImagePopup() {
             const imagePopup = document.getElementById("imagePopup");
             imagePopup.style.display = "none";
@@ -465,4 +447,5 @@
     </script>
 </body>
 </html>
+
 

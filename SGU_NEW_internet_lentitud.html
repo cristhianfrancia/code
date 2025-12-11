@@ -7,46 +7,47 @@
     Año: 2020
     Derechos reservados © Cristhian Francia
   -->
-  <style>
-      body {
-        font-family: Calibri, Calibri, sans-serif;
-      }
+    <title>Plantillas - SGU - Internet - No accede</title>
+    <style>
+        body {	
+            font-family: Calibri, Arial, sans-serif;
+        }
 
-      .container {
-          width: 90%;
-          max-width: 1000px;
-          margin: 20px auto;
-          background-color: #ffffff;
-          border-radius: 12px;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-          padding: 50px;
-          position: relative;
-          transition: box-shadow 0.3s ease;
-      }
+        .container {
+            width: 95%;
+            max-width: 1000px auto;
+            margin: 10px auto;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
 
-      .container:hover {
-          box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
-      }
+        .container:hover {
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        }
 
-      .icon-animation {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          width: 40px;
-          height: 40px;
-          background-color: #007BFF;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          animation: spin 2s linear infinite;
-      }
+        .icon-animation {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 2s linear infinite;
+        }
 
-      .icon-animation::before {
-          content: "📱";
-          font-size: 1.5rem;
-          color: white;
-      }
+        .icon-animation::before {
+            content: "🟡";
+            font-size: 1.5rem;
+            color: white;
+        }
 
       @keyframes spin {
           from { transform: rotate(0deg); }
@@ -180,29 +181,29 @@
     border-radius: 5px;
 }
 
+    .footer-autor {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #eee;
+      user-select: none;
+    }
+    .footer-autor strong {
+      color: var(--bitel-blue);
+    }
+
   </style>
 </head>
 <body>
 
-
-<p style="color: red"><strong>Tipificación: </strong></p>
-
-<div class="ruta-container">
-- <strong>Address:</strong> DIRECCIÓN DEL PROBLEMA, REFERENCIA DEL PROBLEMA, DEPARTAMENTO - PROVINCIA - DISTRITO
-<br><br>
-- <strong>Ruta:</strong> Slow internet connection / Pedido SGU / Pedido SGU / Problemas SGU / Calidad / Problemas de velocidad (con check a BO ✅) 
-<a href="#" onclick="return showImagePopupTip(event)"> 👉Ver ejemplo👈</a>
-
-<div id="imagePopupTip">
-  <button class="close-button" onclick="hideImagePopupTip()">Cerrar</button>
-  <img src="https://i.postimg.cc/ZRCjKm34/Pedido-SGU-Internet-Lentitud.png" alt="Imagen de vista previa 1">
-</div>
-</div>
-
-<hr />
+</style>
+</head>
+<body oncontextmenu="return false"> <div class="container">
 <div class="icon-animation"></div>
 
-<label style="color: red;"><strong>Plantilla:</strong></label>
+<label style="color: red;"><strong>1. Plantilla:</strong></label>
 <p></p>
 
 <center class="code-container">
@@ -220,7 +221,6 @@
 </div>
 
 
-
     <div class="input-container">
       <label for="label_MB">- Tiene MB o data ilimitada para navegar (Si/No):</label>
       <select id="label_MB" onchange="updateResultadoOutput()">
@@ -232,12 +232,10 @@
     </div>
 
 
-
 <div class="input-container">
 <label for="label_LimiteMB">- Fecha desde cuando presenta lentitud:</label>
 <input type="text" id="label_LimiteMB" oninput="updateResultadoOutput()" placeholder="(DD/MM/AAAA)" style="color: #007BFF;" />
 </div>
-
 
 
 <div class="input-container">
@@ -264,13 +262,10 @@
       </select>
     </div>
 
-
-
 <div class="input-container">
 <label for="label_Direccion">- Dirección exacta del inconveniente: </label>
 <input type="text" id="label_Direccion" oninput="updateResultadoOutput()" placeholder="(Ejemplo: Calle Garcia Robles Mz B Lote 35 Urb Reducto)" style="color: #007BFF;" />
 </div>
-
 
 <div class="input-container">
 <label for="label_GoogleEarth">- Coordenadas Google Earth: 
@@ -282,53 +277,68 @@
 <button class="close-button8" onclick="hideImagePopupMaps()">CERRAR</button>
 <img src="https://i.postimg.cc/fyJXFWkg/Google-Maps.png">
 </div>
-</div>
-
 
 <div class="input-container">
 <label for="label_DetalleInc">- Observaciones: </label>
 <input type="text" id="label_DetalleInc" oninput="updateResultadoOutput()" placeholder="(Observaciones del inconveniente)" style="color: #007BFF;" />
 </div>
 
-
 <div class="input-container">
 <label for="labelID">- Codigo de llamada:</label>
 <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
 </div>
 
-
-
-
 <br />
-<hr />
-<br />
-
 
 <label style="color: red;"><strong>Resultado</strong></label>
 <p id="resultado" class="dark-mode-text"></p>
 
+<button onclick="copiarResultado()">Copiar</button>
+<button onclick="limpiarInputs()">Borrar</button>
 
-
-<button onclick="copiarResultado()">Copiar</button> <button onclick="limpiarInputs()">Borrar</button>
-
-<br /><br />
+<br />
 <hr />
+<br />
 
-<label style="color: red;"><strong>Speech de pedido SGU:</strong></label>
+<label style="color: red;"><strong>2. Tipificación:</strong></label>
+
+<div class="ruta-container">
+- <strong>Address:</strong> DIRECCIÓN DEL PROBLEMA, REFERENCIA DEL PROBLEMA, LUG@R: DEPARTAMENTO - PROVINCIA - DISTRITO
+<br><br>
+- <strong>Ruta:</strong> Slow internet connection / Pedido SGU / Pedido SGU / Problemas SGU / Calidad / Problemas de velocidad (con check a BO ✅) 
+<a href="#" onclick="return showImagePopupTip(event)"> 👉Ver ejemplo👈</a>
+
+<div id="imagePopupTip">
+  <button class="close-button" onclick="hideImagePopupTip()">Cerrar</button>
+  <img src="https://i.postimg.cc/ZRCjKm34/Pedido-SGU-Internet-Lentitud.png" alt="Imagen de vista previa 1">
+</div>
+</div>
+
+<br><hr><br>
+
+<label style="color: red;"><strong>3. Speech:</strong></label>
 
 <p><strong><span style="color: #01768b">🎧 Agente: </span></strong> <span style="color: #007BFF">(Nombre del cliente)</span>, le confirmamos que hemos recibido y registrado su pedido con el código <span style="color: #007BFF">(CASSXXXXXXXXXX) o (CAPVXXXXXXXXXX)</span>. El plazo estimado de atención es de 05 días calendario. Nuestra respuesta será enviada vía mensaje de texto en 1 día hábil luego del plazo de atención.</p>
 
-<label style="color: red;"><strong>Despedida:</strong></label>
+<label style="color: red;"><strong>4. Despedida:</strong></label>
 
 <p><strong><span style="color: #01768b">🎧 Agente: </span></strong>  Eso sería todo de mi parte, Muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada. </p>
 
-<br>
-Ejemplo de código de Pedido SGU:
+<br><br>
+<strong>Ejemplo de código para Pedido SGU:</strong>
 <br><br>
 <img src="https://i.postimg.cc/Y2FYwHwH/COD-Pedido-SGU.png">
 </div>
 
-    <script>
+<br><br><br><br><br><br>
+<textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+
+<div class="footer-autor">
+Developed by c&f &copy; 2020 | All rights reserved.
+</div>
+</div>
+
+<script>
 
 window.onload = function() {
     let fechaLimite = new Date("2025-12-31T23:59:59");
@@ -498,8 +508,3 @@ Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
     </script>
   </body>
 </html>
-
-
-
-
-

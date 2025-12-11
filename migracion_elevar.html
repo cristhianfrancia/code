@@ -340,32 +340,35 @@
       <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
     </div>
 
-    <br>
+<br>
+<div id="resultado"></div>
 
-    <label style="color: red;"><strong>Resultado:</strong></label>
-    <div id="resultado"></div>
-    <button onclick="copiarResultado()">Copiar</button>
-    <button onclick="limpiarInputs()">Borrar</button>
+<button onclick="copiarResultado()">Copiar</button>
+<button onclick="limpiarInputs()">Borrar</button>
 
-    <br><hr>
+<br />
+<br />
 
-    <label style="color: red;"><strong>2. Tipificación:</strong></label>
+<label style="color: red;"><strong>2. Tipificación:</strong></label>
 
-    <div class="ruta-container">
-      <strong>PREPAGO A CONTROL</strong><br>
-      Other / Información / Información / Transferencias / Upsale / Migración de prepago a control (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
+<div class="ruta-container">
+<strong>PREPAGO A CONTROL</strong><br>
+Other / Información / Información / Transferencias / Upsale / Migración de prepago a control (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
 
-      <br><br>
+<br><br>
 
-      <strong>CONTROL A CONTROL (Plan mayor)</strong><br>
-      Other / Información / Información / Transferencias / Upsale / Migración de control a control - Cargo fijo mayor (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
-    </div>
+<strong>CONTROL A CONTROL (Plan mayor)</strong><br>
+Other / Información / Información / Transferencias / Upsale / Migración de control a control - Cargo fijo mayor (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
+</div>
 
-    <br><hr>
+<br />
+<hr />
+<br />
 
-    <p style="color: red"><strong>3. Speech: </strong></p>
-    <span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".
+<label style="color: red;"><strong>3. Speech:</strong></label>
+<p><strong><span style="color: #01768b">🎧 Agente: </span></strong><span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".</p>
 
+<br>
 
     <div class="imagenes-container-simple" aria-live="polite">
       <div class="imagen-simple" title="Ejemplo visual - Prepago a Control">
@@ -409,7 +412,6 @@ Developed by c&f &copy; 2020 | All rights reserved.
 </div>
 
   <script>
-
 
     document.addEventListener('contextmenu', event => {
         event.preventDefault();
@@ -528,4 +530,3 @@ Developed by c&f &copy; 2020 | All rights reserved.
   </script>
  </body>
 </html>
-

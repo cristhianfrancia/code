@@ -208,30 +208,24 @@
     .footer-autor strong {
       color: var(--bitel-blue);
     }
-    </style>
+</style>
 </head>
+<body oncontextmenu="return false"> <div class="container">
+<div class="icon-animation"></div>
 
-<body oncontextmenu="return false">
-    <div class="container">
+<label style="color: red;"><strong>1. Plantilla:</strong></label>
+<p></p>
 
-        <div class="icon-animation"></div>
+<center class="code-container">
+<input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
+// Cliente solicita cambio de número
+// Se procede con el cambio de número</label>
+</center>
 
-        <label style="color: red;"><strong>1. Plantilla:</strong></label>
-        <br>
-
-        <center class="code-container">
-            <input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
-
-            // Cliente solicita cambio de número
-            // Se procede con el cambio de número</label>
-        </center>
-
-        <br>
-
-        <div class="input-container">
-            <label for="label1">- Código de tienda:</label>
-            <input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="Call Center" style="color: #007BFF;">
-        </div>
+<div class="input-container">
+<label for="label1">- Código de tienda:</label>
+<input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="Call Center" style="color: #007BFF;">
+</div>
 
         <div class="input-container">
             <label for="label2">- Nombres y apellidos del titular:</label>
@@ -275,49 +269,48 @@
             <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" span style="color: #007BFF;">
         </div>
 
-        <br>
+<br>
+<p id="resultado" class="dark-mode-text"></p>
 
-        <label style="color: red;"><strong>Resultado</strong></label>
-        <p id="resultado"></p>
+<button onclick="copiarResultado()">Copiar</button>
+<button onclick="limpiarInputs()">Borrar</button>
 
-        <button onclick="copiarResultado()">Copiar</button>
-        <button onclick="limpiarCampos()">Limpiar</button>
+<br />
+<br />
 
-    <br><hr>
+<label style="color: red;"><strong>2. Tipificación:</strong></label>
 
-        <p style="color: red"><strong>2. Tipificación: </strong></p>
+<div class="ruta-container">
+Other / Operación - 9018 / Operación - 9018 / Transacciones de la línea / Transacciones de la línea / Cambio de número (con check a BO ✅)
+</div>
 
-        <div class="ruta-container">
-            Other / Operación - 9018 / Operación - 9018 / Transacciones de la línea / Transacciones de la línea / Cambio de número (con check a BO ✅)
-        </div>
+<br />
+<hr />
+<br />
 
-        <hr />
+<label style="color: red;"><strong>3. Speech:</strong></label>
+<p><strong>Prepago:</strong></p>
 
+<p><strong><span style="color: #01768b">🎧 Agente: </span></strong><span style="color: #007BFF">(Nombre del cliente)</span>, se procederá a generar el caso por cambio de número de su línea <span style="color: #007BFF">9xxxxxxx</span>, su código de transacción es el siguiente: <span style="color: #007BFF">XXXXXXXX</span>. El plazo máximo de ejecución es de 7 días útiles, dentro del cual estaremos en contacto con usted para indicarle su nuevo número.</label></p>
 
-        <p style="color: red"><strong>3. Speech:</strong></p>
-        <p><strong>Prepago:</strong></p>
+<p><strong>Control:</strong></p>
+<p><strong><span style="color: #01768b">🎧 Agente: </span></strong><span style="color: #007BFF">(Nombre del cliente)</span>, se ha procedido a generar el caso por cambio de número de su línea <span style="color: #007BFF">9xxxxxxx</span>, su código de transacción es el siguiente: <span style="color: #007BFF">XXXXXXXX</span>. Recordarle que el plazo máximo de ejecución es de 7 días útiles, dentro del cual estaremos en contacto con usted para indicarle su nuevo número.</label></p>
 
-        <span style="color: #007BFF">(Nombre del cliente)</span>, se procederá a generar el caso por cambio de número de su línea <span style="color: #007BFF">9xxxxxxx</span>, su código de transacción es el siguiente: <span style="color: #007BFF">XXXXXXXX</span>. El plazo máximo de ejecución es de 7 días útiles, dentro del cual estaremos en contacto con usted para indicarle su nuevo número.</label>
+<br>
 
-        <p><strong>Control:</strong></p>
-        <span style="color: #007BFF">(Nombre del cliente)</span>, se ha procedido a generar el caso por cambio de número de su línea <span style="color: #007BFF">9xxxxxxx</span>, su código de transacción es el siguiente: <span style="color: #007BFF">XXXXXXXX</span>. Recordarle que el plazo máximo de ejecución es de 7 días útiles, dentro del cual estaremos en contacto con usted para indicarle su nuevo número.</label>
+<label style="color: red;"><strong>4. Despedida:</strong></label>
 
-        <br><br>
-        <hr />
-        <p style="color: red"><strong>4. Despedida</strong></p>
-
-        Eso sería todo de mi parte, muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada.
+<p><strong><span style="color: #01768b">🎧 Agente: </span></strong>Eso sería todo de mi parte, Muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada. </p>
 
 <br><br><br><br><br><br>
-        <textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+<textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
 
-    <div class="footer-autor">
-      Developed by c&f &copy; 2020 | All rights reserved.
-    </div>
+<div class="footer-autor">
+Developed by c&f &copy; 2020 | All rights reserved.
+</div>
+</div>
 
-    </div>
-
-    <script>
+<script>
 
         document.onkeydown = function(e) {
             if (e.key === 'F12' || e.keyCode === 123) return false;
@@ -447,7 +440,3 @@
     </script>
 </body>
 </html>
-
-
-
-

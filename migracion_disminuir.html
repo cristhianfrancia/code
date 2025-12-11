@@ -307,8 +307,8 @@
 <body oncontextmenu="return false"> <div class="container">
 <div class="icon-animation"></div>
 
-    <label style="color: red;"><strong>1. Plantilla:</strong></label>
-    <p></p>
+<label style="color: red;"><strong>1. Plantilla:</strong></label>
+<p></p>
 
     <div class="center-inputs">
         <input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
@@ -333,34 +333,35 @@
       <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
     </div>
 
-    <br>
+<br>
+<div id="resultado"></div>
 
-    <label style="color: red;"><strong>Resultado:</strong></label>
-    <div id="resultado"></div>
+<button onclick="copiarResultado()">Copiar</button>
+<button onclick="limpiarInputs()">Borrar</button>
 
-    <button onclick="copiarResultado()">Copiar</button>
-    <button onclick="limpiarInputs()">Borrar</button>
+<br />
+<br />
 
-    <hr>
+<label style="color: red;"><strong>2. Tipificación:</strong></label>
 
-    <p style="color: red"><strong>2. Tipificación:</strong></p>
+<div class="ruta-container">
+<strong>CONTROL A PREPAGO:</strong><br>
+Other / Información / Información / Transferencias / Migración de Control a Prepago / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS) (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
 
-    <div class="ruta-container">
-      <strong>CONTROL A PREPAGO:</strong><br>
-      Other / Información / Información / Transferencias / Migración de Control a Prepago / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS) (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
+<br><br>
 
-      <br><br>
+<strong>CONTROL A CONTROL: (Plan menor)</strong><br>
+Other / Información / Información / Transferencias / Migración de Control a Control - Cargo fijo menor / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS)  (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
+</div>
 
-      <strong>CONTROL A CONTROL: (Plan menor)</strong><br>
-      Other / Información / Información / Transferencias / Migración de Control a Control - Cargo fijo menor / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS)  (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
-    </div>
+<br />
+<hr />
+<br />
 
-    <br><hr>
+<label style="color: red;"><strong>3. Speech:</strong></label>
+<p><strong><span style="color: #01768b">🎧 Agente: </span></strong><span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".</p>
 
-    <p style="color: red"><strong>3. Speech: </strong></p>
-    <span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".
-
-    <br><br>
+<br>
 
     <div style="text-align: center;">
         <a href="#" class="dropdown-trigger" onclick="toggleDropdown(event, 'dropdownMod1')">Transferencia - Control a Prepago | Control a control menor</a>
@@ -369,7 +370,6 @@
     <div id="dropdownMod1" class="dropdown-content show">
         <img src="https://i.postimg.cc/jqF5v1Y2/Transferencia-Disminuir-plan.png" alt="Transferencia - Control a Prepago | Control a control menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
     </div>
-
   </div>
 
   <div id="copyMessageBox" class="message-box">Resultado copiado al portapapeles</div>
@@ -395,10 +395,8 @@
 Developed by c&f &copy; 2020 | All rights reserved.
 </div>
 </div>
-  
 
-  <script>
-
+<script>
 
     document.addEventListener('contextmenu', event => {
         event.preventDefault();
@@ -533,4 +531,3 @@ Developed by c&f &copy; 2020 | All rights reserved.
     </script>
  </body>
 </html>
-

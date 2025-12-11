@@ -248,31 +248,34 @@
         <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="Solo ID, sin $$_ _&&" style="color: #007BFF;" />
     </div>
 
-    <br/>
+<br>
+<p id="resultado" class="dark-mode-text"></p>
 
-    <label style="color: red;"><strong>Resultado</strong></label>
-    <p id="resultado"></p>
+<button onclick="copiarResultado()">Copiar</button>
+<button onclick="limpiarInputs()">Borrar</button>
 
-    <button onclick="copiarResultado()">Copiar</button>
-    <button onclick="limpiarCampos()">Limpiar</button>
+<br />
+<br />
 
-    <hr />
+<label style="color: red;"><strong>2. Tipificación:</strong></label>
 
-    <p style="color: red"><strong>2. Tipificación: </strong></p>
+<div class="ruta-container">
+<strong>PREPAGO</strong><br>
+Other / Información / Información / Transferencias / Cancelación de línea - Prepago / (Elegir el motivo). <br><br>
 
-    <div class="ruta-container">
-        <strong>PREPAGO</strong><br>
-        Other / Información / Información / Transferencias / Cancelación de línea - Prepago / (Elegir el motivo). <br><br>
+<strong>CONTROL</strong><br>
+Other / Información / Información / Transferencias / Cancelación de línea - Control / (Elegir el motivo).
+</div>
 
-        <strong>CONTROL</strong><br>
-        Other / Información / Información / Transferencias / Cancelación de línea - Control / (Elegir el motivo).
-    </div>
+<br />
+<hr />
+<br />
 
-    <hr />
+<label style="color: red;"><strong>3. Speech:</strong></label>
 
-    <p style="color: red"><strong>3. Speech: </strong></p>
-    <span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de cancelación, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada.
+<p><strong><span style="color: #01768b">🎧 Agente: </span></strong><span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de cancelación, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada.</p>
 
+<br><br>
 
     <div class="imagenes-container" aria-live="polite">
       <div class="imagen-box" title="Transferencia - Cancelaciones">
@@ -377,7 +380,7 @@
         alert("Resultado copiado al portapapeles!");
     }
 
-    function limpiarCampos() {
+    function limpiarInputs() {
         document.querySelector("#label0").value = '';
         document.querySelector("#label0_1").value = '';
         document.querySelector("#label1").value = '';
@@ -387,5 +390,3 @@
 </script>
 </body>
 </html>
-
-

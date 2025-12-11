@@ -167,17 +167,39 @@
 
 </style>
 
+<script>
 
-    <script>
+    document.addEventListener('contextmenu', event => {
+        event.preventDefault();
+        alert('El menú contextual (clic derecho) está deshabilitado.'); 
+    });
 
-window.onload = function() {
-    let fechaLimite = new Date("2025-12-31T23:59:59");
-    let fechaActual = new Date();
+    document.onkeydown = function(e) {
+        if (e.key === 'F12' || e.keyCode === 123) {
+            alert('Las herramientas de desarrollador están deshabilitadas.'); 
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I')) {
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 74 || e.key === 'J')) {
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 67 || e.key === 'C')) {
+            return false;
+        }
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+            return false;
+        }
+    };
 
-    if (fechaActual > fechaLimite) {
-        document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Revisar la variable de mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Requiere actualización)</h5>";
-    }
-};
+    window.onload = function() {
+        let fechaLimite = new Date("2025-12-31T23:59:59");
+        let fechaActual = new Date();
+        if (fechaActual > fechaLimite) {
+            document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Actualización en proceso)</h5>";
+        }
+    };
 
         function mostrarFormulario() {
             let seleccion = document.getElementById("tipoRecarga").value;
@@ -508,7 +530,6 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 Developed by c&f &copy; 2020 | All rights reserved.
 </div>
 </div>
-
 
 
     <!-- Popup de Speech -->

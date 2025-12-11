@@ -1,13 +1,64 @@
 <!DOCTYPE html>
 <html>
- <head>
+<head>
   <!-- 
     Proyecto: Plantillas
     Creado por: Cristhian Francia
     Año: 2020
     Derechos reservados © Cristhian Francia
   -->
+    <title>Plantillas - SAR - 2 recargas</title>
     <style>
+        body {
+            font-family: Calibri, Arial, sans-serif;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1000px auto;
+            margin: 10px auto;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-animation {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 2s linear infinite;
+        }
+
+        .icon-animation::before {
+            content: "🟡";
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         .ruta-container {
             background-color: #fff5e9;
             padding: 10px;
@@ -100,6 +151,19 @@
         font-size: 14px;
         cursor: pointer;
       }
+
+    .footer-autor {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #eee;
+      user-select: none;
+    }
+    .footer-autor strong {
+      color: var(--bitel-blue);
+    }
 
 </style>
 
@@ -346,25 +410,11 @@ function obtenerPrimerNombre(texto) {
 </head>
 <body>
 
-<span style="color: black"><strong>✅ Ruta de tipificación</strong></span> <a href="#" onclick="return showImagePopup(event)">(Ejemplo de llenado - Clic para abrir) </a>
 
-<div id="imagePopup">
-<button class="close-button" onclick="hideImagePopup()">CERRAR</button>
-<img src="https://i.postimg.cc/QMkWsH8V/SAR-1-recarga.png" alt="Imagen de vista previa 1">
-</div>
-
-<div class="ruta-container">
-SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada / SAR - Infundado / Ajuste / Facturación y cobro
-</div>
-
-<br>
-<hr>
-<br>
-
-<span style="color: black"><strong>✅ Plantilla</strong></span><br><br>
+<label style="color: red;"><strong>1. Plantilla para 1 recarga:</strong></label>
+<br><br>
 
 <div id="form1Recarga">
-
 
 <span style="color: red"><input type="number" id="Numero1" oninput="checkLength(this); actualizarResultados()" placeholder="(Número del que llama)" title="Máximo 9 dígitos" required></span> // Cliente señala que realiza una recarga en lugar de efectuar su pago // Se ofrece solución anticipada de reclamo<br><br>
 
@@ -385,57 +435,78 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
             <option value="1 día hábil">1 día hábil</option>
         </select>
 
-        <button type="button" onclick="leerSpeech()">Leer speech de grabación</button>
-
+<button type="button" onclick="leerSpeech()">Leer speech de grabación</button>
 <br><label>10. Número de referencia:</label> <input type="text" id="referencia" oninput="checkLength(this); actualizarResultados()" title="Máximo 9 caracteres, incluye guion si no hay número" required> <span style="color: red">(<- Si no brinda, colocar un guion: "-")</span>
-
-        <br><label>$$_<input type="text" id="id" placeholder="ID de llamada" oninput="actualizarResultados()">_&&
-
-
-<br><br>
+<br><label>$$_<input type="text" id="id" placeholder="ID de llamada" oninput="actualizarResultados()">_&&
 </div>
 
-<hr>
 <br>
-
-<span style="color: red"><strong>✅ Resultado</strong></span><br><br>
+<span style="color: red"><strong>✅ Resultado</strong></span>
+<br>
 
 <div id="resultado" style="display:none;">
+<div class="ruta-container" style="border-left: 4px solid #e67a00; background-color: #fff5e9; padding: 10px;">
+
 <span id="resNumero1"></span> // Cliente señala que realiza una recarga en lugar de efectuar su pago // Se ofrece solución anticipada de reclamo<br><br>
 
-        1. Código o número correlativo de la atención realizada: -<br>
-        2. Nombres y apellidos completos del personal de Bitel que atendió al abonado/usuario: <span id="resNombrePersonal"></span><br>
-        3. Nombres y apellidos completos del abonado/usuario: <span id="resNombreAbonado"></span><br>
-        4. Número o código del servicio del abonado/usuario: <span id="resNumeroAbonado"></span><br>
-        5. Petición del usuario, así como su fecha y hora: Cliente realizó recarga en lugar de pago por el monto de S/<span class="resMonto"></span> con fecha <span id="resFecha1"></span> a las <span id="resHora1"></span>, solicita ajuste de facturación. Fecha: <span id="resfecha5"></span> Hora: <span id="resHora5"></span>.<br>
-        6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: Se le realiza asignación de S/<span class="resMonto"></span> como ajuste a su factura sin beneficios adicionales, ya que cliente recargó en lugar de generar el pago. SAR por fidelización.<br>
-        7. Fecha y hora de la aceptación del abonado/usuario: Fecha: <span id="resFecha3"></span> Hora: <span id="resHora3"></span><br>
-        8. Identificación del mecanismo de aceptación del Abonado/usuario: Audio telefónico<br>
-        9. Plazo de ejecución del SAR: <span id="resPlazo"></span><br>
-        10. Número de referencia: <span id="resReferencia"></span><br>
-        $$_<span id="resId"></span>_&&
-    </div>
+1. Código o número correlativo de la atención realizada: -<br>
+2. Nombres y apellidos completos del personal de Bitel que atendió al abonado/usuario: <span id="resNombrePersonal"></span><br>
+3. Nombres y apellidos completos del abonado/usuario: <span id="resNombreAbonado"></span><br>
+4. Número o código del servicio del abonado/usuario: <span id="resNumeroAbonado"></span><br>
+
+5. Petición del usuario, así como su fecha y hora: Cliente realizó recarga en lugar de pago por el monto de S/<span class="resMonto"></span> con fecha <span id="resFecha1"></span> a las <span id="resHora1"></span>, solicita ajuste de facturación. Fecha: <span id="resfecha5"></span> Hora: <span id="resHora5"></span>.<br>
+
+6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: Se le realiza asignación de S/<span class="resMonto"></span> como ajuste a su factura sin beneficios adicionales, ya que cliente recargó en lugar de generar el pago. SAR por fidelización.<br>
+7. Fecha y hora de la aceptación del abonado/usuario: Fecha: <span id="resFecha3"></span> Hora: <span id="resHora3"></span><br>
+8. Identificación del mecanismo de aceptación del Abonado/usuario: Audio telefónico<br>
+9. Plazo de ejecución del SAR: <span id="resPlazo"></span><br>
+10. Número de referencia: <span id="resReferencia"></span><br>
+$$_<span id="resId"></span>_&&
+</div>
+</div>
 
 <br>
+
 <button onclick="copiarTexto()">Copiar</button>
 <button type="button" onclick="limpiarResultados()" style="margin-left: 20px;">Limpiar</button>
 <button id="deshacerBtn" style="display:none;" onclick="restaurarDatos()">Deshacer última acción</button>
 
+<br><br><hr><br>
 
-<br><br><hr>
+<label style="color: red;"><strong>2. Tipificación: </strong></label><a href="#" onclick="return showImagePopup(event)">(Clic para ver)</a>
 
-<span style="color: black"><strong>✅ Speech para entrega de código</strong></span><br>	
+<div id="imagePopup">
+<button class="close-button" onclick="hideImagePopup()">CERRAR</button>
+<img src="https://i.postimg.cc/QMkWsH8V/SAR-1-recarga.png" alt="Imagen de vista previa 1">
+</div>
 
 <div class="ruta-container">
-<span class="primerNombre"></span>, el codigo de SAR es <span style="color: red">SA00000XXXXX</span>. Finalmente, precisar que dentro del plazo máximo de <span style="color: red">5 días hábiles</span> le enviaremos un SMS o lo llamaremos para confirmar la ejecución del SAR ofrecido. Asi mismo le invitamos a efectuar el seguimiento del SAR mediante nuestra plataforma del Expediente Virtual en www.bitel.com.pe
+SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada / SAR - Infundado / Ajuste / Facturación y cobro
+</div>
+
+
+<br>
+
+<label style="color: red;"><strong>3. Speech:</strong></label>
+
+<div class="ruta-container">
+<strong><span style="color: #01768b">🎧 Agente: </span></strong><span class="primerNombre"></span>, el codigo de SAR es <span style="color: red">SA00000XXXXX</span>. Finalmente, precisar que dentro del plazo máximo de <span style="color: red">5 días hábiles</span> le enviaremos un SMS o lo llamaremos para confirmar la ejecución del SAR ofrecido. Asi mismo le invitamos a efectuar el seguimiento del SAR mediante nuestra plataforma del Expediente Virtual en www.bitel.com.pe
 </div>
 
 <br>
 
-<span style="color: black"><strong>✅ Despedida</strong></span><br>
+<label style="color: red;"><strong>4. Despedida:</strong></label>
 
 <div class="ruta-container">
-Agente: Eso sería todo de mi parte, Muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada.
+<strong><span style="color: #01768b">🎧 Agente: </span></strong>Eso sería todo de mi parte, Muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada.
+</div>
+
+<br><br><br><br><br><br>
+<textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+
+<div class="footer-autor">
+Developed by c&f &copy; 2020 | All rights reserved.
+</div>
 </div>
 
 
@@ -449,5 +520,3 @@ Agente: Eso sería todo de mi parte, Muchas gracias por comunicarse con Bitel. E
     </div>
 </body>
 </html>
-
-

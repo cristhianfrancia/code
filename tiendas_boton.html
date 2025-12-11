@@ -83,6 +83,35 @@
   </div>
 
   <script>
+    // === CÓDIGO DE SEGURIDAD AÑADIDO ===
+
+    // 1. BLOQUEO DE CLIC DERECHO
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    // 2. BLOQUEO DE TECLAS DE DESARROLLO (F12, Ctrl+Shift+I, Ctrl+U, etc.)
+    document.addEventListener('keydown', function(e) {
+      // Bloquea F12
+      if (e.key === 'F12') {
+        e.preventDefault();
+      }
+
+      // Bloquea Ctrl/Cmd + Shift + I/J (Inspeccionar, Consola)
+      // Nota: e.metaKey es para Cmd en Mac
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.key === 'J')) {
+        e.preventDefault();
+      }
+      
+      // Bloquea Ctrl/Cmd + U (Ver código fuente)
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'u') {
+          e.preventDefault();
+          alert('Acción no permitida.');
+      }
+    });
+
+    // ===================================
+
     let popupVentana = null;
 
     function abrirEstructura() {

@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base target="_top">
+  <meta charset="utf-8" />
+  <title>Plantilla de comentarios</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8NLE2SVR33"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-8NLE2SVR33');
+  </script>
+
+  <style>
+    :root {
+      --bitel-teal: #01768b;
+      --bitel-blue: #0c477e;
+      --bitel-yellow: #fbf32f;
+      --soft-gray: #d1d1d1;
+      --text-main: #434343;
+      --bg-soft: #ffffff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      padding: 0;
+      margin: 0;
+      background: #ffffff;
+      color: var(--text-main);
+    }
+
+    .container {
+      max-width: 1000px;
+      background: #ffffff;
+      padding: 25px 28px 30px;
+      border-radius: 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+      margin: 28px auto;
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .titulo-principal {
+      margin: 0 0 4px;
+      font-weight: 700;
+      font-size: 1.4rem;
+      text-align: center;
+      letter-spacing: 0.3px;
+      color: var(--bitel-blue);
+    }
+
+    .subtitulo {
+      margin: 0 0 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #6b6b6b;
+    }
+
+    .barra-titulo {
+      width: 80px;
+      height: 4px;
+      border-radius: 999px;
+      margin: 10px auto 22px;
+      background: linear-gradient(90deg, var(--bitel-yellow), var(--bitel-teal));
+    }
+
+    .template-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .template-selector label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #555;
+    }
+
+    .template-selector select {
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--soft-gray);
+      font-size: 0.9rem;
+      outline: none;
+      background: #fff;
+      min-width: 230px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .template-selector select:focus {
+      border-color: var(--bitel-teal);
+      box-shadow: 0 0 0 2px rgba(1,118,139,0.18);
+    }
+
+    .inline-form {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .inline-form input,
+    .inline-form textarea {
+      padding: 8px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      flex: 1;
+      min-width: 180px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+      background: #fafafa;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    .inline-form input:focus,
+    .inline-form textarea:focus {
+      border-color: var(--bitel-teal);
+      box-shadow: 0 0 0 2px rgba(1,118,139,0.18);
+      background: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .inline-form label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #666;
+      flex-basis: 100%;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .fila-campo {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 180px;
+      width: 100%;
+      max-width: 300px;
+      justify-content: flex-start;
+      align-items: stretch;
+    }
+
+    .campo-resizable {
+      resize: both;
+      overflow: auto;
+      min-height: 38px;
+      max-height: 400px;
+      min-width: 180px;
+      max-width: 100%;
+      font-family: inherit;
+      line-height: 1.4;
+      padding: 8px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #fafafa;
+      transition: all 0.2s ease;
+      width: 100%;
+      box-sizing: border-box;
+      height: 38px;
+    }
+
+    .campo-resizable::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 12px;
+      height: 12px;
+      background: linear-gradient(135deg, transparent 50%, var(--soft-gray) 50%);
+      cursor: se-resize;
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+    }
+
+    .campo-resizable:hover::after {
+      opacity: 1;
+    }
+
+    .campo-resizable:focus {
+      border-color: var(--bitel-teal);
+      box-shadow: 0 0 0 2px rgba(1,118,139,0.18);
+      background: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .inline-form input:not([type="checkbox"]):not([type="radio"]) {
+      height: 38px !important;
+      min-height: 38px !important;
+      resize: none !important;
+    }
+
+    .fila-campo {
+      position: relative;
+    }
+
+    .output {
+      background: #e8f7f9;
+      padding: 12px 15px;
+      margin-top: 18px;
+      border-left: 4px solid var(--bitel-teal);
+      font-family: monospace;
+      word-break: break-word;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: #123;
+      line-height: 1.3;
+    }
+
+    .button-group {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .copiar-btn, .limpiar-btn, .mas-opciones-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .copiar-btn {
+      background-color: var(--bitel-teal);
+      color: white;
+      box-shadow: 0 4px 10px rgba(1,118,139,0.35);
+    }
+    .copiar-btn:hover {
+      background-color: #015d6b;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(1,118,139,0.45);
+    }
+    .copiar-btn.copied {
+      background-color: #28a745;
+      box-shadow: 0 4px 10px rgba(40,167,69,0.45);
+    }
+
+    .limpiar-btn {
+      background-color: #dc3545;
+      color: white;
+      box-shadow: 0 4px 10px rgba(220,53,69,0.35);
+    }
+    .limpiar-btn:hover {
+      background-color: #b02130;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(220,53,69,0.45);
+    }
+
+    .mas-opciones-btn {
+      background-color: var(--bitel-blue);
+      color: white;
+      box-shadow: 0 4px 10px rgba(12,71,126,0.35);
+    }
+    .mas-opciones-btn:hover {
+      background-color: #08325e;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(12,71,126,0.45);
+    }
+
+    .opciones-extra {
+      display: none;
+      gap: 10px;
+      margin-left: auto;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .toggle-historial-btn,
+    .exportar-historial-btn,
+    .borrar-historial-btn {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+
+    .toggle-historial-btn {
+      background-color: #6c757d;
+      color: white;
+    }
+    .toggle-historial-btn:hover {
+      background-color: #545b62;
+      transform: translateY(-1px);
+    }
+
+    .exportar-historial-btn {
+      background-color: #17a2b8;
+      color: white;
+    }
+    .exportar-historial-btn:hover {
+      background-color: #107488;
+      transform: translateY(-1px);
+    }
+
+    .borrar-historial-btn {
+      background-color: #ff9800;
+      color: white;
+    }
+    .borrar-historial-btn:hover {
+      background-color: #d67c00;
+      transform: translateY(-1px);
+    }
+
+    #historial {
+      display: none;
+      margin-top: 20px;
+      background: #fff;
+      border: 1px solid #eee;
+      padding: 10px;
+      border-radius: 12px;
+      max-height: 250px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 13px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    #historial::-webkit-scrollbar { display: none; }
+
+    .historial-aviso {
+      font-size: 11px;
+      color: #555;
+      background: #fff8e1;
+      border-left: 4px solid #ffc107;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin: 0 auto 12px auto;
+      text-align: center;
+      max-width: 95%;
+    }
+
+    .historial-fecha {
+      font-weight: bold;
+      padding: 6px 4px;
+      margin: 10px 0 5px;
+      border-radius: 6px;
+      color: #333;
+    }
+
+    .historial-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      padding: 4px 0;
+      border-bottom: 1px dashed #ccc;
+      transition: background-color 0.5s ease;
+    }
+
+    .historial-item.highlight {
+      background-color: #c8f7c5;
+    }
+
+    .historial-texto {
+      flex: 1;
+      margin-right: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .historial-copy-btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 5px 9px;
+      cursor: pointer;
+      font-size: 11px;
+      transition: background-color 0.25s ease, transform 0.1s ease;
+      white-space: nowrap;
+    }
+    .historial-copy-btn:hover {
+      background: #0056b3;
+      transform: translateY(-1px);
+    }
+    .historial-copy-btn.copied {
+      background: #28a745;
+    }
+
+    .contador-sesiones {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      background: white;
+      padding: 10px 18px;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(0,0,0,0.05);
+      backdrop-filter: blur(12px);
+      font-size: 13px;
+      z-index: 9999;
+    }
+
+    .dot-online {
+      width: 10px;
+      height: 10px;
+      background: #28a745;
+      border-radius: 999px;
+      box-shadow: 0 0 8px #28a745;
+      animation: pulse 1.5s infinite ease-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      60% { transform: scale(1.35); opacity: 0.4; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .contador-sesiones .count {
+      font-weight: 700;
+      color: var(--bitel-blue);
+    }
+
+    .contador-sesiones .label {
+      color: #444;
+      opacity: 0.85;
+    }
+
+    /* Estilos de tus botones dinámicos */
+    .btn-selected {
+      background-color: #0c477e !important;
+      color: white !important;
+      border-color: #08325e !important;
+      box-shadow: 0 0 0 2px rgba(12,71,126,0.25) !important;
+      transform: translateY(-1px);
+    }
+    .btn-opcion {
+      background-color: #f8f9fa;
+      color: #495057;
+      border: 1px solid #ced4da;
+      margin-bottom: 5px;
+      margin-right: 5px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+    .btn-opcion:hover {
+      background-color: #e2e6ea;
+    }
+    .enlace-ejemplo {
+      font-size: 0.85rem;
+      color: #007bff;
+      cursor: pointer;
+      font-weight: normal;
+      text-decoration: underline;
+      margin-left: 5px;
+      transition: color 0.2s;
+    }
+    .enlace-ejemplo:hover {
+      color: #0056b3;
+    }
+
+    /* FOOTER DE AUTORÍA */
+    .footer-autor {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #eee;
+      user-select: none;
+    }
+    .footer-autor strong {
+      color: var(--bitel-blue);
+    }
+
+    /* MODALES */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(3px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .modal-box {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      transform: scale(0.9);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .modal-box-image {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      max-width: 800px;
+      width: 95%;
+      text-align: center;
+      transform: scale(0.9);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .modal-box-image img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .modal-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--bitel-blue);
+      margin-bottom: 10px;
+      margin-top: 0;
+    }
+
+    .modal-msg {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .modal-btn {
+      background: var(--bitel-blue);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+    }
+    .modal-btn:hover {
+      background: #08325e;
+    }
+    
+    .btn-cerrar-img {
+      margin-top: 15px;
+      background: #6c757d;
+      width: auto;
+      min-width: 120px;
+    }
+    .btn-cerrar-img:hover {
+      background: #5a6268;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      .container {
+        margin: 16px;
+        padding: 20px 16px 24px;
+      }
+      .template-selector {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .opciones-extra {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .contador-sesiones {
+        bottom: 16px;
+        right: 12px;
+      }
+      .inline-form {
+        flex-direction: column;
+      }
+      .fila-campo {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body oncontextmenu="return false;">
+  
+  <div class="contador-sesiones">
+    <div class="dot-online"></div>
+    <span class="count" id="contadorOnline">0</span>
+    <span class="label">sesiones en línea</span>
+  </div>
+
+  <div class="container">
+    <h1 class="titulo-principal">Generador de plantillas 🟡</h1>
+    <p class="subtitulo">Genera comentarios para tipificación y calidad de red.</p>
+    <div class="barra-titulo"></div>
+
+    <div class="template-selector">
+      <label for="plantilla">Tipo de plantilla:</label>
+      <select id="plantilla" onchange="cambiarPlantilla()">
+        <option value="comentario">Comentario de tipificación</option>
+        <option value="calidad">Calidad de red - Address</option>
+      </select>
+    </div>
+
+    <div id="plantillaComentario" class="inline-form">
+      <div class="fila-campo">
+        <label>Número del que llama //</label>
+        <input id="numero" maxlength="9" oninput="validarNumero(this)" placeholder="9XX XXX XXX">
+      </div>
+
+      <div class="fila-campo">
+        <label>Consulta del cliente //</label>
+        <div class="textarea-wrapper">
+          <textarea
+            id="consulta"
+            class="campo-resizable"
+            rows="1"
+            placeholder="Consulta de cliente"></textarea>
+          <span class="resize-handle" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="fila-campo">
+        <label>Respuesta brindada //</label>
+        <div class="textarea-wrapper">
+          <textarea
+            id="respuesta"
+            class="campo-resizable"
+            rows="1"
+            placeholder="Respuesta brindada"></textarea>
+          <span class="resize-handle" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="fila-campo">
+        <label>$$_ID de llamada_&&</label>
+        <input id="id" placeholder="ID de llamada">
+      </div>
+      
+      <div class="output" style="flex-basis: 100%;">
+        <strong>Resultado Tipificación:</strong><br>
+        <div id="resultadoGlobal">Resultado aparecerá aquí...</div>
+      </div>
+    </div>
+
+    <div id="plantillaCalidad" class="inline-form" style="display:none;">
+      <h3 style="flex-basis: 100%; margin-bottom: 0px; margin-top: 5px; color: var(--bitel-blue);">Llenado para Address:</h3>
+      <div style="flex-basis: 100%; height: 2px; background: var(--soft-gray); margin-bottom: 10px;"></div>
+
+      <div class="fila-campo">
+        <label>Dirección del problema,</label>
+        <input id="direccion" placeholder="Calle, Número, zona, etc" list="listaDireccion">
+        <datalist id="listaDireccion">
+          <option value="NO BRINDA DIRECCIÓN"></option>
+        </datalist>
+      </div>
+
+      <div class="fila-campo">
+        <label>Referencia del problema,</label>
+        <input id="referencia" placeholder="Mercados, paraderos, etc" list="listaReferencia">
+        <datalist id="listaReferencia">
+          <option value="NO BRINDA REFERENCIA"></option>
+          <option value="NO OBLIGATORIO"></option>
+        </datalist>
+      </div>
+  
+      <div class="fila-campo">
+        <label>Departamento -</label>
+        <input id="departamento" placeholder="Departamento" list="listaDepartamento">
+        <datalist id="listaDepartamento">
+          <option value="NO BRINDA DEPARTAMENTO"></option>
+        </datalist>
+      </div>
+
+      <div class="fila-campo">
+        <label>Provincia -</label>
+        <input id="provincia" placeholder="Provincia" list="listaProvincia">
+        <datalist id="listaProvincia">
+          <option value="NO BRINDA PROVINCIA"></option>
+        </datalist>
+      </div>
+
+      <div class="fila-campo">
+        <label>Distrito</label>
+        <input id="distrito" placeholder="Distrito" list="listaDistrito">
+        <datalist id="listaDistrito">
+          <option value="NO BRINDA DISTRITO"></option>
+        </datalist>
+      </div>
+      
+      <div class="output" style="flex-basis: 100%;">
+        <strong>Resultado Address:</strong><br>
+        <div id="resultadoAddress">Resultado aparecerá aquí...</div>
+      </div>
+      
+      <div class="button-group" style="flex-basis: 100%; margin-left: 0; margin-top: 5px;">
+        <button class="copiar-btn" id="copiarBtnAddress" onclick="copiarResultado(this, 'resultadoAddress')">📋 Copiar Address</button>
+      </div>
+      
+      <hr style="flex-basis: 100%; border: 0; border-top: 1px dashed var(--soft-gray); margin: 20px 0 10px 0;">
+
+      <h3 style="flex-basis: 100%; margin-bottom: 0px; margin-top: 20px; color: var(--bitel-blue);">Datos de Tipificación:</h3>
+      <div style="flex-basis: 100%; height: 2px; background: var(--soft-gray); margin-bottom: 10px;"></div>
+
+      <div class="fila-campo" style="max-width: 100%; min-width: 100%; margin-bottom: 5px;">
+        <label>Tipo de Descarte:</label>
+        <div class="button-group" id="grupoDescartes" style="margin-top:0;">
+          <button class="btn-opcion" data-descarte="internet" onclick="seleccionarDescarte('internet')">Descartes de internet</button>
+          <button class="btn-opcion" data-descarte="senal" onclick="seleccionarDescarte('senal')">Descartes de señal</button>
+        </div>
+      </div>
+
+      <div class="fila-campo" id="opcionesRedProblema" style="max-width: 100%; min-width: 100%; margin-bottom: 15px; display:none; flex-direction:row; gap:10px; flex-wrap:wrap;">
+          <fieldset style="border: 1px solid var(--soft-gray); border-radius: 8px; padding: 10px; margin: 0; flex: 1; min-width: 150px;">
+              <legend style="font-size: 0.78rem; font-weight: 600; color: #666; padding: 0 5px;">Red</legend>
+              <div class="button-group" id="grupoRed" style="margin-top:0;">
+                  <button class="btn-opcion" data-red="3G" onclick="seleccionarRed('3G')">3G</button>
+                  <button class="btn-opcion" data-red="4G" onclick="seleccionarRed('4G')">4G</button>
+                  <button class="btn-opcion" data-red="5G" onclick="seleccionarRed('5G')">5G</button>
+              </div>
+          </fieldset>
+          
+          <fieldset style="border: 1px solid var(--soft-gray); border-radius: 8px; padding: 10px; margin: 0; flex: 3; min-width: 250px;">
+              <legend style="font-size: 0.78rem; font-weight: 600; color: #666; padding: 0 5px;">Tipos de problemas</legend>
+              <div class="button-group" id="grupoProblemas" style="margin-top:0;">
+              </div>
+          </fieldset>
+      </div>
+
+      <div class="fila-campo">
+        <label>Número del que llama //</label>
+        <input id="numeroCalidad" maxlength="9" oninput="validarNumero(this)" placeholder="9XX XXX XXX">
+      </div>
+
+      <div class="fila-campo">
+        <label>Consulta del cliente //</label>
+        <div class="textarea-wrapper">
+          <textarea
+            id="consultaCalidad"
+            class="campo-resizable"
+            rows="1"
+            placeholder="Consulta de cliente"></textarea>
+          <span class="resize-handle" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="fila-campo">
+        <label>Respuesta brindada //</label>
+        <div class="textarea-wrapper">
+          <textarea
+            id="respuestaCalidad"
+            class="campo-resizable"
+            rows="1"
+            placeholder="Respuesta brindada"></textarea>
+          <span class="resize-handle" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="fila-campo">
+        <label>$$_ID de llamada_&&</label>
+        <input id="idCalidad" placeholder="ID de llamada">
+      </div>
+
+      <div class="fila-campo" id="contenedorBts" style="max-width: 100%; min-width: 100%; display:none;">
+        <label>BTS: <span class="enlace-ejemplo" onclick="verEjemploBts()">(clic para ver ejemplo)</span></label>
+        <input id="btsCalidad" placeholder="Información de BTS" disabled list="listaBts">
+        <datalist id="listaBts">
+          <option value="NULL"></option>
+        </datalist>
+      </div>
+      
+      <div class="output" style="flex-basis: 100%;">
+        <strong>Resultado Tipificación + BTS:</strong><br>
+        <div id="resultadoTipificacion">Resultado aparecerá aquí...</div>
+      </div>
+    </div>
+    
+    <div class="button-group" style="justify-content: flex-start; margin-top: 15px; gap: 10px; flex-wrap: wrap;">
+      <button class="copiar-btn" id="copiarBtnGlobal" onclick="copiarResultado(this, 'resultadoGlobal')" style="display:none;">📋 Copiar</button>
+      <button class="copiar-btn" id="copiarBtnTipificacion" onclick="copiarResultado(this, 'resultadoTipificacion')" style="display:none;">📋 Copiar Tipif.</button>
+      <button class="limpiar-btn" onclick="limpiarCampos()">🧹 Limpiar</button>
+      <button class="mas-opciones-btn" onclick="toggleOpciones()">⚙️ Más opciones</button>
+
+      <div class="opciones-extra" id="opcionesExtra" style="display:none;">
+        <button class="toggle-historial-btn" onclick="toggleHistorial()">📂 Historial</button>
+        <button class="exportar-historial-btn" onclick="exportarHistorial()">⬇️ Exportar</button>
+        <button class="borrar-historial-btn" onclick="borrarHistorial()">🗑️ Borrar</button>
+      </div>
+    </div>
+
+    <div class="footer-autor">
+      Developed by Cristhian Francia &copy; 2025 | All rights reserved.
+    </div>
+
+    <div id="historial"></div>
+  </div>
+
+  <div id="modalError" class="modal-overlay" onclick="cerrarModal(event)">
+    <div class="modal-box">
+      <span class="modal-icon">⚠️</span>
+      <h3 class="modal-title">¡Atención!</h3>
+      <p class="modal-msg" id="modalMsgTexto">Faltan campos por completar.</p>
+      <button class="modal-btn" onclick="cerrarModalBtn()">Entendido</button>
+    </div>
+  </div>
+
+  <div id="modalImagen" class="modal-overlay" onclick="cerrarModalImagen(event)">
+    <div class="modal-box-image">
+      <h3 class="modal-title" style="margin-bottom:10px;">Ejemplo de BTS</h3>
+      <img src="https://i.postimg.cc/7Zg7FsXL/BTS.png" alt="Ejemplo BTS">
+      <button class="modal-btn btn-cerrar-img" onclick="cerrarModalImagenBtn()">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    // ***************************************************************
+    // ⚠️ CONFIGURACIÓN: PEGA AQUÍ LA URL DE TU WEB APP
+    // ***************************************************************
+    const CONST_URL_WEB_APP = "https://script.google.com/macros/s/AKfycbzHHcr6MJDtbcbc3tJiO1hGESMdf9NZDagTAPuDJuWgyg_AiYqxCL3k_wLVdZu3PlLCsQ/exec";
+    // ***************************************************************
+
+    /* 1) LÓGICA DE LA PLANTILLA */
+    var HIST_KEY = 'historialResultados';
+    var inputs = ['numero', 'consulta', 'respuesta', 'id', 'direccion', 'referencia', 'departamento', 'provincia', 'distrito', 'numeroCalidad', 'consultaCalidad', 'respuestaCalidad', 'idCalidad', 'btsCalidad'];
+    var historial = [];
+
+    var estadoDescarte = { tipo: '', red: '', problema: '' };
+    var problemas = {
+        internet: [
+            { label: "No accede a internet", plantilla: "Cliente reporta no accede a Internet en [RED]" },
+            { label: "Lentitud", plantilla: "Cliente reporta lentitud en el servicio de Internet en [RED]" },
+            { label: "Desconexiones a internet", plantilla: "Cliente reporta desconexiones de Internet en [RED]" },
+            { label: "Problemas con aplicativos", plantilla: "Cliente reporta problemas con aplicativos al conectarse a Internet en [RED]" },
+            { label: "Otro", plantilla: "Cliente reporta otro inconveniente de internet en [RED]" }
+        ],
+        senal: [
+            { label: "Sin señal - nula", plantilla: "Cliente reporta sin señal/nula en [RED]" },
+            { label: "Señal baja", plantilla: "Cliente reporta señal baja en [RED]" },
+            { label: "Intermitencia", plantilla: "Cliente reporta intermitencia en [RED]" },
+            { label: "Otro", plantilla: "Cliente reporta otro inconveniente de señal en [RED]" }
+        ]
+    };
+
+    function cargarInicial() {
+      var guardado = localStorage.getItem(HIST_KEY);
+      historial = guardado ? JSON.parse(guardado) : [];
+      actualizarHistorial();
+      updateOutput();
+    }
+
+    function plantillaSeleccionada() { return document.getElementById('plantilla').value; }
+
+    function cambiarPlantilla() {
+      var modo = plantillaSeleccionada();
+      var cmt = document.getElementById('plantillaComentario');
+      var cal = document.getElementById('plantillaCalidad');
+      var btnGlobal = document.getElementById('copiarBtnGlobal');
+      var btnAddress = document.getElementById('copiarBtnAddress');
+      var btnTipificacion = document.getElementById('copiarBtnTipificacion');
+
+      if (modo === 'comentario') {
+        cmt.style.display = 'flex'; cal.style.display = 'none';
+        if (btnGlobal) btnGlobal.style.display = 'inline-flex';
+        if (btnAddress) btnAddress.style.display = 'none'; 
+        if (btnTipificacion) btnTipificacion.style.display = 'none';
+      } else {
+        cmt.style.display = 'none'; cal.style.display = 'flex';
+        if (btnGlobal) btnGlobal.style.display = 'none';
+        if (btnAddress) btnAddress.style.display = 'inline-flex'; 
+        if (btnTipificacion) btnTipificacion.style.display = 'inline-flex'; 
+      }
+      updateOutput();
+    }
+
+    function getUpperValue(id) {
+      var el = document.getElementById(id);
+      if (!el) return '';
+      el.value = (el.value || '').toUpperCase();
+      return el.value.trim();
+    }
+
+    function updateOutput() {
+      var modo = plantillaSeleccionada();
+      document.getElementById('resultadoAddress').innerText = 'Resultado aparecerá aquí...';
+      document.getElementById('resultadoTipificacion').innerText = 'Resultado aparecerá aquí...';
+      document.getElementById('resultadoGlobal').innerText = 'Resultado aparecerá aquí...';
+
+      if (modo === 'comentario') {
+        var numero = (document.getElementById('numero').value || '').trim();
+        var consulta = (document.getElementById('consulta').value || '').trim();
+        var respuesta = (document.getElementById('respuesta').value || '').trim();
+        var id = (document.getElementById('id').value || '').trim();
+        var resultadoGlobal = '';
+        if (numero || consulta || respuesta || id) {
+          resultadoGlobal = numero + " // " + consulta + " // " + respuesta + " // $$_" + id + "_&&";
+        }
+        document.getElementById('resultadoGlobal').innerText = resultadoGlobal || 'Resultado aparecerá aquí...';
+      } else {
+        var direccion    = getUpperValue('direccion');
+        var referencia   = getUpperValue('referencia');
+        var departamento = getUpperValue('departamento');
+        var provincia    = getUpperValue('provincia');
+        var distrito     = getUpperValue('distrito');
+        var numeroCalidad    = (document.getElementById('numeroCalidad').value || '').trim();
+        var consultaCalidad  = (document.getElementById('consultaCalidad').value || '').trim(); 
+        var respuestaCalidad = (document.getElementById('respuestaCalidad').value || '').trim();
+        var idCalidad        = (document.getElementById('idCalidad').value || '').trim();
+        var btsCalidad       = (document.getElementById('btsCalidad').value || '').trim(); 
+        var outputAddress = '';
+        var outputTipificacion = '';
+
+        if (direccion || referencia || departamento || provincia || distrito) {
+          // SE MANTIENE EL FORMATO "LUG@R:"
+          outputAddress = direccion + ", " + referencia + ", LUG@R: " + departamento + " - " + provincia + " - " + distrito;
+        }
+
+        var partesTipificacion = [];
+        if (numeroCalidad || consultaCalidad || respuestaCalidad || idCalidad) {
+           partesTipificacion.push(numeroCalidad + " // " + consultaCalidad + " // " + respuestaCalidad + " // $$_" + idCalidad + "_&&");
+        }
+        if (document.getElementById('contenedorBts').style.display !== 'none' && btsCalidad) {
+            partesTipificacion.push('BTS: ' + btsCalidad);
+        }
+        outputTipificacion = partesTipificacion.join('\n\n');
+        document.getElementById('resultadoAddress').innerText = outputAddress || 'Resultado aparecerá aquí...';
+        document.getElementById('resultadoTipificacion').innerText = outputTipificacion || 'Resultado aparecerá aquí...';
+      }
+    }
+
+    function actualizarConsultaInput() {
+        var consultaInput = document.getElementById('consultaCalidad');
+        var resultado = '';
+        if (estadoDescarte.problema) {
+            var listaProblemas = problemas[estadoDescarte.tipo];
+            var problemaObj = listaProblemas ? listaProblemas.find(p => p.label === estadoDescarte.problema) : null;
+            if (problemaObj) {
+                var redTexto = estadoDescarte.red ? estadoDescarte.red : "(FALTA RED)";
+                resultado = problemaObj.plantilla.replace('[RED]', redTexto);
+            }
+        }
+        if (resultado) consultaInput.value = resultado;
+        updateOutput();
+    }
+
+    function seleccionarDescarte(tipo) {
+        estadoDescarte.red = ''; estadoDescarte.problema = ''; estadoDescarte.tipo = tipo;
+        var contenedorBts = document.getElementById('contenedorBts');
+        var btsInput = document.getElementById('btsCalidad');
+        if (contenedorBts && btsInput) { contenedorBts.style.display = 'flex'; btsInput.disabled = false; btsInput.value = ''; }
+        document.querySelectorAll('#grupoDescartes button').forEach(btn => {
+            btn.classList.remove('btn-selected'); 
+            if (btn.dataset.descarte === tipo) btn.classList.add('btn-selected');
+        });
+        document.getElementById('opcionesRedProblema').style.display = 'flex';
+        document.querySelectorAll('#grupoRed button').forEach(btn => btn.classList.remove('btn-selected'));
+        var grupoProblemasDiv = document.getElementById('grupoProblemas');
+        grupoProblemasDiv.innerHTML = '';
+        (problemas[tipo] || []).forEach(item => {
+            var btn = document.createElement('button');
+            btn.className = 'btn-opcion'; btn.textContent = item.label; btn.dataset.problema = item.label;
+            btn.onclick = function() { seleccionarProblema(item.label, btn); };
+            grupoProblemasDiv.appendChild(btn);
+        });
+        actualizarConsultaInput();
+    }
+
+    function seleccionarRed(red) {
+        estadoDescarte.red = red;
+        document.querySelectorAll('#grupoRed button').forEach(btn => {
+            btn.classList.remove('btn-selected');
+            if (btn.dataset.red === red) btn.classList.add('btn-selected');
+        });
+        actualizarConsultaInput();
+    }
+
+    function seleccionarProblema(problema, btnElement) {
+        estadoDescarte.problema = problema;
+        Array.from(document.getElementById('grupoProblemas').children).forEach(b => b.classList.remove('btn-selected'));
+        if (btnElement) btnElement.classList.add('btn-selected');
+        actualizarConsultaInput();
+    }
+
+    function inicializarRedimensionamiento() {}
+    function limpiarTamañosTextareas() {
+      document.querySelectorAll('.campo-resizable').forEach(function(textarea) { textarea.style.width = ''; textarea.style.height = ''; });
+    }
+    function mostrarAlerta(mensaje) {
+      var modal = document.getElementById('modalError');
+      if (modal) { document.getElementById('modalMsgTexto').textContent = mensaje; modal.style.display = 'flex'; } else { alert(mensaje); }
+    }
+    function cerrarModalBtn() { document.getElementById('modalError').style.display = 'none'; }
+    function cerrarModal(event) { if (event.target.id === 'modalError') event.target.style.display = 'none'; }
+    function verEjemploBts() { document.getElementById('modalImagen').style.display = 'flex'; }
+    function cerrarModalImagen(event) { if (event.target.id === 'modalImagen') event.target.style.display = 'none'; }
+    function cerrarModalImagenBtn() { document.getElementById('modalImagen').style.display = 'none'; }
+
+    function isVacio(id) { var el = document.getElementById(id); var val = el ? el.value : ''; return !val || val.trim() === ''; }
+    function validarAntesDeCopiar(resultadoId) {
+      if (resultadoId === 'resultadoGlobal') return true;
+      if (resultadoId === 'resultadoAddress') {
+        if (isVacio('direccion') || isVacio('departamento') || isVacio('provincia') || isVacio('distrito')) {
+           mostrarAlerta('⚠️ Faltan datos de Dirección o Ubigeo (Dep/Prov/Dist).'); return false;
+        }
+        return true;
+      }
+      if (resultadoId === 'resultadoTipificacion') {
+        if (isVacio('numeroCalidad') || isVacio('consultaCalidad') || isVacio('respuestaCalidad') || isVacio('idCalidad')) {
+           mostrarAlerta('⚠️ Faltan datos de Tipificación (Número, Consulta, Respuesta o ID).'); return false;
+        }
+        if (estadoDescarte.tipo && !estadoDescarte.red) {
+             mostrarAlerta('⚠️ Has seleccionado un descarte, pero olvidaste seleccionar la RED (3G, 4G o 5G).'); return false;
+        }
+        if (document.getElementById('contenedorBts').style.display !== 'none' && isVacio('btsCalidad')) {
+             mostrarAlerta('⚠️ Para descartes de red/señal, el campo BTS es obligatorio. (Usa NULL si no tienes el dato).'); return false;
+        }
+        return true;
+      }
+      return true;
+    }
+
+    function copiarResultado(copyButton, resultadoId) {
+      if (!validarAntesDeCopiar(resultadoId)) return;
+      var resultado = document.getElementById(resultadoId).innerText;
+      if (!resultado || resultado === 'Resultado aparecerá aquí...') { showCopyFeedback('noContent', copyButton); return; }
+      historial.push({ texto: resultado, fecha: new Date().toLocaleDateString('es-PE') });
+      guardarHistorial();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(resultado).then(function() { showCopyFeedback(true, copyButton); })
+          .catch(function() { copiarConFallback(resultado, copyButton); });
+      } else { copiarConFallback(resultado, copyButton); }
+    }
+
+    function showCopyFeedback(success, button) {
+      var originalText = button.innerHTML;
+      if (success === 'noContent') {
+        button.innerHTML = 'ℹ️ Nada'; button.classList.add('copied');
+        setTimeout(function() { button.innerHTML = originalText; button.classList.remove('copied'); }, 1500);
+        return;
+      }
+      button.innerHTML = success ? '✅ Copiado!' : '❌ Error'; button.classList.add('copied');
+      setTimeout(function() { button.innerHTML = originalText; button.classList.remove('copied'); }, 1500);
+    }
+    function copiarConFallback(texto, button) {
+      var area = document.createElement('textarea'); area.value = texto; document.body.appendChild(area); area.select();
+      try { document.execCommand('copy'); showCopyFeedback(true, button); } catch (err) { showCopyFeedback(false, button); }
+      document.body.removeChild(area);
+    }
+    function limpiarCampos() {
+      inputs.forEach(id => { var el = document.getElementById(id); if (el) el.value = ''; });
+      document.getElementById('resultadoGlobal').innerText = 'Resultado aparecerá aquí...';
+      document.getElementById('resultadoAddress').innerText = 'Resultado aparecerá aquí...';
+      document.getElementById('resultadoTipificacion').innerText = 'Resultado aparecerá aquí...';
+      estadoDescarte.tipo = ''; estadoDescarte.red = ''; estadoDescarte.problema = '';
+      document.getElementById('opcionesRedProblema').style.display = 'none';
+      var contBts = document.getElementById('contenedorBts'); var btsIn = document.getElementById('btsCalidad');
+      if (contBts) contBts.style.display = 'none'; if (btsIn) { btsIn.disabled = true; btsIn.value = ''; }
+      document.querySelectorAll('.btn-selected').forEach(btn => btn.classList.remove('btn-selected'));
+      document.getElementById('grupoProblemas').innerHTML = '';
+      limpiarTamañosTextareas();
+    }
+    function validarNumero(input) { input.value = input.value.replace(/[^0-9]/g, ''); }
+    function toggleOpciones() {
+      var extra = document.getElementById('opcionesExtra'); var btn = document.querySelector('.mas-opciones-btn');
+      if (extra.style.display === 'none') { extra.style.display = 'flex'; btn.textContent = "⏹ Ocultar opciones"; }
+      else { extra.style.display = 'none'; document.getElementById('historial').style.display = 'none'; btn.textContent = "⚙️ Más opciones"; }
+    }
+    function toggleHistorial() { var h = document.getElementById('historial'); h.style.display = (h.style.display === 'none') ? 'block' : 'none'; }
+    function actualizarHistorial() {
+      var hDiv = document.getElementById('historial'); hDiv.innerHTML = '';
+      var aviso = document.createElement('div'); aviso.className = 'historial-aviso'; aviso.textContent = "⚠️ El historial es temporal y no 100% seguro; no olvides tipificar todas tus llamadas en línea."; hDiv.appendChild(aviso);
+      var grupos = {}; historial.forEach(item => { if (!grupos[item.fecha]) grupos[item.fecha] = []; grupos[item.fecha].push(item); });
+      Object.keys(grupos).sort().reverse().forEach(fecha => {
+        var fDiv = document.createElement('div'); fDiv.className = 'historial-fecha'; fDiv.textContent = "📅 " + fecha; hDiv.appendChild(fDiv);
+        grupos[fecha].slice().reverse().forEach(it => {
+          var div = document.createElement('div'); div.className = 'historial-item';
+          var txt = document.createElement('div'); txt.className = 'historial-texto'; txt.textContent = it.texto;
+          var btn = document.createElement('button'); btn.className = 'historial-copy-btn'; btn.textContent = '📋 Copiar';
+          btn.onclick = function() { copiarDelHistorial(it.texto, btn, div); };
+          div.appendChild(txt); div.appendChild(btn); hDiv.appendChild(div);
+        });
+      });
+    }
+    function copiarDelHistorial(txt, btn, div) {
+      if (navigator.clipboard) navigator.clipboard.writeText(txt).then(() => { showCopyFeedback(true, btn); div.classList.add('highlight'); setTimeout(() => div.classList.remove('highlight'), 1000); });
+      else { copiarConFallback(txt, btn); div.classList.add('highlight'); setTimeout(() => div.classList.remove('highlight'), 1000); }
+    }
+    function borrarHistorial() { if (confirm('¿Seguro?')) { historial = []; guardarHistorial(); } }
+    function exportarHistorial() {
+      if (!historial.length) return alert('Vacío');
+      var txt = '(Historial temporal)\n\n' + historial.map(h => "📅 " + h.fecha + "\n" + h.texto).join('\n\n');
+      var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], {type: 'text/plain'})); a.download = 'historial.txt'; a.click();
+    }
+    function guardarHistorial() { localStorage.setItem(HIST_KEY, JSON.stringify(historial)); actualizarHistorial(); }
+
+    /* 2) UBIGEO Y CONEXIÓN HÍBRIDA (GOOGLE <-> GITHUB) */
+    var ubigeoData = []; var mapaUbigeo = {};
+
+    function callBackend(action, params, onSuccess, onError) {
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        // MODO GOOGLE
+        if (action === 'getUbigeoData') {
+           google.script.run.withSuccessHandler(onSuccess).getUbigeoData();
+        } else if (action === 'updatePresence') {
+           google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).updatePresence(params.sessionId, params.userAgent);
+        }
+      } else {
+        // MODO GITHUB (EXTERNO)
+        if (!CONST_URL_WEB_APP || CONST_URL_WEB_APP.includes("PEGAR_AQUI")) {
+           console.warn("Falta configurar la URL de la Web App para el modo GitHub");
+           return;
+        }
+        var payload = { action: action };
+        if (params) { payload.sessionId = params.sessionId; payload.userAgent = params.userAgent; }
+        
+        fetch(CONST_URL_WEB_APP, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result !== undefined) onSuccess(data.result);
+            else if (onError) onError(data.error);
+        })
+        .catch(err => { if (onError) onError(err); });
+      }
+    }
+
+    function poblarDatalist(id, opts) {
+      var dl = document.getElementById(id); if (!dl) return; dl.innerHTML = '';
+      var ph = (id === 'listaDepartamento') ? 'NO BRINDA DEPARTAMENTO' : (id === 'listaProvincia' ? 'NO BRINDA PROVINCIA' : 'NO BRINDA DISTRITO');
+      var opt0 = document.createElement('option'); opt0.value = ph; dl.appendChild(opt0);
+      (opts || []).forEach(t => { var o = document.createElement('option'); o.value = t; dl.appendChild(o); });
+    }
+
+    function initUbigeo(data) {
+      ubigeoData = data || []; mapaUbigeo = {};
+      ubigeoData.forEach(r => {
+        var d = (r.dep||'').toUpperCase().trim(), p = (r.prov||'').toUpperCase().trim(), di = (r.dist||'').toUpperCase().trim();
+        if(!d||!p||!di) return;
+        if(!mapaUbigeo[d]) mapaUbigeo[d] = {}; if(!mapaUbigeo[d][p]) mapaUbigeo[d][p] = [];
+        if(mapaUbigeo[d][p].indexOf(di) === -1) mapaUbigeo[d][p].push(di);
+      });
+      poblarDatalist('listaDepartamento', Object.keys(mapaUbigeo).sort());
+    }
+
+    function onDepartamentoChange() {
+      var d = getUpperValue('departamento'); var provs = (d && mapaUbigeo[d]) ? Object.keys(mapaUbigeo[d]).sort() : [];
+      document.getElementById('provincia').value = ''; document.getElementById('distrito').value = '';
+      poblarDatalist('listaProvincia', provs); poblarDatalist('listaDistrito', []); updateOutput();
+    }
+    function onProvinciaChange() {
+      var d = getUpperValue('departamento'), p = getUpperValue('provincia');
+      var dists = (d && p && mapaUbigeo[d] && mapaUbigeo[d][p]) ? mapaUbigeo[d][p].slice().sort() : [];
+      document.getElementById('distrito').value = ''; poblarDatalist('listaDistrito', dists); updateOutput();
+    }
+
+    function cargarUbigeo() {
+      callBackend('getUbigeoData', null, initUbigeo);
+    }
+
+    /* 3) PRESENCIA (CORREGIDO PARA GITHUB USANDO GET) */
+    function obtenerSessionId() {
+      try { if (sessionStorage) { var s = sessionStorage.getItem("sessionIdBitel"); if(!s) { s="sess_"+Date.now()+"_"+Math.random().toString(16).substring(2); sessionStorage.setItem("sessionIdBitel", s); } return s; } } catch(e){}
+      return "sess_"+Date.now()+"_"+Math.random().toString(16).substring(2);
+    }
+    
+    var SID_ACTUAL = obtenerSessionId();
+    
+    function actualizarContadorSesiones(c) { var el=document.getElementById("contadorOnline"); if(el && typeof c==='number') el.textContent=c; }
+    function mostrarErrorContador(e) { console.log('Err presencia', e); document.getElementById("contadorOnline").textContent='⚠'; }
+    
+/* MODIFICADO: Usa GET + NO CACHE (Timestamp) */
+    function enviarLatidoPresencia() {
+      var ua = navigator.userAgent || '';
+      
+      // MODO APPSCRIPT (Interno)
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+         google.script.run
+           .withSuccessHandler(actualizarContadorSesiones)
+           .withFailureHandler(mostrarErrorContador)
+           .updatePresence(SID_ACTUAL, ua);
+      } 
+      // MODO GITHUB (Externo)
+      else {
+        // 🔥 TRUCO ANTI-CACHÉ: Agregamos el timestamp actual
+        var timestamp = new Date().getTime(); 
+
+        var urlConParams = CONST_URL_WEB_APP + 
+                           "?action=updatePresence" + 
+                           "&sessionId=" + encodeURIComponent(SID_ACTUAL) + 
+                           "&userAgent=" + encodeURIComponent(ua) +
+                           "&nocache=" + timestamp; // <--- ESTO ES LA CLAVE
+
+        fetch(urlConParams, { method: 'GET' }) 
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+           if (data.result !== undefined) {
+             actualizarContadorSesiones(data.result);
+           }
+        })
+        .catch(function(err) {
+           console.log("Error latido GitHub:", err);
+        });
+      }
+    }
+    
+    function iniciarPresencia() {
+      enviarLatidoPresencia();
+      setInterval(enviarLatidoPresencia, 10000);
+    }
+
+    /* 4) INICIALIZACIÓN GLOBAL */
+    window.addEventListener('load', function() {
+      console.clear(); console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
+      console.log("%cSystem by cefratech.", "color: #0c477e; font-size: 16px;");
+      
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.addEventListener('keydown', e => { if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) e.preventDefault(); });
+
+      inputs.forEach(id => { var el = document.getElementById(id); if (el) el.addEventListener('input', updateOutput); });
+      var dep = document.getElementById('departamento'), prov = document.getElementById('provincia');
+      if (dep) dep.addEventListener('change', onDepartamentoChange);
+      if (prov) prov.addEventListener('change', onProvinciaChange);
+
+      inicializarRedimensionamiento();
+      cambiarPlantilla();
+      document.getElementById('opcionesRedProblema').style.display = 'none';
+      var bts = document.getElementById('btsCalidad'), cBts = document.getElementById('contenedorBts');
+      if (bts) bts.disabled = true; if (cBts) cBts.style.display = 'none';
+
+      cargarInicial();
+      cargarUbigeo();
+      iniciarPresencia(); // Arranca el contador
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Rubí | ¡Felicidades!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&family=Dancing+Script:wght@700&display=swap');
+
+        :root {
+            --primary: #e84393;
+            --secondary: #fd79a8;
+            --bg-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--bg-gradient);
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+
+        /* --- ESCENARIO --- */
+        .stage-container {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            max-height: 850px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- CAJA DE REGALO --- */
+        .gift-container {
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .gift-box {
+            width: 160px;
+            height: 160px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            position: relative;
+            animation: bounce 2s infinite;
+        }
+
+        .gift-ribbon-v {
+            position: absolute; left: 50%; top: 0; width: 35px; height: 100%;
+            background: var(--primary); transform: translateX(-50%);
+        }
+        .gift-ribbon-h {
+            position: absolute; top: 50%; left: 0; width: 100%; height: 35px;
+            background: var(--primary); transform: translateY(-50%);
+        }
+        .gift-bow {
+            position: absolute; top: -25px; left: 50%; width: 50px; height: 50px;
+            background: var(--primary); transform: translateX(-50%) rotate(45deg);
+            border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .tap-hint {
+            text-align: center; margin-top: 25px; color: var(--primary);
+            font-weight: 600; letter-spacing: 1px; animation: pulse 1.5s infinite;
+        }
+
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+
+        .gift-container.opened {
+            transform: scale(1.5); opacity: 0; pointer-events: none;
+        }
+
+        /* --- TARJETA DE FOTO --- */
+        .photo-card-container {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 95%;
+            max-width: 420px;
+            height: 85vh; /* Ajuste para móviles */
+            background: #fff; /* Fondo blanco por si la imagen tarda en cargar */
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            opacity: 0; visibility: hidden;
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 5;
+        }
+
+        .photo-card-container.active {
+            opacity: 1; visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .hero-image {
+            width: 100%; 
+            height: 100%;
+            object-fit: cover; 
+            /* Esto ayuda a centrar tu foto vertical */
+            object-position: center bottom; 
+            display: block;
+        }
+
+        /* --- TEXTO OVERLAY --- */
+        .text-overlay {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            max-height: 65%; /* Ocupa un poco más de la mitad para que se vea el oso arriba */
+            padding: 25px 20px;
+            background: rgba(255, 255, 255, 0.92); /* Un poco más sólido para leer mejor */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            text-align: center;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-radius: 20px 20px 0 0; /* Redondeado arriba */
+        }
+
+        .badge {
+            align-self: center;
+            background: var(--primary); color: white;
+            padding: 5px 15px; border-radius: 20px;
+            font-size: 0.7rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #2d3436; font-size: 2rem; line-height: 1;
+        }
+
+        h2 {
+            color: var(--primary); font-size: 0.9rem;
+            font-weight: 800; text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .message-body {
+            color: #636e72; font-size: 0.85rem;
+            line-height: 1.5; font-weight: 500;
+            text-align: justify;
+            text-align-last: center;
+        }
+        
+        .message-body p { margin-bottom: 8px; }
+
+        .highlight { color: var(--primary); font-weight: 800; }
+
+        .signature {
+            margin-top: 10px; font-size: 0.8rem; color: #2d3436;
+            padding-top: 10px; border-top: 1px dashed #fab1a0;
+        }
+        
+        .footer { font-size: 0.7rem; color: #b2bec3; margin-top: 5px; }
+
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-9835.mp3" type="audio/mpeg">
+        Tu navegador no soporta el audio.
+    </audio>
+
+    <div class="stage-container">
+        
+        <div class="gift-container" id="giftTrigger" onclick="revealSurprise()">
+            <div class="gift-box">
+                <div class="gift-ribbon-v"></div>
+                <div class="gift-ribbon-h"></div>
+                <div class="gift-bow"></div>
+            </div>
+            <div class="tap-hint">Toca para Rubí ✨</div>
+        </div>
+
+        <div class="photo-card-container" id="finalCard">
+            <img src="https://drive.google.com/uc?export=view&id=1gGRIokZ20x5iCLLU2KYbD5UmtbcIRHKY" alt="Regalo para Rubí" class="hero-image">
+            
+            <div class="text-overlay">
+                <span class="badge">¡PARA MI CHICA HERMOSA!</span>
+                <h1>¡Felicidades, mi amor!</h1>
+                <h2>Nueva Supervisora de Calidad</h2>
+                
+                <div class="message-body">
+                    <p>Hoy quiero detener el tiempo solo un momento para decirte lo <span class="highlight">orgulloso</span> que me siento de ti.</p>
+                    <p>Este ascenso no llegó por suerte. Llegó por tu <span class="highlight">esfuerzo diario</span>, por tu disciplina, por esas veces en las que seguiste adelante incluso cuando estabas cansada.</p>
+                    <p>Pasaste de ser apoyo a <span class="highlight">Supervisora</span>, demostrando que eres capaz de cosas enormes. ¿Aunque tú a veces no lo notes? Jajaja, yo confío en ti.</p>
+                    <p>Admiro la mujer increíble que eres. <span class="highlight">Te quiero mucho</span>, siempre estaré aquí celebrando contigo. ✨❤️</p>
+                </div>
+
+                <div class="signature">
+                    Con todo mi amor,<br>
+                    <strong>El intenso, el peleandero, el dramático que siempre está a tu lado.</strong>
+                </div>
+
+                <div class="footer">Hecho con mucho amor ❤️✨</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        function revealSurprise() {
+            const gift = document.getElementById('giftTrigger');
+            const card = document.getElementById('finalCard');
+            const music = document.getElementById('bgMusic');
+
+            // Reproducir música (Volumen suave)
+            music.volume = 0.5;
+            music.play().catch(error => {
+                console.log("El navegador bloqueó la reproducción automática, intenta tocar de nuevo.");
+            });
+
+            // Animar regalo
+            gift.classList.add('opened');
+
+            // Confeti
+            const duration = 3000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#e84393', '#fd79a8', '#ffeaa7'] });
+                confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#e84393', '#fd79a8', '#ffeaa7'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+
+            // Mostrar tarjeta
+            setTimeout(() => {
+                card.classList.add('active');
+            }, 500);
+        }
+    </script>
+</body>
+</html>

@@ -167,19 +167,14 @@
         
         .footer { font-size: 0.7rem; color: #b2bec3; margin-top: 5px; }
 
-        /* Estilo para ocultar el reproductor de YouTube visualmente pero mantenerlo activo */
-        #youtube-player {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-            visibility: hidden;
-        }
-
     </style>
 </head>
 <body>
 
-    <div id="youtube-player"></div>
+    <audio id="bgMusic" loop preload="auto">
+        <source src="cancion.mp3" type="audio/mpeg">
+        Tu navegador no soporta el audio.
+    </audio>
 
     <div class="stage-container">
         
@@ -219,48 +214,23 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
-        // --- 1. CONFIGURACIÓN DE YOUTUBE ---
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                height: '0',
-                width: '0',
-                videoId: 'bVI3pslviHg', // ID del video de Yiruma
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1, // Bucle para que no pare
-                    'playlist': 'bVI3pslviHg' // Necesario para el bucle
-                },
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // El reproductor está listo, esperando el clic
-            console.log("Música lista");
-        }
-
-        // --- 2. LÓGICA DEL REGALO ---
         function revealSurprise() {
             const gift = document.getElementById('giftTrigger');
             const card = document.getElementById('finalCard');
+            const music = document.getElementById('bgMusic');
 
-            // A) Reproducir música de YouTube al hacer clic
-            if (player && player.playVideo) {
-                player.setVolume(50); // Volumen al 50%
-                player.playVideo();
-            }
+            // 1. REPRODUCIR MÚSICA (Esto funciona en móvil porque es resultado de un clic)
+            music.volume = 0.5;
+            music.play().catch(error => {
+                console.log("Error al reproducir audio:", error);
+            });
 
-            // B) Animar apertura
+            // 2. ANIMACIÓN
             gift.classList.add('opened');
 
-            // C) Confeti
+            // 3. CONFETI
             const duration = 3000;
             const end = Date.now() + duration;
 
@@ -270,7 +240,7 @@
                 if (Date.now() < end) requestAnimationFrame(frame);
             }());
 
-            // D) Mostrar tarjeta
+            // 4. MOSTRAR TARJETA
             setTimeout(() => {
                 card.classList.add('active');
             }, 500);

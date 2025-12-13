@@ -173,7 +173,6 @@
 
     <audio id="bgMusic" loop preload="auto">
         <source src="cancion.mp3" type="audio/mpeg">
-        Tu navegador no soporta el audio.
     </audio>
 
     <div class="stage-container">
@@ -221,16 +220,36 @@
             const card = document.getElementById('finalCard');
             const music = document.getElementById('bgMusic');
 
-            // 1. REPRODUCIR MÚSICA (Esto funciona en móvil porque es resultado de un clic)
-            music.volume = 0.5;
-            music.play().catch(error => {
-                console.log("Error al reproducir audio:", error);
-            });
+            // --- INTENTO DE REPRODUCCIÓN CON DIAGNÓSTICO ---
+            var playPromise = music.play();
 
-            // 2. ANIMACIÓN
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // La música empezó correctamente
+                    console.log("Audio reproduciéndose");
+                })
+                .catch(error => {
+                    // Algo falló
+                    console.log("Error de audio:", error);
+                    // Si el error es que no encuentra el archivo (404) o formato
+                    if(error.name === "NotSupportedError" || error.message.includes("supported")) {
+                         alert("Error: El formato de audio no es compatible o no se encuentra.");
+                    } else {
+                        // En móviles a veces falla si no es por toque directo, 
+                        // pero aquí estamos en un onclick, así que debería ir bien.
+                        // Comprobamos si el archivo existe cargándolo
+                        const audioCheck = new Audio('cancion.mp3');
+                        audioCheck.onerror = function() {
+                             alert("⚠️ ATENCIÓN: No encuentro el archivo 'cancion.mp3'. \n\nAsegúrate de que subiste el archivo dentro de la carpeta 'code' en GitHub y que el nombre está todo en minúsculas.");
+                        };
+                    }
+                });
+            }
+
+            // --- ANIMACIÓN ---
             gift.classList.add('opened');
 
-            // 3. CONFETI
+            // --- CONFETI ---
             const duration = 3000;
             const end = Date.now() + duration;
 
@@ -240,7 +259,7 @@
                 if (Date.now() < end) requestAnimationFrame(frame);
             }());
 
-            // 4. MOSTRAR TARJETA
+            // --- MOSTRAR TARJETA ---
             setTimeout(() => {
                 card.classList.add('active');
             }, 500);

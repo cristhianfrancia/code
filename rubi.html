@@ -90,7 +90,7 @@
             width: 95%;
             max-width: 420px;
             height: 85vh; /* Ajuste para móviles */
-            background: #fff; /* Fondo blanco por si la imagen tarda en cargar */
+            background: #fff;
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 25px 50px rgba(0,0,0,0.25);
@@ -108,7 +108,6 @@
             width: 100%; 
             height: 100%;
             object-fit: cover; 
-            /* Esto ayuda a centrar tu foto vertical */
             object-position: center bottom; 
             display: block;
         }
@@ -117,9 +116,9 @@
         .text-overlay {
             position: absolute;
             bottom: 0; left: 0; width: 100%;
-            max-height: 65%; /* Ocupa un poco más de la mitad para que se vea el oso arriba */
+            max-height: 65%;
             padding: 25px 20px;
-            background: rgba(255, 255, 255, 0.92); /* Un poco más sólido para leer mejor */
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-top: 1px solid rgba(255, 255, 255, 0.5);
@@ -128,7 +127,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            border-radius: 20px 20px 0 0; /* Redondeado arriba */
+            border-radius: 20px 20px 0 0;
         }
 
         .badge {
@@ -173,7 +172,7 @@
 <body>
 
     <audio id="bgMusic" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-9835.mp3" type="audio/mpeg">
+        <source src="https://archive.org/download/nocturneineflatmajorop.9no.2/Nocturne%20in%20E%20flat%20major%2C%20Op.%209%20no.%202.mp3" type="audio/mpeg">
         Tu navegador no soporta el audio.
     </audio>
 
@@ -222,8 +221,8 @@
             const card = document.getElementById('finalCard');
             const music = document.getElementById('bgMusic');
 
-            // Reproducir música (Volumen suave)
-            music.volume = 0.5;
+            // Reproducir música (Volumen al 60% para que sea envolvente)
+            music.volume = 0.6;
             music.play().catch(error => {
                 console.log("El navegador bloqueó la reproducción automática, intenta tocar de nuevo.");
             });
@@ -231,7 +230,7 @@
             // Animar regalo
             gift.classList.add('opened');
 
-            // Confeti
+            // Confeti (Rosado y Dorado)
             const duration = 3000;
             const end = Date.now() + duration;
 

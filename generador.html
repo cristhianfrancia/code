@@ -644,17 +644,18 @@
     <div id="plantillaComentario" class="inline-form">
       <div class="fila-campo">
         <label>Número del que llama //</label>
-        <input id="numero" maxlength="9" oninput="validarNumero(this)" placeholder="9XX XXX XXX">
+        <input id="numero" maxlength="9" oninput="validarNumero(this)" placeholder="9XX XXX XXX" spellcheck="true" lang="es">
       </div>
 
       <div class="fila-campo">
         <label>Consulta del cliente //</label>
         <div class="textarea-wrapper">
-          <textarea
-            id="consulta"
-            class="campo-resizable"
-            rows="1"
-            placeholder="Consulta de cliente"></textarea>
+          <textarea 
+            id="consulta" 
+            class="campo-resizable" 
+            rows="1" 
+            placeholder="Consulta de cliente"
+            spellcheck="true" lang="es"></textarea>
           <span class="resize-handle" aria-hidden="true"></span>
         </div>
       </div>
@@ -662,18 +663,19 @@
       <div class="fila-campo">
         <label>Respuesta brindada //</label>
         <div class="textarea-wrapper">
-          <textarea
-            id="respuesta"
-            class="campo-resizable"
-            rows="1"
-            placeholder="Respuesta brindada"></textarea>
+          <textarea 
+            id="respuesta" 
+            class="campo-resizable" 
+            rows="1" 
+            placeholder="Respuesta brindada"
+            spellcheck="true" lang="es"></textarea>
           <span class="resize-handle" aria-hidden="true"></span>
         </div>
       </div>
 
       <div class="fila-campo">
         <label>$$_ID de llamada_&&</label>
-        <input id="id" placeholder="ID de llamada">
+        <input id="id" placeholder="ID de llamada" spellcheck="true" lang="es">
       </div>
       
       <div class="output" style="flex-basis: 100%;">
@@ -688,7 +690,7 @@
 
       <div class="fila-campo">
         <label>Dirección del problema,</label>
-        <input id="direccion" placeholder="Calle, Número, zona, etc" list="listaDireccion">
+        <input id="direccion" placeholder="Calle, Número, zona, etc" list="listaDireccion" spellcheck="true" lang="es">
         <datalist id="listaDireccion">
           <option value="NO BRINDA DIRECCIÓN"></option>
         </datalist>
@@ -696,7 +698,7 @@
 
       <div class="fila-campo">
         <label>Referencia del problema,</label>
-        <input id="referencia" placeholder="Mercados, paraderos, etc" list="listaReferencia">
+        <input id="referencia" placeholder="Mercados, paraderos, etc" list="listaReferencia" spellcheck="true" lang="es">
         <datalist id="listaReferencia">
           <option value="NO BRINDA REFERENCIA"></option>
           <option value="NO OBLIGATORIO"></option>
@@ -705,7 +707,7 @@
   
       <div class="fila-campo">
         <label>Departamento -</label>
-        <input id="departamento" placeholder="Departamento" list="listaDepartamento">
+        <input id="departamento" placeholder="Departamento" list="listaDepartamento" spellcheck="true" lang="es">
         <datalist id="listaDepartamento">
           <option value="NO BRINDA DEPARTAMENTO"></option>
         </datalist>
@@ -713,7 +715,7 @@
 
       <div class="fila-campo">
         <label>Provincia -</label>
-        <input id="provincia" placeholder="Provincia" list="listaProvincia">
+        <input id="provincia" placeholder="Provincia" list="listaProvincia" spellcheck="true" lang="es">
         <datalist id="listaProvincia">
           <option value="NO BRINDA PROVINCIA"></option>
         </datalist>
@@ -721,7 +723,7 @@
 
       <div class="fila-campo">
         <label>Distrito</label>
-        <input id="distrito" placeholder="Distrito" list="listaDistrito">
+        <input id="distrito" placeholder="Distrito" list="listaDistrito" spellcheck="true" lang="es">
         <datalist id="listaDistrito">
           <option value="NO BRINDA DISTRITO"></option>
         </datalist>
@@ -768,17 +770,18 @@
 
       <div class="fila-campo">
         <label>Número del que llama //</label>
-        <input id="numeroCalidad" maxlength="9" oninput="validarNumero(this)" placeholder="9XX XXX XXX">
+        <input id="numeroCalidad" maxlength="9" oninput="validarNumero(this)" placeholder="9XX XXX XXX" spellcheck="true" lang="es">
       </div>
 
       <div class="fila-campo">
         <label>Consulta del cliente //</label>
         <div class="textarea-wrapper">
-          <textarea
-            id="consultaCalidad"
-            class="campo-resizable"
-            rows="1"
-            placeholder="Consulta de cliente"></textarea>
+          <textarea 
+            id="consultaCalidad" 
+            class="campo-resizable" 
+            rows="1" 
+            placeholder="Consulta de cliente"
+            spellcheck="true" lang="es"></textarea>
           <span class="resize-handle" aria-hidden="true"></span>
         </div>
       </div>
@@ -786,23 +789,24 @@
       <div class="fila-campo">
         <label>Respuesta brindada //</label>
         <div class="textarea-wrapper">
-          <textarea
-            id="respuestaCalidad"
-            class="campo-resizable"
-            rows="1"
-            placeholder="Respuesta brindada"></textarea>
+          <textarea 
+            id="respuestaCalidad" 
+            class="campo-resizable" 
+            rows="1" 
+            placeholder="Respuesta brindada"
+            spellcheck="true" lang="es"></textarea>
           <span class="resize-handle" aria-hidden="true"></span>
         </div>
       </div>
 
       <div class="fila-campo">
         <label>$$_ID de llamada_&&</label>
-        <input id="idCalidad" placeholder="ID de llamada">
+        <input id="idCalidad" placeholder="ID de llamada" spellcheck="true" lang="es">
       </div>
 
       <div class="fila-campo" id="contenedorBts" style="max-width: 100%; min-width: 100%; display:none;">
         <label>BTS: <span class="enlace-ejemplo" onclick="verEjemploBts()">(clic para ver ejemplo)</span></label>
-        <input id="btsCalidad" placeholder="Información de BTS" disabled list="listaBts">
+        <input id="btsCalidad" placeholder="Información de BTS" disabled list="listaBts" spellcheck="true" lang="es">
         <datalist id="listaBts">
           <option value="NULL"></option>
         </datalist>
@@ -1197,7 +1201,7 @@
       callBackend('getUbigeoData', null, initUbigeo);
     }
 
-    /* 3) PRESENCIA (CORREGIDO PARA GITHUB USANDO GET) */
+    /* 3) PRESENCIA (CORREGIDO PARA GITHUB USANDO GET Y LATIDO 60s) */
     function obtenerSessionId() {
       try { if (sessionStorage) { var s = sessionStorage.getItem("sessionIdBitel"); if(!s) { s="sess_"+Date.now()+"_"+Math.random().toString(16).substring(2); sessionStorage.setItem("sessionIdBitel", s); } return s; } } catch(e){}
       return "sess_"+Date.now()+"_"+Math.random().toString(16).substring(2);
@@ -1208,7 +1212,7 @@
     function actualizarContadorSesiones(c) { var el=document.getElementById("contadorOnline"); if(el && typeof c==='number') el.textContent=c; }
     function mostrarErrorContador(e) { console.log('Err presencia', e); document.getElementById("contadorOnline").textContent='⚠'; }
     
-/* MODIFICADO: Usa GET + NO CACHE (Timestamp) */
+    /* MODIFICADO: Usa GET + NO CACHE (Timestamp) */
     function enviarLatidoPresencia() {
       var ua = navigator.userAgent || '';
       
@@ -1245,36 +1249,73 @@
     
     function iniciarPresencia() {
       enviarLatidoPresencia();
-      setInterval(enviarLatidoPresencia, 10000);
+      // CAMBIO IMPORTANTE: 60000ms (1 min) para soportar 200 usuarios
+      setInterval(enviarLatidoPresencia, 60000);
     }
 
-    /* 4) INICIALIZACIÓN GLOBAL */
+    /* 4) INICIALIZACIÓN GLOBAL Y SEGURIDAD MEJORADA */
     window.addEventListener('load', function() {
-      console.clear(); console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
-      console.log("%cSystem by cefratech.", "color: #0c477e; font-size: 16px;");
-      
-      document.addEventListener('contextmenu', e => e.preventDefault());
-      document.addEventListener('keydown', e => { if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) e.preventDefault(); });
+      // MARCA DE AGUA EN CONSOLA (Seguridad por Obfuscación Visual)
+      console.clear();
+      console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
+      console.log("%cEste sistema ha sido desarrollado exclusivamente por Cristhian Francia.", "color: #0c477e; font-size: 16px;");
+      console.log("%cEl uso no autorizado o la copia de este código está prohibida.", "font-size: 14px;");
 
-      inputs.forEach(id => { var el = document.getElementById(id); if (el) el.addEventListener('input', updateOutput); });
-      var dep = document.getElementById('departamento'), prov = document.getElementById('provincia');
-      if (dep) dep.addEventListener('change', onDepartamentoChange);
-      if (prov) prov.addEventListener('change', onProvinciaChange);
+      // ANTI-COPY INTELIGENTE: Bloquear clic derecho MENOS en campos editables (para ortografía)
+      document.addEventListener('contextmenu', function(e) {
+        var target = e.target;
+        var tagName = target.tagName;
+        // Permitimos clic derecho solo en Textarea o Inputs de texto
+        var esEditable = (tagName === 'TEXTAREA' || (tagName === 'INPUT' && target.type === 'text'));
+        
+        if (!esEditable) {
+           e.preventDefault();
+        }
+      });
 
+      // ANTI-INSPECT (Básico): Bloquear teclas F12, Ctrl+Shift+I, Ctrl+U
+      document.addEventListener('keydown', function(e) {
+        if (
+          e.key === 'F12' || 
+          (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+          (e.ctrlKey && e.key === 'u')
+        ) {
+          e.preventDefault();
+        }
+      });
+
+      // Eventos para actualizar el resultado
+      for (var i = 0; i < inputs.length; i++) {
+        var el = document.getElementById(inputs[i]);
+        if (el) {
+          el.addEventListener('input', updateOutput);
+        }
+      }
+
+      // Eventos específicos de Ubigeo
+      var depInput  = document.getElementById('departamento');
+      var provInput = document.getElementById('provincia');
+
+      if (depInput)  depInput.addEventListener('change', onDepartamentoChange);
+      if (provInput) provInput.addEventListener('change', onProvinciaChange);
+
+      // Inicializar redimensionamiento simple
       inicializarRedimensionamiento();
-      cambiarPlantilla();
-      document.getElementById('opcionesRedProblema').style.display = 'none';
-      var bts = document.getElementById('btsCalidad'), cBts = document.getElementById('contenedorBts');
-      if (bts) bts.disabled = true; if (cBts) cBts.style.display = 'none';
+
+      // Asegurar estado inicial de la interfaz
+      cambiarPlantilla(); 
+      document.getElementById('opcionesRedProblema').style.display = 'none'; 
+
+      // Asegurar estado inicial de BTS (bloqueado y oculto)
+      var btsInput = document.getElementById('btsCalidad');
+      var contBts = document.getElementById('contenedorBts');
+      if(btsInput) btsInput.disabled = true;
+      if(contBts) contBts.style.display = 'none';
 
       cargarInicial();
       cargarUbigeo();
-      iniciarPresencia(); // Arranca el contador
+      iniciarPresencia(); // Arranca el contador cada 60s
     });
   </script>
 </body>
 </html>
-
-
-
-

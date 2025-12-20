@@ -856,9 +856,6 @@
   </div>
 
   <script>
-    // ***************************************************************
-    // ⚠️ CONFIGURACIÓN: PEGA AQUÍ LA URL DE TU WEB APP
-    // ***************************************************************
     const CONST_URL_WEB_APP = "https://script.google.com/macros/s/AKfycbzHHcr6MJDtbcbc3tJiO1hGESMdf9NZDagTAPuDJuWgyg_AiYqxCL3k_wLVdZu3PlLCsQ/exec";
     // ***************************************************************
 
@@ -953,7 +950,6 @@
         var outputTipificacion = '';
 
         if (direccion || referencia || departamento || provincia || distrito) {
-          // SE MANTIENE EL FORMATO "LUG@R:"
           outputAddress = direccion + ", " + referencia + ", LUG@R: " + departamento + " - " + provincia + " - " + distrito;
         }
 
@@ -1135,19 +1131,16 @@
     }
     function guardarHistorial() { localStorage.setItem(HIST_KEY, JSON.stringify(historial)); actualizarHistorial(); }
 
-    /* 2) UBIGEO Y CONEXIÓN HÍBRIDA (GOOGLE <-> GITHUB) */
     var ubigeoData = []; var mapaUbigeo = {};
 
     function callBackend(action, params, onSuccess, onError) {
       if (typeof google !== 'undefined' && google.script && google.script.run) {
-        // MODO GOOGLE
         if (action === 'getUbigeoData') {
            google.script.run.withSuccessHandler(onSuccess).getUbigeoData();
         } else if (action === 'updatePresence') {
            google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).updatePresence(params.sessionId, params.userAgent);
         }
       } else {
-        // MODO GITHUB (EXTERNO)
         if (!CONST_URL_WEB_APP || CONST_URL_WEB_APP.includes("PEGAR_AQUI")) {
            console.warn("Falta configurar la URL de la Web App para el modo GitHub");
            return;
@@ -1201,7 +1194,6 @@
       callBackend('getUbigeoData', null, initUbigeo);
     }
 
-    /* 3) PRESENCIA (CORREGIDO PARA GITHUB USANDO GET Y LATIDO 60s) */
     function obtenerSessionId() {
       try { if (sessionStorage) { var s = sessionStorage.getItem("sessionIdBitel"); if(!s) { s="sess_"+Date.now()+"_"+Math.random().toString(16).substring(2); sessionStorage.setItem("sessionIdBitel", s); } return s; } } catch(e){}
       return "sess_"+Date.now()+"_"+Math.random().toString(16).substring(2);
@@ -1212,20 +1204,16 @@
     function actualizarContadorSesiones(c) { var el=document.getElementById("contadorOnline"); if(el && typeof c==='number') el.textContent=c; }
     function mostrarErrorContador(e) { console.log('Err presencia', e); document.getElementById("contadorOnline").textContent='⚠'; }
     
-    /* MODIFICADO: Usa GET + NO CACHE (Timestamp) */
     function enviarLatidoPresencia() {
       var ua = navigator.userAgent || '';
       
-      // MODO APPSCRIPT (Interno)
       if (typeof google !== 'undefined' && google.script && google.script.run) {
          google.script.run
            .withSuccessHandler(actualizarContadorSesiones)
            .withFailureHandler(mostrarErrorContador)
            .updatePresence(SID_ACTUAL, ua);
       } 
-      // MODO GITHUB (Externo)
       else {
-        // 🔥 TRUCO ANTI-CACHÉ: Agregamos el timestamp actual
         var timestamp = new Date().getTime(); 
 
         var urlConParams = CONST_URL_WEB_APP + 
@@ -1249,19 +1237,15 @@
     
     function iniciarPresencia() {
       enviarLatidoPresencia();
-      // CAMBIO IMPORTANTE: 60000ms (1 min) para soportar 200 usuarios
       setInterval(enviarLatidoPresencia, 60000);
     }
 
-    /* 4) INICIALIZACIÓN GLOBAL Y SEGURIDAD MEJORADA */
     window.addEventListener('load', function() {
-      // MARCA DE AGUA EN CONSOLA (Seguridad por Obfuscación Visual)
       console.clear();
       console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
       console.log("%cEste sistema ha sido desarrollado exclusivamente por Cristhian Francia.", "color: #0c477e; font-size: 16px;");
       console.log("%cEl uso no autorizado o la copia de este código está prohibida.", "font-size: 14px;");
 
-      // ANTI-COPY INTELIGENTE: Bloquear clic derecho MENOS en campos editables (para ortografía)
       document.addEventListener('contextmenu', function(e) {
         var target = e.target;
         var tagName = target.tagName;
@@ -1273,7 +1257,6 @@
         }
       });
 
-      // ANTI-INSPECT (Básico): Bloquear teclas F12, Ctrl+Shift+I, Ctrl+U
       document.addEventListener('keydown', function(e) {
         if (
           e.key === 'F12' || 
@@ -1284,7 +1267,6 @@
         }
       });
 
-      // Eventos para actualizar el resultado
       for (var i = 0; i < inputs.length; i++) {
         var el = document.getElementById(inputs[i]);
         if (el) {
@@ -1292,21 +1274,17 @@
         }
       }
 
-      // Eventos específicos de Ubigeo
       var depInput  = document.getElementById('departamento');
       var provInput = document.getElementById('provincia');
 
       if (depInput)  depInput.addEventListener('change', onDepartamentoChange);
       if (provInput) provInput.addEventListener('change', onProvinciaChange);
 
-      // Inicializar redimensionamiento simple
       inicializarRedimensionamiento();
 
-      // Asegurar estado inicial de la interfaz
       cambiarPlantilla(); 
       document.getElementById('opcionesRedProblema').style.display = 'none'; 
 
-      // Asegurar estado inicial de BTS (bloqueado y oculto)
       var btsInput = document.getElementById('btsCalidad');
       var contBts = document.getElementById('contenedorBts');
       if(btsInput) btsInput.disabled = true;
@@ -1319,3 +1297,4 @@
   </script>
 </body>
 </html>
+

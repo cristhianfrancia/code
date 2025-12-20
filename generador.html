@@ -1253,7 +1253,7 @@
       setInterval(enviarLatidoPresencia, 60000);
     }
 
-    /* 4) INICIALIZACIÓN GLOBAL Y SEGURIDAD MEJORADA (TRAMPA DEL DEPURADOR) */
+    /* 4) INICIALIZACIÓN GLOBAL Y SEGURIDAD MEJORADA */
     window.addEventListener('load', function() {
       // MARCA DE AGUA EN CONSOLA (Seguridad por Obfuscación Visual)
       console.clear();
@@ -1261,44 +1261,28 @@
       console.log("%cEste sistema ha sido desarrollado exclusivamente por Cristhian Francia.", "color: #0c477e; font-size: 16px;");
       console.log("%cEl uso no autorizado o la copia de este código está prohibida.", "font-size: 14px;");
 
-      // ==========================================================
-      // 🛡️ SEGURIDAD AVANZADA (ANTI-COPY + TRAMPA INSPECTOR)
-      // ==========================================================
-
-      // 1. Bloqueo de teclas F12, Ctrl+U, etc.
-      document.addEventListener('keydown', function(e) {
-        if (
-          e.key === 'F12' || 
-          (e.ctrlKey && e.shiftKey && e.key === 'I') || 
-          (e.ctrlKey && e.shiftKey && e.key === 'J') || 
-          (e.ctrlKey && e.key === 'u')
-        ) {
-          e.preventDefault();
-        }
-      });
-
-      // 2. Clic derecho INTELIGENTE:
-      // - Si es Input/Textarea: PERMITE clic derecho (para Corrector Ortográfico)
-      // - Si es Fondo/Texto estático/Botones: BLOQUEA clic derecho (para no Inspeccionar)
+      // ANTI-COPY INTELIGENTE: Bloquear clic derecho MENOS en campos editables (para ortografía)
       document.addEventListener('contextmenu', function(e) {
         var target = e.target;
         var tagName = target.tagName;
-        // Solo permitimos en Input (no botones) y Textareas
-        var esEditable = (tagName === 'TEXTAREA' || (tagName === 'INPUT' && target.type !== 'button' && target.type !== 'submit' && target.type !== 'radio' && target.type !== 'checkbox'));
+        // Permitimos clic derecho solo en Textarea o Inputs de texto
+        var esEditable = (tagName === 'TEXTAREA' || (tagName === 'INPUT' && target.type === 'text'));
         
         if (!esEditable) {
            e.preventDefault();
         }
       });
 
-      // 3. 🚨 TRAMPA PARA EL INSPECTOR
-      // Si logran abrir "Inspeccionar", esto congela la herramienta constantemente.
-      setInterval(function() {
-        // debugger; // <--- Descomenta esto para congelar la herramienta de desarrollo si se abre
-        // NOTA: Algunos navegadores modernos pueden bloquear esta trampa si se abusa, 
-        // pero funciona bien como disuasión básica.
-        (function() { debugger; })();
-      }, 1000);
+      // ANTI-INSPECT (Básico): Bloquear teclas F12, Ctrl+Shift+I, Ctrl+U
+      document.addEventListener('keydown', function(e) {
+        if (
+          e.key === 'F12' || 
+          (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+          (e.ctrlKey && e.key === 'u')
+        ) {
+          e.preventDefault();
+        }
+      });
 
       // Eventos para actualizar el resultado
       for (var i = 0; i < inputs.length; i++) {

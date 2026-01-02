@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tipificación</title>
+    <style>
+        :root {
+            --bitel-teal: #01768b;
+            --bitel-blue: #0c477e;
+            --bitel-yellow: #fbf32f;
+            --text-main: #434343;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* 🔒 Evitar la selección de texto */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 8px;
+        }
+
+        /* 🌟 BOTÓN ESTILO BITEL */
+        .abrir-btn {
+            background: transparent;
+            color: var(--bitel-blue);
+            border: 2px solid var(--bitel-blue);
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            max-width: 90vw;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .abrir-btn:hover {
+            background: var(--bitel-blue);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(12,71,126,0.35);
+        }
+
+        .abrir-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(12,71,126,0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .abrir-btn {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+                font-size: 13px;
+                padding: 10px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false">
+    <div class="button-group">
+        <button class="abrir-btn" onclick="abrirEstructura()">
+            📂 Calculadora de datos (Clic para abrir)
+        </button>
+    </div>
+
+<script>
+let popupVentana = null;
+
+function abrirEstructura() {
+    const url = "https://cristhianfrancia.github.io/code/datos.html";
+    const ancho = 1200;
+    const alto = 450;
+
+    const left = (window.screen.width / 2) - (ancho / 2);
+    const top = (window.screen.height / 2) - (alto / 2);
+
+    const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
+
+    if (!popupVentana || popupVentana.closed) {
+        // 👇 CAMBIADO: Nombre de ventana único para los datos
+        popupVentana = window.open(url, "PopupDatos", opciones); 
+
+        // 🔥 ZOOM FIJO AL 90%
+        popupVentana.onload = () => {
+            try {
+                const style = popupVentana.document.createElement("style");
+                style.textContent = `
+                    html, body {
+                        margin: 0;
+                        padding: 0;
+                        overflow-y: auto;
+                        transform: scale(0.90);        /* 👈 ZOOM 90% */
+                        transform-origin: top center;  /* Centrado perfecto */
+                    }
+
+                    ::-webkit-scrollbar {
+                        width: 0 !important;
+                        height: 0 !important;
+                        display: none;
+                    }
+                `;
+                popupVentana.document.head.appendChild(style);
+            } catch (e) {
+                console.warn("No se pudo aplicar el zoom por CORS.");
+            }
+        };
+    } else {
+        popupVentana.focus();
+    }
+}
+
+/* 🔒 BLOQUEO DE SEGURIDAD MEJORADO */
+document.onkeydown = function(e) {
+    if (e.key === 'F12' || e.keyCode === 123) return false;
+    if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) return false;
+    if (e.ctrlKey && e.key.toUpperCase() === 'U') return false;
+
+    if (e.ctrlKey && e.key.toUpperCase() === 'P') {
+        e.preventDefault();
+        alert('La impresión está deshabilitada.');
+        return false;
+    }
+
+    if (e.ctrlKey && e.key.toUpperCase() === 'S') {
+        e.preventDefault();
+        alert('Guardar la página está deshabilitado.');
+        return false;
+    }
+};
+
+/* 🚫 Evita arrastrar o soltar elementos (como imágenes) */
+document.addEventListener('dragstart', function(e) {
+    e.preventDefault();
+    return false;
+});
+
+/* 🚫 Bloquea el menú contextual del clic derecho en el documento completo */
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    return false;
+});
+
+/* Mensaje en consola */
+window.addEventListener('load', function() {
+    console.clear();
+    console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
+    console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
+});
+
+</script>
+</body>
+</html>
+

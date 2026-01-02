@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <!-- 
+    Proyecto: Plantillas
+    Creado por: Cristhian Francia
+    Año: 2025
+    Derechos reservados © Cristhian Francia
+  -->
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #ffffff; /* Fondo blanco */
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: popup 0.5s ease-out;
+    }
+
+    .btn {
+      width: 240px;
+      background: #ffffff;
+      color: black;
+      border: 2px solid #fb8162;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .btn:hover {
+      background: #fb8162;
+      color: #ffffff;
+      transform: translateY(-3px);
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    @keyframes popup {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="btn-container">
+    <button class="btn" onclick="abrirRegular()">🙋 Bienvenida</button>
+    <button class="btn" onclick="Despedida()">🫂 Despedida</button>
+    <button class="btn" onclick="TipiAvanzada()">🏢 Lista de Tiendas</button>
+  </div>
+
+  <script>
+    let popupVentana = null;
+
+    function Estructura() {
+      const url = "https://cristhianfrancia.github.io/code/generador.html";
+      abrirPopup(url, 1200, 500, 1); // zoom 100%
+    }
+
+    function abrirRegular() {
+      window.open(
+        "https://drive.google.com/file/d/1Z1vguE7EjPjJYozOY9BE_u_pBy4pC-aF/view?usp=sharing",
+        "Bienvenida - Regular y Smart IVR",
+        "width=1600,height=1080"
+      );
+    }
+
+    function Despedida() {
+      window.open(
+        "https://drive.google.com/file/d/1zhT3U4p4N7_wUFkEilCP6nOsRi5W3SST/view?usp=sharing",
+        "Despedida",
+        "width=1600,height=1080"
+      );
+    }
+
+    /* ⭐ Nuevo botón: Tipificación Avanzada */
+    function TipiAvanzada() {
+      const url = "https://script.google.com/macros/s/AKfycbyOHFm6zxT5EPUio0OEv2SrKgOvdTAZ6uC1b9ZQmuxCVm17m7mge_u2nFOpKLXZRit_ew/exec";
+      abrirPopup(url, 1600, 800, 0.90); // zoom 90%
+    }
+
+    /* 📌 Función estándar para abrir popups centrados + zoom */
+    function abrirPopup(url, ancho, alto, zoomNivel) {
+      const left = (window.screen.width / 2) - (ancho / 2);
+      const top = (window.screen.height / 2) - (alto / 2);
+
+      const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
+
+      popupVentana = window.open(url, "_blank", opciones);
+
+      popupVentana.onload = () => {
+        try {
+          const style = popupVentana.document.createElement("style");
+          style.textContent = `
+            html, body {
+              margin: 0;
+              padding: 0;
+              overflow: hidden;
+              transform: scale(${zoomNivel});
+              transform-origin: top left;
+              width: ${100 / zoomNivel}%;
+              height: ${100 / zoomNivel}%;
+            }
+            ::-webkit-scrollbar { display: none; }
+          `;
+          popupVentana.document.head.appendChild(style);
+        } catch (e) {
+          console.warn("No se pudo inyectar CSS en el popup (CORS).");
+        }
+      };
+    }
+  </script>
+
+</body>
+</html>
+
+

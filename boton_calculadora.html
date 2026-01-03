@@ -37,7 +37,7 @@
             padding: 10px;
         }
 
-        /* 🌟 BOTÓN ESTILO BITEL */
+        /* 🌟 BOTÓN ESTILO BITEL UNIFICADO */
         .abrir-btn {
             background: transparent;
             color: var(--bitel-blue);
@@ -48,7 +48,6 @@
             font-weight: 600;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            max-width: 90vw;
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
@@ -56,22 +55,12 @@
             letter-spacing: 0.3px;
         }
 
+        /* Efecto al pasar el mouse - Ahora igual para todos */
         .abrir-btn:hover {
             background: var(--bitel-blue);
             color: #ffffff;
             transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(12,71,126,0.3);
-        }
-
-        /* Color específico para herramientas externas (opcional) */
-        .btn-sheet {
-            border-color: var(--bitel-teal);
-            color: var(--bitel-teal);
-        }
-
-        .btn-sheet:hover {
-            background: var(--bitel-teal);
-            border-color: var(--bitel-teal);
+            box-shadow: 0 8px 18px rgba(12,71,126,0.35);
         }
 
         .abrir-btn:active {
@@ -99,11 +88,11 @@
             📂 Calculadora de datos
         </button>
 
-        <button class="abrir-btn btn-sheet" onclick="abrirVentana('ocs')">
+        <button class="abrir-btn" onclick="abrirVentana('ocs')">
             📊 OCS
         </button>
 
-        <button class="abrir-btn btn-sheet" onclick="abrirVentana('pcrf')">
+        <button class="abrir-btn" onclick="abrirVentana('pcrf')">
             📋 PCRF
         </button>
     </div>
@@ -115,9 +104,8 @@ function abrirVentana(tipo) {
     let url = "";
     let titulo = "";
     let ancho = 1200;
-    let alto = 800; // Un poco más alto para los Sheets
+    let alto = 750;
 
-    // Configuración según el botón pulsado
     switch(tipo) {
         case 'calc':
             url = "https://cristhianfrancia.github.io/code/calculadora.html";
@@ -138,11 +126,10 @@ function abrirVentana(tipo) {
     const top = (window.screen.height / 2) - (alto / 2);
     const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=yes`;
 
-    // Abrir la ventana
     const nuevaVentana = window.open(url, titulo, opciones);
 
-    // 🔥 Aplicar ZOOM 90% (Solo funcionará en tu dominio GitHub por seguridad CORS)
-    if (tipo === 'calc') {
+    // Zoom 90% para la calculadora
+    if (tipo === 'calc' && nuevaVentana) {
         nuevaVentana.onload = () => {
             try {
                 const style = nuevaVentana.document.createElement("style");
@@ -157,7 +144,7 @@ function abrirVentana(tipo) {
                 `;
                 nuevaVentana.document.head.appendChild(style);
             } catch (e) {
-                console.warn("CORS: No se pudo inyectar zoom en el popup.");
+                console.warn("CORS: Zoom no aplicado.");
             }
         };
     }
@@ -165,37 +152,22 @@ function abrirVentana(tipo) {
     if (nuevaVentana) nuevaVentana.focus();
 }
 
-/* 🔒 BLOQUEO DE SEGURIDAD MEJORADO */
+/* 🔒 SEGURIDAD */
 document.onkeydown = function(e) {
     if (e.key === 'F12' || e.keyCode === 123) return false;
     if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) return false;
     if (e.ctrlKey && e.key.toUpperCase() === 'U') return false;
-
-    if (e.ctrlKey && e.key.toUpperCase() === 'P') {
-        e.preventDefault();
-        return false;
-    }
+    if (e.ctrlKey && e.key.toUpperCase() === 'P') { e.preventDefault(); return false; }
 };
 
-/* 🚫 Evita arrastrar o soltar elementos */
-document.addEventListener('dragstart', function(e) {
-    e.preventDefault();
-    return false;
-});
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('dragstart', e => e.preventDefault());
 
-/* 🚫 Bloquea el menú contextual */
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-    return false;
-});
-
-/* Mensaje en consola */
-window.addEventListener('load', function() {
+window.addEventListener('load', () => {
     console.clear();
     console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
     console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
 });
-
 </script>
 </body>
 </html>

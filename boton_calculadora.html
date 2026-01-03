@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Tipificación</title>
+    <title>Tipificación | Bitel</title>
     <style>
         :root {
             --bitel-teal: #01768b;
@@ -25,6 +25,7 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            overflow: hidden;
         }
 
         .button-group {
@@ -32,8 +33,8 @@
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
-            padding: 8px;
+            gap: 12px;
+            padding: 10px;
         }
 
         /* 🌟 BOTÓN ESTILO BITEL */
@@ -41,11 +42,11 @@
             background: transparent;
             color: var(--bitel-blue);
             border: 2px solid var(--bitel-blue);
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 999px;
             font-size: 14px;
             font-weight: 600;
-            transition: all 0.25s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             max-width: 90vw;
             white-space: nowrap;
@@ -59,7 +60,18 @@
             background: var(--bitel-blue);
             color: #ffffff;
             transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(12,71,126,0.35);
+            box-shadow: 0 8px 18px rgba(12,71,126,0.3);
+        }
+
+        /* Color específico para herramientas externas (opcional) */
+        .btn-sheet {
+            border-color: var(--bitel-teal);
+            color: var(--bitel-teal);
+        }
+
+        .btn-sheet:hover {
+            background: var(--bitel-teal);
+            border-color: var(--bitel-teal);
         }
 
         .abrir-btn:active {
@@ -68,13 +80,14 @@
         }
 
         /* Responsive */
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
+            .button-group {
+                flex-direction: column;
+                width: 90%;
+            }
             .abrir-btn {
                 width: 100%;
-                text-align: center;
                 justify-content: center;
-                font-size: 13px;
-                padding: 10px 16px;
             }
         }
     </style>
@@ -82,55 +95,74 @@
 
 <body oncontextmenu="return false">
     <div class="button-group">
-        <button class="abrir-btn" onclick="abrirEstructura()">
-            📂 Calculadora de datos (Clic para abrir)
+        <button class="abrir-btn" onclick="abrirVentana('calc')">
+            📂 Calculadora de datos
+        </button>
+
+        <button class="abrir-btn btn-sheet" onclick="abrirVentana('ocs')">
+            📊 OCS
+        </button>
+
+        <button class="abrir-btn btn-sheet" onclick="abrirVentana('pcrf')">
+            📋 PCRF
         </button>
     </div>
 
 <script>
 let popupVentana = null;
 
-function abrirEstructura() {
-    const url = "https://cristhianfrancia.github.io/code/calculadora.html";
-    const ancho = 1200;
-    const alto = 500;
+function abrirVentana(tipo) {
+    let url = "";
+    let titulo = "";
+    let ancho = 1200;
+    let alto = 700; // Un poco más alto para los Sheets
+
+    // Configuración según el botón pulsado
+    switch(tipo) {
+        case 'calc':
+            url = "https://cristhianfrancia.github.io/code/calculadora.html";
+            titulo = "PopupCalculadora";
+            alto = 500;
+            break;
+        case 'ocs':
+            url = "https://docs.google.com/spreadsheets/d/1AsiIX7RuW_9bjpjIJNwbiErZJdqnC0N1FXi2XpxBd-s/edit?usp=sharing";
+            titulo = "PopupOCS";
+            break;
+        case 'pcrf':
+            url = "https://docs.google.com/spreadsheets/d/1rmIOV7KiMfLC8nIOxwtlz5dpKVEJUB3uR6vkNdISi0k/edit?usp=sharing";
+            titulo = "PopupPCRF";
+            break;
+    }
 
     const left = (window.screen.width / 2) - (ancho / 2);
     const top = (window.screen.height / 2) - (alto / 2);
+    const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=yes`;
 
-    const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
+    // Abrir la ventana
+    const nuevaVentana = window.open(url, titulo, opciones);
 
-    if (!popupVentana || popupVentana.closed) {
-        // 👇 CAMBIADO: Nombre de ventana único para los datos
-        popupVentana = window.open(url, "PopupDatos", opciones); 
-
-        // 🔥 ZOOM FIJO AL 90%
-        popupVentana.onload = () => {
+    // 🔥 Aplicar ZOOM 90% (Solo funcionará en tu dominio GitHub por seguridad CORS)
+    if (tipo === 'calc') {
+        nuevaVentana.onload = () => {
             try {
-                const style = popupVentana.document.createElement("style");
+                const style = nuevaVentana.document.createElement("style");
                 style.textContent = `
                     html, body {
-                        margin: 0;
-                        padding: 0;
+                        margin: 0; padding: 0;
+                        transform: scale(0.90);
+                        transform-origin: top center;
                         overflow-y: auto;
-                        transform: scale(0.90);        /* 👈 ZOOM 90% */
-                        transform-origin: top center;  /* Centrado perfecto */
                     }
-
-                    ::-webkit-scrollbar {
-                        width: 0 !important;
-                        height: 0 !important;
-                        display: none;
-                    }
+                    ::-webkit-scrollbar { display: none; }
                 `;
-                popupVentana.document.head.appendChild(style);
+                nuevaVentana.document.head.appendChild(style);
             } catch (e) {
-                console.warn("No se pudo aplicar el zoom por CORS.");
+                console.warn("CORS: No se pudo inyectar zoom en el popup.");
             }
         };
-    } else {
-        popupVentana.focus();
     }
+
+    if (nuevaVentana) nuevaVentana.focus();
 }
 
 /* 🔒 BLOQUEO DE SEGURIDAD MEJORADO */
@@ -141,24 +173,17 @@ document.onkeydown = function(e) {
 
     if (e.ctrlKey && e.key.toUpperCase() === 'P') {
         e.preventDefault();
-        alert('La impresión está deshabilitada.');
-        return false;
-    }
-
-    if (e.ctrlKey && e.key.toUpperCase() === 'S') {
-        e.preventDefault();
-        alert('Guardar la página está deshabilitado.');
         return false;
     }
 };
 
-/* 🚫 Evita arrastrar o soltar elementos (como imágenes) */
+/* 🚫 Evita arrastrar o soltar elementos */
 document.addEventListener('dragstart', function(e) {
     e.preventDefault();
     return false;
 });
 
-/* 🚫 Bloquea el menú contextual del clic derecho en el documento completo */
+/* 🚫 Bloquea el menú contextual */
 document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
     return false;
@@ -174,6 +199,3 @@ window.addEventListener('load', function() {
 </script>
 </body>
 </html>
-
-
-

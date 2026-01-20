@@ -68,23 +68,20 @@
     <button class="btn" onclick="abrirRegular()">🙋 Bienvenida</button>
     <button class="btn" onclick="Despedida()">🫂 Despedida</button>
     <button class="btn" onclick="TipiAvanzada()">🏢 Lista de Tiendas</button>
+    <button class="btn" onclick="calculadoraMB()">📱 Calculadora de datos</button>
   </div>
 
   <script>
     let popupVentana = null;
 
-    function Estructura() {
-      const url = "https://cristhianfrancia.github.io/code/generador.html";
-      abrirPopup(url, 1200, 500, 1); // zoom 100%
-    }
-
     function abrirRegular() {
       window.open(
-        "https://drive.google.com/file/d/1Z1vguE7EjPjJYozOY9BE_u_pBy4pC-aF/view?usp=sharing",
+        "https://drive.google.com/file/d/1Iv2YswvlR8pqjFokBbAhG6tcmVw9bB0D/view?usp=sharing",
         "Bienvenida - Regular y Smart IVR",
         "width=1600,height=1080"
       );
     }
+
 
     function Despedida() {
       window.open(
@@ -94,11 +91,18 @@
       );
     }
 
-    /* ⭐ Nuevo botón: Tipificación Avanzada */
+
     function TipiAvanzada() {
       const url = "https://script.google.com/macros/s/AKfycbyOHFm6zxT5EPUio0OEv2SrKgOvdTAZ6uC1b9ZQmuxCVm17m7mge_u2nFOpKLXZRit_ew/exec";
       abrirPopup(url, 1600, 800, 0.90); // zoom 90%
     }
+
+
+    function calculadoraMB() {
+      const url = "https://cristhianfrancia.github.io/code/calculadora.html";
+      abrirPopup(url, 1200, 550, 0.90); // zoom 90%
+    }
+
 
     /* 📌 Función estándar para abrir popups centrados + zoom */
     function abrirPopup(url, ancho, alto, zoomNivel) {
@@ -134,5 +138,3 @@
 
 </body>
 </html>
-
-

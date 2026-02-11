@@ -1,29 +1,238 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  <style>
-      body { font-family: Calibri, sans-serif; }
-      .container { width: 90%; max-width: 1000px; margin: 20px auto; background-color: #ffffff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); padding: 50px; position: relative; transition: box-shadow 0.3s ease; }
-      .container:hover { box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3); }
-      .icon-animation { position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; background-color: #007BFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: spin 2s linear infinite; }
-      .icon-animation::before { content: "📱"; font-size: 1.5rem; color: white; }
-      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-      .input-container { display: flex; align-items: center; transition: transform 0.3s ease; margin-bottom: 10px; }
-      .input-container:hover { transform: scale(1.00); }
-      .input-container label { width: 50%; }
-      .input-container input, .input-container select { width: 50%; padding: 4px; border: 1px solid #ccc; border-radius: 4px; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
-      .input-container input:focus, .input-container select:focus { border-color: #007BFF; outline: none; box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); }
-      @media screen and (max-width: 600px) { .input-container { flex-direction: column; } .input-container label, .input-container input, .input-container select { width: 100%; } }
-      .resultado-label { color: #007BFF; font-weight: bold; }
-      .dark-mode .resultado-label { color: yellow; }
-      hr { border: 1px solid #e67a00; margin: 10px 0; }
-      button { background-color: #e67a00; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease; margin: 5px; }
-      button:hover { background-color: #0056b3; transform: scale(1.05); }
-      button:active { background-color: #004085; transform: scale(0.98); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-      #resultado { margin: 15px 0; font-size: 0.9rem; background-color: #fff5e9; padding: 10px; border-left: 4px solid #e67a00; white-space: pre-line; min-height: 50px; transition: background-color 0.3s ease; }
+ <head>
+  <!-- 
+    Proyecto: Plantillas
+    Creado por: Cristhian Francia
+    Año: 2020
+    Derechos reservados © Cristhian Francia
+  -->
+    <style>
+      body {
+        font-family: Calibri, Arial, sans-serif;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1000px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        padding: 50px;
+        position: relative;
+        transition: box-shadow 0.3s ease;
+      }
+
+      .container:hover {
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+      }
+
+      .icon-animation {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        background-color: #007BFF;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: spin 2s linear infinite;
+      }
+
+      .icon-animation::before {
+        content: "😎";
+        font-size: 1.5rem;
+        color: white;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .input-container {
+        display: flex;
+        align-items: center;
+        transition: transform 0.3s ease;
+      }
+
+      .input-container:hover {
+        transform: scale(1.00);
+      }
+
+      .input-container label {
+        width: 50%;
+      }
+
+      .input-container input {
+        width: 50%;
+        padding: 4px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .input-container input:focus {
+        border-color: #007BFF;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+
+      /* Estilos responsive */
+      @media screen and (max-width: 600px) {
+        .input-container {
+          flex-direction: column;
+        }
+        .input-container label, .input-container input {
+          width: 100%;
+        }
+      }
+
+      .resultado-label {
+        color: #007BFF;
+        font-weight: bold;
+      }
+
+      .ruta-container {
+        background-color: #fff5e9;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        border-left: 4px solid #e67a00;
+        font-size: 0.9rem;
+        color: #333;
+      }
+
+      hr {
+        border: 1px solid #e67a00;
+        margin: 10px 0;
+      }
+
+      button {
+        background-color: #e67a00;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        margin: 5px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+      }
+
+      button:active {
+        background-color: #004085;
+        transform: scale(0.98);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      button:focus {
+        outline: none;
+      }
+
+      #resultado {
+        margin: 15px 0;
+        font-size: 0.9rem;
+        background-color: #fff5e9;
+        padding: 10px;
+        border-left: 4px solid #e67a00;
+        white-space: pre-line;
+        min-height: 50px;
+        transition: background-color 0.3s ease;
+      }
+
+      #resultadoADIC {
+        margin: 15px 0;
+        font-size: 0.9rem;
+        background-color: #fff5e9;
+        padding: 10px;
+        border-left: 4px solid #e67a00;
+        white-space: pre-line;
+        min-height: 50px;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Estilos para el contenedor de la vista previa */
+      #imagePopup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        z-index: 1000; /* Añadido para asegurar que esté por encima de todo */
+      }
+
+      /* Estilos para la imagen de la vista previa */
+      #imagePopup img {
+        max-width: 90%; /* Un poco de margen */
+        max-height: 90vh; /* Un poco de margen */
+        margin-top: 5vh; /* Centrado vertical */
+      }
+
+      /* Estilos para el botón de cerrar */
+      .close-button {
+        position: absolute;
+        top: 20px;
+        right: 20px; /* Mejor posicionado */
+        background-color: white;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      /* Estilos para el contenedor de la vista previa 2 */
+      #imagePopup2 {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        z-index: 1000; /* Añadido para asegurar que esté por encima de todo */
+      }
+
+      /* Estilos para la imagen de la vista previa 2 */
+      #imagePopup2 img {
+        max-width: 90%; /* Un poco de margen */
+        max-height: 90vh; /* Un poco de margen */
+        margin-top: 5vh; /* Centrado vertical */
+      }
+
+      /* Estilos para el botón de cerrar 2 */
+      .close-button2 {
+        position: absolute;
+        top: 20px;
+        right: 20px; /* Mejor posicionado */
+        background-color: white;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
     </style>
   </head>
-<body>
+  <body>
 
 <label style="color: red;"><strong>Plantilla:</strong></label>
 <p></p>

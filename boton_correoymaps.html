@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tipificación</title>
+  <style>
+    :root {
+      --bitel-teal: #01768b;
+      --bitel-blue: #0c477e;
+      --bitel-yellow: #fbf32f;
+      --text-main: #434343;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column; /* Botones uno debajo del otro */
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      width: 90%;
+    }
+
+    .abrir-btn {
+      background: transparent;
+      color: var(--bitel-blue);
+      border: 2px solid var(--bitel-blue);
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      width: 160px; /* Ancho fijo para uniformidad */
+      justify-content: center;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.3px;
+      text-decoration: none; /* Por si decidimos usar <a> en el futuro */
+    }
+
+    .abrir-btn:hover {
+      background: var(--bitel-blue);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(12,71,126,0.35);
+    }
+
+    .abrir-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 10px rgba(12,71,126,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="button-group">
+    
+    <button class="abrir-btn" onclick="abrirEstructura('https://www.verifyemailaddress.org/')">
+      📧 Ver Correo
+    </button>
+
+    <button class="abrir-btn" onclick="abrirEstructura('https://www.google.com/maps')">
+      🗺️ Ver Dirección
+    </button>
+
+    </div>
+
+  <script>
+    // Variable global para controlar la ventana emergente
+    let popupVentana = null;
+
+    // Ahora la función recibe la 'urlDestino' como parámetro
+    function abrirEstructura(urlDestino) {
+      const ancho = 1400;
+      const alto = 800;
+
+      const left = (window.screen.width / 2) - (ancho / 2);
+      const top = (window.screen.height / 2) - (alto / 2);
+
+      const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=yes`;
+
+      // Si la ventana ya existe y no está cerrada, la cerramos para abrir la nueva URL
+      // o simplemente le cambiamos la ubicación y le damos foco.
+      if (popupVentana && !popupVentana.closed) {
+        popupVentana.location.href = urlDestino;
+        popupVentana.focus();
+      } else {
+        popupVentana = window.open(urlDestino, "VentanaValidacion", opciones);
+      }
+    }
+  </script>
+
+</body>
+</html>

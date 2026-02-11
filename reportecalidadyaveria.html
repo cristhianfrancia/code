@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+      body { font-family: Calibri, sans-serif; }
+      .container { width: 90%; max-width: 1000px; margin: 20px auto; background-color: #ffffff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); padding: 50px; position: relative; transition: box-shadow 0.3s ease; }
+      .container:hover { box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3); }
+      .icon-animation { position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; background-color: #007BFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: spin 2s linear infinite; }
+      .icon-animation::before { content: "📱"; font-size: 1.5rem; color: white; }
+      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      .input-container { display: flex; align-items: center; transition: transform 0.3s ease; margin-bottom: 10px; }
+      .input-container:hover { transform: scale(1.00); }
+      .input-container label { width: 50%; }
+      .input-container input, .input-container select { width: 50%; padding: 4px; border: 1px solid #ccc; border-radius: 4px; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+      .input-container input:focus, .input-container select:focus { border-color: #007BFF; outline: none; box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); }
+      @media screen and (max-width: 600px) { .input-container { flex-direction: column; } .input-container label, .input-container input, .input-container select { width: 100%; } }
+      .resultado-label { color: #007BFF; font-weight: bold; }
+      .dark-mode .resultado-label { color: yellow; }
+      hr { border: 1px solid #e67a00; margin: 10px 0; }
+      button { background-color: #e67a00; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease; margin: 5px; }
+      button:hover { background-color: #0056b3; transform: scale(1.05); }
+      button:active { background-color: #004085; transform: scale(0.98); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+      #resultado { margin: 15px 0; font-size: 0.9rem; background-color: #fff5e9; padding: 10px; border-left: 4px solid #e67a00; white-space: pre-line; min-height: 50px; transition: background-color 0.3s ease; }
+    </style>
+  </head>
+<body>
+
+<label style="color: red;"><strong>Plantilla:</strong></label>
+<p></p>
+
+<center class="code-container">
+<p>
+<input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="color: #007BFF;" />
+// <input type="text" id="label0_1" oninput="updateResultadoOutput()" placeholder="(Consulta del cliente)" style="color: #007BFF;" />
+// Se genera reporte de calidad y avería
+</p>
+</center>
+
+<div class="input-container">
+<label for="label_super">- Jefe/Supervisor aprobador del reporte:</label>
+<input type="text" id="label_super" oninput="updateResultadoOutput()" placeholder="(Nombre del encargado que aprueba)" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="label_reclamante">- Condición del Reclamante:</label>
+<select id="label_reclamante" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Abonado nacional">Abonado nacional</option>
+<option value="Abonado extranjero">Abonado extranjero</option>
+</select>
+</div>
+
+<div class="input-container">
+<label for="label_validentidad">- Validó identidad:</label>
+<select id="label_validentidad" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Si">Si</option>
+</select>
+</div>
+
+<div class="input-container">
+<label for="label_valdatos">- Datos validados correctamente: </label>
+<select id="label_valdatos" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Si">Si</option>
+</select>
+</div>
+
+<div class="input-container">
+  <label for="label_FechaHora">- Fecha y hora del inconveniente:</label>
+  <input type="datetime-local" id="label_FechaHora" oninput="updateResultadoOutput()" />
+</div>
+
+<div class="input-container">
+<label for="label_direccion">- Dirección donde presenta los inconvenientes (con referencia válidas, cruce de avenidas, Urbanización – centro poblado - distrito – provincia - departamento):</label>
+<input type="text" id="label_direccion" oninput="updateResultadoOutput()" placeholder="(Ejem: Av. Aviación 2270, Frente a La Rambla, Lima - Lima - San Borja...)" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="label_numeroref">- Número de referencia:</label>
+<input type="number" id="label_numeroref" oninput="updateResultadoOutput()" placeholder="9xxxxxxxx" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="label_Cobertura">- Indicador de Cobertura:</label>
+<select id="label_Cobertura" onchange="updateResultadoOutput()">
+ <option value="">Seleccionar</option>
+        <option value="3G (H, H+, 3.5G)">3G (H, H+, 3.5G)</option>
+       <option value="4G">4G</option>
+       <option value="5G">5G</option>
+        <option value="E">E</option>
+        <option value="-">-</option>
+      </select>
+    </div>
+
+<div class="input-container">
+<label for="label_mensajeerror">- Mensaje de Error:</label>
+<input type="text" id="label_mensajeerror" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="label_reinicio">- Reinicio su equipo: </label>
+<select id="label_reinicio" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Si">Si</option>
+<option value="No">No</option>
+</select>
+</div>
+
+<div class="input-container">
+<label for="label_otralinea">- Cuenta con alguna otra línea que presenta la incidencia: </label>
+<select id="label_otralinea" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Si">Si</option>
+<option value="No">No</option>
+</select>
+</div>
+
+<div class="input-container">
+<label for="label_equipo">- Equipo fue adquirido en Bitel: </label>
+<select id="label_equipo" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Si">Si</option>
+<option value="No">No</option>
+</select>
+</div>
+
+<div class="input-container">
+<label for="label_os">- Sistema operativo del Dispositivo: </label>
+<select id="label_os" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Android">Android</option>
+<option value="IOS">IOS</option>
+<option value="Harmony OS">Harmony OS</option>
+<option value="Hyper OS">Hyper OS</option>
+<option value="Otro">Otro</option>
+</select>
+</div>
+
+<div class="input-container">
+<label for="label_kb">- Cantidad de KB vigente al momento de escalar:</label>
+<input type="text" id="label_kb" oninput="updateResultadoOutput()" placeholder="(Ver PCRF u OCS)" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="label_otroequipo">- ¿Se probó el chip en otro equipo y se solucionó el inconveniente?: </label>
+<select id="label_otroequipo" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Si">Si</option>
+<option value="No">No</option>
+</select>
+</div>
+
+<div class="input-container">
+<label for="label_DetalleInc">- Detalle del inconveniente: </label>
+<input type="text" id="label_DetalleInc" oninput="updateResultadoOutput()" placeholder="(Descripción del problema)" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="labelID">- Código de la llamada:</label>
+<input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
+</div>
+
+<br />
+<hr />
+<br />
+
+<label style="color: red;"><strong>Resultado</strong></label>
+<p id="resultado" class="dark-mode-text"></p>
+
+<button onclick="copiarResultado()">Copiar</button> <button onclick="limpiarInputs()">Borrar</button>
+
+<script>
+window.onload = function() {
+    let fechaLimite = new Date("2026-12-31T23:59:59");
+    let fechaActual = new Date();
+    if (fechaActual > fechaLimite) {
+        document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Actualización en proceso)</h5>";
+    }
+};
+
+      const label0Input = document.querySelector("#label0");
+      const label0_1Input = document.querySelector("#label0_1");
+      const label_superInput = document.querySelector("#label_super");
+      const label_reclamanteInput = document.querySelector("#label_reclamante");
+      const label_validentidadInput = document.querySelector("#label_validentidad");
+      const label_valdatosInput = document.querySelector("#label_valdatos");
+      const label_FechaHoraInput = document.querySelector("#label_FechaHora");
+      const label_direccionInput = document.querySelector("#label_direccion");
+      const label_numerorefInput = document.querySelector("#label_numeroref");
+      const label_CoberturaInput = document.querySelector("#label_Cobertura");
+      const label_mensajeerrorInput = document.querySelector("#label_mensajeerror");
+      const label_reinicioInput = document.querySelector("#label_reinicio");
+      const label_otralineaInput = document.querySelector("#label_otralinea");
+      const label_equipoInput = document.querySelector("#label_equipo");
+      const label_osInput = document.querySelector("#label_os");
+      const label_kbInput = document.querySelector("#label_kb");
+      const label_otroequipoInput = document.querySelector("#label_otroequipo");
+      const label_DetalleIncInput = document.querySelector("#label_DetalleInc");
+      const labelIDInput = document.querySelector("#labelID");
+      const resultadoOutput = document.querySelector("#resultado");
+
+      label0Input.addEventListener("input", updateResultadoOutput);
+      label0_1Input.addEventListener("input", updateResultadoOutput);
+      label_superInput.addEventListener("input", updateResultadoOutput);
+      label_reclamanteInput.addEventListener("change", updateResultadoOutput);
+      label_validentidadInput.addEventListener("change", updateResultadoOutput);
+      label_valdatosInput.addEventListener("change", updateResultadoOutput);
+      label_FechaHoraInput.addEventListener("input", updateResultadoOutput);
+      label_direccionInput.addEventListener("input", updateResultadoOutput);
+      label_numerorefInput.addEventListener("input", updateResultadoOutput);
+      label_CoberturaInput.addEventListener("change", updateResultadoOutput);
+      label_mensajeerrorInput.addEventListener("input", updateResultadoOutput);
+      label_reinicioInput.addEventListener("change", updateResultadoOutput);
+      label_otralineaInput.addEventListener("change", updateResultadoOutput);
+      label_equipoInput.addEventListener("change", updateResultadoOutput);
+      label_osInput.addEventListener("change", updateResultadoOutput);
+      label_kbInput.addEventListener("input", updateResultadoOutput);
+      label_otroequipoInput.addEventListener("change", updateResultadoOutput);
+      label_DetalleIncInput.addEventListener("input", updateResultadoOutput);
+      labelIDInput.addEventListener("input", updateResultadoOutput);
+
+function formatDateToDDMMYYYYHHMM(dateString) {
+  if (!dateString) return "";
+  const dateParts = dateString.split("T");
+  const date = dateParts[0];
+  const time = dateParts[1] ? dateParts[1].slice(0, 5) : ""; // Corrección para evitar error si no hay hora
+  const datePartsFormatted = date.split("-");
+  const day = datePartsFormatted[2];
+  const month = datePartsFormatted[1];
+  const year = datePartsFormatted[0];
+  return `${day}/${month}/${year} ${time}`;
+}
+
+function updateResultadoOutput() {
+    const label0 = label0Input.value;
+    const label0_1 = capitalizeFirstLetter(label0_1Input.value);
+    const label_super = label_superInput.value;
+    const label_reclamante = label_reclamanteInput.value;
+    const label_validentidad = label_validentidadInput.value;
+    const label_valdatos = label_valdatosInput.value;
+    const label_FechaHora = formatDateToDDMMYYYYHHMM(label_FechaHoraInput.value);
+    const label_direccion = label_direccionInput.value;
+    const label_numeroref = label_numerorefInput.value;
+    const label_Cobertura = label_CoberturaInput.value;
+    const label_mensajeerror = label_mensajeerrorInput.value;
+    const label_reinicio = label_reinicioInput.value;
+    const label_otralinea = label_otralineaInput.value;
+    const label_equipo = label_equipoInput.value;
+    const label_os = label_osInput.value;
+    const label_DetalleInc = label_DetalleIncInput.value;
+    const labelID = labelIDInput.value;
+    
+    // VARIABLES AGREGADAS AQUÍ QUE FALTABAN:
+    const label_kb = label_kbInput.value;
+    const label_otroequipo = label_otroequipoInput.value;
+
+    resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> // Se genera reporte de calidad y avería
+
+- Jefe/Supervisor aprobador del reporte: <span class="resultado-label">${label_super}</span>
+- Condición del Reclamante: <span class="resultado-label">${label_reclamante}</span>
+- Validó identidad: <span class="resultado-label">Si</span>
+- Datos validados correctamente: <span class="resultado-label">Si</span>
+- Fecha y hora del inconveniente: <span class="resultado-label">${label_FechaHora}</span>
+- Dirección donde presenta los inconvenientes (con referencia válidas, cruce de avenidas, Urbanización – centro poblado - distrito – provincia - departamento): <span class="resultado-label">${label_direccion}</span>
+- Número de referencia: <span class="resultado-label">${label_numeroref}</span>
+- Indicador de cobertura: <span class="resultado-label">${label_Cobertura}</span>
+- Mensaje de Error: <span class="resultado-label">${label_mensajeerror}</span>
+- Reinicio su equipo: <span class="resultado-label">${label_reinicio}</span>
+- Cuenta con alguna otra línea que presenta la incidencia: <span class="resultado-label">${label_otralinea}</span>
+- Equipo fue adquirido en Bitel: <span class="resultado-label">${label_equipo}</span>
+- Sistema operativo del Dispositivo: <span class="resultado-label">${label_os}</span>
+- Cantidad de KB vigente al momento de escalar: <span class="resultado-label">${label_kb}</span>
+- ¿Se probó el chip en otro equipo y se solucionó el inconveniente?: <span class="resultado-label">${label_otroequipo}</span>
+- Detalle del inconveniente: <span class="resultado-label">${label_DetalleInc}</span>
+- $$_<span class="resultado-label">${labelID}</span>_&&`;
+}
+
+    function capitalizeFirstLetter(string) {
+      if(!string) return ""; // Protección si el string está vacío
+      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
+
+    function checkLength(input) {
+        if (input.value.length > 9) {
+          input.value = input.value.slice(0, 9);
+        }
+    }
+
+    function copiarResultado() {
+        const resultadoTexto = resultadoOutput.innerText.trim();
+        const textarea = document.createElement("textarea");
+        textarea.value = resultadoTexto;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("Resultado copiado al portapapeles");
+    }
+
+    function limpiarInputs() {
+        label0Input.value = "";
+        label0_1Input.value = "";
+        label_superInput.value = "";
+        label_reclamanteInput.value = "";
+        label_validentidadInput.value = "";
+        label_valdatosInput.value = "";
+        label_FechaHoraInput.value = "";
+        label_direccionInput.value = "";
+        label_numerorefInput.value = "";
+        label_CoberturaInput.value = "";
+        label_mensajeerrorInput.value = "";
+        label_reinicioInput.value = "";
+        label_otralineaInput.value = "";
+        label_equipoInput.value = "";
+        label_osInput.value = "";
+        label_kbInput.value = "";
+        label_otroequipoInput.value = ""; // Faltaba limpiar este también
+        label_DetalleIncInput.value = "";
+        labelIDInput.value = "";
+        resultadoOutput.innerHTML = "";
+    }
+</script>
+</body>
+</html>

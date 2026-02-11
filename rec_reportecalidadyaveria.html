@@ -260,6 +260,27 @@
 </div>
 
 <div class="input-container">
+<label for="label_padre">- Nombre del padre:</label>
+<input type="text" id="label_padre" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="label_padre">- Nombre de la madre:</label>
+<input type="text" id="label_madre" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="label_fecnac">- Fecha de nacimiento:</label>
+<input type="text" id="label_fecnac" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="label_lugnac">- Lugar de nacimiento:</label>
+<input type="text" id="label_lugnac" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+
+<div class="input-container">
 <label for="label_validentidad">- Validó identidad:</label>
 <select id="label_validentidad" onchange="updateResultadoOutput()">
 <option value="">Seleccionar</option>
@@ -392,6 +413,10 @@ window.onload = function() {
       const label0_1Input = document.querySelector("#label0_1");
       const label_superInput = document.querySelector("#label_super");
       const label_reclamanteInput = document.querySelector("#label_reclamante");
+      const label_padreInput = document.querySelector("#label_padre");
+      const label_madreInput = document.querySelector("#label_madre");
+      const label_fecnacInput = document.querySelector("#label_fecnac");
+      const label_lugnacInput = document.querySelector("#label_lugnac");
       const label_validentidadInput = document.querySelector("#label_validentidad");
       const label_valdatosInput = document.querySelector("#label_valdatos");
       const label_FechaHoraInput = document.querySelector("#label_FechaHora");
@@ -413,6 +438,10 @@ window.onload = function() {
       label0_1Input.addEventListener("input", updateResultadoOutput);
       label_superInput.addEventListener("input", updateResultadoOutput);
       label_reclamanteInput.addEventListener("change", updateResultadoOutput);
+      label_padreInput.addEventListener("input", updateResultadoOutput);
+      label_madreInput.addEventListener("input", updateResultadoOutput);
+      label_fecnacInput.addEventListener("input", updateResultadoOutput);
+      label_lugnacInput.addEventListener("input", updateResultadoOutput);
       label_validentidadInput.addEventListener("change", updateResultadoOutput);
       label_valdatosInput.addEventListener("change", updateResultadoOutput);
       label_FechaHoraInput.addEventListener("input", updateResultadoOutput);
@@ -446,6 +475,10 @@ function updateResultadoOutput() {
     const label0_1 = capitalizeFirstLetter(label0_1Input.value);
     const label_super = label_superInput.value;
     const label_reclamante = label_reclamanteInput.value;
+    const label_padre = label_padreInput.value;
+    const label_madre = label_madreInput.value;
+    const label_fecnac = label_fecnacInput.value;
+    const label_lugnac = label_lugnacInput.value;
     const label_validentidad = label_validentidadInput.value;
     const label_valdatos = label_valdatosInput.value;
     const label_FechaHora = formatDateToDDMMYYYYHHMM(label_FechaHoraInput.value);
@@ -468,6 +501,10 @@ function updateResultadoOutput() {
 
 - Jefe/Supervisor aprobador del reporte: <span class="resultado-label">${label_super}</span>
 - Condición del Reclamante: <span class="resultado-label">${label_reclamante}</span>
+- Nombre del padre: <span class="resultado-label">${label_padre}</span>
+- Nombre de la madre: <span class="resultado-label">${label_madre}</span>
+- Fecha de nacimiento: <span class="resultado-label">${label_fecnac}</span>
+- Lugar de nacimiento: <span class="resultado-label">${label_lugnac}</span>
 - Validó identidad: <span class="resultado-label">Si</span>
 - Datos validados correctamente: <span class="resultado-label">Si</span>
 - Fecha y hora del inconveniente: <span class="resultado-label">${label_FechaHora}</span>
@@ -512,6 +549,10 @@ function updateResultadoOutput() {
         label0_1Input.value = "";
         label_superInput.value = "";
         label_reclamanteInput.value = "";
+        label_padreInput.value = "";
+        label_madreInput.value = "";
+        label_fecnacInput.value = "";
+        label_lugnacInput.value = "";
         label_validentidadInput.value = "";
         label_valdatosInput.value = "";
         label_FechaHoraInput.value = "";

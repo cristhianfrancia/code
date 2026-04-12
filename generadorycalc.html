@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base target="_top">
+  <meta charset="utf-8" />
+  <title>Herramientas de Gestión</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8NLE2SVR33"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-8NLE2SVR33');
+  </script>
+
+  <style>
+    /* =========================================
+       1. VARIABLES DE COLOR Y ESTILOS GLOBALES
+       ========================================= */
+    :root {
+      /* Colores Base (Bitel) */
+      --bitel-teal: #01768b;
+      --bitel-blue: #0c477e; /* El azul marino clásico */
+      --bitel-yellow: #fbf32f;
+      --bitel-orange: #fd8261;
+      
+      /* Colores de UI Generales */
+      --soft-gray: #e0e0e0;
+      --text-main: #333333;
+      --muted: #757575; /* Gris para textos secundarios e inactive menu */
+      --bg-soft: #FFFFFF; /* FONDO DE PÁGINA BLANCO (RESTABLECIDO) */
+      
+      /* Colores para Sidebar Estilo Light & Azur Sophisticated */
+      --sidebar-bg: #FFFFFF; /* Fondo sidebar blanco puro */
+      --sidebar-text: var(--muted); /* Texto gris para opciones inactivas */
+      
+      --sidebar-active-bg: var(--bitel-blue); /* FONDO AZUL CLÁSICO REDONDEADO PARA ACTIVO (RESTABLECIDO) */
+      --sidebar-active-text: #FFFFFF; /* Texto blanco en opción activa */
+      --sidebar-hover-bg: #f5f5f5; /* Fondo hover muy sutil */
+      
+      --card-bg: rgba(255,255,255,0.98);
+      --glass: rgba(255,255,255,0.7);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: var(--bg-soft); /* Fondo de la página completo blanco */
+      overflow: hidden;
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =========================================
+       2. ESTILOS DEL MENÚ LATERAL (SIDEBAR LIGHT & AZUR) - ESTILO SOFISTICADO
+       ========================================= */
+    .sidebar {
+      width: 260px;
+      background-color: var(--sidebar-bg); /* Fondo blanco */
+      color: var(--sidebar-text);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.03); /* Sombra muy sutil */
+      border-right: 1px solid rgba(0,0,0,0.05); /* Línea divisoria suave */
+      z-index: 100;
+      overflow-y: auto;
+      user-select: none;
+    }
+
+    .sidebar-header {
+      padding: 30px 25px 20px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Divisor suave */
+    }
+    
+    .sidebar-header .app-icon {
+        width: 32px; height: 32px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .sidebar-header h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: var(--bitel-blue); /* Título en azul Bitel elegante */
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 20px 15px; /* Aire lateral para los botones redondeados */
+      margin: 0;
+      flex: 1;
+    }
+
+    .menu-item {
+      padding: 12px 20px; /* Aire vertical y horizontal */
+      margin-bottom: 6px; /* Espacio entre botones */
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--sidebar-text); /* Texto gris por defecto */
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-radius: 10px; /* Esquinas redondeadas suaves */
+      position: relative;
+    }
+    
+    .menu-item span { opacity: 0.7; font-size: 1.1rem; transition: opacity 0.2s; }
+
+    .menu-item:hover {
+      background-color: var(--sidebar-hover-bg); /* Hover gris sutil */
+      color: var(--text-main);
+    }
+    
+    .menu-item:hover span { opacity: 1; }
+
+    /* ESTILO ACTIVO: AZUR REDONDEADO CLÁSICO Y ELEGANTE */
+    .menu-item.active {
+      background-color: var(--sidebar-active-bg); /* Fondo azul clásico */
+      color: var(--sidebar-active-text); /* Texto blanco */
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(12, 71, 126, 0.15); /* Sombra azul suave para resaltar */
+    }
+    
+    .menu-item.active span { opacity: 1; color: #FFFFFF; }
+    
+    /* Contenido Principal */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .app-section {
+      display: none;
+      padding: 30px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .app-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    /* =========================================
+       3. ESTILOS DEL GENERADOR (PULIDO)
+       ========================================= */
+    .container {
+      max-width: 1000px;
+      background: #ffffff;
+      padding: 25px 28px 30px;
+      border-radius: 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.06); /* Sombra más suave */
+      margin: 28px auto;
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+
+    .titulo-principal {
+      margin: 0 0 4px; font-weight: 700; font-size: 1.4rem;
+      text-align: center; letter-spacing: 0.3px; color: var(--bitel-blue);
+    }
+
+    .subtitulo { margin: 0 0 20px; text-align: center; font-size: 0.9rem; color: #6b6b6b; }
+
+    .barra-titulo {
+      width: 80px; height: 4px; border-radius: 999px; margin: 10px auto 22px;
+      background: linear-gradient(90deg, var(--bitel-yellow), var(--bitel-teal));
+    }
+
+    .template-selector { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .template-selector label { font-size: 0.9rem; font-weight: 600; color: #555; }
+    .template-selector select {
+      padding: 7px 10px; border-radius: 999px; border: 1px solid var(--soft-gray);
+      font-size: 0.9rem; outline: none; background: #fff; min-width: 230px;
+    }
+    .template-selector select:focus { border-color: var(--bitel-teal); box-shadow: 0 0 0 2px rgba(1,118,139,0.1); }
+
+    .inline-form { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+    .inline-form input, .inline-form textarea {
+      padding: 8px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 10px;
+      flex: 1; min-width: 180px; outline: none; background: #fafafa; box-sizing: border-box;
+    }
+    .inline-form input:focus, .inline-form textarea:focus {
+      border-color: var(--bitel-teal); background: #ffffff; transform: translateY(-1px);
+    }
+    .inline-form label { font-size: 0.78rem; font-weight: 600; color: #666; flex-basis: 100%; margin: 4px 0; }
+    .fila-campo { display: flex; flex-direction: column; flex: 1; min-width: 180px; width: 100%; max-width: 300px; position: relative; }
+    .campo-resizable { resize: both; overflow: auto; min-height: 38px; height: 38px; width: 100%; }
+
+    .output {
+      background: #e8f7f9; padding: 12px 15px; margin-top: 18px;
+      border-left: 4px solid var(--bitel-teal); font-family: monospace;
+      word-break: break-word; border-radius: 8px; font-size: 0.9rem; line-height: 1.3;
+    }
+
+    .button-group { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .copiar-btn, .limpiar-btn, .mas-opciones-btn {
+      padding: 8px 16px; border: none; border-radius: 999px; cursor: pointer;
+      font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .copiar-btn { background-color: var(--bitel-teal); color: white; }
+    .copiar-btn.copied { background-color: #28a745; }
+    .limpiar-btn { background-color: #dc3545; color: white; }
+    .mas-opciones-btn { background-color: var(--bitel-blue); color: white; }
+    
+    .opciones-extra { display: none; gap: 10px; margin-left: auto; align-items: center; flex-wrap: wrap; }
+    .toggle-historial-btn, .exportar-historial-btn, .borrar-historial-btn {
+      padding: 6px 12px; border-radius: 999px; border: none; cursor: pointer; font-size: 12px; color: white;
+    }
+    .toggle-historial-btn { background-color: #6c757d; }
+    .exportar-historial-btn { background-color: #17a2b8; }
+    .borrar-historial-btn { background-color: #ff9800; }
+
+    #historial {
+      display: none; margin-top: 20px; background: #fff; border: 1px solid #eee;
+      padding: 10px; border-radius: 12px; max-height: 250px; overflow-y: auto;
+      font-family: monospace; font-size: 13px;
+    }
+    .historial-item { display: flex; align-items: center; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed #ccc; }
+    .historial-copy-btn { background: #007bff; color: white; border: none; border-radius: 14px; padding: 5px 9px; cursor: pointer; font-size: 11px; }
+
+    .contador-sesiones {
+      position: fixed; right: 22px; bottom: 22px; background: white; padding: 10px 18px;
+      border-radius: 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); display: flex;
+      align-items: center; gap: 8px; z-index: 9999; font-size: 13px;
+    }
+    .dot-online { width: 10px; height: 10px; background: #28a745; border-radius: 999px; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 60% { transform: scale(1.35); opacity: 0.4; } 100% { transform: scale(1); opacity: 1; } }
+
+    .btn-selected { background-color: #0c477e !important; color: white !important; }
+    .btn-opcion { background-color: #f8f9fa; border: 1px solid #ced4da; margin: 0 5px 5px 0; padding: 6px 12px; border-radius: 999px; cursor: pointer; font-size: 12px; }
+    .enlace-ejemplo { font-size: 0.85rem; color: #007bff; cursor: pointer; text-decoration: underline; margin-left: 5px; }
+
+    .footer-autor { text-align: center; margin-top: 30px; padding: 15px; font-size: 0.8rem; color: #aaa; border-top: 1px solid #eee; user-select: none; }
+    .footer-autor strong { color: var(--bitel-blue); }
+
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6); display: none; justify-content: center; align-items: center; z-index: 10000;
+    }
+    .modal-box, .modal-box-image { background: white; padding: 30px; border-radius: 16px; text-align: center; max-width: 400px; width: 90%; }
+    .modal-box-image { max-width: 800px; }
+    .modal-box-image img { max-width: 100%; border-radius: 8px; }
+    .modal-btn { background: var(--bitel-blue); color: white; border: none; padding: 12px 24px; border-radius: 8px; width: 100%; cursor: pointer; margin-top:15px; }
+
+    /* =========================================
+       4. ESTILOS DE LA CALCULADORA (LIMPIADO)
+       ========================================= */
+    .container-calc {
+      width: 95%; max-width: 1000px; margin: 28px auto; background: var(--card-bg);
+      border-radius: 14px; padding: 22px; box-shadow: 0 14px 40px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+
+    .container-calc h1 { margin: 0; font-size: 1.5rem; color: var(--bitel-blue); }
+    .subtitle { margin: 0; font-size: .85rem; color: var(--muted); }
+    .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position:relative; flex-wrap:wrap; gap:10px; }
+    
+    .toolbar { display: flex; gap: 20px; align-items: center; flex-wrap:wrap; }
+    .toggle, .select-dec { display: flex; gap: 12px; background: #fff; border: 1px solid rgba(0,0,0,0.08); padding: 8px; border-radius: 999px; }
+    .toggle button, .select-dec button { border: 0; background: none; padding: 8px 13px; font-weight: 700; cursor: pointer; border-radius: 8px; }
+    .toggle button.active, .select-dec button.active { background: linear-gradient(90deg,var(--bitel-teal),var(--bitel-blue)); color: white; }
+
+    .main-row { display: flex; align-items: flex-end; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+    .main-row select, .main-row input[type=number] { padding: 12px; border-radius: 8px; border: 1px solid #ccc; background: #fafafa; font-size: 1.05rem; height: 48px; outline:none; box-sizing:border-box;}
+    .main-row input[type=number] { width: 260px; }
+    .main-row select:focus, .main-row input[type=number]:focus { border-color: var(--bitel-teal); box-shadow: 0 0 0 2px rgba(1,118,139,0.1); }
+    
+    .btn-clean { background: linear-gradient(90deg,var(--bitel-teal),var(--bitel-blue)); color: white; border: 0; padding: 12.5px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; height: 48px; }
+    .three-results { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 12px; }
+    .card-calc { background: var(--glass); border-radius: 10px; padding: 15px; border: 1px solid rgba(12,71,126,0.08); cursor: pointer; position: relative; display:flex; flex-direction:column; transition:.15s ease;}
+    .card-calc:hover{box-shadow:0 10px 26px rgba(12,71,126,0.08)}
+    .card-calc:active{transform:scale(.98)}
+    
+    .card-calc .u { font-size: .78rem; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
+    .card-calc .v { font-size: 1.2rem; color: var(--bitel-blue); font-weight: 800; }
+    
+    .copy-tip-calc { position: absolute; right: 10px; top: 10px; background: var(--bitel-blue); color: white; padding: 4px 8px; font-size: .72rem; border-radius: 6px; opacity: 0; transition: .2s ease; }
+    .card-calc.copied .copy-tip-calc { opacity: 1; }
+    #extraContainer { display: none; margin-top: 10px; }
+    #toggleExtra { background: #fff; border: 1px solid var(--bitel-blue); padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 700; color: var(--bitel-blue); margin-bottom: 14px; }
+  </style>
+</head>
+
+<body oncontextmenu="return false;">
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+        <div class="app-icon">💡</div> <h2>Herramientas</h2>
+    </div>
+    <ul class="sidebar-menu">
+      <li class="menu-item active" onclick="switchApp('generadorApp', this)">
+        <span>📝</span> Generador
+      </li>
+      <li class="menu-item" onclick="switchApp('calculadoraApp', this)">
+        <span>🧮</span> Calculadora
+      </li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    
+    <div id="generadorApp" class="app-section active">
+      
+      <div class="container">
+        <h1 class="titulo-principal">Generador de plantillas 🧑‍💻</h1>
+        <p class="subtitulo">Genera comentarios para tipificación y calidad de red.</p>
+        <div class="barra-titulo"></div>
+
+        <div class="template-selector">
+          <label for="plantilla">Tipo de plantilla:</label>
+          <select id="plantilla" onchange="cambiarPlantilla()">
+            <option value="comentario">Comentario de tipificación</option>
+            <option value="calidad">Calidad de red - Address</option>
+          </select>
+        </div>
+
+        <div id="plantillaComentario" class="inline-form">
+          <div class="fila-campo">
+            <label>Número del que llama //</label>
+            <input id="numero" maxlength="9" oninput="validarNumero(this)" placeholder="9XX XXX XXX">
+          </div>
+          <div class="fila-campo">
+            <label>Consulta del cliente //</label>
+            <textarea id="consulta" class="campo-resizable" rows="1" placeholder="Consulta de cliente"></textarea>
+          </div>
+          <div class="fila-campo">
+            <label>Respuesta brindada //</label>
+            <textarea id="respuesta" class="campo-resizable" rows="1" placeholder="Respuesta brindada"></textarea>
+          </div>
+          <div class="fila-campo">
+            <label>$$_ID de llamada_&&</label>
+            <input id="id" placeholder="ID de llamada">
+          </div>
+          <div class="output" style="flex-basis: 100%;">
+            <strong>Resultado Tipificación:</strong><br>
+            <div id="resultadoGlobal">Resultado aparecerá aquí...</div>
+          </div>
+        </div>
+
+        <div id="plantillaCalidad" class="inline-form" style="display:none;">
+          <h3 style="flex-basis: 100%; margin-bottom: 0px; margin-top: 5px; color: var(--bitel-blue);">Llenado para Address:</h3>
+          <div style="flex-basis: 100%; height: 2px; background: var(--soft-gray); margin-bottom: 10px;"></div>
+
+          <div class="fila-campo">
+            <label>Dirección del problema,</label>
+            <input id="direccion" placeholder="Calle, Número, zona, etc" list="listaDireccion">
+            <datalist id="listaDireccion"><option value="NO BRINDA DIRECCIÓN"></option></datalist>
+          </div>
+          <div class="fila-campo">
+            <label>Referencia del problema,</label>
+            <input id="referencia" placeholder="Mercados, paraderos, etc" list="listaReferencia">
+            <datalist id="listaReferencia"><option value="NO BRINDA REFERENCIA"></option><option value="NO OBLIGATORIO"></option></datalist>
+          </div>
+          <div class="fila-campo">
+            <label>Departamento -</label>
+            <input id="departamento" placeholder="Departamento" list="listaDepartamento">
+            <datalist id="listaDepartamento"><option value="NO BRINDA DEPARTAMENTO"></option></datalist>
+          </div>
+          <div class="fila-campo">
+            <label>Provincia -</label>
+            <input id="provincia" placeholder="Provincia" list="listaProvincia">
+            <datalist id="listaProvincia"><option value="NO BRINDA PROVINCIA"></option></datalist>
+          </div>
+          <div class="fila-campo">
+            <label>Distrito</label>
+            <input id="distrito" placeholder="Distrito" list="listaDistrito">
+            <datalist id="listaDistrito"><option value="NO BRINDA DISTRITO"></option></datalist>
+          </div>
+          
+          <div class="output" style="flex-basis: 100%;">
+            <strong>Resultado Address:</strong><br>
+            <div id="resultadoAddress">Resultado aparecerá aquí...</div>
+          </div>
+          
+          <div class="button-group" style="flex-basis: 100%; margin-left: 0; margin-top: 5px;">
+            <button class="copiar-btn" id="copiarBtnAddress" onclick="copiarResultado(this, 'resultadoAddress')">📋 Copiar Address</button>
+          </div>
+          
+          <hr style="flex-basis: 100%; border: 0; border-top: 1px dashed var(--soft-gray); margin: 20px 0 10px 0;">
+
+          <h3 style="flex-basis: 100%; margin-bottom: 0px; margin-top: 20px; color: var(--bitel-blue);">Datos de Tipificación:</h3>
+          <div style="flex-basis: 100%; height: 2px; background: var(--soft-gray); margin-bottom: 10px;"></div>
+
+          <div class="fila-campo" style="max-width: 100%; min-width: 100%; margin-bottom: 5px;">
+            <label>Tipo de Descarte:</label>
+            <div class="button-group" id="grupoDescartes" style="margin-top:0;">
+              <button class="btn-opcion" data-descarte="internet" onclick="seleccionarDescarte('internet')">Descartes de internet</button>
+              <button class="btn-opcion" data-descarte="senal" onclick="seleccionarDescarte('senal')">Descartes de señal</button>
+            </div>
+          </div>
+
+          <div class="fila-campo" id="opcionesRedProblema" style="max-width: 100%; min-width: 100%; margin-bottom: 15px; display:none; flex-direction:row; gap:10px; flex-wrap:wrap;">
+              <fieldset style="border: 1px solid var(--soft-gray); border-radius: 8px; padding: 10px; margin: 0; flex: 1; min-width: 150px;">
+                  <legend style="font-size: 0.78rem; font-weight: 600; color: #666; padding: 0 5px;">Red</legend>
+                  <div class="button-group" id="grupoRed" style="margin-top:0;">
+                      <button class="btn-opcion" data-red="3G" onclick="seleccionarRed('3G')">3G</button>
+                      <button class="btn-opcion" data-red="4G" onclick="seleccionarRed('4G')">4G</button>
+                      <button class="btn-opcion" data-red="5G" onclick="seleccionarRed('5G')">5G</button>
+                  </div>
+              </fieldset>
+              
+              <fieldset style="border: 1px solid var(--soft-gray); border-radius: 8px; padding: 10px; margin: 0; flex: 3; min-width: 250px;">
+                  <legend style="font-size: 0.78rem; font-weight: 600; color: #666; padding: 0 5px;">Tipos de problemas</legend>
+                  <div class="button-group" id="grupoProblemas" style="margin-top:0;">
+                  </div>
+              </fieldset>
+          </div>
+
+          <div class="fila-campo"><label>Número del que llama //</label><input id="numeroCalidad" maxlength="9" oninput="validarNumero(this)" placeholder="9XX XXX XXX"></div>
+          <div class="fila-campo"><label>Consulta del cliente //</label><textarea id="consultaCalidad" class="campo-resizable" rows="1" placeholder="Consulta de cliente"></textarea></div>
+          <div class="fila-campo"><label>Respuesta brindada //</label><textarea id="respuestaCalidad" class="campo-resizable" rows="1" placeholder="Respuesta brindada"></textarea></div>
+          <div class="fila-campo"><label>$$_ID de llamada_&&</label><input id="idCalidad" placeholder="ID de llamada"></div>
+
+          <div class="fila-campo" id="contenedorBts" style="max-width: 100%; min-width: 100%; display:none;">
+            <label>BTS: <span class="enlace-ejemplo" onclick="verEjemploBts()">(clic para ver ejemplo)</span></label>
+            <input id="btsCalidad" placeholder="Información de BTS" disabled list="listaBts">
+            <datalist id="listaBts"><option value="NULL"></option></datalist>
+          </div>
+          
+          <div class="output" style="flex-basis: 100%;">
+            <strong>Resultado Tipificación + BTS:</strong><br>
+            <div id="resultadoTipificacion">Resultado aparecerá aquí...</div>
+          </div>
+        </div>
+        
+        <div class="button-group" style="justify-content: flex-start; margin-top: 15px; gap: 10px; flex-wrap: wrap;">
+          <button class="copiar-btn" id="copiarBtnGlobal" onclick="copiarResultado(this, 'resultadoGlobal')">📋 Copiar</button>
+          <button class="copiar-btn" id="copiarBtnTipificacion" onclick="copiarResultado(this, 'resultadoTipificacion')" style="display:none;">📋 Copiar Tipif.</button>
+          <button class="limpiar-btn" onclick="limpiarCampos()">🧹 Limpiar</button>
+          <button class="mas-opciones-btn" onclick="toggleOpciones()">⚙️ Más opciones</button>
+
+          <div class="opciones-extra" id="opcionesExtra">
+            <button class="toggle-historial-btn" onclick="toggleHistorial()">📂 Historial</button>
+            <button class="exportar-historial-btn" onclick="exportarHistorial()">⬇️ Exportar</button>
+            <button class="borrar-historial-btn" onclick="borrarHistorial()">🗑️ Borrar</button>
+          </div>
+        </div>
+
+        <div id="historial"></div>
+
+        <div class="footer-autor">
+          Developed by Cristhian Francia &copy; 2025 | All rights reserved.
+        </div>
+      </div>
+
+    </div>
+
+    <div id="calculadoraApp" class="app-section">
+      <div class="container-calc">
+        <div class="top">
+          <div>
+            <h1>Calculadora de Datos</h1>
+            <p class="subtitle">Conversión precisa de unidades</p>
+          </div>
+          <div class="toolbar">
+             <div class="toggle">
+                <button id="btn-1024" class="active">1024 (Bitel)</button>
+                <button id="btn-1000">1000</button>
+             </div>
+             <div class="select-dec">
+                <button data-dec="0">0</button>
+                <button data-dec="2">2</button>
+                <button data-dec="4" class="active">4</button>
+             </div>
+          </div>
+        </div>
+
+        <div class="main-row">
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label>Unidad de origen</label>
+            <select id="unitSelect">
+              <option value="KB">Kilobyte (KB)</option>
+              <option value="MB">Megabyte (MB)</option>
+              <option value="GB">Gigabyte (GB)</option>
+              <option value="TB">Terabyte (TB)</option>
+              <option value="PB">Petabyte (PB)</option>
+              <option value="bit">Bit (b)</option>
+              <option value="byte">Byte (B)</option>
+            </select>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label>Valor a convertir</label>
+            <input type="number" id="valueInput" placeholder="0">
+          </div>
+          <button id="btnClean" class="btn-clean">Limpiar todo</button>
+        </div>
+
+        <div id="primaryResults" class="three-results"></div>
+        <button id="toggleExtra">Más resultados</button>
+        <div id="extraContainer" class="three-results"></div>
+
+        <div class="footer-autor" style="margin-top:40px;">
+          Developed by Cristhian Francia &copy; 2025 | All rights reserved.
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="contador-sesiones">
+    <div class="dot-online"></div>
+    <span class="count" id="contadorOnline">0</span>
+    <span class="label">sesiones en línea</span>
+  </div>
+
+  <div id="modalError" class="modal-overlay" onclick="cerrarModal(event)">
+    <div class="modal-box">
+      <span class="modal-icon">⚠️</span>
+      <h3 class="modal-title">¡Atención!</h3>
+      <p class="modal-msg" id="modalMsgTexto">Faltan campos por completar.</p>
+      <button class="modal-btn" onclick="cerrarModalBtn()">Entendido</button>
+    </div>
+  </div>
+
+  <div id="modalImagen" class="modal-overlay" onclick="cerrarModalImagen(event)">
+    <div class="modal-box-image">
+      <h3 class="modal-title" style="margin-bottom:10px;">Ejemplo de BTS</h3>
+      <img src="https://i.postimg.cc/7Zg7FsXL/BTS.png" alt="Ejemplo BTS">
+      <button class="modal-btn btn-cerrar-img" onclick="cerrarModalImagenBtn()">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    // -----------------------------------------
+    // LÓGICA DE PESTAÑAS (MENÚ LATERAL)
+    // -----------------------------------------
+    function switchApp(appId, element) {
+      document.querySelectorAll('.app-section').forEach(section => section.classList.remove('active'));
+      document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+      document.getElementById(appId).classList.add('active');
+      element.classList.add('active');
+    }
+
+    // -----------------------------------------
+    // SCRIPT: GENERADOR DE PLANTILLAS
+    // -----------------------------------------
+    const CONST_URL_WEB_APP = "https://script.google.com/macros/s/AKfycbzHHcr6MJDtbcbc3tJiO1hGESMdf9NZDagTAPuDJuWgyg_AiYqxCL3k_wLVdZu3PlLCsQ/exec";
+    var HIST_KEY = 'historialResultados';
+    var inputs = ['numero', 'consulta', 'respuesta', 'id', 'direccion', 'referencia', 'departamento', 'provincia', 'distrito', 'numeroCalidad', 'consultaCalidad', 'respuestaCalidad', 'idCalidad', 'btsCalidad'];
+    var historial = [];
+
+    var estadoDescarte = { tipo: '', red: '', problema: '' };
+    var problemas = {
+        internet: [
+            { label: "No accede a internet", plantilla: "Cliente reporta no accede a Internet en [RED]" },
+            { label: "Lentitud", plantilla: "Cliente reporta lentitud en el servicio de Internet en [RED]" },
+            { label: "Desconexiones a internet", plantilla: "Cliente reporta desconexiones de Internet en [RED]" },
+            { label: "Problemas con aplicativos", plantilla: "Cliente reporta problemas con aplicativos al conectarse a Internet en [RED]" },
+            { label: "Otro", plantilla: "Cliente reporta otro inconveniente de internet en [RED]" }
+        ],
+        senal: [
+            { label: "Sin señal - nula", plantilla: "Cliente reporta sin señal/nula en [RED]" },
+            { label: "Señal baja", plantilla: "Cliente reporta señal baja en [RED]" },
+            { label: "Intermitencia", plantilla: "Cliente reporta intermitencia en [RED]" },
+            { label: "Otro", plantilla: "Cliente reporta otro inconveniente de señal en [RED]" }
+        ]
+    };
+
+    function cargarInicial() {
+      var guardado = localStorage.getItem(HIST_KEY);
+      historial = guardado ? JSON.parse(guardado) : [];
+      actualizarHistorial(); updateOutput();
+    }
+
+    function plantillaSeleccionada() { return document.getElementById('plantilla').value; }
+
+    function cambiarPlantilla() {
+      var modo = plantillaSeleccionada();
+      var cmt = document.getElementById('plantillaComentario');
+      var cal = document.getElementById('plantillaCalidad');
+      var btnGlobal = document.getElementById('copiarBtnGlobal');
+      var btnAddress = document.getElementById('copiarBtnAddress');
+      var btnTipificacion = document.getElementById('copiarBtnTipificacion');
+
+      if (modo === 'comentario') {
+        cmt.style.display = 'flex'; cal.style.display = 'none';
+        if (btnGlobal) btnGlobal.style.display = 'inline-flex';
+        if (btnAddress) btnAddress.style.display = 'none'; 
+        if (btnTipificacion) btnTipificacion.style.display = 'none';
+      } else {
+        cmt.style.display = 'none'; cal.style.display = 'flex';
+        if (btnGlobal) btnGlobal.style.display = 'none';
+        if (btnAddress) btnAddress.style.display = 'inline-flex'; 
+        if (btnTipificacion) btnTipificacion.style.display = 'inline-flex'; 
+      }
+      updateOutput();
+    }
+
+    function getUpperValue(id) {
+      var el = document.getElementById(id);
+      if (!el) return '';
+      el.value = (el.value || '').toUpperCase();
+      return el.value.trim();
+    }
+
+    function updateOutput() {
+      var modo = plantillaSeleccionada();
+      document.getElementById('resultadoAddress').innerText = 'Resultado aparecerá aquí...';
+      document.getElementById('resultadoTipificacion').innerText = 'Resultado aparecerá aquí...';
+      document.getElementById('resultadoGlobal').innerText = 'Resultado aparecerá aquí...';
+
+      if (modo === 'comentario') {
+        var numero = (document.getElementById('numero').value || '').trim();
+        var consulta = (document.getElementById('consulta').value || '').trim();
+        var respuesta = (document.getElementById('respuesta').value || '').trim();
+        var id = (document.getElementById('id').value || '').trim();
+        var resultadoGlobal = '';
+        if (numero || consulta || respuesta || id) {
+          resultadoGlobal = numero + " // " + consulta + " // " + respuesta + " // $$_" + id + "_&&";
+        }
+        document.getElementById('resultadoGlobal').innerText = resultadoGlobal || 'Resultado aparecerá aquí...';
+      } else {
+        var direccion    = getUpperValue('direccion');
+        var referencia   = getUpperValue('referencia');
+        var departamento = getUpperValue('departamento');
+        var provincia    = getUpperValue('provincia');
+        var distrito     = getUpperValue('distrito');
+        var numeroCalidad    = (document.getElementById('numeroCalidad').value || '').trim();
+        var consultaCalidad  = (document.getElementById('consultaCalidad').value || '').trim(); 
+        var respuestaCalidad = (document.getElementById('respuestaCalidad').value || '').trim();
+        var idCalidad        = (document.getElementById('idCalidad').value || '').trim();
+        var btsCalidad       = (document.getElementById('btsCalidad').value || '').trim(); 
+        
+        var outputAddress = '';
+        if (direccion || referencia || departamento || provincia || distrito) {
+          outputAddress = direccion + ", " + referencia + ", LUG@R: " + departamento + " - " + provincia + " - " + distrito;
+        }
+
+        var partesTipificacion = [];
+        if (numeroCalidad || consultaCalidad || respuestaCalidad || idCalidad) {
+           partesTipificacion.push(numeroCalidad + " // " + consultaCalidad + " // " + respuestaCalidad + " // $$_" + idCalidad + "_&&");
+        }
+        if (document.getElementById('contenedorBts').style.display !== 'none' && btsCalidad) {
+            partesTipificacion.push('BTS: ' + btsCalidad);
+        }
+        document.getElementById('resultadoAddress').innerText = outputAddress || 'Resultado aparecerá aquí...';
+        document.getElementById('resultadoTipificacion').innerText = partesTipificacion.join('\n\n') || 'Resultado aparecerá aquí...';
+      }
+    }
+
+    function actualizarConsultaInput() {
+        var consultaInput = document.getElementById('consultaCalidad');
+        var resultado = '';
+        if (estadoDescarte.problema) {
+            var listaProblemas = problemas[estadoDescarte.tipo];
+            var problemaObj = listaProblemas ? listaProblemas.find(p => p.label === estadoDescarte.problema) : null;
+            if (problemaObj) {
+                var redTexto = estadoDescarte.red ? estadoDescarte.red : "(FALTA RED)";
+                resultado = problemaObj.plantilla.replace('[RED]', redTexto);
+            }
+        }
+        if (resultado) consultaInput.value = resultado;
+        updateOutput();
+    }
+
+    function seleccionarDescarte(tipo) {
+        estadoDescarte.red = ''; estadoDescarte.problema = ''; estadoDescarte.tipo = tipo;
+        var contenedorBts = document.getElementById('contenedorBts');
+        var btsInput = document.getElementById('btsCalidad');
+        if (contenedorBts && btsInput) { contenedorBts.style.display = 'flex'; btsInput.disabled = false; btsInput.value = ''; }
+        document.querySelectorAll('#grupoDescartes button').forEach(btn => {
+            btn.classList.remove('btn-selected'); 
+            if (btn.dataset.descarte === tipo) btn.classList.add('btn-selected');
+        });
+        document.getElementById('opcionesRedProblema').style.display = 'flex';
+        document.querySelectorAll('#grupoRed button').forEach(btn => btn.classList.remove('btn-selected'));
+        var grupoProblemasDiv = document.getElementById('grupoProblemas');
+        grupoProblemasDiv.innerHTML = '';
+        (problemas[tipo] || []).forEach(item => {
+            var btn = document.createElement('button');
+            btn.className = 'btn-opcion'; btn.textContent = item.label; btn.dataset.problema = item.label;
+            btn.onclick = function() { seleccionarProblema(item.label, btn); };
+            grupoProblemasDiv.appendChild(btn);
+        });
+        actualizarConsultaInput();
+    }
+
+    function seleccionarRed(red) {
+        estadoDescarte.red = red;
+        document.querySelectorAll('#grupoRed button').forEach(btn => {
+            btn.classList.remove('btn-selected');
+            if (btn.dataset.red === red) btn.classList.add('btn-selected');
+        });
+        actualizarConsultaInput();
+    }
+
+    function seleccionarProblema(problema, btnElement) {
+        estadoDescarte.problema = problema;
+        Array.from(document.getElementById('grupoProblemas').children).forEach(b => b.classList.remove('btn-selected'));
+        if (btnElement) btnElement.classList.add('btn-selected');
+        actualizarConsultaInput();
+    }
+
+    function mostrarAlerta(mensaje) {
+      var modal = document.getElementById('modalError');
+      if (modal) { document.getElementById('modalMsgTexto').textContent = mensaje; modal.style.display = 'flex'; } else { alert(mensaje); }
+    }
+    function cerrarModalBtn() { document.getElementById('modalError').style.display = 'none'; }
+    function cerrarModal(event) { if (event.target.id === 'modalError') event.target.style.display = 'none'; }
+    function verEjemploBts() { document.getElementById('modalImagen').style.display = 'flex'; }
+    function cerrarModalImagen(event) { if (event.target.id === 'modalImagen') event.target.style.display = 'none'; }
+    function cerrarModalImagenBtn() { document.getElementById('modalImagen').style.display = 'none'; }
+
+    function isVacio(id) { var el = document.getElementById(id); var val = el ? el.value : ''; return !val || val.trim() === ''; }
+    
+    function validarAntesDeCopiar(resultadoId) {
+      if (resultadoId === 'resultadoGlobal') return true;
+      if (resultadoId === 'resultadoAddress') {
+        if (isVacio('direccion') || isVacio('departamento') || isVacio('provincia') || isVacio('distrito')) {
+           mostrarAlerta('⚠️ Faltan datos de Dirección o Ubigeo (Dep/Prov/Dist).'); return false;
+        }
+        return true;
+      }
+      if (resultadoId === 'resultadoTipificacion') {
+        if (isVacio('numeroCalidad') || isVacio('consultaCalidad') || isVacio('respuestaCalidad') || isVacio('idCalidad')) {
+           mostrarAlerta('⚠️ Faltan datos de Tipificación (Número, Consulta, Respuesta o ID).'); return false;
+        }
+        if (estadoDescarte.tipo && !estadoDescarte.red) {
+             mostrarAlerta('⚠️ Has seleccionado un descarte, pero olvidaste seleccionar la RED (3G, 4G o 5G).'); return false;
+        }
+        if (document.getElementById('contenedorBts').style.display !== 'none' && isVacio('btsCalidad')) {
+             mostrarAlerta('⚠️ Para descartes de red/señal, el campo BTS es obligatorio. (Usa NULL si no tienes el dato).'); return false;
+        }
+        return true;
+      }
+      return true;
+    }
+
+    function copiarResultado(copyButton, resultadoId) {
+      if (!validarAntesDeCopiar(resultadoId)) return;
+      var resultado = document.getElementById(resultadoId).innerText;
+      if (!resultado || resultado === 'Resultado aparecerá aquí...') { showCopyFeedback('noContent', copyButton); return; }
+      historial.push({ texto: resultado, fecha: new Date().toLocaleDateString('es-PE') });
+      guardarHistorial();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(resultado).then(function() { showCopyFeedback(true, copyButton); }).catch(function() { copiarConFallback(resultado, copyButton); });
+      } else { copiarConFallback(resultado, copyButton); }
+    }
+
+    function showCopyFeedback(success, button) {
+      var originalText = button.innerHTML;
+      if (success === 'noContent') {
+        button.innerHTML = 'ℹ️ Nada'; button.classList.add('copied');
+        setTimeout(function() { button.innerHTML = originalText; button.classList.remove('copied'); }, 1500);
+        return;
+      }
+      button.innerHTML = success ? '✅ Copiado!' : '❌ Error'; button.classList.add('copied');
+      setTimeout(function() { button.innerHTML = originalText; button.classList.remove('copied'); }, 1500);
+    }
+    
+    function copiarConFallback(texto, button) {
+      var area = document.createElement('textarea'); area.value = texto; document.body.appendChild(area); area.select();
+      try { document.execCommand('copy'); showCopyFeedback(true, button); } catch (err) { showCopyFeedback(false, button); }
+      document.body.removeChild(area);
+    }
+    
+    function limpiarCampos() {
+      inputs.forEach(id => { var el = document.getElementById(id); if (el) el.value = ''; });
+      document.getElementById('resultadoGlobal').innerText = 'Resultado aparecerá aquí...';
+      document.getElementById('resultadoAddress').innerText = 'Resultado aparecerá aquí...';
+      document.getElementById('resultadoTipificacion').innerText = 'Resultado aparecerá aquí...';
+      estadoDescarte.tipo = ''; estadoDescarte.red = ''; estadoDescarte.problema = '';
+      document.getElementById('opcionesRedProblema').style.display = 'none';
+      var contBts = document.getElementById('contenedorBts'); var btsIn = document.getElementById('btsCalidad');
+      if (contBts) contBts.style.display = 'none'; if (btsIn) { btsIn.disabled = true; btsIn.value = ''; }
+      document.querySelectorAll('.btn-selected').forEach(btn => btn.classList.remove('btn-selected'));
+      document.getElementById('grupoProblemas').innerHTML = '';
+      document.querySelectorAll('.campo-resizable').forEach(function(textarea) { textarea.style.width = ''; textarea.style.height = ''; });
+    }
+    
+    function validarNumero(input) { input.value = input.value.replace(/[^0-9]/g, ''); }
+    
+    function toggleOpciones() {
+      var extra = document.getElementById('opcionesExtra'); var btn = document.querySelector('.mas-opciones-btn');
+      if (extra.style.display === 'none') { extra.style.display = 'flex'; btn.textContent = "⏹ Ocultar opciones"; }
+      else { extra.style.display = 'none'; document.getElementById('historial').style.display = 'none'; btn.textContent = "⚙️ Más opciones"; }
+    }
+    
+    function toggleHistorial() { var h = document.getElementById('historial'); h.style.display = (h.style.display === 'none') ? 'block' : 'none'; }
+    
+    function actualizarHistorial() {
+      var hDiv = document.getElementById('historial'); hDiv.innerHTML = '';
+      var aviso = document.createElement('div'); aviso.className = 'historial-aviso'; aviso.textContent = "⚠️ El historial es temporal y no 100% seguro; no olvides tipificar todas tus llamadas en línea."; hDiv.appendChild(aviso);
+      var grupos = {}; historial.forEach(item => { if (!grupos[item.fecha]) grupos[item.fecha] = []; grupos[item.fecha].push(item); });
+      Object.keys(grupos).sort().reverse().forEach(fecha => {
+        var fDiv = document.createElement('div'); fDiv.className = 'historial-fecha'; fDiv.textContent = "📅 " + fecha; hDiv.appendChild(fDiv);
+        grupos[fecha].slice().reverse().forEach(it => {
+          var div = document.createElement('div'); div.className = 'historial-item';
+          var txt = document.createElement('div'); txt.className = 'historial-texto'; txt.textContent = it.texto;
+          var btn = document.createElement('button'); btn.className = 'historial-copy-btn'; btn.textContent = '📋 Copiar';
+          btn.onclick = function() {
+            if (navigator.clipboard) navigator.clipboard.writeText(it.texto).then(() => { showCopyFeedback(true, btn); div.classList.add('highlight'); setTimeout(() => div.classList.remove('highlight'), 1000); });
+            else { copiarConFallback(it.texto, btn); div.classList.add('highlight'); setTimeout(() => div.classList.remove('highlight'), 1000); }
+          };
+          div.appendChild(txt); div.appendChild(btn); hDiv.appendChild(div);
+        });
+      });
+    }
+    function borrarHistorial() { if (confirm('¿Seguro?')) { historial = []; guardarHistorial(); } }
+    function exportarHistorial() {
+      if (!historial.length) return alert('Vacío');
+      var txt = '(Historial temporal)\n\n' + historial.map(h => "📅 " + h.fecha + "\n" + h.texto).join('\n\n');
+      var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], {type: 'text/plain'})); a.download = 'historial.txt'; a.click();
+    }
+    function guardarHistorial() { localStorage.setItem(HIST_KEY, JSON.stringify(historial)); actualizarHistorial(); }
+
+    var ubigeoData = []; var mapaUbigeo = {};
+
+    function callBackend(action, params, onSuccess, onError) {
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        if (action === 'getUbigeoData') google.script.run.withSuccessHandler(onSuccess).getUbigeoData();
+        else if (action === 'updatePresence') google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).updatePresence(params.sessionId, params.userAgent);
+      } else {
+        var payload = { action: action };
+        if (params) { payload.sessionId = params.sessionId; payload.userAgent = params.userAgent; }
+        fetch(CONST_URL_WEB_APP, { method: 'POST', body: JSON.stringify(payload) })
+        .then(response => response.json())
+        .then(data => { if (data.result !== undefined) onSuccess(data.result); else if (onError) onError(data.error); })
+        .catch(err => { if (onError) onError(err); });
+      }
+    }
+
+    function poblarDatalist(id, opts) {
+      var dl = document.getElementById(id); if (!dl) return; dl.innerHTML = '';
+      var ph = (id === 'listaDepartamento') ? 'NO BRINDA DEPARTAMENTO' : (id === 'listaProvincia' ? 'NO BRINDA PROVINCIA' : 'NO BRINDA DISTRITO');
+      var opt0 = document.createElement('option'); opt0.value = ph; dl.appendChild(opt0);
+      (opts || []).forEach(t => { var o = document.createElement('option'); o.value = t; dl.appendChild(o); });
+    }
+
+    function initUbigeo(data) {
+      ubigeoData = data || []; mapaUbigeo = {};
+      ubigeoData.forEach(r => {
+        var d = (r.dep||'').toUpperCase().trim(), p = (r.prov||'').toUpperCase().trim(), di = (r.dist||'').toUpperCase().trim();
+        if(!d||!p||!di) return;
+        if(!mapaUbigeo[d]) mapaUbigeo[d] = {}; if(!mapaUbigeo[d][p]) mapaUbigeo[d][p] = [];
+        if(mapaUbigeo[d][p].indexOf(di) === -1) mapaUbigeo[d][p].push(di);
+      });
+      poblarDatalist('listaDepartamento', Object.keys(mapaUbigeo).sort());
+    }
+
+    function onDepartamentoChange() {
+      var d = getUpperValue('departamento'); var provs = (d && mapaUbigeo[d]) ? Object.keys(mapaUbigeo[d]).sort() : [];
+      document.getElementById('provincia').value = ''; document.getElementById('distrito').value = '';
+      poblarDatalist('listaProvincia', provs); poblarDatalist('listaDistrito', []); updateOutput();
+    }
+    function onProvinciaChange() {
+      var d = getUpperValue('departamento'), p = getUpperValue('provincia');
+      var dists = (d && p && mapaUbigeo[d] && mapaUbigeo[d][p]) ? mapaUbigeo[d][p].slice().sort() : [];
+      document.getElementById('distrito').value = ''; poblarDatalist('listaDistrito', dists); updateOutput();
+    }
+
+    function cargarUbigeo() { callBackend('getUbigeoData', null, initUbigeo); }
+    function obtenerSessionId() {
+      try { if (sessionStorage) { var s = sessionStorage.getItem("sessionIdBitel"); if(!s) { s="sess_"+Date.now()+"_"+Math.random().toString(16).substring(2); sessionStorage.setItem("sessionIdBitel", s); } return s; } } catch(e){}
+      return "sess_"+Date.now()+"_"+Math.random().toString(16).substring(2);
+    }
+    var SID_ACTUAL = obtenerSessionId();
+    function actualizarContadorSesiones(c) { var el=document.getElementById("contadorOnline"); if(el && typeof c==='number') el.textContent=c; }
+    function enviarLatidoPresencia() {
+      var ua = navigator.userAgent || '';
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+         google.script.run.withSuccessHandler(actualizarContadorSesiones).updatePresence(SID_ACTUAL, ua);
+      } else {
+        var urlConParams = CONST_URL_WEB_APP + "?action=updatePresence&sessionId=" + encodeURIComponent(SID_ACTUAL) + "&userAgent=" + encodeURIComponent(ua) + "&nocache=" + new Date().getTime();
+        fetch(urlConParams, { method: 'GET' }).then(r => r.json()).then(d => { if (d.result !== undefined) actualizarContadorSesiones(d.result); }).catch(e => console.log("Error latido:", e));
+      }
+    }
+    function iniciarPresencia() { enviarLatidoPresencia(); setInterval(enviarLatidoPresencia, 60000); }
+
+
+    // -----------------------------------------
+    // SCRIPT: CALCULADORA DE DATOS
+    // -----------------------------------------
+    const UNITS = [
+      { key:'bit',  label:'Bit (b)',   factorBytes:1/8 },
+      { key:'byte', label:'Byte (B)',  factorBytes:1 },
+      { key:'KB',   label:'Kilobyte (KB)', pow:1 },
+      { key:'MB',   label:'Megabyte (MB)', pow:2 },
+      { key:'GB',   label:'Gigabyte (GB)', pow:3 },
+      { key:'TB',   label:'Terabyte (TB)', pow:4 },
+      { key:'PB',   label:'Petabyte (PB)', pow:5 }
+    ];
+
+    const PRIMARY_ORDER = ["KB","MB","GB"];
+    const EXTRA_ORDER   = ["bit","byte","TB","PB"];
+
+    let base = 1024;
+    let precision = 4;
+
+    function buildBlocks(){
+      const primaryResults = document.getElementById("primaryResults");
+      const extraContainer = document.getElementById("extraContainer");
+      if(!primaryResults || !extraContainer) return;
+      
+      primaryResults.innerHTML = "";
+      extraContainer.innerHTML = "";
+
+      PRIMARY_ORDER.forEach(k=>{
+        const u = UNITS.find(x=>x.key===k);
+        primaryResults.appendChild(makeCard(u));
+      });
+
+      EXTRA_ORDER.forEach(k=>{
+        const u = UNITS.find(x=>x.key===k);
+        extraContainer.appendChild(makeCard(u));
+      });
+    }
+
+    function makeCard(u){
+      const card = document.createElement("div");
+      card.className="card-calc";
+      card.dataset.unit=u.key;
+      card.innerHTML = `
+        <div class="copy-tip-calc">Copiar</div>
+        <div class="u">${u.label}</div>
+        <div class="v" data-value>0</div>`;
+      card.onclick = ()=>copyCard(card);
+      return card;
+    }
+
+    function copyCard(card){
+      const txt = card.querySelector("[data-value]").textContent;
+      navigator.clipboard.writeText(txt).then(()=>{
+        card.classList.add("copied");
+        const tip = card.querySelector(".copy-tip-calc");
+        tip.textContent="¡Copiado!";
+        setTimeout(()=>{ card.classList.remove("copied"); tip.textContent="Copiar"; },1000);
+      });
+    }
+
+    function inputToBytes(v, unit){
+      if(!isFinite(v)) return 0;
+      v = Number(v);
+      if(unit==="bit") return v/8;
+      if(unit==="byte") return v;
+      const u = UNITS.find(x=>x.key===unit);
+      return v * Math.pow(base, u.pow);
+    }
+
+    function bytesToUnit(bytes, unit){
+      if(unit==="bit") return bytes*8;
+      if(unit==="byte") return bytes;
+      const u = UNITS.find(x=>x.key===unit);
+      return bytes / Math.pow(base, u.pow);
+    }
+
+    function formatNumber(num){
+      if(!isFinite(num)) return "0";
+      return Number(num).toLocaleString("en-US",{maximumFractionDigits:precision});
+    }
+
+    function renderCalc(){
+      const valueInput = document.getElementById("valueInput");
+      const unitSelect = document.getElementById("unitSelect");
+      if(!valueInput || !unitSelect) return;
+      
+      const val = valueInput.value==="" ? 0 : Number(valueInput.value);
+      const bytes = inputToBytes(val, unitSelect.value);
+      const cards = document.querySelectorAll(".card-calc");
+
+      cards.forEach(card=>{
+        const unit = card.dataset.unit;
+        const res  = bytesToUnit(bytes, unit);
+        card.querySelector("[data-value]").textContent = formatNumber(res);
+      });
+    }
+
+
+    // -----------------------------------------
+    // INICIALIZACIÓN GLOBAL (AL CARGAR PÁGINA)
+    // -----------------------------------------
+    window.addEventListener('load', function() {
+      console.clear();
+      console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
+      console.log("%cEste sistema ha sido desarrollado exclusivamente por Cristhian Francia.", "color: #0c477e; font-size: 16px;");
+      console.log("%cEl uso no autorizado o la copia de este código está prohibida.", "font-size: 14px;");
+
+      // Bloqueo de código e inspección
+      document.addEventListener('contextmenu', function(e) {
+        var target = e.target;
+        var esEditable = (target.tagName === 'TEXTAREA' || (target.tagName === 'INPUT' && target.type === 'text') || (target.tagName === 'INPUT' && target.type === 'number'));
+        if (!esEditable) e.preventDefault();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
+          e.preventDefault();
+        }
+      });
+
+      // Inicializar eventos de Generador
+      for (var i = 0; i < inputs.length; i++) {
+        var el = document.getElementById(inputs[i]);
+        if (el) el.addEventListener('input', updateOutput);
+      }
+      var depInput = document.getElementById('departamento');
+      var provInput = document.getElementById('provincia');
+      if (depInput) depInput.addEventListener('change', onDepartamentoChange);
+      if (provInput) provInput.addEventListener('change', onProvinciaChange);
+
+      cambiarPlantilla();
+      cargarInicial();
+      cargarUbigeo();
+      iniciarPresencia();
+
+      // Inicializar eventos de Calculadora
+      buildBlocks();
+      renderCalc();
+      
+      document.getElementById("valueInput").addEventListener('input', renderCalc);
+      document.getElementById("unitSelect").addEventListener('change', renderCalc);
+
+      document.getElementById("btn-1024").onclick = ()=>{
+        base = 1024;
+        document.getElementById("btn-1024").classList.add("active");
+        document.getElementById("btn-1000").classList.remove("active");
+        renderCalc();
+      };
+      document.getElementById("btn-1000").onclick = ()=>{
+        base = 1000;
+        document.getElementById("btn-1000").classList.add("active");
+        document.getElementById("btn-1024").classList.remove("active");
+        renderCalc();
+      };
+
+      document.querySelectorAll(".select-dec button").forEach(btn=>{
+        btn.onclick = ()=>{
+          document.querySelectorAll(".select-dec button").forEach(b=>b.classList.remove("active"));
+          btn.classList.add("active");
+          precision = Number(btn.dataset.dec);
+          renderCalc();
+        };
+      });
+
+      const toggleExtra = document.getElementById("toggleExtra");
+      const extraContainer = document.getElementById("extraContainer");
+      if(toggleExtra && extraContainer) {
+          toggleExtra.onclick=()=>{
+            if(extraContainer.style.display==="none" || extraContainer.style.display===""){
+              extraContainer.style.display="grid";
+              toggleExtra.textContent="Ocultar resultados";
+            } else {
+              extraContainer.style.display="none";
+              toggleExtra.textContent="Más resultados";
+            }
+          };
+      }
+
+      const btnClean = document.getElementById("btnClean");
+      if(btnClean) {
+          btnClean.onclick=()=>{
+            document.getElementById("unitSelect").value="KB";
+            document.getElementById("valueInput").value="";
+            extraContainer.style.display="none";
+            toggleExtra.textContent="Más resultados";
+            base = 1024;
+            document.getElementById("btn-1024").classList.add("active");
+            document.getElementById("btn-1000").classList.remove("active");
+            precision = 4;
+            document.querySelectorAll(".select-dec button").forEach(b=>b.classList.remove("active"));
+            document.querySelector('[data-dec="4"]').classList.add("active");
+            renderCalc();
+          };
+      }
+
+    });
+  </script>
+</body>
+</html>

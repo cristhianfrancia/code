@@ -18,25 +18,18 @@
        1. VARIABLES DE COLOR Y ESTILOS GLOBALES
        ========================================= */
     :root {
-      /* Colores Base (Bitel) */
       --bitel-teal: #01768b;
-      --bitel-blue: #0c477e; /* El azul marino clásico */
+      --bitel-blue: #0c477e; 
       --bitel-yellow: #fbf32f;
       --bitel-orange: #fd8261;
       
-      /* Colores de UI Generales */
       --soft-gray: #e0e0e0;
       --text-main: #333333;
-      --muted: #757575; /* Gris para textos secundarios e inactive menu */
-      --bg-soft: #FFFFFF; /* FONDO DE PÁGINA BLANCO (RESTABLECIDO) */
+      --muted: #757575; 
+      --bg-soft: #FFFFFF; 
       
-      /* Colores para Sidebar Estilo Light & Azur Sophisticated */
-      --sidebar-bg: #FFFFFF; /* Fondo sidebar blanco puro */
-      --sidebar-text: var(--muted); /* Texto gris para opciones inactivas */
-      
-      --sidebar-active-bg: var(--bitel-blue); /* FONDO AZUL CLÁSICO REDONDEADO PARA ACTIVO (RESTABLECIDO) */
-      --sidebar-active-text: #FFFFFF; /* Texto blanco en opción activa */
-      --sidebar-hover-bg: #f5f5f5; /* Fondo hover muy sutil */
+      --nav-active-bg: var(--bitel-blue); 
+      --nav-active-text: #FFFFFF; 
       
       --card-bg: rgba(255,255,255,0.98);
       --glass: rgba(255,255,255,0.7);
@@ -48,124 +41,115 @@
       margin: 0;
       padding: 0;
       display: flex;
+      flex-direction: column; /* Cambiado a columna para menú superior */
       height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background-color: var(--bg-soft); /* Fondo de la página completo blanco */
+      background-color: var(--bg-soft); 
       overflow: hidden;
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
     }
 
     /* =========================================
-       2. ESTILOS DEL MENÚ LATERAL (SIDEBAR LIGHT & AZUR) - ESTILO SOFISTICADO
+       2. NAVEGACIÓN SUPERIOR (TOP NAV) - MINIMALISTA
        ========================================= */
-    .sidebar {
-      width: 260px;
-      background-color: var(--sidebar-bg); /* Fondo blanco */
-      color: var(--sidebar-text);
+    .top-navbar {
       display: flex;
-      flex-direction: column;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.03); /* Sombra muy sutil */
-      border-right: 1px solid rgba(0,0,0,0.05); /* Línea divisoria suave */
+      justify-content: center; /* Centramos las opciones */
+      align-items: center;
+      padding: 15px 20px;
+      background-color: #FFFFFF;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.03); /* Sombra muy sutil abajo */
       z-index: 100;
-      overflow-y: auto;
+      position: relative;
+    }
+
+    .nav-brand {
+      position: absolute;
+      left: 25px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: var(--bitel-blue);
+      font-size: 1.1rem;
+      letter-spacing: -0.3px;
       user-select: none;
     }
 
-    .sidebar-header {
-      padding: 30px 25px 20px;
-      text-align: left;
+    .nav-brand .app-icon { font-size: 1.3rem; }
+
+    /* Contenedor estilo "Segmented Control" (Apple Style) */
+    .nav-menu {
       display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Divisor suave */
-    }
-    
-    .sidebar-header .app-icon {
-        width: 32px; height: 32px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.5rem;
-    }
-
-    .sidebar-header h2 {
-      margin: 0;
-      font-size: 1.2rem;
-      color: var(--bitel-blue); /* Título en azul Bitel elegante */
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-
-    .sidebar-menu {
+      background-color: #f0f2f5; /* Fondo gris sutil para el contenedor de botones */
+      padding: 5px;
+      border-radius: 12px;
+      gap: 5px;
       list-style: none;
-      padding: 20px 15px; /* Aire lateral para los botones redondeados */
       margin: 0;
-      flex: 1;
     }
 
     .menu-item {
-      padding: 12px 20px; /* Aire vertical y horizontal */
-      margin-bottom: 6px; /* Espacio entre botones */
+      padding: 8px 24px;
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 500;
-      color: var(--sidebar-text); /* Texto gris por defecto */
-      transition: all 0.2s ease;
+      color: var(--muted);
+      border-radius: 8px;
+      transition: all 0.25s ease;
       display: flex;
       align-items: center;
-      gap: 15px;
-      border-radius: 10px; /* Esquinas redondeadas suaves */
-      position: relative;
+      gap: 8px;
+      user-select: none;
     }
-    
-    .menu-item span { opacity: 0.7; font-size: 1.1rem; transition: opacity 0.2s; }
 
-    .menu-item:hover {
-      background-color: var(--sidebar-hover-bg); /* Hover gris sutil */
-      color: var(--text-main);
-    }
-    
-    .menu-item:hover span { opacity: 1; }
+    .menu-item:hover { color: var(--text-main); }
 
-    /* ESTILO ACTIVO: AZUR REDONDEADO CLÁSICO Y ELEGANTE */
     .menu-item.active {
-      background-color: var(--sidebar-active-bg); /* Fondo azul clásico */
-      color: var(--sidebar-active-text); /* Texto blanco */
+      background-color: var(--nav-active-bg);
+      color: var(--nav-active-text);
       font-weight: 600;
-      box-shadow: 0 4px 12px rgba(12, 71, 126, 0.15); /* Sombra azul suave para resaltar */
+      box-shadow: 0 2px 8px rgba(12, 71, 126, 0.2);
     }
-    
-    .menu-item.active span { opacity: 1; color: #FFFFFF; }
-    
-    /* Contenido Principal */
+
+    /* Ocultamos el texto en pantallas muy pequeñas para dejar solo el icono si es necesario */
+    @media (max-width: 500px) {
+      .nav-brand { display: none; }
+      .menu-item { padding: 8px 16px; }
+    }
+
+    /* =========================================
+       3. CONTENIDO PRINCIPAL
+       ========================================= */
     .main-content {
       flex: 1;
       overflow-y: auto;
       position: relative;
+      background-color: #fafbfc; /* Un gris muuuy claro para contrastar apenas con las tarjetas blancas */
     }
 
     .app-section {
       display: none;
-      padding: 30px;
+      padding: 30px 15px; /* Ajuste de padding para popup */
       animation: fadeIn 0.4s ease;
     }
 
-    .app-section.active {
-      display: block;
-    }
+    .app-section.active { display: block; }
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
     /* =========================================
-       3. ESTILOS DEL GENERADOR (PULIDO)
+       4. ESTILOS DEL GENERADOR
        ========================================= */
     .container {
       max-width: 1000px;
       background: #ffffff;
       padding: 25px 28px 30px;
       border-radius: 18px;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.06); /* Sombra más suave */
-      margin: 28px auto;
-      border: 1px solid rgba(0,0,0,0.02);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04); 
+      margin: 0 auto;
+      border: 1px solid rgba(0,0,0,0.03);
     }
 
     .titulo-principal {
@@ -257,12 +241,12 @@
     .modal-btn { background: var(--bitel-blue); color: white; border: none; padding: 12px 24px; border-radius: 8px; width: 100%; cursor: pointer; margin-top:15px; }
 
     /* =========================================
-       4. ESTILOS DE LA CALCULADORA (LIMPIADO)
+       5. ESTILOS DE LA CALCULADORA
        ========================================= */
     .container-calc {
-      width: 95%; max-width: 1000px; margin: 28px auto; background: var(--card-bg);
-      border-radius: 14px; padding: 22px; box-shadow: 0 14px 40px rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.02);
+      width: 100%; max-width: 1000px; margin: 0 auto; background: var(--card-bg);
+      border-radius: 14px; padding: 25px 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.03);
     }
 
     .container-calc h1 { margin: 0; font-size: 1.5rem; color: var(--bitel-blue); }
@@ -270,9 +254,9 @@
     .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position:relative; flex-wrap:wrap; gap:10px; }
     
     .toolbar { display: flex; gap: 20px; align-items: center; flex-wrap:wrap; }
-    .toggle, .select-dec { display: flex; gap: 12px; background: #fff; border: 1px solid rgba(0,0,0,0.08); padding: 8px; border-radius: 999px; }
-    .toggle button, .select-dec button { border: 0; background: none; padding: 8px 13px; font-weight: 700; cursor: pointer; border-radius: 8px; }
-    .toggle button.active, .select-dec button.active { background: linear-gradient(90deg,var(--bitel-teal),var(--bitel-blue)); color: white; }
+    .toggle, .select-dec { display: flex; gap: 8px; background: #f0f2f5; padding: 6px; border-radius: 12px; }
+    .toggle button, .select-dec button { border: 0; background: none; padding: 8px 16px; font-weight: 600; cursor: pointer; border-radius: 8px; color: var(--muted); transition: 0.2s;}
+    .toggle button.active, .select-dec button.active { background: #fff; color: var(--bitel-blue); box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
 
     .main-row { display: flex; align-items: flex-end; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
     .main-row select, .main-row input[type=number] { padding: 12px; border-radius: 8px; border: 1px solid #ccc; background: #fafafa; font-size: 1.05rem; height: 48px; outline:none; box-sizing:border-box;}
@@ -281,8 +265,8 @@
     
     .btn-clean { background: linear-gradient(90deg,var(--bitel-teal),var(--bitel-blue)); color: white; border: 0; padding: 12.5px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; height: 48px; }
     .three-results { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 12px; }
-    .card-calc { background: var(--glass); border-radius: 10px; padding: 15px; border: 1px solid rgba(12,71,126,0.08); cursor: pointer; position: relative; display:flex; flex-direction:column; transition:.15s ease;}
-    .card-calc:hover{box-shadow:0 10px 26px rgba(12,71,126,0.08)}
+    .card-calc { background: #fff; border-radius: 10px; padding: 15px; border: 1px solid rgba(12,71,126,0.08); cursor: pointer; position: relative; display:flex; flex-direction:column; transition:.15s ease;}
+    .card-calc:hover{box-shadow:0 10px 26px rgba(12,71,126,0.06)}
     .card-calc:active{transform:scale(.98)}
     
     .card-calc .u { font-size: .78rem; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
@@ -297,16 +281,16 @@
 
 <body oncontextmenu="return false;">
 
-  <div class="sidebar">
-    <div class="sidebar-header">
-        <div class="app-icon">💡</div> <h2>Herramientas</h2>
+  <div class="top-navbar">
+    <div class="nav-brand">
+      <span class="app-icon">💡</span> Herramientas
     </div>
-    <ul class="sidebar-menu">
+    <ul class="nav-menu">
       <li class="menu-item active" onclick="switchApp('generadorApp', this)">
         <span>📝</span> Generador
       </li>
       <li class="menu-item" onclick="switchApp('calculadoraApp', this)">
-        <span>🧮</span> Calculadora (KB)
+        <span>🧮</span> Calculadora
       </li>
     </ul>
   </div>
@@ -314,7 +298,6 @@
   <div class="main-content">
     
     <div id="generadorApp" class="app-section active">
-      
       <div class="container">
         <h1 class="titulo-principal">Generador de plantillas 🧑‍💻</h1>
         <p class="subtitulo">Genera comentarios para tipificación y calidad de red.</p>
@@ -453,10 +436,9 @@
         <div id="historial"></div>
 
         <div class="footer-autor">
-          Developed by Cristhian Francia &copy; 2025 | All rights reserved.
+          Developed by <strong>Cristhian Francia</strong> &copy; 2025 | All rights reserved.
         </div>
       </div>
-
     </div>
 
     <div id="calculadoraApp" class="app-section">
@@ -468,7 +450,7 @@
           </div>
           <div class="toolbar">
              <div class="toggle">
-                <button id="btn-1024" class="active">1024</button>
+                <button id="btn-1024" class="active">1024 (Bitel)</button>
                 <button id="btn-1000">1000</button>
              </div>
              <div class="select-dec">
@@ -504,7 +486,7 @@
         <div id="extraContainer" class="three-results"></div>
 
         <div class="footer-autor" style="margin-top:40px;">
-          Developed by Cristhian Francia &copy; 2025 | All rights reserved.
+          Developed by <strong>Cristhian Francia</strong> &copy; 2025 | All rights reserved.
         </div>
       </div>
     </div>
@@ -536,7 +518,7 @@
 
   <script>
     // -----------------------------------------
-    // LÓGICA DE PESTAÑAS (MENÚ LATERAL)
+    // LÓGICA DE PESTAÑAS (MENÚ SUPERIOR)
     // -----------------------------------------
     function switchApp(appId, element) {
       document.querySelectorAll('.app-section').forEach(section => section.classList.remove('active'));

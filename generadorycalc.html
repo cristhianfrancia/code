@@ -337,10 +337,8 @@
   </style>
 </head>
 
-<body oncontextmenu="return false;">
-
-  <div class="top-navbar">
-    <div class="nav-brand"><span class="app-icon">💡</span> Herramientas</div>
+<body> <div class="top-navbar">
+    <div class="nav-brand"><span class="app-icon">💡</span> Tools</div>
     <ul class="nav-menu">
       <li class="menu-item active" onclick="switchApp('generadorApp', this)"><span>📝</span> Generador</li>
       <li class="menu-item" onclick="switchApp('calculadoraApp', this)"><span>🧮</span> Calculadora</li>
@@ -475,14 +473,14 @@
     <div class="widget-item widget-likes" title="Valoración de la herramienta">
       <span class="heart">❤️</span> <span id="contadorLikes" style="color: var(--text-main);">...</span>
     </div>
+
+    <div class="widget-item widget-feedback" onclick="abrirFeedback()">
+      ⭐ Opinar
+    </div>
     
     <div class="widget-item">
       <div class="dot-online"></div>
       <span id="contadorOnline" style="color: var(--text-main);">0</span> en línea
-    </div>
-
-    <div class="widget-item widget-feedback" onclick="abrirFeedback()">
-      ⭐ Opinar
     </div>
   </div>
 
@@ -689,8 +687,16 @@
     function cerrarModalImagen(event) { if (event.target.id === 'modalImagen') event.target.style.display = 'none'; }
     function cerrarModalImagenBtn() { document.getElementById('modalImagen').style.display = 'none'; }
     function isVacio(id) { var el = document.getElementById(id); var val = el ? el.value : ''; return !val || val.trim() === ''; }
+    
+    // AQUÍ SE AGREGÓ LA VALIDACIÓN DEL COMENTARIO DE TIPIFICACIÓN
     function validarAntesDeCopiar(resultadoId) {
-      if (resultadoId === 'resultadoGlobal') return true;
+      if (resultadoId === 'resultadoGlobal') {
+        if (isVacio('numero') || isVacio('consulta') || isVacio('respuesta') || isVacio('id')) {
+           mostrarAlerta('⚠️ Faltan datos para generar el comentario (Número, Consulta, Respuesta o ID).');
+           return false;
+        }
+        return true;
+      }
       if (resultadoId === 'resultadoAddress') { if (isVacio('direccion') || isVacio('departamento') || isVacio('provincia') || isVacio('distrito')) { mostrarAlerta('⚠️ Faltan datos de Dirección o Ubigeo (Dep/Prov/Dist).'); return false; } return true; }
       if (resultadoId === 'resultadoTipificacion') {
         if (isVacio('numeroCalidad') || isVacio('consultaCalidad') || isVacio('respuestaCalidad') || isVacio('idCalidad')) { mostrarAlerta('⚠️ Faltan datos de Tipificación.'); return false; }
@@ -699,6 +705,7 @@
         return true;
       } return true;
     }
+
     function copiarResultado(copyButton, resultadoId) {
       if (!validarAntesDeCopiar(resultadoId)) return; var resultado = document.getElementById(resultadoId).innerText;
       if (!resultado || resultado === 'Resultado aparecerá aquí...') { showCopyFeedback('noContent', copyButton); return; }
@@ -813,7 +820,14 @@
     // -----------------------------------------
     window.addEventListener('load', function() {
       console.clear();
-      document.addEventListener('contextmenu', function(e) { var target = e.target; var esEditable = (target.tagName === 'TEXTAREA' || (target.tagName === 'INPUT' && target.type === 'text') || (target.tagName === 'INPUT' && target.type === 'number')); if (!esEditable) e.preventDefault(); });
+      
+      // SOLO SE BLOQUEA EL CLIC DERECHO SI NO ESTÁS EN UN CUADRO DE TEXTO
+      document.addEventListener('contextmenu', function(e) { 
+        var target = e.target; 
+        var esEditable = (target.tagName === 'TEXTAREA' || (target.tagName === 'INPUT' && target.type === 'text') || (target.tagName === 'INPUT' && target.type === 'number')); 
+        if (!esEditable) e.preventDefault(); 
+      });
+      
       document.addEventListener('keydown', function(e) { if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) { e.preventDefault(); } });
       for (var i = 0; i < inputs.length; i++) { var el = document.getElementById(inputs[i]); if (el) el.addEventListener('input', updateOutput); }
       var depInput = document.getElementById('departamento'); var provInput = document.getElementById('provincia');

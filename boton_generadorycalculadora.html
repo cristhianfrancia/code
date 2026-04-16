@@ -44,9 +44,9 @@
             border-radius: 999px;
             font-size: 15px;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transición súper suave */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             cursor: pointer;
-            max-width: 90vw;
+            max-width: 100vw;
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
@@ -67,7 +67,6 @@
             box-shadow: 0 2px 5px rgba(12,71,126,0.2);
         }
 
-        /* Responsive */
         @media (max-width: 500px) {
             .abrir-btn {
                 width: 100%;
@@ -91,17 +90,18 @@
         function abrirEstructura() {
             const url = "https://cristhianfrancia.github.io/code/generadorycalc.html";
             const ancho = 1300;
-            const alto = 580;
+            const alto = 620;
 
-            // 🛠️ CÁLCULO DEFINITIVO PARA CENTRAR (Ignora el iframe de Google Sites)
-            const screenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-            const screenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+            // 🛠️ NUEVO CÁLCULO: Centrado perfecto relativo a la ventana activa
+            // Esto asegura que se centre sin importar si tienes 1 o 2 monitores
+            const x = window.screenX !== undefined ? window.screenX : window.screenLeft;
+            const y = window.screenY !== undefined ? window.screenY : window.screenTop;
+            
+            const outerWidth = window.outerWidth || document.documentElement.clientWidth || window.screen.width;
+            const outerHeight = window.outerHeight || document.documentElement.clientHeight || window.screen.height;
 
-            const monitorWidth = window.screen.width;
-            const monitorHeight = window.screen.height;
-
-            const left = Math.round((monitorWidth / 2) - (ancho / 2)) + screenLeft;
-            const top = Math.round((monitorHeight / 2) - (alto / 2)) + screenTop;
+            const left = Math.round(x + (outerWidth - ancho) / 2);
+            const top = Math.round(y + (outerHeight - alto) / 2);
 
             const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=no`;
 
@@ -116,8 +116,6 @@
                                 html, body {
                                     margin: 0;
                                     padding: 0;
-                                    transform: scale(0.95); 
-                                    transform-origin: top center;
                                     width: 100%;
                                     height: 100%;
                                     overflow-y: auto;

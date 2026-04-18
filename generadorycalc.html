@@ -264,9 +264,12 @@
 
     /* Estilos específicos de la pestaña Porcentaje */
     .porcentaje-wrapper {
-      display: flex; align-items: center; justify-content: center; gap: 15px; font-size: 1.2rem; 
-      font-weight: 600; color: var(--muted); flex-wrap: wrap; background: #fafafa; 
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; 
+      font-size: 1.2rem; font-weight: 600; color: var(--muted); background: #fafafa; 
       padding: 30px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 25px;
+    }
+    .porcentaje-main-row {
+      display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; width: 100%;
     }
     .input-porcentaje {
       padding: 10px; font-size: 1.2rem; text-align: center; border-radius: 8px; 
@@ -490,24 +493,33 @@
         </div>
 
         <div class="porcentaje-wrapper">
-          El
-          <input type="number" id="inputPorciento" class="input-porcentaje" style="width: 80px;" placeholder="XX">
-          % de
-          <input type="number" id="inputMonto" class="input-porcentaje" style="width: 140px;" placeholder="XX.XX">
-          es
-          <div style="background: var(--bitel-blue); color: white; padding: 10px 20px; border-radius: 8px; font-size: 1.5rem; font-weight: 700; min-width: 110px; text-align: center; box-shadow: 0 4px 10px rgba(12,71,126,0.2);">
-            <span id="resultadoPorcentaje">0.00</span>
+          <div class="porcentaje-main-row">
+            El
+            <input type="number" id="inputPorciento" class="input-porcentaje" style="width: 80px;" placeholder="XX">
+            % de
+            <input type="number" id="inputMonto" class="input-porcentaje" style="width: 140px;" placeholder="XX.XX">
+            es
+            <div style="background: var(--bitel-blue); color: white; padding: 10px 20px; border-radius: 8px; font-size: 1.5rem; font-weight: 700; min-width: 110px; text-align: center; box-shadow: 0 4px 10px rgba(12,71,126,0.2);">
+              <span id="resultadoPorcentaje">0.00</span>
+            </div>
+            <button id="btnCleanPorcentaje" class="limpiar-btn" style="padding: 8px 14px; font-size: 13px; margin-left: 5px;">🧹 Limpiar</button>
           </div>
-          <button id="btnCleanPorcentaje" class="limpiar-btn" style="padding: 8px 14px; font-size: 13px; margin-left: 5px;">🧹 Limpiar</button>
+
+          <div style="width: 100%; max-width: 500px; text-align: center; font-size: 0.95rem; color: #888; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ddd; display: flex; justify-content: center; align-items: center; gap: 8px;">
+             <span id="montoOriginal">0.00</span> - <span id="montoDescuento">0.00</span> = 
+             <strong style="color: var(--bitel-teal); font-size: 1.15rem; background: #e8f7f9; padding: 4px 12px; border-radius: 6px;">
+               <span id="montoFinal">0.00</span>
+             </strong>
+          </div>
         </div>
 
         <a href="https://bipayweb.bitel.com.pe/recarga-y-gana-gb-extra-con-bipay22?categoryId=1887544" target="_blank" style="text-decoration: none;">
           <div class="bipay-banner">
             <div style="display: flex; align-items: center; gap: 15px;">
-              <span style="font-size: 2.2rem; background: white; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">📲</span>
+              <span style="font-size: 2.2rem; background: white; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">💧</span>
               <div>
-                <h3 style="margin: 0; color: #ffffff; font-size: 1.3rem;">Bipay</h3>
-                <p style="margin: 4px 0 0; color: #e8f7f9; font-weight: 600; font-size: 0.9rem;">Ver promociones y descuentos</p>
+                <h3 style="margin: 0; color: #ffffff; font-size: 1.3rem;">Recarga Bipay</h3>
+                <p style="margin: 4px 0 0; color: #e8f7f9; font-weight: 600; font-size: 0.9rem;">Recarga y gana GB Extra con Bipay</p>
               </div>
             </div>
             <div class="btn-bipay-action">Abrir Bipay ➔</div>
@@ -866,12 +878,16 @@
     }
 
     // -----------------------------------------
-    // LÓGICA DE PORCENTAJE (NUEVA)
+    // LÓGICA DE PORCENTAJE Y RESTA
     // -----------------------------------------
     function calcularPorcentaje() {
       const inputPorciento = document.getElementById('inputPorciento');
       const inputMonto = document.getElementById('inputMonto');
       const resultadoSpan = document.getElementById('resultadoPorcentaje');
+      
+      const montoOriginalSpan = document.getElementById('montoOriginal');
+      const montoDescuentoSpan = document.getElementById('montoDescuento');
+      const montoFinalSpan = document.getElementById('montoFinal');
       
       if (!inputPorciento || !inputMonto || !resultadoSpan) return;
 
@@ -879,7 +895,13 @@
       const monto = parseFloat(inputMonto.value) || 0;
       
       const res = (porc / 100) * monto;
+      const final = monto - res;
+
       resultadoSpan.textContent = res.toFixed(2);
+      
+      if(montoOriginalSpan) montoOriginalSpan.textContent = monto.toFixed(2);
+      if(montoDescuentoSpan) montoDescuentoSpan.textContent = res.toFixed(2);
+      if(montoFinalSpan) montoFinalSpan.textContent = final.toFixed(2);
     }
 
     function limpiarPorcentaje() {
@@ -887,9 +909,17 @@
       const inputMonto = document.getElementById('inputMonto');
       const resultadoSpan = document.getElementById('resultadoPorcentaje');
       
+      const montoOriginalSpan = document.getElementById('montoOriginal');
+      const montoDescuentoSpan = document.getElementById('montoDescuento');
+      const montoFinalSpan = document.getElementById('montoFinal');
+      
       if(inputPorciento) inputPorciento.value = '';
       if(inputMonto) inputMonto.value = '';
       if(resultadoSpan) resultadoSpan.textContent = '0.00';
+      
+      if(montoOriginalSpan) montoOriginalSpan.textContent = '0.00';
+      if(montoDescuentoSpan) montoDescuentoSpan.textContent = '0.00';
+      if(montoFinalSpan) montoFinalSpan.textContent = '0.00';
     }
 
     // -----------------------------------------
@@ -933,4 +963,4 @@
     });
   </script>
 </body>
-</html> 
+</html>

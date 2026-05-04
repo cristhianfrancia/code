@@ -114,7 +114,7 @@
 
     @media (max-width: 500px) {
       .nav-brand { display: none; }
-      .menu-item { padding: 8px 12px; font-size: 0.8rem; }
+      .menu-item { padding: 8px 16px; }
     }
 
     /* =========================================
@@ -223,7 +223,7 @@
     .historial-copy-btn:hover { background: #0056b3; }
 
     /* =========================================
-       5. ESTILOS DE LA CALCULADORA Y PORCENTAJE
+       5. ESTILOS DE LA CALCULADORA, PORCENTAJE Y FECHAS
        ========================================= */
     .container-calc {
       width: 100%; max-width: 1000px; margin: 0 auto; background: var(--card-bg);
@@ -262,15 +262,13 @@
     #toggleExtra { background: #fff; border: 1px solid var(--bitel-blue); padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 700; color: var(--bitel-blue); margin-bottom: 14px; transition: 0.2s;}
     #toggleExtra:hover { background: #f4f6f8; }
 
-    /* Estilos específicos de la pestaña Porcentaje */
+    /* Estilos específicos de Porcentaje */
     .porcentaje-wrapper {
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; 
       font-size: 1.2rem; font-weight: 600; color: var(--muted); background: #fafafa; 
       padding: 30px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 25px;
     }
-    .porcentaje-main-row {
-      display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; width: 100%;
-    }
+    .porcentaje-main-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; width: 100%; }
     .input-porcentaje {
       padding: 10px; font-size: 1.2rem; text-align: center; border-radius: 8px; 
       border: 1px solid #ccc; outline: none; transition: 0.2s; background: white;
@@ -284,13 +282,79 @@
       justify-content: space-between; box-shadow: 0 8px 20px rgba(12, 71, 126, 0.2); 
       transition: transform 0.2s, box-shadow 0.2s; flex-wrap: wrap; gap: 15px;
     }
-    .bipay-banner:hover {
-      transform: translateY(-3px); box-shadow: 0 12px 25px rgba(12, 71, 126, 0.35);
-    }
+    .bipay-banner:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(12, 71, 126, 0.35); }
     .btn-bipay-action {
       background: white; color: var(--bitel-blue); padding: 10px 22px; border-radius: 999px; 
       font-weight: 800; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
+    /* Estilos específicos de Días Hábiles */
+    .calc-dias-container { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+    .radio-card {
+      flex: 1; min-width: 250px; background: white; border: 2px solid #e1e4e8; border-radius: 12px;
+      padding: 20px; cursor: pointer; transition: all 0.2s; position: relative;
+    }
+    .radio-card:hover { border-color: #b0b8c4; }
+    
+    .radio-card input[type="radio"] { position: absolute; opacity: 0; }
+    .radio-card:has(input[type="radio"]:checked) {
+      border-color: var(--bitel-blue);
+      background-color: #f8fbff;
+      box-shadow: 0 4px 15px rgba(12, 71, 126, 0.1);
+    }
+    
+    .card-content { display: flex; flex-direction: column; gap: 10px; }
+    .card-title { font-weight: 700; color: var(--text-main); font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+    .card-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.4; }
+    
+    .radio-circle {
+      width: 20px; height: 20px; border-radius: 50%; border: 2px solid #ccc; 
+      display: inline-block; position: relative;
+    }
+    .radio-card input[type="radio"]:checked + .card-content .card-title .radio-circle {
+      border-color: var(--bitel-blue);
+    }
+    .radio-card input[type="radio"]:checked + .card-content .card-title .radio-circle::after {
+      content: ''; position: absolute; width: 10px; height: 10px; 
+      background: var(--bitel-blue); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    }
+
+    .info-box {
+      margin-top: 25px; background: #f0f7ff; border-left: 4px solid var(--bitel-blue);
+      padding: 15px 20px; border-radius: 0 8px 8px 0; font-size: 0.9rem; color: #444; line-height: 1.5;
+    }
+    .info-box ul { margin: 10px 0 0 0; padding-left: 20px; }
+    .info-box li { margin-bottom: 8px; }
+
+    .input-fechas-row {
+      display: flex; align-items: center; gap: 15px; margin-top: 30px; flex-wrap: wrap; background: #fafafa; padding: 20px; border-radius: 12px; border: 1px solid #eee;
+    }
+    .input-fechas-row input {
+      padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; outline: none; font-family: inherit; transition: 0.2s;
+    }
+    .input-fechas-row input:focus { border-color: var(--bitel-teal); box-shadow: 0 0 0 2px rgba(1,118,139,0.1); }
+    
+    .btn-calcular-fecha {
+      background: var(--bitel-blue); color: white; border: none; padding: 12px 30px;
+      border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(12,71,126,0.2);
+    }
+    .btn-calcular-fecha:hover { background: #08325e; transform: translateY(-1px); }
+    
+    .resultado-fecha-box {
+      margin-top: 25px; padding: 25px; border-radius: 12px; background: #fff;
+      border: 1px solid #eee; text-align: center; color: var(--text-main); box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+    }
+    .res-top-text { font-size: 1.05rem; color: #555; margin-bottom: 12px; }
+    .res-top-text strong { color: var(--text-main); font-size: 1.15rem; }
+    .res-fecha-final { font-size: 1.8rem; color: var(--bitel-blue); font-weight: 800; margin-bottom: 25px; }
+    
+    .feriados-omitidos-box {
+      background: #f4f6f8; border-radius: 10px; padding: 18px 25px; text-align: left; margin-bottom: 25px;
+    }
+    .feriados-omitidos-box p { margin: 0 0 12px 0; font-size: 0.95rem; color: #444; font-weight: 500;}
+    .lista-feriados { list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: #555; }
+    .lista-feriados li { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .lista-feriados li::before { content: "●"; color: #28a745; font-size: 1.2rem; line-height: 0.5; }
 
     /* =========================================
        6. WIDGETS FLOTANTES (LIKES, SESIONES, FEEDBACK)
@@ -307,7 +371,7 @@
       border: 1px solid rgba(0,0,0,0.03); transition: all 0.25s ease; user-select: none;
     }
 
-    .widget-feedback { cursor: pointer; }
+    .widget-feedback { cursor: pointer; font-weight: 500;}
     .widget-feedback:hover { color: var(--bitel-blue); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.12); }
     .widget-likes { cursor: default; }
     .widget-likes .heart { color: #e91e63; font-size: 1.1rem; animation: heartbeat 2s infinite; display: inline-block;}
@@ -352,17 +416,20 @@
 </head>
 
 <body> 
+  <!-- NAVEGACIÓN SUPERIOR -->
   <div class="top-navbar">
     <div class="nav-brand"><span class="app-icon">💡</span> Herramientas</div>
     <ul class="nav-menu">
       <li class="menu-item active" onclick="switchApp('generadorApp', this)"><span>📝</span> Generador</li>
       <li class="menu-item" onclick="switchApp('calculadoraApp', this)"><span>🧮</span> Calculadora</li>
       <li class="menu-item" onclick="switchApp('porcentajeApp', this)"><span>📊</span> Porcentaje</li>
+      <li class="menu-item" onclick="switchApp('diasApp', this)"><span>📅</span> Días Hábiles</li>
     </ul>
   </div>
 
   <div class="main-content">
     
+    <!-- PESTAÑA 1: GENERADOR -->
     <div id="generadorApp" class="app-section active">
       <div class="container">
         <h1 class="titulo-principal">Generador de plantillas 🧑‍💻</h1>
@@ -452,6 +519,7 @@
       </div>
     </div>
 
+    <!-- PESTAÑA 2: CALCULADORA -->
     <div id="calculadoraApp" class="app-section">
       <div class="container-calc">
         <div class="top">
@@ -460,7 +528,7 @@
             <p class="subtitle">Conversión precisa de unidades</p>
           </div>
           <div class="toolbar">
-             <div class="toggle"><button id="btn-1024" class="active">1024 (Bitel)</button><button id="btn-1000">1000</button></div>
+             <div class="toggle"><button id="btn-1024" class="active">1024</button><button id="btn-1000">1000</button></div>
              <div class="select-dec"><button data-dec="0">0</button><button data-dec="2">2</button><button data-dec="4" class="active">4</button></div>
           </div>
         </div>
@@ -483,6 +551,7 @@
       </div>
     </div>
 
+    <!-- PESTAÑA 3: PORCENTAJE -->
     <div id="porcentajeApp" class="app-section">
       <div class="container-calc">
         <div class="top">
@@ -495,9 +564,9 @@
         <div class="porcentaje-wrapper">
           <div class="porcentaje-main-row">
             El
-            <input type="number" id="inputPorciento" class="input-porcentaje" style="width: 80px;" placeholder="XX">
+            <input type="number" id="inputPorciento" class="input-porcentaje" style="width: 80px;" placeholder="30">
             % de
-            <input type="number" id="inputMonto" class="input-porcentaje" style="width: 140px;" placeholder="XX.XX">
+            <input type="number" id="inputMonto" class="input-porcentaje" style="width: 140px;" placeholder="39.90">
             es
             <div style="background: var(--bitel-blue); color: white; padding: 10px 20px; border-radius: 8px; font-size: 1.5rem; font-weight: 700; min-width: 110px; text-align: center; box-shadow: 0 4px 10px rgba(12,71,126,0.2);">
               <span id="resultadoPorcentaje">0.00</span>
@@ -530,8 +599,86 @@
       </div>
     </div>
 
+    <!-- PESTAÑA 4: DÍAS HÁBILES -->
+    <div id="diasApp" class="app-section">
+      <div class="container-calc">
+        <div class="top">
+          <div>
+            <h1>Calcular días hábiles o calendario</h1>
+            <p class="subtitle">Calculadora basada en los feriados del Estado Peruano</p>
+          </div>
+        </div>
+
+        <div class="calc-dias-container">
+          <label class="radio-card">
+            <input type="radio" name="tipoDias" value="calendario" checked onchange="actualizarInfoDias()">
+            <div class="card-content">
+              <div class="card-title">
+                <span class="radio-circle"></span> Días calendario
+              </div>
+              <div class="card-desc">
+                Son todos los días que componen un año calendario; considera todos los días sin excepción.
+              </div>
+            </div>
+          </label>
+
+          <label class="radio-card">
+            <input type="radio" name="tipoDias" value="habiles" onchange="actualizarInfoDias()">
+            <div class="card-content">
+              <div class="card-title">
+                <span class="radio-circle"></span> Días hábiles
+              </div>
+              <div class="card-desc">
+                Son los días comprendidos de lunes a viernes, sin contar feriados y días no laborables oficiales.
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <div id="infoDiasBox" class="info-box" style="display: none;">
+          <strong>Ten en cuenta que:</strong>
+          <ul>
+            <li>Esta calculadora considera los feriados y días no laborables para el sector público de Perú.</li>
+            <li>El conteo inicia a partir del <strong>siguiente día</strong> de la fecha seleccionada.</li>
+            <li>Sábados y Domingos <strong>no son considerados</strong> como días hábiles.</li>
+          </ul>
+        </div>
+
+        <div class="input-fechas-row">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <label style="color:#555; font-weight:600;">Contar:</label>
+            <input type="number" id="inputCantidadDias" style="width: 80px;" min="0" placeholder="Ej: 3">
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <label style="color:#555; font-weight:600;"><span id="labelTipoDia">días calendario a partir del:</span></label>
+            <input type="date" id="inputFechaInicio">
+          </div>
+          <button class="btn-calcular-fecha" onclick="calcularDias()">Calcular</button>
+          <button class="limpiar-btn" onclick="limpiarDias()" style="padding: 12px 20px; font-size: 14px; border-radius: 8px;">🧹 Limpiar</button>
+          <button class="toggle-historial-btn" onclick="window.open('https://www.gob.pe/8283-calcular-dias-habiles-o-calendario', '_blank')" style="padding: 12px 20px; font-size: 14px; border-radius: 8px; font-weight: 500;">🏛️ GOB.PE</button>
+        </div>
+
+        <div id="resultadoDiasBox" class="resultado-fecha-box" style="display: none;">
+          <div class="res-top-text">
+            En <strong id="resCantidadDias">X</strong> días <span id="resTipoDiasTxt">hábiles</span> a partir del <strong id="resFechaInicialTxt">X</strong>, será:
+          </div>
+          <div class="res-fecha-final" id="textoResultadoFecha">-</div>
+          
+          <div id="boxFeriadosOmitidos" class="feriados-omitidos-box" style="display: none;">
+            <p>Este cálculo omite los siguientes días feriados o no laborables:</p>
+            <ul id="listaFeriadosOmitidos" class="lista-feriados">
+              <!-- Llenado por JS -->
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-autor" style="margin-top:40px;">Developed by Cristhian Francia &copy; 2025 | All rights reserved.</div>
+      </div>
+    </div>
+
   </div>
   
+  <!-- DOCK DE WIDGETS FLOTANTES -->
   <div class="bottom-widgets">
     <div class="widget-item widget-likes" title="Valoración de la herramienta">
       <span class="heart">❤️</span> <span id="contadorLikes" style="color: var(--text-main);">...</span>
@@ -547,6 +694,7 @@
     </div>
   </div>
 
+  <!-- MODALES DE LA APLICACIÓN -->
   <div id="modalError" class="modal-overlay" onclick="cerrarModal(event)">
     <div class="modal-box">
       <span class="modal-icon" style="font-size:40px;">⚠️</span>
@@ -564,6 +712,7 @@
     </div>
   </div>
 
+  <!-- MODAL FEEDBACK -->
   <div id="modalFeedback" class="modal-overlay" onclick="cerrarModalFeedbackExt(event)">
     <div class="modal-box feedback-box" id="cajaFeedbackInterna">
       <h3 class="modal-title" style="margin-bottom: 5px;">¿Qué te parece?</h3>
@@ -811,6 +960,7 @@
     function callBackend(action, params, onSuccess, onError) {
       if (typeof google !== 'undefined' && google.script && google.script.run) {
         if (action === 'getUbigeoData') google.script.run.withSuccessHandler(onSuccess).getUbigeoData();
+        else if (action === 'getFeriadosData') google.script.run.withSuccessHandler(onSuccess).getFeriadosData();
         else if (action === 'updatePresence') google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).updatePresence(params.sessionId, params.userAgent);
       } else {
         var payload = { action: action }; if (params) { payload.sessionId = params.sessionId; payload.userAgent = params.userAgent; }
@@ -837,6 +987,15 @@
       document.getElementById('distrito').value = ''; poblarDatalist('listaDistrito', dists); updateOutput();
     }
     function cargarUbigeo() { callBackend('getUbigeoData', null, initUbigeo); }
+    
+    // CARGA DE FERIADOS DINÁMICOS DESDE GOOGLE SHEETS
+    let feriadosDinamicos = {};
+    function cargarFeriados() {
+      callBackend('getFeriadosData', null, function(data) {
+        feriadosDinamicos = data || {};
+      });
+    }
+
     function obtenerSessionId() { try { if (sessionStorage) { var s = sessionStorage.getItem("sessionIdBitel"); if(!s) { s="sess_"+Date.now()+"_"+Math.random().toString(16).substring(2); sessionStorage.setItem("sessionIdBitel", s); } return s; } } catch(e){} return "sess_"+Date.now()+"_"+Math.random().toString(16).substring(2); }
     var SID_ACTUAL = obtenerSessionId();
     function actualizarContadorSesiones(c) { var el=document.getElementById("contadorOnline"); if(el && typeof c==='number') el.textContent=c; }
@@ -848,7 +1007,7 @@
     function iniciarPresencia() { enviarLatidoPresencia(); setInterval(enviarLatidoPresencia, 60000); }
 
     // -----------------------------------------
-    // CALCULADORA
+    // CALCULADORA DE DATOS
     // -----------------------------------------
     const UNITS = [ { key:'bit', label:'Bit (b)', factorBytes:1/8 }, { key:'byte', label:'Byte (B)', factorBytes:1 }, { key:'KB', label:'Kilobyte (KB)', pow:1 }, { key:'MB', label:'Megabyte (MB)', pow:2 }, { key:'GB', label:'Gigabyte (GB)', pow:3 }, { key:'TB', label:'Terabyte (TB)', pow:4 }, { key:'PB', label:'Petabyte (PB)', pow:5 } ];
     const PRIMARY_ORDER = ["KB","MB","GB"]; const EXTRA_ORDER = ["bit","byte","TB","PB"];
@@ -923,15 +1082,135 @@
     }
 
     // -----------------------------------------
+    // LÓGICA DE DÍAS HÁBILES
+    // -----------------------------------------
+    
+    function actualizarInfoDias() {
+        const tipo = document.querySelector('input[name="tipoDias"]:checked').value;
+        const infoBox = document.getElementById('infoDiasBox');
+        const labelTipo = document.getElementById('labelTipoDia');
+        
+        // Limpiamos los resultados previos al cambiar de opción
+        document.getElementById('resultadoDiasBox').style.display = 'none';
+        
+        if (tipo === 'habiles') {
+            infoBox.style.display = 'block';
+            labelTipo.textContent = 'días hábiles a partir del:';
+        } else {
+            infoBox.style.display = 'none';
+            labelTipo.textContent = 'días calendario a partir del:';
+        }
+    }
+
+    function limpiarDias() {
+        const hoy = new Date();
+        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoy.getDate()).padStart(2, '0');
+        document.getElementById('inputFechaInicio').value = `${hoy.getFullYear()}-${mes}-${dia}`;
+        document.getElementById('inputCantidadDias').value = '';
+        document.getElementById('resultadoDiasBox').style.display = 'none';
+    }
+
+    function calcularDias() {
+        const tipo = document.querySelector('input[name="tipoDias"]:checked').value;
+        const cantidadStr = document.getElementById('inputCantidadDias').value;
+        const fechaInicioVal = document.getElementById('inputFechaInicio').value;
+        const resultadoBox = document.getElementById('resultadoDiasBox');
+        const textoResultado = document.getElementById('textoResultadoFecha');
+        const feriadosBox = document.getElementById('boxFeriadosOmitidos');
+        const listaFeriados = document.getElementById('listaFeriadosOmitidos');
+
+        const cantidad = parseInt(cantidadStr);
+
+        if (isNaN(cantidad) || cantidad < 0 || !fechaInicioVal) {
+            mostrarAlerta('⚠️ Por favor ingresa una cantidad de días válida y una fecha inicial.');
+            return;
+        }
+
+        // Parsear fecha correctamente
+        const partes = fechaInicioVal.split('-');
+        let fechaActual = new Date(partes[0], partes[1] - 1, partes[2]);
+        
+        const opcionesTexto = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        let txtFechaInicial = new Date(partes[0], partes[1] - 1, partes[2]).toLocaleDateString('es-PE', opcionesTexto);
+        document.getElementById('resFechaInicialTxt').textContent = "hoy (" + txtFechaInicial + ")";
+        
+        document.getElementById('resCantidadDias').textContent = cantidad;
+        document.getElementById('resTipoDiasTxt').textContent = tipo === 'calendario' ? 'días calendario' : 'días hábiles';
+
+        let diasAgregados = 0;
+        let feriadosOmitidos = [];
+
+        // Conteo
+        while (diasAgregados < cantidad) {
+            fechaActual.setDate(fechaActual.getDate() + 1); 
+            
+            let diaSemana = fechaActual.getDay();
+            let esFinde = (diaSemana === 0 || diaSemana === 6);
+            
+            let mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+            let dia = String(fechaActual.getDate()).padStart(2, '0');
+            let fechaCompleta = fechaActual.getFullYear() + "-" + mes + "-" + dia;
+            
+            // BUSCAMOS EN EL DICCIONARIO DINÁMICO
+            let nombreFeriado = feriadosDinamicos[fechaCompleta];
+
+            if (tipo === 'calendario') {
+                diasAgregados++;
+            } else {
+                // Si NO es fin de semana Y NO es feriado, agregamos el día.
+                if (!esFinde && !nombreFeriado) {
+                    diasAgregados++;
+                }
+                
+                // Si es un feriado (sea fin de semana o no), lo registramos para mostrarlo, 
+                // PERO NO suma días porque ya lo saltó.
+                if (nombreFeriado) {
+                    feriadosOmitidos.push({ fecha: new Date(fechaActual), nombre: nombreFeriado });
+                }
+            }
+        }
+
+        // Mostrar fecha resultante
+        let textoFecha = fechaActual.toLocaleDateString('es-PE', opcionesTexto);
+        textoFecha = textoFecha.charAt(0).toUpperCase() + textoFecha.slice(1);
+        textoResultado.textContent = textoFecha;
+        
+        // Mostrar Feriados Omitidos (solo si es modo hábiles y hubo alguno)
+        listaFeriados.innerHTML = '';
+        if (tipo === 'habiles' && feriadosOmitidos.length > 0) {
+            const diasSemanaNombres = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+            const mesesNombres = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            
+            feriadosOmitidos.forEach(feriado => {
+                let nomDia = diasSemanaNombres[feriado.fecha.getDay()];
+                let numDia = String(feriado.fecha.getDate()).padStart(2, '0');
+                let nomMes = mesesNombres[feriado.fecha.getMonth()];
+                let formatoLista = `${nomDia} ${numDia} ${nomMes}`;
+                
+                let li = document.createElement('li');
+                li.innerHTML = `<strong>${formatoLista}:</strong> ${feriado.nombre}`;
+                listaFeriados.appendChild(li);
+            });
+            feriadosBox.style.display = 'block';
+        } else {
+            feriadosBox.style.display = 'none';
+        }
+
+        resultadoBox.style.display = 'block';
+    }
+
+
+    // -----------------------------------------
     // INICIALIZACIÓN
     // -----------------------------------------
     window.addEventListener('load', function() {
       console.clear();
       
-      // SOLO SE BLOQUEA EL CLIC DERECHO SI NO ESTÁS EN UN CUADRO DE TEXTO
+      // SOLO SE BLOQUEA EL CLIC DERECHO SI NO ESTÁS EN UN CUADRO DE TEXTO O FECHA
       document.addEventListener('contextmenu', function(e) { 
         var target = e.target; 
-        var esEditable = (target.tagName === 'TEXTAREA' || (target.tagName === 'INPUT' && target.type === 'text') || (target.tagName === 'INPUT' && target.type === 'number')); 
+        var esEditable = (target.tagName === 'TEXTAREA' || (target.tagName === 'INPUT' && (target.type === 'text' || target.type === 'number' || target.type === 'date'))); 
         if (!esEditable) e.preventDefault(); 
       });
       
@@ -949,7 +1228,13 @@
       if(inMon) inMon.addEventListener('input', calcularPorcentaje);
       if(btnCleanPorc) btnCleanPorc.addEventListener('click', limpiarPorcentaje);
 
-      cambiarPlantilla(); cargarInicial(); cargarUbigeo(); iniciarPresencia(); cargarLikesInicial(); buildBlocks(); renderCalc();
+      // Setear fecha actual por defecto en la calculadora de días
+      const hoy = new Date();
+      const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+      const dia = String(hoy.getDate()).padStart(2, '0');
+      document.getElementById('inputFechaInicio').value = `${hoy.getFullYear()}-${mes}-${dia}`;
+
+      cambiarPlantilla(); cargarInicial(); cargarUbigeo(); cargarFeriados(); iniciarPresencia(); cargarLikesInicial(); buildBlocks(); renderCalc();
       
       document.getElementById("valueInput").addEventListener('input', renderCalc); document.getElementById("unitSelect").addEventListener('change', renderCalc);
       document.getElementById("btn-1024").onclick = ()=>{ base = 1024; document.getElementById("btn-1024").classList.add("active"); document.getElementById("btn-1000").classList.remove("active"); renderCalc(); };

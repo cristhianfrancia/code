@@ -223,7 +223,7 @@
     .historial-copy-btn:hover { background: #0056b3; }
 
     /* =========================================
-       5. ESTILOS DE LA CALCULADORA, PORCENTAJE Y FECHAS
+       5. ESTILOS DE LA CALCULADORA Y PORCENTAJE
        ========================================= */
     .container-calc {
       width: 100%; max-width: 1000px; margin: 0 auto; background: var(--card-bg);
@@ -288,7 +288,9 @@
       font-weight: 800; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    /* Estilos específicos de Días Hábiles */
+    /* =========================================
+       6. ESTILOS DE DÍAS HÁBILES Y BOTONES LÍNEA
+       ========================================= */
     .calc-dias-container { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
     .radio-card {
       flex: 1; min-width: 250px; background: white; border: 2px solid #e1e4e8; border-radius: 12px;
@@ -326,20 +328,31 @@
     .info-box ul { margin: 10px 0 0 0; padding-left: 20px; }
     .info-box li { margin-bottom: 8px; }
 
+    /* FILA DE FECHAS EN UNA SOLA LÍNEA */
     .input-fechas-row {
-      display: flex; align-items: center; gap: 15px; margin-top: 30px; flex-wrap: wrap; background: #fafafa; padding: 20px; border-radius: 12px; border: 1px solid #eee;
+      display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 30px; 
+      flex-wrap: wrap; background: #fafafa; padding: 15px; border-radius: 12px; border: 1px solid #eee;
     }
     .input-fechas-row input {
-      padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; outline: none; font-family: inherit; transition: 0.2s;
+      padding: 8px; border: 1px solid #ccc; border-radius: 8px; font-size: 0.95rem; 
+      outline: none; font-family: inherit; transition: 0.2s;
     }
     .input-fechas-row input:focus { border-color: var(--bitel-teal); box-shadow: 0 0 0 2px rgba(1,118,139,0.1); }
     
+    /* BOTONES MÁS COMPACTOS */
     .btn-calcular-fecha {
-      background: var(--bitel-blue); color: white; border: none; padding: 12px 30px;
-      border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(12,71,126,0.2);
+      background: var(--bitel-blue); color: white; border: none; padding: 8px 16px;
+      border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(12,71,126,0.2);
     }
     .btn-calcular-fecha:hover { background: #08325e; transform: translateY(-1px); }
     
+    .btn-gob-pe {
+      background: #6c757d; color: white; border: none; padding: 8px 16px;
+      border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: 0.2s; 
+      text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
+    }
+    .btn-gob-pe:hover { background: #5a6268; transform: translateY(-1px); }
+
     .resultado-fecha-box {
       margin-top: 25px; padding: 25px; border-radius: 12px; background: #fff;
       border: 1px solid #eee; text-align: center; color: var(--text-main); box-shadow: 0 8px 25px rgba(0,0,0,0.03);
@@ -357,7 +370,7 @@
     .lista-feriados li::before { content: "●"; color: #28a745; font-size: 1.2rem; line-height: 0.5; }
 
     /* =========================================
-       6. WIDGETS FLOTANTES (LIKES, SESIONES, FEEDBACK)
+       7. WIDGETS FLOTANTES (LIKES, SESIONES, FEEDBACK)
        ========================================= */
     .bottom-widgets {
       position: fixed; right: 22px; bottom: 22px; display: flex; gap: 12px; 
@@ -389,7 +402,7 @@
     .footer-autor strong { color: var(--bitel-blue); }
 
     /* =========================================
-       7. MODALES
+       8. MODALES
        ========================================= */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -644,18 +657,22 @@
           </ul>
         </div>
 
+        <!-- FILA COMPACTA DE INPUTS Y BOTONES -->
         <div class="input-fechas-row">
-          <div style="display:flex; align-items:center; gap:10px;">
-            <label style="color:#555; font-weight:600;">Contar:</label>
-            <input type="number" id="inputCantidadDias" style="width: 80px;" min="0" placeholder="Ej: 3">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <label style="color:#555; font-weight:600; font-size: 0.9rem;">Contar:</label>
+            <input type="number" id="inputCantidadDias" style="width: 70px;" min="0" placeholder="Ej: 3">
           </div>
-          <div style="display:flex; align-items:center; gap:10px;">
-            <label style="color:#555; font-weight:600;"><span id="labelTipoDia">días calendario a partir del:</span></label>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <label style="color:#555; font-weight:600; font-size: 0.9rem;"><span id="labelTipoDia">días cal. desde el:</span></label>
             <input type="date" id="inputFechaInicio">
           </div>
-          <button class="btn-calcular-fecha" onclick="calcularDias()">Calcular</button>
-          <button class="limpiar-btn" onclick="limpiarDias()" style="padding: 12px 20px; font-size: 14px; border-radius: 8px;">🧹 Limpiar</button>
-          <button class="toggle-historial-btn" onclick="window.open('https://www.gob.pe/8283-calcular-dias-habiles-o-calendario', '_blank')" style="padding: 12px 20px; font-size: 14px; border-radius: 8px; font-weight: 500;">🏛️ GOB.PE</button>
+          
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap: nowrap;">
+            <button class="btn-calcular-fecha" onclick="calcularDias()">Calcular</button>
+            <button class="limpiar-btn" onclick="limpiarDias()" style="padding: 8px 14px; font-size: 0.9rem; border-radius: 8px;">🧹 Limpiar</button>
+            <button class="btn-gob-pe" onclick="window.open('https://www.gob.pe/8283-calcular-dias-habiles-o-calendario', '_blank')">🏛️ gob.pe</button>
+          </div>
         </div>
 
         <div id="resultadoDiasBox" class="resultado-fecha-box" style="display: none;">
@@ -1095,10 +1112,10 @@
         
         if (tipo === 'habiles') {
             infoBox.style.display = 'block';
-            labelTipo.textContent = 'días hábiles a partir del:';
+            labelTipo.textContent = 'días hábiles desde el:';
         } else {
             infoBox.style.display = 'none';
-            labelTipo.textContent = 'días calendario a partir del:';
+            labelTipo.textContent = 'días cal. desde el:';
         }
     }
 

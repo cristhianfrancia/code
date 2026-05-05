@@ -141,7 +141,7 @@
             border-radius: 12px;
         }
 
-        /* --- Estilos para el POPUP 2 (Corregido) --- */
+        /* --- Estilos para el POPUP 2 --- */
         #imagePopup2 {
             display: none;
             position: fixed;
@@ -315,7 +315,7 @@
             box-shadow: 0 2px 5px rgba(12, 71, 126, 0.3);
         }
 
-        /* Botón de descarga de Word */
+        /* Botón de descarga de Word ajustado */
         .btn-word {
             display: inline-block; 
             margin-bottom: 15px; 
@@ -325,12 +325,16 @@
             font-weight: bold; 
             text-decoration: none; 
             border-radius: 8px; 
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
             box-shadow: 0 2px 5px rgba(24, 90, 189, 0.3); 
             transition: all 0.3s ease;
         }
 
         .btn-word:hover {
-            background-color: #0c477e; /* Azul Bitel oscuro al pasar el mouse */
+            background-color: #0c477e; 
             box-shadow: 0 4px 8px rgba(12, 71, 126, 0.4); 
         }
 
@@ -409,7 +413,6 @@
             });
 
             document.getElementById("resultado").style.display = "block";
-            
             document.getElementById("mensajeValidacionBtn").style.opacity = "0";
         }
 
@@ -425,6 +428,51 @@
             toast.innerHTML = `<span style="color: #fde204; font-size: 1.3rem;">${icono}</span> <span>${mensaje}</span>`;
             toast.classList.add("show");
             setTimeout(() => { toast.classList.remove("show"); }, 3500);
+        }
+
+        // ----- MAGIA BLOB PARA FORZAR EL NOMBRE DEL ARCHIVO -----
+        async function descargarWordPersonalizado() {
+            let numeroAbonado = document.getElementById("numeroAbonado").value.trim();
+            let nombreArchivo = "";
+            
+            if (numeroAbonado === "") {
+                nombreArchivo = "EVIDENCIA DE SAR - 9XXXXXXXX.docx";
+            } else {
+                nombreArchivo = `EVIDENCIA DE SAR - ${numeroAbonado}.docx`;
+            }
+
+            let url = "https://docs.google.com/document/d/1pm1DzFS9_Xgi84XvRJ61TGPgzVnlko48wFfhoF2c_5s/export?format=docx";
+
+            mostrarNotificacion("Preparando documento...", "success");
+
+            try {
+                // Descargamos el archivo a la memoria temporal (Blob)
+                let respuesta = await fetch(url);
+                if (!respuesta.ok) throw new Error("Error de red");
+                let blob = await respuesta.blob();
+                
+                // Creamos un link interno para forzar nuestro nombre
+                let urlLocal = window.URL.createObjectURL(blob);
+                let linkTemporal = document.createElement("a");
+                linkTemporal.href = urlLocal;
+                linkTemporal.download = nombreArchivo;
+                
+                // Hacemos clic y limpiamos
+                document.body.appendChild(linkTemporal);
+                linkTemporal.click();
+                document.body.removeChild(linkTemporal);
+                window.URL.revokeObjectURL(urlLocal);
+                
+            } catch (error) {
+                // PLAN B: Si la red del agente o Chrome bloquea el Blob por seguridad extrema, 
+                // hacemos la descarga normal asegurándonos que el archivo baje
+                let linkTemporal = document.createElement("a");
+                linkTemporal.href = url;
+                linkTemporal.download = nombreArchivo; 
+                document.body.appendChild(linkTemporal);
+                linkTemporal.click();
+                document.body.removeChild(linkTemporal);
+            }
         }
 
         function copiarTexto() {
@@ -682,7 +730,7 @@ $$_<span id="resId"></span>_&&
 </div>
 
 <div class="ruta-container">
-SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada / SAR - Infundado / Ajuste / Facturación y cobro
+Other / Solución anticipada / Solución anticipada / SAR - Infundado / Ajuste / Facturación y cobro
 </div>
 
 <br>
@@ -700,7 +748,8 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 - Imagen de la recarga -> [Balance / View Subscriber refill history]<br>
 - Imagen Consumo -> [Balance / Subscriber consumption detail(New)]<br><br>
 
-<a href="https://docs.google.com/document/d/1pm1DzFS9_Xgi84XvRJ61TGPgzVnlko48wFfhoF2c_5s/export?format=docx" target="_blank" class="btn-word">📄 Descargar Plantilla Word</a><br>
+<!-- BOTÓN CON FUNCIÓN JAVASCRIPT DINÁMICA -->
+<button type="button" class="btn-word" onclick="descargarWordPersonalizado()">📄 Descargar Plantilla Word</button><br>
 
 </div>
 
@@ -740,6 +789,6 @@ Derechos reservados &copy; 2020 Cristhian Francia
         <h2 style="margin-top: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; color: #0c477e;">Speech de grabación</h2>
         <pre id="speechText"></pre>
         <button onclick="cerrarPopup()" style="cursor: pointer; padding: 8px 16px; border-radius: 8px; border: none; background-color: #0c477e; color: white; font-weight: bold; width: 100%; margin-top: 10px;">Cerrar</button>
-</div>
+    </div>
 </body>
 </html>

@@ -141,7 +141,7 @@
             border-radius: 12px;
         }
 
-        /* --- Estilos para el POPUP 2 (Corregido) --- */
+        /* --- Estilos para el POPUP 2 --- */
         #imagePopup2 {
             display: none;
             position: fixed;
@@ -271,13 +271,13 @@
         }
 
         #mensajeValidacionBtn {
-            display: block;
-            margin-top: 8px;
+            display: inline-block;
+            margin-left: 15px;
             font-size: 14px;
             font-weight: bold;
             opacity: 0;
             transition: opacity 0.3s ease;
-            height: 20px; 
+            vertical-align: middle;
         }
 
         .highlight-box {
@@ -295,15 +295,14 @@
             border-color: rgba(253, 226, 4, 0.4);
         }
 
-        /* ----- NUEVOS BOTONES DE CONSULTA (COLORES INVERTIDOS) ----- */
         .btn-consulta {
             cursor: pointer;
             padding: 3px 10px;
             margin-left: 6px;
             font-size: 12px;
             font-weight: bold;
-            color: #ffffff; /* Texto blanco por defecto */
-            background-color: #0c477e; /* Fondo azul Bitel por defecto */
+            color: #ffffff; 
+            background-color: #0c477e; 
             border: 1px solid #0c477e;
             border-radius: 6px;
             transition: all 0.2s ease;
@@ -311,33 +310,37 @@
         }
         
         .btn-consulta:hover {
-            background-color: #ffffff; /* Fondo blanco al hacer hover */
-            color: #0c477e; /* Texto azul al hacer hover */
+            background-color: #ffffff; 
+            color: #0c477e; 
             box-shadow: 0 2px 5px rgba(12, 71, 126, 0.3);
         }
 
-        /* Botón de descarga de Word */
+        /* Botón de descarga de Word ajustado para botón dinámico */
         .btn-word {
             display: inline-block; 
             margin-bottom: 15px; 
             padding: 8px 16px; 
-            background-color: #185abd; /* Azul Word */
+            background-color: #185abd; 
             color: white !important; 
             font-weight: bold; 
             text-decoration: none; 
             border-radius: 8px; 
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
             box-shadow: 0 2px 5px rgba(24, 90, 189, 0.3); 
             transition: all 0.3s ease;
         }
 
         .btn-word:hover {
-            background-color: #0c477e; /* Azul Bitel oscuro al pasar el mouse */
+            background-color: #0c477e; 
             box-shadow: 0 4px 8px rgba(12, 71, 126, 0.4); 
         }
 
     </style>
-    <script>
 
+    <script>
         document.addEventListener('contextmenu', event => {
             event.preventDefault();
         });
@@ -414,7 +417,6 @@
             });
 
             document.getElementById("resultado").style.display = "block";
-            
             document.getElementById("mensajeValidacionBtn").style.opacity = "0";
         }
 
@@ -430,6 +432,46 @@
             toast.innerHTML = `<span style="color: #fde204; font-size: 1.3rem;">${icono}</span> <span>${mensaje}</span>`;
             toast.classList.add("show");
             setTimeout(() => { toast.classList.remove("show"); }, 3500);
+        }
+
+        // ----- MAGIA BLOB PARA FORZAR EL NOMBRE DEL ARCHIVO -----
+        async function descargarWordPersonalizado() {
+            let numeroAbonado = document.getElementById("numeroAbonado").value.trim();
+            let nombreArchivo = "";
+            
+            if (numeroAbonado === "") {
+                nombreArchivo = "EVIDENCIA DE SAR - 9XXXXXXXX.docx";
+            } else {
+                nombreArchivo = `EVIDENCIA DE SAR - ${numeroAbonado}.docx`;
+            }
+
+            let url = "https://docs.google.com/document/d/1pm1DzFS9_Xgi84XvRJ61TGPgzVnlko48wFfhoF2c_5s/export?format=docx";
+
+            mostrarNotificacion("Preparando documento...", "success");
+
+            try {
+                let respuesta = await fetch(url);
+                if (!respuesta.ok) throw new Error("Error de red");
+                let blob = await respuesta.blob();
+                
+                let urlLocal = window.URL.createObjectURL(blob);
+                let linkTemporal = document.createElement("a");
+                linkTemporal.href = urlLocal;
+                linkTemporal.download = nombreArchivo;
+                
+                document.body.appendChild(linkTemporal);
+                linkTemporal.click();
+                document.body.removeChild(linkTemporal);
+                window.URL.revokeObjectURL(urlLocal);
+                
+            } catch (error) {
+                let linkTemporal = document.createElement("a");
+                linkTemporal.href = url;
+                linkTemporal.download = nombreArchivo; 
+                document.body.appendChild(linkTemporal);
+                linkTemporal.click();
+                document.body.removeChild(linkTemporal);
+            }
         }
 
         function copiarTexto() {
@@ -466,7 +508,7 @@
 
             let texto = document.getElementById("resultado");
             let inputTemp = document.createElement("textarea");
-            inputTemp.value = texto.innerText;
+            inputTemp.value = texto.innerText; 
             document.body.appendChild(inputTemp);
             inputTemp.select();
             document.execCommand("copy");
@@ -561,7 +603,7 @@
             datosGuardados = {};
             campos.forEach(el => {
                 datosGuardados[el.id] = el.value;
-                el.classList.remove("input-error");
+                el.classList.remove("input-error"); 
             });
 
             campos.forEach(el => el.value = "");
@@ -681,7 +723,7 @@ $$_<span id="resId"></span>_&&
 
 <br><hr><br>
 
-<label style="color: red;"><strong>2. Tipificación: </strong></label><a href="#" onclick="return showImagePopup(event)" style="text-decoration: none; color: #007BFF;"><strong>(Clic para ver)</strong></a>
+<label style="color: red;"><strong>2. Tipificación: </strong></label><a href="#" onclick="return showImagePopup(event)" style="text-decoration: none; color: #007BFF;"><strong>(Ver ejemplo)</strong></a>
 
 <div id="imagePopup">
 <button class="close-button" onclick="hideImagePopup()">Cerrar</button>
@@ -707,11 +749,12 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 - Imagen de la recarga -> [Balance / View Subscriber refill history]<br>
 - Imagen Consumo -> [Balance / Subscriber consumption detail(New)]<br><br>
 
-<a href="https://docs.google.com/document/d/1pm1DzFS9_Xgi84XvRJ61TGPgzVnlko48wFfhoF2c_5s/export?format=docx" target="_blank" class="btn-word">📄 Descargar Plantilla Word</a><br>
+<!-- BOTÓN CON FUNCIÓN JAVASCRIPT DINÁMICA -->
+<button type="button" class="btn-word" onclick="descargarWordPersonalizado()">📄 Descargar Plantilla Word</button><br>
 
 </div>
-<br>
 
+<br>
 
 <label style="color: red;"><strong>4. Speech:</strong></label>
 
@@ -736,7 +779,6 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 <br><br><br><br><br><br>
 <textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
 
-
 <div class="footer-autor">
 Derechos reservados &copy; 2020 Cristhian Francia
 </div>
@@ -749,5 +791,4 @@ Derechos reservados &copy; 2020 Cristhian Francia
         <button onclick="cerrarPopup()" style="cursor: pointer; padding: 8px 16px; border-radius: 8px; border: none; background-color: #0c477e; color: white; font-weight: bold; width: 100%; margin-top: 10px;">Cerrar</button>
     </div>
 </body>
-
 </html>

@@ -239,7 +239,7 @@
         }
 
         .highlight-box {
-            background-color: rgba(253, 226, 4, 0.04); 
+            background-color: #FFFEF5; 
             padding: 6px 18px; 
             margin: 4px -18px; 
             border-radius: 8px;
@@ -320,6 +320,55 @@
             background-color: #0c477e;
             color: white;
             box-shadow: 0 2px 8px rgba(12, 71, 126, 0.3);
+        }
+
+        /* ----- ESTILOS PARA EL TOOLTIP (AVISO FLOTANTE) ----- */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .tooltip-box {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            top: calc(100% + 8px); /* Aparece justo debajo del input */
+            left: 0;
+            background-color: #f8fbff; /* Fondo azulado muy claro */
+            border: 1px solid #0c477e; /* Borde Bitel */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            padding: 12px;
+            border-radius: 8px;
+            width: max-content; /* Se adapta al texto */
+            max-width: 550px;
+            z-index: 100;
+            font-size: 14px;
+            color: #333;
+            text-align: left;
+            font-weight: normal;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            transform: translateY(-5px); /* Efecto de deslizamiento */
+            line-height: 1.5;
+        }
+        
+        /* Pequeño triangulito arriba del tooltip */
+        .tooltip-box::before {
+            content: "";
+            position: absolute;
+            bottom: 100%; 
+            left: 20px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent transparent #0c477e transparent;
+        }
+
+        /* Mostrar el tooltip cuando el agente da clic en el input (focus) o pasa el mouse (hover) */
+        .tooltip-container input:focus + .tooltip-box,
+        .tooltip-container:hover .tooltip-box {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
         }
 
     </style>
@@ -418,33 +467,32 @@
         function toggleDescuento() {
             let tipo = document.querySelector('input[name="tipoDescuento"]:checked').value;
             
-            // Elementos a mostrar/ocultar
-            let formConsumo = document.getElementById("formBloqueConsumo");
-            let formSobrante = document.getElementById("formTextoSobrante");
+            let formBloqueConsumo = document.getElementById("formBloqueConsumo");
+            let formTextoSobrante = document.getElementById("formTextoSobrante");
             let inputConsumo = document.getElementById("consumo");
             
-            let resConsumo = document.getElementById("resBloqueConsumo");
-            let resSobrante = document.getElementById("resTextoSobrante");
+            let resBloqueConsumo = document.getElementById("resBloqueConsumo");
+            let resTextoSobrante = document.getElementById("resTextoSobrante");
 
             if (tipo === "con") {
-                formConsumo.style.display = "inline";
-                formSobrante.style.display = "inline";
-                resConsumo.style.display = "inline";
-                resSobrante.style.display = "inline";
+                formBloqueConsumo.style.display = "inline";
+                formTextoSobrante.style.display = "inline";
+                resBloqueConsumo.style.display = "inline";
+                resTextoSobrante.style.display = "inline";
             } else {
-                formConsumo.style.display = "none";
-                formSobrante.style.display = "none";
-                resConsumo.style.display = "none";
-                resSobrante.style.display = "none";
+                formBloqueConsumo.style.display = "none";
+                formTextoSobrante.style.display = "none";
+                resBloqueConsumo.style.display = "none";
+                resTextoSobrante.style.display = "none";
                 
                 inputConsumo.value = "";
                 inputConsumo.classList.remove("input-error");
-                inputConsumo.style.width = "450px"; // Restaura tamaño original
+                inputConsumo.style.width = "560px"; // Restaura tamaño original
             }
             actualizarResultados();
         }
 
-        // ----- DESCARGA DE WORD INTELIGENTE -----
+        // ----- MAGIA BLOB PARA FORZAR EL NOMBRE DEL ARCHIVO CON ENLACES DINÁMICOS -----
         async function descargarWordPersonalizado() {
             let numeroAbonado = document.getElementById("numeroAbonado").value.trim();
             let tipoDescuento = document.querySelector('input[name="tipoDescuento"]:checked').value;
@@ -712,11 +760,22 @@
     
     <span id="formBloqueConsumo" style="display:none;">
         , sin embargo, se valida consumo de 
-        <!-- Campo con redimensionamiento automático inteligente -->
-        <input type="text" id="consumo" oninput="this.style.width = ((this.value.length > 55) ? (this.value.length + 2) + 'ch' : '560px'); actualizarResultados()" placeholder="S/(monto descontado), por (motivo de descuento), el DD/MM/AAAA a las XX:XX:XX" title="Ejemplo: S/5.00 por la compra de un paquete 5SO el 04/05/2026 a las 07:46:15" style="width: 560px; max-width: 100%; display: inline-block; vertical-align: middle; transition: width 0.2s ease;">
+        
+        <!-- Contenedor relativo para el Tooltip Flotante -->
+        <span class="tooltip-container">
+            <input type="text" id="consumo" oninput="this.style.width = ((this.value.length > 55) ? (this.value.length + 2) + 'ch' : '560px'); actualizarResultados()" placeholder="S/(monto descontado), por (motivo de descuento), el DD/MM/AAAA a las XX:XX:XX" style="width: 560px; max-width: 100%; display: inline-block; vertical-align: middle; transition: width 0.2s ease;">
+            
+            <!-- La ventana flotante con los ejemplos -->
+            <span class="tooltip-box">
+                <strong style="color: #0c477e;">💡 Ejemplos de llenado correcto:</strong><br><br>
+                <span style="color:#555;">• S/1.80 por la suscripción MPS CLUB_RITMO-22122 el 06/05/2026 a las 08:57:15</span><br><br>
+                <span style="color:#555;">• S/5.00 por la compra de un paquete 5SO el 04/05/2026 a las 07:46:15</span><br><br>
+                <span style="color:#555;">• S/0.0002 por navegación en internet desde el 04/05/2026 a las 07:46:15 hasta el 05/05/2026 a las 09:20:29</span>
+            </span>
+        </span>
     </span> 
     
-    y solicita el traslado del monto de recarga <span id="formTextoSobrante" style="display:none;">sobrante </span>como ajuste de factura. Fecha: <input type="date" id="fecha5" oninput="actualizarResultados()"> Hora: <input type="time" id="hora5" oninput="checkLength(this); actualizarResultados()"></label> <span style="color: red; font-size: 0.9em; font-weight: bold;">(Fecha y Hora de petición)</span>
+    y solicita el traslado del monto de recarga <span id="formTextoSobrante" style="display:none;">sobrante </span>como ajuste de factura. Fecha: <input type="date" id="fecha5" oninput="actualizarResultados()"> Hora: <input type="time" id="hora5" oninput="checkLength(this); actualizarResultados()">.</label> <span style="color: red; font-size: 0.9em; font-weight: bold;">(Fecha y Hora de petición)</span>
 </div>
 
 <label>6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: Se le realiza la asignación de S/<input type="text" id="lab6" oninput="checkLength(this); actualizarResultados()" placeholder="X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required> como ajuste a su factura sin beneficios adicionales.</label><br>
@@ -779,7 +838,7 @@ $$_<span id="resId"></span>_&&
 
 <div id="imagePopup">
 <button class="close-button" onclick="hideImagePopup()">Cerrar</button>
-<img src="https://i.postimg.cc/YC8tCwtZ/SAR-1-recarga-Evidencia.png" alt="Imagen de vista previa 1">
+<img src="https://i.postimg.cc/KzHDDtX8/SAR_1_recarga.png" alt="Imagen de vista previa 1">
 </div>
 
 <div class="ruta-container">
@@ -806,9 +865,7 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 <button type="button" id="btnDescargaWord" class="btn-word" onclick="descargarWordPersonalizado()">📄 Descargar Plantilla Word</button><br>
 </div>
 
-
 <br>
-
 
 <label style="color: red;"><strong>4. Speech:</strong></label>
 
@@ -832,7 +889,6 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 
 <br><br><br><br><br><br>
 <textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
-
 
 <div class="footer-autor">
 Derechos reservados &copy; 2020 Cristhian Francia

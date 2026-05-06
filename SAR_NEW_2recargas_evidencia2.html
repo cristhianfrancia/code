@@ -82,7 +82,7 @@
             color: #007BFF;
         }
 
-        /* --- Estilos para el POPUP 1 --- */
+        /* --- Estilos para los POPUPS --- */
         .popup {
             display: none;
             position: fixed;
@@ -240,7 +240,7 @@
 
         .highlight-box {
             background-color: #FFFEF5; 
-            padding: 12px 18px; 
+            padding: 6px 18px; 
             margin: 4px -18px; 
             border-radius: 8px;
             border: 1px solid rgba(253, 226, 4, 0.25); 
@@ -273,6 +273,7 @@
             box-shadow: 0 2px 5px rgba(12, 71, 126, 0.3);
         }
 
+        /* Botón de descarga de Word ajustado */
         .btn-word {
             display: inline-block; 
             margin-bottom: 15px; 
@@ -321,12 +322,52 @@
             color: white;
             box-shadow: 0 2px 8px rgba(12, 71, 126, 0.3);
         }
+
+        /* ----- ESTILOS PARA EL TOOLTIP (AVISO FLOTANTE) ----- */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+        }
         
-        /* Estilo para el input de consumo auto-expandible */
-        #consumo {
-            min-width: 250px; 
-            max-width: 100%; 
-            transition: width 0.2s ease;
+        .tooltip-box {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            top: calc(100% + 8px); 
+            left: 0;
+            background-color: #f8fbff; 
+            border: 1px solid #0c477e; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            padding: 12px;
+            border-radius: 8px;
+            width: max-content; 
+            max-width: 550px;
+            z-index: 100;
+            font-size: 14px;
+            color: #333;
+            text-align: left;
+            font-weight: normal;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            transform: translateY(-5px); 
+            line-height: 1.5;
+        }
+        
+        .tooltip-box::before {
+            content: "";
+            position: absolute;
+            bottom: 100%; 
+            left: 20px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent transparent #0c477e transparent;
+        }
+
+        .tooltip-container input:focus + .tooltip-box,
+        .tooltip-container:hover .tooltip-box {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
         }
 
     </style>
@@ -393,17 +434,12 @@
                 }
             });
 
-            // Actualización de montos con clases (por si se repiten)
+            // ResMonto para recarga 1
             let monto = document.getElementById("monto").value;
             if (monto) {
                 document.querySelectorAll(".resMonto").forEach(span => span.innerText = monto);
             }
 
-            let total2rxInput = document.getElementById("total2rx");
-            let total2rxValue = total2rxInput ? total2rxInput.value : "";
-            document.querySelectorAll(".restotal2rx").forEach(span => span.innerText = total2rxValue);
-
-            // Actualización de primer nombre
             let primerNombre = obtenerPrimerNombre(document.getElementById("nombreAbonado").value);
             document.querySelectorAll(".primerNombre").forEach(span => {
                 span.innerHTML = `<span style="color: #007BFF;">${primerNombre}</span>`;
@@ -437,49 +473,23 @@
             
             let resBloqueConsumo = document.getElementById("resBloqueConsumo");
             let resTextoSobrante = document.getElementById("resTextoSobrante");
-            
-            // Cambios de texto dinámicos según selección
-            let txtPeticion = document.getElementById("txtPeticion");
-            let resTxtPeticion = document.getElementById("resTxtPeticion");
-            
-            let txtOfrecimiento = document.getElementById("txtOfrecimiento");
-            let resTxtOfrecimiento = document.getElementById("resTxtOfrecimiento");
 
             if (tipo === "con") {
                 formBloqueConsumo.style.display = "inline";
                 formTextoSobrante.style.display = "inline";
                 resBloqueConsumo.style.display = "inline";
                 resTextoSobrante.style.display = "inline";
-                
-                // Textos para Con Descuento
-                txtPeticion.innerText = "Cliente desea reclamar porque realizó 2 recargas en lugar de pago por el monto de S/";
-                resTxtPeticion.innerText = "Cliente desea reclamar porque realizó 2 recargas en lugar de pago por el monto de S/";
-                txtOfrecimiento.innerText = "Se ofrece ajuste de factura por el monto de S/";
-                resTxtOfrecimiento.innerText = "Se ofrece ajuste de factura por el monto de S/";
-                
             } else {
                 formBloqueConsumo.style.display = "none";
                 formTextoSobrante.style.display = "none";
                 resBloqueConsumo.style.display = "none";
                 resTextoSobrante.style.display = "none";
                 
-                // Textos para Sin Descuento
-                txtPeticion.innerText = "Cliente realizó 2 recargas en lugar de pago por el monto de S/";
-                resTxtPeticion.innerText = "Cliente realizó 2 recargas en lugar de pago por el monto de S/";
-                txtOfrecimiento.innerText = "Se le realiza asignación de S/";
-                resTxtOfrecimiento.innerText = "Se le realiza asignación de S/";
-                
                 inputConsumo.value = "";
                 inputConsumo.classList.remove("input-error");
-                resizeInput(inputConsumo); // Restaura el tamaño
+                inputConsumo.style.width = "560px"; // Restaura tamaño original
             }
             actualizarResultados();
-        }
-
-        // ----- FUNCIÓN PARA AUTO-REDIMENSIONAR EL INPUT DE CONSUMO -----
-        function resizeInput(input) {
-            let content = input.value || input.placeholder;
-            input.style.width = (content.length + 2) + 'ch';
         }
 
         // ----- MAGIA BLOB PARA FORZAR EL NOMBRE DEL ARCHIVO CON ENLACES DINÁMICOS -----
@@ -590,13 +600,12 @@
             let dniAbonado = document.getElementById("dniAbonado")?.value || "XXXXXX";
             let total2rx = document.getElementById("total2rx").value || "XX"; 
             let fechaActual = obtenerFechaActual();
-
             let speech = "";
 
             if (plazo === "10 días hábiles") {
-                speech = `👉 10 días hábiles 👈\n\n"Sr(a). <span style="color: #007BFF">("Primer nombre" y "Primer apellido" del cliente)</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia Facturación y Cobro en aceptación del ofrecimiento efectuado por Bitel donde realizaremos el ajuste en su facturación por el monto de S/<span style="color: #007BFF">${total2rx}</span> incluido IGV, la cual se ejecutará en un plazo no mayor a 10 días hábiles de acuerdo al articulo 20° del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
+                speech = `👉 10 días hábiles 👈\n\n"Sr(a). <span style="color: #007BFF">("Primer nombre" y "Primer apellido" del cliente)</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia Facturación y Cobro en aceptación del ofrecimiento efectuado por Bitel donde realizaremos el ajuste en su facturación por el monto de S/<span style="color: #007BFF">${total2rx}</span> incluido IGV, la cual se ejecutará en un plazo no mayor a 10 días hábiles de acuerdo al articulo 20° Del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
             } else if (plazo === "1 día hábil") {
-                speech = `👉 1 día hábil 👈\n\n"Estimado cliente, como le mencionaba, el plazo legal establecido por OSIPTEL es no mayor a 10 días hábiles, sin embargo, le ofrecemos ejecutar el cumplimiento en un plazo mínimo de 1 día hábil. ¿Se encuentra usted de acuerdo?"\n\n**********************************\nSi el cliente acepta, continuamos\n**********************************\n\n"Sr(a). <span style="color: #007BFF">("Primer nombre" y "Primer apellido" del cliente)</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia Facturación y Cobro, en aceptación del ofrecimiento efectuado por Bitel donde realizaremos el ajuste en su facturación por el monto de S/<span style="color: #007BFF">${total2rx}</span> incluido IGV, la cual se ejecutará en un plazo no mayor a 1 día hábil de acuerdo al articulo 20° del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
+                speech = `👉 1 día hábil 👈\n\n"Estimado cliente, como le mencionaba el plazo legal establecido por OSIPTEL es no mayor a 10 días hábiles; sin embargo, le ofrecemos ejecutar el cumplimiento en un plazo mínimo de 1 día hábil".\n\n**********************************\nSi el cliente acepta, continuamos\n**********************************\n\n"Sr(a). <span style="color: #007BFF">("Primer nombre" y "Primer apellido" del cliente)</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia Facturación y Cobro, en aceptación del ofrecimiento efectuado por Bitel donde realizaremos el ajuste en su facturación por el monto de S/<span style="color: #007BFF">${total2rx}</span> incluido IGV, la cual se ejecutará en un plazo no mayor a 1 día hábil de acuerdo al articulo 20° Del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
             }
 
             if (speech !== "") {
@@ -709,12 +718,6 @@
             let y = (screen.height / 2) - (alto / 2);
             window.open(url, "Consulta_Externa", `width=${ancho},height=${alto},left=${x},top=${y},scrollbars=yes,resizable=yes`);
         }
-        
-        // Inicializar el tamaño del input en carga
-        window.addEventListener('DOMContentLoaded', (event) => {
-            let inputConsumo = document.getElementById("consumo");
-            if(inputConsumo) resizeInput(inputConsumo);
-        });
 
     </script>
 </head>
@@ -729,7 +732,8 @@
 
 <span style="color: red"><input type="number" id="Numero1" oninput="checkLength(this); actualizarResultados()" placeholder="(Número del que llama)" title="Máximo 9 dígitos" required></span> // Cliente señala que realiza una recarga en lugar de efectuar su pago // Se ofrece solución anticipada de reclamo<br><br>
 
-<label>1. Código o número correlativo de la atención realizada: </label> <select id="codigo" onchange="actualizarResultados()"><option value="">Seleccionar</option><option value="-">-</option></select><br>
+<label>1. Código o número correlativo de la atención realizada: </label> <select id="codigo" onchange="actualizarResultados()"><option value="">Seleccionar</option><option value="-">-</option>
+</select><br>
 <label>2. Nombres y apellidos completos del personal de Bitel que atendió al abonado/usuario: </label> <input type="text" id="nombrePersonal" oninput="actualizarResultados()" placeholder="(Datos del agente 123)" title="Tus nombres y apellidos completos" required><br>
 
 <label>3. Nombres y apellidos completos del abonado/usuario:</label> 
@@ -739,7 +743,7 @@
 
 <label>4. Número o código del servicio del abonado/usuario:</label> <input type="number" id="numeroAbonado" oninput="checkLength(this); actualizarResultados()" placeholder="(Número celular SAR)" title="Máximo 9 dígitos" required><br>
 
-<!-- BOTONES TIPO TOGGLE PARA TIPO DE DESCUENTO -->
+<!-- BOTONES TIPO TOGGLE -->
 <div class="radio-group">
     <label>
         <input type="radio" name="tipoDescuento" value="sin" checked onchange="toggleDescuento()">
@@ -752,28 +756,40 @@
 </div>
 
 <div class="highlight-box">
-<label>5. Petición del usuario, así como su fecha y hora: <span id="txtPeticion">Cliente realizó 2 recargas en lugar de un pago el <input type="date" id="fecha1" oninput="actualizarResultados()"> a las <input type="text" id="hora1" oninput="checkLength(this); actualizarResultados()" placeholder="HH:MM:SS" title="Ejemplo: 08:00:10" required> por un monto de S/</span><input type="text" id="monto" oninput="checkLength(this); actualizarResultados()" placeholder="Recarga 1 -> X.XX | XX.XX" title="Ejemplo: 5.00" required> y otra recarga el <input type="date" id="fecha2rx" oninput="actualizarResultados()"> a las <input type="text" id="hora12r" oninput="checkLength(this); actualizarResultados()" placeholder="HH:MM:SS" title="Ejemplo: 08:00:10" required> por un monto de S/<input type="text" id="monto2rx" oninput="checkLength(this); actualizarResultados()" placeholder="Recarga 2 -> X.XX | XX.XX" title="Ejemplo: 25.00" required> haciendo un total de S/<input type="text" id="total2rx" oninput="checkLength(this); actualizarResultados()" placeholder="Total -> X.XX | XX.XX" title="Ejemplo: 30.00" required>
+    <label>5. Petición del usuario, así como su fecha y hora: Cliente desea reclamar porque realizó 2 recargas en lugar de pago por el monto de S/<input type="text" id="monto" oninput="checkLength(this); actualizarResultados()" placeholder="Recarga 1 -> X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required> el <input type="date" id="fecha1" oninput="actualizarResultados()"> a las <input type="text" id="hora1" oninput="checkLength(this); actualizarResultados()" placeholder="HH:MM:SS" title="Ejemplo: 08:00:10" required> y otra recarga de S/<input type="text" id="monto2rx" oninput="checkLength(this); actualizarResultados()" placeholder="Recarga 2 -> X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required> el <input type="date" id="fecha2rx" oninput="actualizarResultados()"> a las <input type="text" id="hora12r" oninput="checkLength(this); actualizarResultados()" placeholder="HH:MM:SS" title="Ejemplo: 08:00:10" required>, haciendo un total de S/<input type="text" id="total2rx" oninput="checkLength(this); actualizarResultados()" placeholder="Total -> X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required>
+
     
     <span id="formBloqueConsumo" style="display:none;">
         , sin embargo, se valida consumo de 
-        <input type="text" id="consumo" oninput="resizeInput(this); actualizarResultados()" placeholder="S/(monto descontado), por (motivo de descuento), el DD/MM/AAAA a las XX:XX:XX" title="Ejemplo: S/5.00 por la compra de un paquete 5SO el 04/05/2026 a las 07:46:15" style="width: 450px; max-width: 100%; display: inline-block; vertical-align: middle; transition: width 0.2s ease;">
+        
+        <!-- Contenedor relativo para el Tooltip Flotante -->
+        <span class="tooltip-container">
+            <input type="text" id="consumo" oninput="this.style.width = ((this.value.length > 55) ? (this.value.length + 2) + 'ch' : '560px'); actualizarResultados()" placeholder="S/(monto descontado), por (motivo de descuento), el DD/MM/AAAA a las XX:XX:XX" style="width: 560px; max-width: 100%; display: inline-block; vertical-align: middle; transition: width 0.2s ease;">
+            
+            <!-- La ventana flotante con los ejemplos -->
+            <span class="tooltip-box">
+                <strong style="color: #0c477e;">💡 Ejemplos de llenado correcto:</strong><br><br>
+                <span style="color:#555;">• S/1.80 por la suscripción MPS CLUB_RITMO-22122 el 06/05/2026 a las 08:57:15</span><br><br>
+                <span style="color:#555;">• S/5.00 por la compra de un paquete 5SO el 04/05/2026 a las 07:46:15</span><br><br>
+                <span style="color:#555;">• S/0.0002 por navegación en internet desde el 04/05/2026 a las 07:46:15 hasta el 05/05/2026 a las 09:20:29</span>
+            </span>
+        </span>
     </span> 
     
-, solicita el traslado del monto de recarga <span id="formTextoSobrante" style="display:none;">sobrante </span>como ajuste de facturación. Fecha: <input type="date" id="fecha5" oninput="actualizarResultados()"> Hora: <input type="time" id="hora5" oninput="actualizarResultados()"> </label><span style="color: red; font-size: 0.9em; font-weight: bold;"> (Fecha y Hora de petición)</span>
+    y solicita el traslado del monto de recarga <span id="formTextoSobrante" style="display:none;">sobrante </span>como ajuste de factura. Fecha: <input type="date" id="fecha5" oninput="actualizarResultados()"> Hora: <input type="time" id="hora5" oninput="checkLength(this); actualizarResultados()">.</label> <span style="color: red; font-size: 0.9em; font-weight: bold;">(Fecha y Hora de petición)</span>
 </div>
 
-<label>6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: <span id="txtOfrecimiento">Se le realiza asignación de S/</span><input type="text" id="lab6" oninput="checkLength(this); actualizarResultados()" placeholder="X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required> como ajuste a su factura sin beneficios adicionales.</label><br>
+<label>6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: Se ofrece ajuste de factura por el monto de S/<input type="text" id="lab6" oninput="checkLength(this); actualizarResultados()" placeholder="X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required> sin beneficios adicionales.</label><br>
 
-<label>7. Fecha y hora de la aceptación del abonado/usuario: Fecha: </label> <input type="date" id="fecha3" oninput="actualizarResultados()"> <label>Hora: </label> <input type="time" id="hora3" oninput="actualizarResultados()"> <span style="color: red; font-size: 0.9em; font-weight: bold;"> (Fecha y Hora de aceptación)</span><br>
+<label>7. Fecha y hora de la aceptación del abonado/usuario: Fecha: </label> <input type="date" id="fecha3" oninput="actualizarResultados()"> <label>Hora: </label> <input type="time" id="hora3" oninput="actualizarResultados()"><span style="color: red; font-size: 0.9em; font-weight: bold;"> (Fecha y Hora de aceptación)</span><br>
 
 <label>8. Identificación del mecanismo de aceptación del Abonado/usuario: Audio telefónico</label><br>
-
-<label>9. Plazo de execution del SAR:</label>
- <select id="plazo" onchange="actualizarResultados()">
-            <option value="">Seleccionar</option>
-            <option value="10 días hábiles">10 días hábiles</option>
-            <option value="1 día hábil">1 día hábil</option>
-        </select>
+<label>9. Plazo de ejecución del SAR:</label>
+<select id="plazo" onchange="actualizarResultados()">
+<option value="">Seleccionar</option>
+<option value="10 días hábiles">10 días hábiles</option>
+<option value="1 día hábil">1 día hábil</option>
+</select>
 <button type="button" onclick="leerSpeech()" style="cursor: pointer; border-radius: 6px; border: 1px solid #ccc; padding: 4px 10px; background: #0c477e; color: white; font-weight: bold;">Leer speech de grabación</button>
 
 <br><label>10. Número de referencia:</label> <input type="text" id="referencia" oninput="checkLength(this); actualizarResultados()" title="Máximo 9 caracteres, incluye guion si no hay número" required> <span style="color: red; font-size: 0.9em; font-weight: bold;"> (Si no brinda, colocar un guion: "-")</span>
@@ -782,12 +798,12 @@
 </div>
 
 <br>
-
 <span style="color: red"><strong>✅ Resultado</strong></span>
 <br>
 
 <div id="resultado" style="display:none;">
 <div class="ruta-container" style="border-left: 4px solid #e67a00; background-color: #fff5e9; padding: 10px;">
+
 <span id="resNumero1"></span> // Cliente señala que realiza una recarga en lugar de efectuar su pago // Se ofrece solución anticipada de reclamo<br><br>
 
 1. Código o número correlativo de la atención realizada: <span id="resCodigo"></span><br>
@@ -795,13 +811,13 @@
 3. Nombres y apellidos completos del abonado/usuario: <span id="resNombreAbonado"></span><br>
 4. Número o código del servicio del abonado/usuario: <span id="resNumeroAbonado"></span><br>
 
-5. Petición del usuario, así como su fecha y hora: <span id="resTxtPeticion">Cliente realizó 2 recargas en lugar de un pago el <span id="resFecha1"></span> a las <span id="resHora1"></span> por un monto de S/</span><span class="resMonto"></span> y otra recarga el <span id="resFecha2rx"></span> a las <span id="resHora12r"></span> por un monto de S/<span id="resMonto2rx"></span>, haciendo un total de S/<span class="restotal2rx"></span><span id="resBloqueConsumo" style="display:none;">, sin embargo, se valida consumo de <span id="resConsumo"></span></span>, solicita el traslado del monto de la recarga sobrante como ajuste de factura. Fecha: <span id="resFecha5"></span> Hora: <span id="resHora5"></span><br>
+5. Petición del usuario, así como su fecha y hora: Cliente desea reclamar porque realizó 2 recargas en lugar de pago por el monto de S/<span class="resMonto"></span> el <span id="resFecha1"></span> a las <span id="resHora1"></span> y otra recarga de S/<span id="resMonto2rx"></span> el <span id="resFecha2rx"></span> a las <span id="resHora12r"></span>, haciendo un total de S/<span id="resTotal2rx"></span><span id="resBloqueConsumo" style="display:none;">, sin embargo, se valida consumo de <span id="resConsumo"></span></span> y solicita el traslado del monto de recarga <span id="resTextoSobrante" style="display:none;">sobrante </span>como ajuste de factura. Fecha: <span id="resFecha5"></span> Hora: <span id="resHora5"></span><br>
 
-6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: <span id="resTxtOfrecimiento">Se le realiza asignación de S/</span><span id="resLab6"></span> como ajuste a su factura sin beneficios adicionales.<br>
+6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: Se ofrece ajuste de factura por el monto de S/<span id="resLab6"></span> sin beneficios adicionales.<br>
 
 7. Fecha y hora de la aceptación del abonado/usuario: Fecha: <span id="resFecha3"></span> Hora: <span id="resHora3"></span><br>
 8. Identificación del mecanismo de aceptación del Abonado/usuario: Audio telefónico<br>
- 9. Plazo de ejecución del SAR: <span id="resPlazo"></span><br>
+9. Plazo de ejecución del SAR: <span id="resPlazo"></span><br>
 10. Número de referencia: <span id="resReferencia"></span><br>
 $$_<span id="resId"></span>_&&
 </div>
@@ -819,7 +835,7 @@ $$_<span id="resId"></span>_&&
 
 <br><hr><br>
 
-<label style="color: red;"><strong>2. Tipificación: </strong></label><a href="#" onclick="return showImagePopup(event)" style="text-decoration: none; color: #007BFF;"><strong>(Ver ejemplo)</strong></a>
+<label style="color: red;"><strong>2. Tipificación: </strong></label> <a href="#" onclick="return showImagePopup(event)" style="text-decoration: none; color: #007BFF;"><strong>(Ver ejemplo)</strong></a>
 
 <div id="imagePopup">
 <button class="close-button" onclick="hideImagePopup()">Cerrar</button>
@@ -827,7 +843,7 @@ $$_<span id="resId"></span>_&&
 </div>
 
 <div class="ruta-container">
-SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada / SAR - Infundado / Ajuste / Facturación y cobro
+SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada / SAR - Infundado / Ajuste / Facturación y cobro (✅ con check a BO)
 </div>
 
 <br>
@@ -847,9 +863,10 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 * Imagen de la desafiliación del MPS -> Solo si hay consumo por suscripciones promocionales "MPS services"<br>
 
 <br>
-<button type="button" class="btn-word" onclick="descargarWordPersonalizado()">📄 Descargar Plantilla Word</button><br>
-</div>
+<!-- BOTÓN CON FUNCIÓN JAVASCRIPT DINÁMICA -->
+<button type="button" id="btnDescargaWord" class="btn-word" onclick="descargarWordPersonalizado()">📄 Descargar Plantilla Word</button><br>
 
+</div>
 
 <br>
 
@@ -862,7 +879,7 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 *******************************
 <br><br>
 
-<strong><span style="color: #01768b">🎧 Agente:</span></strong> <span class="primerNombre"></span>, el codigo de SAR es <span style="color: red">SAXXXXXXXXX</span>. Finalmente, precisar que dentro del plazo máximo de <span style="color: red">5 días hábiles</span> contados desde el vencimiento del plazo señalado le enviaremos un SMS o lo llamaremos para confirmar la ejecución del SAR ofrecido. Asi mismo le invitamos a efectuar el seguimiento del SAR mediante nuestra plataforma del Expediente Virtual en www.bitel.com.pe
+<strong><span style="color: #01768b">🎧 Agente:</span></strong> <span class="primerNombre"></span>, el codigo de SAR es <span style="color: red">SAXXXXXXXXX</span>. Finalmente, precisar que dentro del plazo máximo de <span style="color: red">5 días hábiles</span> contados desde el vencimiento del plazo señalado le enviaremos un SMS o lo llamaremos para confirmar la ejecución del SAR ofrecido. Asimismo le invitamos a efectuar el seguimiento del SAR mediante nuestra plataforma del Expediente Virtual en www.bitel.com.pe
 </div>
 
 <br>
@@ -875,6 +892,7 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 
 <br><br><br><br><br><br>
 <textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+
 
 <div class="footer-autor">
 Derechos reservados &copy; 2020 Cristhian Francia

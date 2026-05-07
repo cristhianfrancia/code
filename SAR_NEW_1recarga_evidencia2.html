@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- 
-    Proyecto: Plantillas
-    Creado por: Cristhian Francia
-    Año: 2020
-    Derechos reservados © Cristhian Francia
-  -->
-    <title>Plantillas - SAR - 1 recarga</title>
+  <title>Plantillas - SAR - 1 recarga</title>
     <style>
         body {
             font-family: Calibri, Arial, sans-serif;
@@ -63,7 +57,7 @@
             border-left: 4px solid #e67a00;
             font-size: 16px;
             color: #333;
-            font-family: Calibri, sans-serif; 
+            font-family: Calibri, sans-serif;
         }
 
         hr {
@@ -72,7 +66,7 @@
         }
 
         #resultado {
-            user-select: none; 
+            user-select: none;
             -webkit-user-select: none; 
             -moz-user-select: none; 
             -ms-user-select: none; 
@@ -91,7 +85,7 @@
             transform: translate(-50%, 0%); 
             background-color: white;
             padding: 20px;
-            border-radius: 16px; 
+            border-radius: 16px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); 
             z-index: 9999;
             width: 100%;
@@ -114,7 +108,7 @@
         }
 
         #speechText {
-            max-height: 600px; 
+            max-height: 600px;
             overflow-y: auto; 
             white-space: pre-wrap; 
             font-family: Calibri, sans-serif; 
@@ -185,7 +179,7 @@
         }
         
         input:focus, select:focus {
-            border-color: #01768b; 
+            border-color: #01768b;
             box-shadow: 0 0 0 2px rgba(1, 118, 139, 0.2);
         }
 
@@ -198,7 +192,7 @@
             padding: 12px 28px;
             border-radius: 40px; 
             background: rgba(12, 71, 126, 0.90); 
-            backdrop-filter: blur(12px); 
+            backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(253, 226, 4, 0.3); 
             box-shadow: 0 10px 30px rgba(12, 71, 126, 0.3);
@@ -208,7 +202,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             font-size: 16px;
             font-weight: 500;
-            color: #ffffff; 
+            color: #ffffff;
             z-index: 10001;
             opacity: 0;
             visibility: hidden;
@@ -222,7 +216,7 @@
         }
 
         .input-error {
-            border: 1px solid #FF3B30 !important; 
+            border: 1px solid #FF3B30 !important;
             box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.15) !important; 
             background-color: #fffcfc !important;
             transition: all 0.3s ease;
@@ -239,17 +233,17 @@
         }
 
         .highlight-box {
-            background-color: #FFFEF5; 
+            background-color: #FFFEF5;
             padding: 6px 18px; 
             margin: 4px -18px; 
             border-radius: 8px;
-            border: 1px solid rgba(253, 226, 4, 0.25); 
+            border: 1px solid rgba(253, 226, 4, 0.25);
             box-shadow: 0 2px 10px rgba(253, 226, 4, 0.08); 
             transition: all 0.3s ease;
         }
 
         .highlight-box:hover {
-            box-shadow: 0 4px 15px rgba(253, 226, 4, 0.15); 
+            box-shadow: 0 4px 15px rgba(253, 226, 4, 0.15);
             border-color: rgba(253, 226, 4, 0.4);
         }
 
@@ -268,13 +262,13 @@
         }
         
         .btn-consulta:hover {
-            background-color: #ffffff; 
+            background-color: #ffffff;
             color: #0c477e; 
             box-shadow: 0 2px 5px rgba(12, 71, 126, 0.3);
         }
 
         .btn-word {
-            display: inline-block; 
+            display: inline-block;
             margin-bottom: 15px; 
             padding: 8px 16px; 
             background-color: #185abd; 
@@ -291,7 +285,7 @@
         }
 
         .btn-word:hover {
-            background-color: #0c477e; 
+            background-color: #0c477e;
             box-shadow: 0 4px 8px rgba(12, 71, 126, 0.4); 
         }
 
@@ -333,14 +327,14 @@
             visibility: hidden;
             opacity: 0;
             position: absolute;
-            top: calc(100% + 8px); /* Aparece justo debajo del input */
+            top: calc(100% + 8px);
             left: 0;
-            background-color: #f8fbff; /* Fondo azulado muy claro */
-            border: 1px solid #0c477e; /* Borde Bitel */
+            background-color: #f8fbff;
+            border: 1px solid #0c477e;
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             padding: 12px;
             border-radius: 8px;
-            width: max-content; /* Se adapta al texto */
+            width: max-content; 
             max-width: 550px;
             z-index: 100;
             font-size: 14px;
@@ -348,11 +342,10 @@
             text-align: left;
             font-weight: normal;
             transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-            transform: translateY(-5px); /* Efecto de deslizamiento */
+            transform: translateY(-5px); 
             line-height: 1.5;
         }
         
-        /* Pequeño triangulito arriba del tooltip */
         .tooltip-box::before {
             content: "";
             position: absolute;
@@ -363,7 +356,6 @@
             border-color: transparent transparent #0c477e transparent;
         }
 
-        /* Mostrar el tooltip cuando el agente da clic en el input (focus) o pasa el mouse (hover) */
         .tooltip-container input:focus + .tooltip-box,
         .tooltip-container:hover .tooltip-box {
             visibility: visible;
@@ -377,7 +369,6 @@
         document.addEventListener('contextmenu', event => {
             event.preventDefault();
         });
-
         document.onkeydown = function(e) {
             if (e.key === 'F12' || e.keyCode === 123) { return false; }
             if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I')) { return false; }
@@ -411,6 +402,30 @@
             if (input.value.length > 9) {
                 input.value = input.value.slice(0, 9);
             }
+        }
+
+        // --- FUNCIONES DE SINCRONIZACIÓN DE MONTOS EN TIEMPO REAL ---
+        function alCambiarMonto() {
+            let inputMonto = document.getElementById("monto");
+            checkLength(inputMonto);
+            
+            let tipo = document.querySelector('input[name="tipoDescuento"]:checked').value;
+            
+            // Si está en "Sin descuento", el monto inicial se copia en automático a los demás labels
+            if (tipo === "sin") {
+                document.getElementById("montoSobrante").value = inputMonto.value;
+                document.getElementById("lab6").value = inputMonto.value;
+            }
+            actualizarResultados();
+        }
+
+        function alCambiarMontoSobrante() {
+            let inputMontoSobrante = document.getElementById("montoSobrante");
+            checkLength(inputMontoSobrante);
+            
+            // Todo lo que se escriba en el sobrante, sea en "con" o "sin" descuento, va al label 6
+            document.getElementById("lab6").value = inputMontoSobrante.value;
+            actualizarResultados();
         }
 
         function actualizarResultados() {
@@ -463,31 +478,58 @@
             setTimeout(() => { toast.classList.remove("show"); }, 3500);
         }
 
-        // ----- FUNCIÓN PARA ALTERNAR EL DESCUENTO -----
+        // ----- FUNCIÓN PARA ALTERNAR EL DESCUENTO Y LIMPIAR CAMPOS -----
         function toggleDescuento() {
             let tipo = document.querySelector('input[name="tipoDescuento"]:checked').value;
             
             let formBloqueConsumo = document.getElementById("formBloqueConsumo");
             let formTextoSobrante = document.getElementById("formTextoSobrante");
+            
             let inputConsumo = document.getElementById("consumo");
+            let inputMontoSobrante = document.getElementById("montoSobrante");
+            let inputMonto = document.getElementById("monto");
+            let inputLab6 = document.getElementById("lab6");
             
             let resBloqueConsumo = document.getElementById("resBloqueConsumo");
             let resTextoSobrante = document.getElementById("resTextoSobrante");
 
             if (tipo === "con") {
+                // Muestra bloques de consumo y la palabra "sobrante"
                 formBloqueConsumo.style.display = "inline";
                 formTextoSobrante.style.display = "inline";
                 resBloqueConsumo.style.display = "inline";
                 resTextoSobrante.style.display = "inline";
+
+                // Lógica de limpieza para evitar confusiones
+                inputConsumo.value = "";
+                inputMontoSobrante.value = "";
+                inputLab6.value = "";
+
+                // Liberar el input de Monto Sobrante para que el agente digite
+                inputMontoSobrante.removeAttribute("readonly");
+                inputMontoSobrante.style.backgroundColor = "#ffffff";
+                inputMontoSobrante.style.cursor = "text";
+
             } else {
+                // Oculta bloques de consumo y la palabra "sobrante"
                 formBloqueConsumo.style.display = "none";
                 formTextoSobrante.style.display = "none";
                 resBloqueConsumo.style.display = "none";
                 resTextoSobrante.style.display = "none";
                 
+                // Reset de consumo
                 inputConsumo.value = "";
                 inputConsumo.classList.remove("input-error");
-                inputConsumo.style.width = "560px"; // Restaura tamaño original
+                inputConsumo.style.width = "560px";
+
+                // Autocompletar nuevamente con el monto inicial si existe
+                inputMontoSobrante.value = inputMonto.value;
+                inputLab6.value = inputMonto.value;
+
+                // Bloquear el input de Monto Sobrante porque se autocompleta solo
+                inputMontoSobrante.setAttribute("readonly", true);
+                inputMontoSobrante.style.backgroundColor = "#f5f5f7";
+                inputMontoSobrante.style.cursor = "not-allowed";
             }
             actualizarResultados();
         }
@@ -498,14 +540,13 @@
             let tipoDescuento = document.querySelector('input[name="tipoDescuento"]:checked').value;
             let nombreArchivo = "";
             let url = "";
-            
+
             if (numeroAbonado === "") {
                 nombreArchivo = "EVIDENCIA DE SAR - 9XXXXXXXX.docx";
             } else {
                 nombreArchivo = `EVIDENCIA DE SAR - ${numeroAbonado}.docx`;
             }
 
-            // Cambia la ruta dependiendo de si tiene descuento o no
             if (tipoDescuento === "con") {
                 url = "https://docs.google.com/document/d/1qq6n2dMDeke9nSK1Nc3v_xmZYbfA3SvSzr4hAUsZHcg/export?format=docx";
             } else {
@@ -528,7 +569,6 @@
                 linkTemporal.click();
                 document.body.removeChild(linkTemporal);
                 window.URL.revokeObjectURL(urlLocal);
-                
             } catch (error) {
                 let linkTemporal = document.createElement("a");
                 linkTemporal.href = url;
@@ -542,11 +582,10 @@
         function copiarTexto() {
             let camposObligatorios = [
                 "Numero1", "codigo", "nombrePersonal", "nombreAbonado", 
-                "numeroAbonado", "monto", "fecha1", "hora1", "lab6", "fecha5", 
+                "numeroAbonado", "monto", "fecha1", "hora1", "montoSobrante", "lab6", "fecha5", 
                 "hora5", "fecha3", "hora3", "plazo", "referencia", "id"
             ];
 
-            // Si "Con descuento" está marcado, hacer obligatorio el campo de consumo
             if (document.querySelector('input[name="tipoDescuento"]:checked').value === "con") {
                 camposObligatorios.push("consumo");
             }
@@ -572,7 +611,7 @@
                 msjBtn.innerText = "⚠️ Faltan campos resaltados por completar";
                 msjBtn.style.color = "#FF3B30";
                 msjBtn.style.opacity = "1";
-                return; 
+                return;
             }
 
             let texto = document.getElementById("resultado");
@@ -665,7 +704,6 @@
         }
 
         let datosGuardados = {};
-
         function limpiarResultados() {
             let campos = document.querySelectorAll("#form1Recarga input, #form1Recarga select");
             datosGuardados = {};
@@ -680,7 +718,6 @@
                 if(el.type !== "radio") el.value = "";
             });
 
-            // Regresamos al estado por defecto (Sin descuento)
             let radioSin = document.querySelector('input[name="tipoDescuento"][value="sin"]');
             if (radioSin) {
                 radioSin.checked = true;
@@ -705,7 +742,6 @@
                     el.value = datosGuardados[el.id];
                 }
             });
-
             actualizarResultados();
             document.getElementById("deshacerBtn").style.display = "none";
         }
@@ -742,7 +778,6 @@
 
 <label>4. Número o código del servicio del abonado/usuario:</label> <input type="number" id="numeroAbonado" oninput="checkLength(this); actualizarResultados()" placeholder="(Número celular SAR)" title="Máximo 9 dígitos" required><br>
 
-<!-- BOTONES TIPO TOGGLE -->
 <div class="radio-group">
     <label>
         <input type="radio" name="tipoDescuento" value="sin" checked onchange="toggleDescuento()">
@@ -755,30 +790,46 @@
 </div>
 
 <div class="highlight-box">
-    <label>5. Petición del usuario, así como su fecha y hora: Cliente desea reclamar porque realizó recarga en lugar de pago el <input type="date" id="fecha1" oninput="actualizarResultados()"> a las <input type="text" id="hora1" oninput="checkLength(this); actualizarResultados()" placeholder="HH:MM:SS" title="Ejemplo: 08:00:10" required> por un monto de S/<input type="text" id="monto" oninput="checkLength(this); actualizarResultados()" placeholder="X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required>
+    <label>5. Petición del usuario, así como su fecha y hora: Cliente desea reclamar porque realizó recarga en lugar de pago el <input type="date" id="fecha1" oninput="actualizarResultados()"> a las <input type="text" id="hora1" oninput="checkLength(this); actualizarResultados()" placeholder="HH:MM:SS" title="Ejemplo: 08:00:10" required> por un monto de S/<input type="text" id="monto" oninput="alCambiarMonto()" placeholder="X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required>
 
     
     <span id="formBloqueConsumo" style="display:none;">
         , sin embargo, se valida consumo de 
         
-        <!-- Contenedor relativo para el Tooltip Flotante -->
         <span class="tooltip-container">
             <input type="text" id="consumo" oninput="this.style.width = ((this.value.length > 55) ? (this.value.length + 2) + 'ch' : '560px'); actualizarResultados()" placeholder="S/(monto descontado), por (motivo de descuento), el DD/MM/AAAA a las XX:XX:XX" style="width: 560px; max-width: 100%; display: inline-block; vertical-align: middle; transition: width 0.2s ease;">
             
-            <!-- La ventana flotante con los ejemplos -->
-            <span class="tooltip-box">
-                <strong style="color: #0c477e;">💡 Ejemplos de llenado correcto:</strong><br><br>
-                <span style="color:#555;">• S/1.80 por la suscripción MPS CLUB_RITMO-22122 el 06/05/2026 a las 08:57:15</span><br><br>
-                <span style="color:#555;">• S/5.00 por la compra de un paquete PRE_5SO el 04/05/2026 a las 07:46:15</span><br><br>
-                <span style="color:#555;">• S/0.0002 por navegación en internet desde el 04/05/2026 a las 07:46:15 hasta el 05/05/2026 a las 09:20:29</span>
-            </span>
-        </span>
-    </span> 
+<span class="tooltip-box">
+<strong style="color: #0c477e;">💡 Ejemplos de llenado correcto:</strong><br><br>
+
+<strong><span style="color:#0c477e;">PAQUETE:</span></strong><br>
+<span style="color:#ff2241;">S/XX.XX por compra del paquete XXXXXXXX el XX/XX/XXXX a las XX:XX:XX</span><br>
+<span style="color:#000000;">S/5.00 por la compra de un paquete Pre_5SO el 04/05/2026 a las 07:46:15</span><br><br>
+
+<strong><span style="color:#0c477e;">SERVICIOS MPS:</span></strong><br>
+<span style="color:#ff2241;">S/XX.XX por servicio MPS XXXXXXXX el XX/XX/XXXX a las XX:XX:XX</span><br>
+<span style="color:#000000;">S/1.80 por servicio MPS DISCOVERY el 03/05/2026 a las 08:20:45</span><br><br>
+
+<strong><span style="color:#0c477e;">INTERNET (GPRS):</span></strong><br>
+<span style="color:#ff2241;">S/XX.XX por navegación en internet el XX/XX/XXXX en el rango de XX:XX:XX hasta XX:XX:XX</span><br>
+<span style="color:#000000;">S/0.0002 por navegación en internet el 04/05/2026 en el rango de 07:46:15 hasta 09:20:29</span><br><br>
+
+<strong><span style="color:#0c477e;">SERVICIOS MPS + INTERNET (GPRS):</span></strong><br>
+<span style="color:#ff2241;">S/XX.XX por servicio MPS XXXXXXXX el XX/XX/XXXX a las XX:XX:XX y S/XX.XX por navegación por internet el XX/XX/XXXX en el rango de XX:XX.XX hasta XX:XX:XX haciendo un total de S/XX.XX</span><br>
+<span style="color:#000000;">S/1.80 por servicio MPS DISCOBERY el 03/05/2026 a las 08:20:45 y S/0.90 por navegación por internet el 04/05/2026 en el rango de 07:30:20 hasta 08:01:40 haciendo un total de S/2.70</span><br><br>
+
+<strong><span style="color:#0c477e;">❗ NO SE VALIDA DESCUENTO:</span></strong><br>
+<span style="color:#ff2241;">S/XX.XXXX el cual aún no se identifica</span><br>
+<span style="color:#000000;">S/0.008 el cual aún no se identifica</span>
+
+</span>
+</span>
+</span> 
     
-    y solicita el traslado del monto de recarga <span id="formTextoSobrante" style="display:none;">sobrante </span>como ajuste de factura. Fecha: <input type="date" id="fecha5" oninput="actualizarResultados()"> Hora: <input type="time" id="hora5" oninput="checkLength(this); actualizarResultados()">.</label> <span style="color: red; font-size: 0.9em; font-weight: bold;">(Fecha y Hora de petición)</span>
+    y solicita el traslado del monto de recarga <span id="formTextoSobrante" style="display:none;">sobrante </span>de S/<input type="text" id="montoSobrante" readonly style="background-color: #f5f5f7; color: #1d1d1f; cursor: not-allowed;" oninput="alCambiarMontoSobrante()" placeholder="X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required> como ajuste de factura. Fecha: <input type="date" id="fecha5" oninput="actualizarResultados()"> Hora: <input type="time" id="hora5" oninput="checkLength(this); actualizarResultados()">.</label> <span style="color: red; font-size: 0.9em; font-weight: bold;">(Fecha y Hora de petición)</span>
 </div>
 
-<label>6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: Se le realiza la asignación de S/<input type="text" id="lab6" oninput="checkLength(this); actualizarResultados()" placeholder="X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required> como ajuste a su factura sin beneficios adicionales.</label><br>
+<label>6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: Se le realiza la asignación de S/<input type="text" id="lab6" readonly style="background-color: #f5f5f7; color: #1d1d1f; cursor: not-allowed; font-weight: bold; border-color: #d2d2d7;" placeholder="X.XX | XX.XX" title="Este campo se autocompleta con el monto sobrante anterior" required> como ajuste a su factura sin beneficios adicionales.</label><br>
 
 <label>7. Fecha y hora de la aceptación del abonado/usuario: Fecha: </label> <input type="date" id="fecha3" oninput="actualizarResultados()"> <label>Hora: </label> <input type="time" id="hora3" oninput="actualizarResultados()"><span style="color: red; font-size: 0.9em; font-weight: bold;"> (Fecha y Hora de aceptación)</span><br>
 
@@ -810,7 +861,7 @@
 3. Nombres y apellidos completos del abonado/usuario: <span id="resNombreAbonado"></span><br>
 4. Número o código del servicio del abonado/usuario: <span id="resNumeroAbonado"></span><br>
 
-5. Petición del usuario, así como su fecha y hora: Cliente desea reclamar porque realizó recarga en lugar de pago el <span id="resFecha1"></span> a las <span id="resHora1"></span> por un monto de S/<span id="resMonto"></span><span id="resBloqueConsumo" style="display:none;">, sin embargo, se valida consumo de <span id="resConsumo"></span></span> y solicita el traslado del monto de recarga <span id="resTextoSobrante" style="display:none;">sobrante </span>como ajuste de factura. Fecha: <span id="resFecha5"></span> Hora: <span id="resHora5"></span><br>
+5. Petición del usuario, así como su fecha y hora: Cliente desea reclamar porque realizó recarga en lugar de pago el <span id="resFecha1"></span> a las <span id="resHora1"></span> por un monto de S/<span id="resMonto"></span><span id="resBloqueConsumo" style="display:none;">, sin embargo, se valida consumo de <span id="resConsumo"></span></span> y solicita el traslado del monto de recarga <span id="resTextoSobrante" style="display:none;">sobrante </span>de S/<span id="resMontoSobrante"></span> como ajuste de factura. Fecha: <span id="resFecha5"></span> Hora: <span id="resHora5"></span><br>
 
 6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: Se le realiza asignación de S/<span id="resLab6"></span> como ajuste a su factura sin beneficios adicionales.<br>
 
@@ -856,13 +907,14 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 
 <div class="ruta-container"> En el Customer Care desplegamos la opción "Attach file" y adjuntamos el archivo (WORD) insertando las imágenes:<br><br>
 
-1. Imagen del OCS -> Saldo actual<br>
-2. Imagen de la recarga -> Balance / View Subscriber refill history<br>
-3. Imagen del consumo -> Balance / Subscriber consumption detail (New)<br><br>
-* Imagen de la desafiliación del MPS -> Solo si hay consumo por suscripciones promocionales "MPS services"<br>
+1. Imagen del OCS -> Saldo actual <br>
+2. Imagen de la recarga -> Balance / View Subscriber refill history <br>
+3. Imagen del consumo -> Balance / Subscriber consumption detail (New) <br><br>
+
+4. Imagen de la desafiliación del MPS -> Processes / View and Unregister MPS services | (En caso haya consumo por suscripciones promocionales) <br>
 
 <br>
-<button type="button" id="btnDescargaWord" class="btn-word" onclick="descargarWordPersonalizado()">📄 Descargar Plantilla Word</button><br>
+<button type="button" id="btnDescargaWord" class="btn-word" onclick="descargarWordPersonalizado()">📄 Descargar Word para adjuntar evidencias</button><br>
 </div>
 
 <br>
@@ -872,7 +924,6 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 <div class="ruta-container">
 
 <strong><span style="color: #01768b">🎧 Agente:</span></strong> Estimado cliente, permítame un momento en línea para brindarle el código de SAR como constancia del ofrecimiento realizado.
-
 <br><br>
 *******************************
 <br><br>
@@ -895,7 +946,6 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 Derechos reservados &copy; 2020 Cristhian Francia
 </div>
 
-    <!-- Popup de Speech -->
     <div id="popupOverlay" class="popup-overlay" onclick="cerrarPopup()"></div>
     <div id="popupSpeech" class="popup">
         <h2 style="margin-top: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; color: #0c477e;">Speech de grabación</h2>

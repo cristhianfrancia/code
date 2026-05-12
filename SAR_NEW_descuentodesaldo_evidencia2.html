@@ -364,6 +364,64 @@
             transform: translateY(0);
         }
 
+        /* ----- ESTILOS AISLADOS PARA EL FOOTER DE EVIDENCIAS (ILovePDF) ----- */
+        .evidencias-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(230, 122, 0, 0.2);
+        }
+        .evidencias-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .botones-conv {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-conv {
+            display: inline-block; 
+            padding: 7px 12px; 
+            background-color: #ffffff; 
+            font-weight: bold; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+        .btn-conv-pdf {
+            color: #df382c !important;
+            border: 1px solid #df382c;
+            box-shadow: 0 2px 4px rgba(223, 56, 44, 0.05);
+        }
+        .btn-conv-pdf:hover {
+            background-color: #df382c;
+            color: #ffffff !important;
+            box-shadow: 0 4px 8px rgba(223, 56, 44, 0.2);
+        }
+        .btn-conv-word {
+            color: #185abd !important;
+            border: 1px solid #185abd;
+            box-shadow: 0 2px 4px rgba(24, 90, 189, 0.05);
+        }
+        .btn-conv-word:hover {
+            background-color: #185abd;
+            color: #ffffff !important;
+            box-shadow: 0 4px 8px rgba(24, 90, 189, 0.2);
+        }
+        .credito-ilovepdf {
+            font-size: 11px;
+            color: #888888;
+            margin-top: 4px;
+        }
+
     </style>
 
     <script>
@@ -456,52 +514,51 @@
             setTimeout(() => { toast.classList.remove("show"); }, 3500);
         }
 
+        function toggleDescuento() {
+            let tipo = document.querySelector('input[name="tipoDescuento"]:checked').value;
+            let tooltipBox = document.getElementById("tooltipContent");
+            let inputConsumo = document.getElementById("consumo");
 
-function toggleDescuento() {
-    let tipo = document.querySelector('input[name="tipoDescuento"]:checked').value;
-    let tooltipBox = document.getElementById("tooltipContent");
-    let inputConsumo = document.getElementById("consumo");
+            // Limpiamos el texto que haya escrito el agente en el input de consumo
+            inputConsumo.value = "";
+            inputConsumo.classList.remove("input-error");
+            inputConsumo.style.width = "560px"; // Restablece el ancho al tamaño original
 
-    // Limpiamos el texto que haya escrito el agente en el input de consumo
-    inputConsumo.value = "";
-    inputConsumo.classList.remove("input-error");
-    inputConsumo.style.width = "560px"; // Restablece el ancho al tamaño original
-
-    // Cambiamos el texto del tooltip dinámicamente con los ejemplos reales
-    if (tooltipBox) {
-        if (tipo === "paquete") {
-            tooltipBox.innerHTML = `
-                <strong style="color: #0c477e;">💡 Ejemplo: PAQUETE</strong><br><br>
-                <span style="color:#ff2241;">S/XX.XX por compra del paquete XXXXXXXX el XX/XX/XXXX a las XX:XX:XX</span><br><br>
-                <span style="color:#000000;">S/5.00 por la compra de un paquete Pre_5SO el 04/05/2026 a las 07:46:15</span>`;
-        } else if (tipo === "mps") {
-            tooltipBox.innerHTML = `
-                <strong style="color: #0c477e;">💡 Ejemplo: SERVICIOS MPS:</strong><br><br>
-                <span style="color:#ff2241;">S/XX.XX por servicio MPS XXXXXXXX el XX/XX/XXXX a las XX:XX:XX</span><br><br>
-                <span style="color:#ff2241;">S/XX.XX por el servicio MPS XXXXXXXX el XX/XX/XXXX a las XX:XX:XX, otro descuento de S/XX.XX por el servicio MPS XXXXXXXX el XX/XX/XXXX a las XX:XX:XX haciendo un total de S/XX.XX</span><br><br>
-                <span style="color:#000000;">S/1.80 por servicio MPS DISCOVERY el 03/05/2026 a las 08:20:45</span><br><br>
-                <span style="color:#000000;">S/1.90 por el servicio MPS MUJERES_ARRIBA el 03/05/2026 a las 08:20:45, otro descuento de S/1.80 por el servicio MPS GAMEAD-1426 el 06/05/2026 a las 09:45:04 haciendo un total de S/3.70</span>`;
-        } else if (tipo === "internet") {
-            tooltipBox.innerHTML = `
-                <strong style="color: #0c477e;">💡 Ejemplo: INTERNET (GPRS):</strong><br><br>
-                <span style="color:#ff2241;">S/XX.XX por navegación en internet el XX/XX/XXXX en el rango de XX:XX:XX hasta XX:XX:XX</span><br><br>
-                <span style="color:#000000;">S/0.0002 por navegación en internet el 04/05/2026 en el rango de 07:46:15 hasta 09:20:29</span>`;
-        } else if (tipo === "mps_internet") {
-            tooltipBox.innerHTML = `
-                <strong style="color: #0c477e;">💡Ejemplo: SERVICIOS MPS + INTERNET (GPRS):</strong><br><br>
-                <span style="color:#ff2241;">S/XX.XX por servicio MPS XXXXXXXX el XX/XX/XXXX a las XX:XX:XX y S/XX.XX por navegación por internet el XX/XX/XXXX en el rango de XX:XX.XX hasta XX:XX:XX haciendo un total de S/XX.XX</span><br><br>
-                <span style="color:#000000;">S/1.80 por servicio MPS DISCOVERY el 03/05/2026 a las 08:20:45 y S/0.90 por navegación por internet el 04/05/2026 en el rango de 07:30:20 hasta 08:01:40 haciendo un total de S/2.70</span>`;
+            // Cambiamos el texto del tooltip dinámicamente con los ejemplos reales
+            if (tooltipBox) {
+                if (tipo === "paquete") {
+                    tooltipBox.innerHTML = `
+                        <strong style="color: #0c477e;">💡 Ejemplo: PAQUETE</strong><br><br>
+                        <span style="color:#ff2241;">S/XX.XX por compra del paquete XXXXXXXX el XX/XX/XXXX a las XX:XX:XX</span><br><br>
+                        <span style="color:#000000;">S/5.00 por la compra de un paquete Pre_5SO el 04/05/2026 a las 07:46:15</span>`;
+                } else if (tipo === "mps") {
+                    tooltipBox.innerHTML = `
+                        <strong style="color: #0c477e;">💡 Ejemplo: SERVICIOS MPS:</strong><br><br>
+                        <span style="color:#ff2241;">S/XX.XX por servicio MPS XXXXXXXX el XX/XX/XXXX a las XX:XX:XX</span><br><br>
+                        <span style="color:#ff2241;">S/XX.XX por el servicio MPS XXXXXXXX el XX/XX/XXXX a las XX:XX:XX, otro descuento de S/XX.XX por el servicio MPS XXXXXXXX el XX/XX/XXXX a las XX:XX:XX haciendo un total de S/XX.XX</span><br><br>
+                        <span style="color:#000000;">S/1.80 por servicio MPS DISCOVERY el 03/05/2026 a las 08:20:45</span><br><br>
+                        <span style="color:#000000;">S/1.90 por el servicio MPS MUJERES_ARRIBA el 03/05/2026 a las 08:20:45, otro descuento de S/1.80 por el servicio MPS GAMEAD-1426 el 06/05/2026 a las 09:45:04 haciendo un total de S/3.70</span>`;
+                } else if (tipo === "internet") {
+                    tooltipBox.innerHTML = `
+                        <strong style="color: #0c477e;">💡 Ejemplo: INTERNET (GPRS):</strong><br><br>
+                        <span style="color:#ff2241;">S/XX.XX por navegación en internet el XX/XX/XXXX en el rango de XX:XX:XX hasta XX:XX:XX</span><br><br>
+                        <span style="color:#000000;">S/0.0002 por navegación en internet el 04/05/2026 en el rango de 07:46:15 hasta 09:20:29</span>`;
+                } else if (tipo === "mps_internet") {
+                    tooltipBox.innerHTML = `
+                        <strong style="color: #0c477e;">💡Ejemplo: SERVICIOS MPS + INTERNET (GPRS):</strong><br><br>
+                        <span style="color:#ff2241;">S/XX.XX por servicio MPS XXXXXXXX el XX/XX/XXXX a las XX:XX:XX y S/XX.XX por navegación por internet el XX/XX/XXXX en el rango de XX:XX.XX hasta XX:XX:XX haciendo un total de S/XX.XX</span><br><br>
+                        <span style="color:#000000;">S/1.80 por servicio MPS DISCOVERY el 03/05/2026 a las 08:20:45 y S/0.90 por navegación por internet el 04/05/2026 en el rango de 07:30:20 hasta 08:01:40 haciendo un total de S/2.70</span>`;
+                }
+            }
+            
+            actualizarResultados();
         }
-    }
-    
-    actualizarResultados();
-}
 
         // ----- MAGIA BLOB PARA FORZAR EL NOMBRE DEL ARCHIVO CON ENLACES ÚNICOS -----
         async function descargarWordPersonalizado() {
             let numeroAbonado = document.getElementById("numeroAbonado").value.trim();
             let nombreArchivo = "";
-let url = "https://docs.google.com/document/d/1JsXx0XjHTQOiIZ_h69xzrrh8MFMdve8BgfkMllTeRhw/export?format=docx";
+            let url = "https://docs.google.com/document/d/1JsXx0XjHTQOiIZ_h69xzrrh8MFMdve8BgfkMllTeRhw/export?format=docx";
             
             if (numeroAbonado === "") {
                 nombreArchivo = "EVIDENCIA DE SAR - 9XXXXXXXX.docx";
@@ -853,17 +910,28 @@ Other / Solución anticipada / Solución anticipada / SAR - (Infundado o Fundado
 <img src="https://i.postimg.cc/GhFw75Lm/SAR-attach-file-descuento-de-saldo.png" alt="Imagen de vista previa 2">
 </div>
 
-<div class="ruta-container"> En el Customer Care desplegamos la opción "Attach file" y adjuntamos el archivo (WORD) insertando las imágenes:<br><br>
+<div class="ruta-container"> En el Customer Care desplegamos la opción "Attach file" y adjuntamos el archivo (WORD con peso máximo de 5 MB) insertando las imágenes:<br><br>
 
 1. Imagen de la recarga -> Balance / View Subscriber refill history<br>
 2. Imagen del OCS -> Saldo actual<br>
 3. Imagen del consumo -> Balance / Subscriber consumption detail (New)<br><br>
 
 4. Imagen de las bolsas -> Balance / View Historic Balance Change detail <br>
-5. Imagen de la desafiliación del MPS -> Processes / View and Unregister MPS services | (En caso haya consumo por suscripciones promocionales) <br><br>
+5. Imagen de la desafiliación del MPS -> Processes / View and Unregister MPS services | (En caso haya consumo por suscripciones promocionales) <br>
 
-<br>
-<button type="button" id="btnDescargaWord" class="btn-word" onclick="descargarWordPersonalizado()">📄 Descargar Plantilla Word</button>
+<div class="evidencias-footer">
+    <div>
+        <button type="button" id="btnDescargaWord" class="btn-word" style="margin-bottom: 0;" onclick="descargarWordPersonalizado()">📄 Descargar "Word" para adjuntar evidencias</button>
+    </div>
+
+    <div class="evidencias-right">
+        <div class="botones-conv">
+            <button type="button" class="btn-conv btn-conv-pdf" onclick="abrirVentana('https://www.ilovepdf.com/es/word_a_pdf')">🔄 Word a PDF</button>
+            <button type="button" class="btn-conv btn-conv-word" onclick="abrirVentana('https://www.ilovepdf.com/es/pdf_a_word')">🔄 PDF a Word</button>
+        </div>
+        <span class="credito-ilovepdf">Powered by iLovePDF</span>
+    </div>
+</div>
 </div>
 
 <br>

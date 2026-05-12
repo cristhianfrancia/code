@@ -363,6 +363,64 @@
             transform: translateY(0);
         }
 
+        /* ----- ESTILOS AISLADOS PARA EL FOOTER DE EVIDENCIAS (ILovePDF) ----- */
+        .evidencias-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(230, 122, 0, 0.2);
+        }
+        .evidencias-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .botones-conv {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-conv {
+            display: inline-block; 
+            padding: 7px 12px; 
+            background-color: #ffffff; 
+            font-weight: bold; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+        .btn-conv-pdf {
+            color: #df382c !important;
+            border: 1px solid #df382c;
+            box-shadow: 0 2px 4px rgba(223, 56, 44, 0.05);
+        }
+        .btn-conv-pdf:hover {
+            background-color: #df382c;
+            color: #ffffff !important;
+            box-shadow: 0 4px 8px rgba(223, 56, 44, 0.2);
+        }
+        .btn-conv-word {
+            color: #185abd !important;
+            border: 1px solid #185abd;
+            box-shadow: 0 2px 4px rgba(24, 90, 189, 0.05);
+        }
+        .btn-conv-word:hover {
+            background-color: #185abd;
+            color: #ffffff !important;
+            box-shadow: 0 4px 8px rgba(24, 90, 189, 0.2);
+        }
+        .credito-ilovepdf {
+            font-size: 11px;
+            color: #888888;
+            margin-top: 4px;
+        }
+
     </style>
 
     <script>
@@ -905,7 +963,7 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 <img src="https://i.postimg.cc/qqd3bgxQ/SAR-Evidencia.png" alt="Imagen de vista previa 2">
 </div>
 
-<div class="ruta-container"> En el Customer Care desplegamos la opción "Attach file" y adjuntamos el archivo (WORD) insertando las imágenes:<br><br>
+<div class="ruta-container"> En el Customer Care desplegamos la opción "Attach file" y adjuntamos el archivo (WORD con peso máximo de 5 MB) insertando las imágenes:<br><br>
 
 1. Imagen de la recarga -> Balance / View Subscriber refill history<br>
 2. Imagen del OCS -> Saldo actual<br>
@@ -913,8 +971,19 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 
 4. Imagen de la desafiliación del MPS -> Processes / View and Unregister MPS services | (En caso haya consumo por suscripciones promocionales) <br>
 
-<br>
-<button type="button" id="btnDescargaWord" class="btn-word" onclick="descargarWordPersonalizado()">📄 Descargar Word para adjuntar evidencias</button><br>
+<div class="evidencias-footer">
+    <div>
+        <button type="button" id="btnDescargaWord" class="btn-word" style="margin-bottom: 0;" onclick="descargarWordPersonalizado()">📄 Descargar Word para adjuntar evidencias</button>
+    </div>
+
+    <div class="evidencias-right">
+        <div class="botones-conv">
+            <button type="button" class="btn-conv btn-conv-pdf" onclick="abrirVentana('https://www.ilovepdf.com/es/word_a_pdf')">🔄 Word a PDF</button>
+            <button type="button" class="btn-conv btn-conv-word" onclick="abrirVentana('https://www.ilovepdf.com/es/pdf_a_word')">🔄 PDF a Word</button>
+        </div>
+        <span class="credito-ilovepdf">Powered by iLovePDF</span>
+    </div>
+</div>
 </div>
 
 <br>

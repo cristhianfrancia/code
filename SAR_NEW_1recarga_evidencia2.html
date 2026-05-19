@@ -640,7 +640,7 @@
         function copiarTexto() {
             let camposObligatorios = [
                 "Numero1", "codigo", "nombrePersonal", "nombreAbonado", 
-                "numeroAbonado", "monto", "fecha1", "hora1", "montoSobrante", "lab6", "fecha5", 
+                "numeroAbonado", "monto", "canal", "fecha1", "hora1", "montoSobrante", "lab6", "fecha5", 
                 "hora5", "fecha3", "hora3", "plazo", "referencia", "id"
             ];
 
@@ -848,8 +848,20 @@
 </div>
 
 <div class="highlight-box">
-    <label>5. Petición del usuario, así como su fecha y hora: Cliente desea reclamar porque realizó recarga en lugar de pago el <input type="date" id="fecha1" oninput="actualizarResultados()"> a las <input type="text" id="hora1" oninput="checkLength(this); actualizarResultados()" placeholder="HH:MM:SS" title="Ejemplo: 08:00:10" required> por un monto de S/<input type="text" id="monto" oninput="alCambiarMonto()" placeholder="X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required>
-
+    <label>5. Petición del usuario, así como su fecha y hora: Cliente desea reclamar porque realizó recarga en lugar de pago el <input type="date" id="fecha1" oninput="actualizarResultados()"> a las <input type="text" id="hora1" oninput="checkLength(this); actualizarResultados()" placeholder="HH:MM:SS" title="Ejemplo: 08:00:10" required> por un monto de S/<input type="text" id="monto" oninput="alCambiarMonto()" placeholder="X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required> a través de <input type="text" id="canal" list="listaCanales" oninput="actualizarResultados()" placeholder="Medio de recarga" style="width: 160px;" required>
+    
+    <datalist id="listaCanales">
+        <option value="App Mi Bitel">
+        <option value="Bipay">
+        <option value="CAB Bitel">
+        <option value="Yape">
+        <option value="Plin">
+        <option value="APP BCP">
+        <option value="APP BBVA">
+        <option value="APP Interbank">
+        <option value="APP Scotiabank">
+        <option value="APP Banco de la nación">
+   </datalist>
     
     <span id="formBloqueConsumo" style="display:none;">
         , sin embargo, se valida consumo de 
@@ -919,7 +931,7 @@
 3. Nombres y apellidos completos del abonado/usuario: <span id="resNombreAbonado"></span><br>
 4. Número o código del servicio del abonado/usuario: <span id="resNumeroAbonado"></span><br>
 
-5. Petición del usuario, así como su fecha y hora: Cliente desea reclamar porque realizó recarga en lugar de pago el <span id="resFecha1"></span> a las <span id="resHora1"></span> por un monto de S/<span id="resMonto"></span><span id="resBloqueConsumo" style="display:none;">, sin embargo, se valida consumo de <span id="resConsumo"></span></span> y solicita el traslado del monto de recarga <span id="resTextoSobrante" style="display:none;">sobrante </span>de S/<span id="resMontoSobrante"></span> como ajuste de factura. Fecha: <span id="resFecha5"></span> Hora: <span id="resHora5"></span><br>
+5. Petición del usuario, así como su fecha y hora: Cliente desea reclamar porque realizó recarga en lugar de pago el <span id="resFecha1"></span> a las <span id="resHora1"></span> por un monto de S/<span id="resMonto"></span> a través de <span id="resCanal"></span><span id="resBloqueConsumo" style="display:none;">, sin embargo, se valida consumo de <span id="resConsumo"></span></span> y solicita el traslado del monto de recarga <span id="resTextoSobrante" style="display:none;">sobrante </span>de S/<span id="resMontoSobrante"></span> como ajuste de factura. Fecha: <span id="resFecha5"></span> Hora: <span id="resHora5"></span><br>
 
 6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: Se le realiza asignación de S/<span id="resLab6"></span> como ajuste a su factura sin beneficios adicionales.<br>
 
@@ -963,7 +975,7 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 <img src="https://i.postimg.cc/qqd3bgxQ/SAR-Evidencia.png" alt="Imagen de vista previa 2">
 </div>
 
-<div class="ruta-container"> En el Customer Care desplegamos la opción "Attach file" y adjuntamos el archivo (WORD con peso máximo de 5 MB) insertando las imágenes:<br><br>
+<div class="ruta-container"> En el Customer Care desplegamos la opción "Attach file" and adjuntamos el archivo (WORD con peso máximo de 5 MB) insertando las imágenes:<br><br>
 
 1. Imagen de la recarga -> Balance / View Subscriber refill history<br>
 2. Imagen del OCS -> Saldo actual<br>

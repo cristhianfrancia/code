@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Plantillas - SGU - Internet - No accede</title>
+    <style>
+        body {  
+            font-family: Calibri, Arial, sans-serif;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1000px auto;
+            margin: 10px auto;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- ESTILO PARA EL TÍTULO ELEGANTE ESTILO APPLE --- */
+        .elegant-title {
+            text-align: center;
+            color: #1d1d1f;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-top: 15px;
+            margin-bottom: 30px;
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+        }
+        /* -------------------------------------- */
+
+        .icon-animation {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 2s linear infinite;
+        }
+
+        .icon-animation::before {
+            content: "🟡";
+            font-size: 1.5rem;
+            color: white;
+        }
+
+      @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+      }
+
+      .input-container {
+          display: flex;
+          align-items: center;
+          transition: transform 0.3s ease;
+      }
+
+      .input-container:hover {
+          transform: scale(1.00);
+      }
+
+      .input-container label {
+        width: 50%;
+      }
+
+      .input-container input, .input-container select {
+          width: 50%;
+          padding: 4px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .input-container input:focus, .input-container select:focus {
+          border-color: #007BFF;
+          outline: none;
+          box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+
+      @media screen and (max-width: 600px) {
+        .input-container {
+          flex-direction: column;
+        }
+        .input-container label, .input-container input, .input-container select {
+          width: 100%;
+        }
+      }
+
+      .resultado-label {
+        color: #007BFF;
+      }
+      .dark-mode .resultado-label {
+        color: yellow;
+      }
+
+      .ruta-container {
+          background-color: #fff5e9;
+          padding: 10px;
+          border-radius: 4px;
+          margin: 10px 0;
+          border-left: 4px solid #e67a00;
+          font-size: 0.9rem;
+          color: #333;
+      }
+
+      hr {
+          border: 1px solid #e67a00;
+          margin: 10px 0;
+      }
+
+      button {
+          background-color: #e67a00;
+          color: white;
+          padding: 10px 15px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease, transform 0.3s ease;
+          margin: 5px;
+      }
+
+      button:hover {
+          background-color: #0056b3;
+          transform: scale(1.05);
+      }
+
+      button:active {
+          background-color: #004085;
+          transform: scale(0.98);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      button:focus {
+          outline: none;
+      }
+
+      #resultado {
+          margin: 15px 0;
+          font-size: 0.9rem;
+          background-color: #fff5e9;
+          padding: 10px;
+          border-left: 4px solid #e67a00;
+          white-space: pre-line;
+          min-height: 50px;
+          transition: background-color 0.3s ease;
+      }
+
+      #imagePopupTip, #imagePopupLimiteMB, #imagePopupIMEI, #imagePopupNavegacion, #imagePopupMarca, #imagePopupBarring, #imagePopupMaps {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        z-index: 1000;
+      }
+
+      #imagePopupTip img, #imagePopupLimiteMB img, #imagePopupIMEI img, #imagePopupNavegacion img, #imagePopupMarca img, #imagePopupBarring img, #imagePopupMaps img {
+        max-width: 90%;
+        max-height: 90vh;
+        margin-top: 5vh;
+      }
+
+    .close-button, .close-button2, .close-button3, .close-button4, .close-button5, .close-button6, .close-button8 {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: white;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .footer-autor {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #eee;
+      user-select: none;
+    }
+    .footer-autor strong {
+      color: var(--bitel-blue);
+    }
+
+    </style>
+</head>
+<body oncontextmenu="return false"> 
+  <div class="container">
+    <div class="icon-animation"></div>
+
+    <h2 class="elegant-title">Incidencia: Compensación de GB</h2>
+
+    <label style="color: red;"><strong>1. Plantilla:</strong></label>
+    <p></p>
+
+    <center class="code-container">
+    <p>
+    <input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="color: #007BFF;" />
+    // El cliente no puede conectarse a internet en ningún momento, sin importar la red.
+    // "Se genera incidencia a BO123"
+    </p>
+    </center>
+
+    <div class="input-container">
+    <label for="label_1">1. Servicio o número que presenta la afectación:</label>
+    <input type="number" id="label_1" oninput="checkLength(this)" placeholder="(Número del inconveniente)" style="color: #007BFF;" />
+    </div>
+
+    <div class="input-container">
+    <label for="label_2">2. Nombre y apellidos del cliente:</label>
+    <input type="text" id="label_2" oninput="updateResultadoOutput()" placeholder="(Nombres y apellidos completos)" style="color: #007BFF;" />
+    </div>
+
+    <div class="input-container">
+    <label for="label_3">3. Código correlativo SGU:</label>
+    <input type="text" id="label_3" oninput="updateResultadoOutput()" placeholder="(Pega el código del Pedido SGU)" style="color: #007BFF;" />
+    </div>
+
+    <div class="input-container">
+      <label for="label_4">4. Tipo de compensación aplicada:</label>
+      <select id="label_4" onchange="updateResultadoOutput()">
+        <option value="">Seleccionar</option>
+        <option value="Bono Control - 3GB">Bono Control - 3GB</option>
+        <option value="Bono Prepago - Paquete activo">Bono Prepago - Paquete activo</option>
+      </select>
+    </div>
+
+    <div class="input-container">
+    <label for="label_5">5. Plan o paquete activo del cliente:</label>
+    <input type="text" id="label_5" oninput="updateResultadoOutput()" placeholder="(Ingresa el plan o el paquete)" style="color: #007BFF;" />
+    </div>
+
+    <div class="input-container">
+    <label for="label_6">6. Cantidad de GB a acreditar:</label>
+    <input type="text" id="label_6" oninput="updateResultadoOutput()" placeholder="(GB para acreditar)" style="color: #007BFF;" />
+    </div>
+
+    <div class="input-container">
+    <label for="label_7">7. Vigencia del plan o paquete activo:</label>
+    <input type="text" id="label_7" oninput="updateResultadoOutput()" placeholder="(Vigencia del plan)" style="color: #007BFF;" />
+    </div>
+
+    <div class="input-container">
+    <label for="labelID">Codigo de llamada:</label>
+    <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
+    </div>
+
+    <br>
+    <p id="resultado" class="dark-mode-text"></p>
+
+    <button onclick="copiarResultado()">Copiar</button>
+    <button onclick="limpiarInputs()">Borrar</button>
+
+    <br />
+    <br />
+
+    <label style="color: red;"><strong>2. Tipificación:</strong></label>
+
+    <div class="ruta-container">
+<strong>Ruta:<br></strong> Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / Intermitencia en el acceso a internet / "Bono control - 3 GB" o "Bono Prepago - Paquete activo" (con check a BO ✅) <br><br>
+<strong>Ruta:<br></strong> Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / No accede a internet / "Bono control - 3 GB" o "Bono Prepago - Paquete activo" (con check a BO ✅) <br><br>
+<strong>Ruta:<br></strong> Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / Lentitud en el acceso a internet / "Bono control - 3 GB" o "Bono Prepago - Paquete activo" (con check a BO ✅) <BR>
+
+    </div>
+
+    <br />
+    <hr />
+    <br />
+
+    <label style="color: red;"><strong>3. Speech:</strong></label>
+
+    <p><strong><span style="color: #01768b">🎧 Agente: </span></strong> <span style="color: #007BFF">(Nombre del cliente)</span>, "Lamentamos los inconvenientes ocasionados. Como compensación, le acreditamos <span style="color: #007BFF">[XX]</span> GB a su línea."</p>
+
+    <label style="color: red;"><strong>4. Despedida:</strong></label>
+
+    <p><strong><span style="color: #01768b">🎧 Agente: </span></strong>  Eso sería todo de mi parte, Muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada. </p>
+
+    <br><br><br><br><br><br>
+    <textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+
+    <div class="footer-autor">
+    Developed by c&f &copy; 2020 | All rights reserved.
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('contextmenu', event => {
+        event.preventDefault();
+        alert('El menú contextual (clic derecho) está deshabilitado.'); 
+    });
+
+    document.onkeydown = function(e) {
+        if (e.key === 'F12' || e.keyCode === 123) {
+            alert('Las herramientas de desarrollador están deshabilitadas.'); 
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I')) {
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 74 || e.key === 'J')) {
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 67 || e.key === 'C')) {
+            return false;
+        }
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+            return false;
+        }
+    };
+
+    window.onload = function() {
+        let fechaLimite = new Date("2026-07-30T23:59:59");
+        let fechaActual = new Date();
+
+        if (fechaActual > fechaLimite) {
+            document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Revisar la variable de mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Requiere actualización)</h5>";
+        }
+    };
+
+      const label0Input = document.querySelector("#label0");
+      const label_1Input = document.querySelector("#label_1");
+      const label_2Input = document.querySelector("#label_2");
+      const label_3Input = document.querySelector("#label_3");
+      const label_4Input = document.querySelector("#label_4");
+      const label_5Input = document.querySelector("#label_5");
+      const label_6Input = document.querySelector("#label_6");
+      const label_7Input = document.querySelector("#label_7");
+      const labelIDInput = document.querySelector("#labelID");
+      const resultadoOutput = document.querySelector("#resultado");
+
+      label0Input.addEventListener("input", updateResultadoOutput);
+      label_1Input.addEventListener("input", updateResultadoOutput);
+      label_2Input.addEventListener("input", updateResultadoOutput);
+      label_3Input.addEventListener("input", updateResultadoOutput);
+      label_4Input.addEventListener("change", updateResultadoOutput);
+      label_5Input.addEventListener("input", updateResultadoOutput);
+      label_6Input.addEventListener("input", updateResultadoOutput);
+      label_7Input.addEventListener("input", updateResultadoOutput);
+      labelIDInput.addEventListener("input", updateResultadoOutput);
+
+    function formatDateToDDMMYYYYHHMM(dateString) {
+      if (!dateString) return ""; 
+
+      const dateParts = dateString.split("T"); 
+      const date = dateParts[0];
+      const time = dateParts[1].slice(0, 5); 
+      const datePartsFormatted = date.split("-");
+      const day = datePartsFormatted[2];
+      const month = datePartsFormatted[1];
+      const year = datePartsFormatted[0];
+      return `${day}/${month}/${year} ${time}`;
+    }
+
+      function formatDateToDDMMYYYY(dateString) {
+        const dateParts = dateString.split("-");
+        const day = dateParts[2];
+        const month = dateParts[1];
+        const year = dateParts[0];
+        return `${day}/${month}/${year}`;
+      }
+
+    function updateResultadoOutput() {
+    const label0 = label0Input.value;
+    const label_1 = label_1Input.value;
+    const label_2 = label_2Input.value;
+    const label_3 = label_3Input.value;
+    const label_4 = label_4Input.value;
+    const label_5 = label_5Input.value;
+    const label_6 = label_6Input.value;
+    const label_7 = label_7Input.value;
+    const labelID = labelIDInput.value;
+
+    resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // Cliente manifiesta inconformidad ya que no pudo usar el servicio de internet // Se genera incidencia a BO123 para compensación de GB
+
+1. Servicio o número que presenta la afectación: <span class="resultado-label">${label_1}</span>
+2. Nombre y apellidos del cliente: <span class="resultado-label">${label_2}</span>
+3. Código correlativo SGU: <span class="resultado-label">${label_3}</span>
+4. Tipo de compensación aplicada: <span class="resultado-label">${label_4}</span>
+5. Plan o paquete activo del cliente: <span class="resultado-label">${label_5}</span>
+6. Cantidad de GB a acreditar: <span class="resultado-label">${label_6}</span>
+7. Vigencia del plan o paquete activo: <span class="resultado-label">${label_7}</span>
+Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
+    }
+
+     function capitalizeFirstLetter(string) {
+          return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+        }
+
+        function capitalizeName(input) {
+          return input
+            .toLowerCase()
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+        }
+
+          function checkLength(input) {
+            if (input.value.length > 9) {
+              input.value = input.value.slice(0, 9);
+            }
+          }
+
+          function copiarResultado() {
+            const resultadoTexto = resultadoOutput.innerText.trim();
+            const textarea = document.createElement("textarea");
+            textarea.value = resultadoTexto;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+            alert("Resultado copiado al portapapeles");
+          }
+
+          function limpiarInputs() {
+            label0Input.value = "";
+            label_1Input.value = "";
+            label_2Input.value = "";
+            label_3Input.value = "";
+            label_4Input.value = "";
+            label_5Input.value = "";
+            label_6Input.value = "";
+            label_7Input.value = "";
+            labelIDInput.value = "";
+            resultadoOutput.innerHTML = "";
+          }
+
+      function showImagePopupTip(event) {
+        event.preventDefault();
+        const imagePopupTip = document.getElementById("imagePopupTip");
+        imagePopupTip.style.display = "block";
+        return false;
+      }
+
+      function hideImagePopupTip() {
+        const imagePopupTip = document.getElementById("imagePopupTip");
+        imagePopupTip.style.display = "none";
+      }
+
+      function showImagePopupLimiteMB(event) {
+        event.preventDefault();
+        const imagePopupLimiteMB = document.getElementById("imagePopupLimiteMB");
+        imagePopupLimiteMB.style.display = "block";
+        return false;
+      }
+
+      function hideImagePopupLimiteMB() {
+        const imagePopupLimiteMB = document.getElementById("imagePopupLimiteMB");
+        imagePopupLimiteMB.style.display = "none";
+      }
+
+      function showImagePopupIMEI(event) {
+        event.preventDefault();
+        const imagePopupIMEI = document.getElementById("imagePopupIMEI");
+        imagePopupIMEI.style.display = "block";
+        return false;
+      }
+
+      function hideImagePopupIMEI() {
+        const imagePopupIMEI = document.getElementById("imagePopupIMEI");
+        imagePopupIMEI.style.display = "none";
+      }
+
+      function showImagePopupNavegacion(event) {
+        event.preventDefault();
+        const imagePopupNavegacion = document.getElementById("imagePopupNavegacion");
+        imagePopupNavegacion.style.display = "block";
+        return false;
+      }
+
+      function hideImagePopupNavegacion() {
+        const imagePopupNavegacion = document.getElementById("imagePopupNavegacion");
+        imagePopupNavegacion.style.display = "none";
+      }
+
+      function showImagePopupMarca(event) {
+        event.preventDefault();
+        const imagePopupMarca = document.getElementById("imagePopupMarca");
+        imagePopupMarca.style.display = "block";
+        return false;
+      }
+
+      function hideImagePopupMarca() {
+        const imagePopupMarca = document.getElementById("imagePopupMarca");
+        imagePopupMarca.style.display = "none";
+      }
+
+      function showImagePopupBarring(event) {
+        event.preventDefault();
+        const imagePopupBarring = document.getElementById("imagePopupBarring");
+        imagePopupBarring.style.display = "block";
+        return false;
+      }
+
+      function hideImagePopupBarring() {
+        const imagePopupBarring = document.getElementById("imagePopupBarring");
+        imagePopupBarring.style.display = "none";
+      }
+
+      function showImagePopupMaps(event) {
+        event.preventDefault();
+        const imagePopupMaps = document.getElementById("imagePopupMaps");
+        imagePopupMaps.style.display = "block";
+        return false;
+      }
+
+      function hideImagePopupMaps() {
+        const imagePopupMaps = document.getElementById("imagePopupMaps");
+        imagePopupMaps.style.display = "none";
+      }
+  </script>
+</body>
+</html>

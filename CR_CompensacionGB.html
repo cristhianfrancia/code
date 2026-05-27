@@ -248,14 +248,20 @@
     <input type="text" id="label_5" oninput="updateResultadoOutput()" placeholder="(Nombre del plan o paquete activo)" style="color: #007BFF;" />
     </div>
 
+
     <div class="input-container">
-    <label for="label_6">6. Cantidad de GB a acreditar:</label>
-    <input type="text" id="label_6" oninput="updateResultadoOutput()" placeholder="(Control: 3 GB | Prepago: Según el paquete activo)" style="color: #007BFF;" />
+      <label for="label_6">6. Cantidad de GB a acreditar:</label>
+      <select id="label_6" onchange="updateResultadoOutput()">
+        <option value="">Seleccionar</option>
+        <option value="3 GB">3 GB</option>
+      </select>
     </div>
+
+
 
     <div class="input-container">
     <label for="label_7">7. Vigencia del plan o paquete activo:</label>
-    <input type="text" id="label_7" oninput="updateResultadoOutput()" placeholder="(Control: Fecha de renovación de beneficios | Prepago: Fecha de expiración del paquete)" style="color: #007BFF;" />
+    <input type="text" id="label_7" oninput="updateResultadoOutput()" placeholder="(Control: Fecha de cierre de ciclo | Prepago: Fecha de expiración del paquete)" style="color: #007BFF;" />
     </div>
 
     <div class="input-container">
@@ -287,7 +293,7 @@
 
     <label style="color: red;"><strong>3. Speech:</strong></label>
 
-    <p><strong><span style="color: #01768b">🎧 Agente: </span></strong> <span style="color: #007BFF">(Nombre del cliente)</span>, "Lamentamos los inconvenientes ocasionados. Como compensación, lo más pronto posible se le acreditará <span style="color: #007BFF">[XX]</span> GB a su línea."</p>
+    <p><strong><span style="color: #01768b">🎧 Agente: </span></strong> <span style="color: #007BFF">(Nombre del cliente)</span>, "Lamentamos los inconvenientes ocasionados. Como compensación, lo más pronto posible se le acreditará <span style="color: #007BFF">[3]</span> GB a su línea."</p>
 
     <label style="color: red;"><strong>4. Despedida:</strong></label>
 
@@ -352,7 +358,7 @@
       label_3Input.addEventListener("input", updateResultadoOutput);
       label_4Input.addEventListener("change", updateResultadoOutput);
       label_5Input.addEventListener("input", updateResultadoOutput);
-      label_6Input.addEventListener("input", updateResultadoOutput);
+      label_6Input.addEventListener("change", updateResultadoOutput);
       label_7Input.addEventListener("input", updateResultadoOutput);
       labelIDInput.addEventListener("input", updateResultadoOutput);
 

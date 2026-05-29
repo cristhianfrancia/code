@@ -3,28 +3,26 @@
 <head>
   <title>Plantillas - SGU - Internet - No accede</title>
     <style>
-        /* --- FUENTE CALIBRI PARA TODO EL DOCUMENTO --- */
-        * {
+        /* --- REGLA MAESTRA PARA ALINEACIÓN PERFECTA --- */
+        *, *::before, *::after {
+            box-sizing: border-box !important;
             font-family: Calibri, Arial, sans-serif !important;
         }
 
         body {  
-            background-color: #ffffff; /* FONDO TOTALMENTE BLANCO */
+            background-color: #ffffff;
             margin: 0;
             padding: 10px;
         }
 
-.container {
-            width: 95%; /* Puedes subirlo a 98% si quieres que ocupe casi toda la pantalla */
-            max-width: 1100px; /* ANTES: 1000px | Aumenta esto para estirar la caja */
+        .container {
+            width: 95%; 
+            max-width: 1100px; 
             margin: 0 auto;
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
-            
-            /* ANTES: 20px 30px | El segundo valor (50px) empuja el contenido hacia el centro */
             padding: 20px 50px; 
-            
             position: relative;
         }
 
@@ -63,23 +61,25 @@
           to { transform: rotate(360deg); }
       }
 
-      /* --- ESPACIADO COMPACTO ENTRE CAMPOS --- */
+      /* --- ESPACIADO Y ALINEACIÓN PERFECTA DE CAMPOS --- */
       .input-container {
           display: flex;
           align-items: center;
           position: relative;
-          margin-bottom: 6px; /* Reducido para mayor compacidad */
+          margin-bottom: 6px; /* Un respiro milimétrico extra */
+          width: 100%;
       }
 
       .input-container label {
-        width: 50%;
+        flex: 0 0 45%; /* El label toma exactamente el 45% del espacio */
         font-weight: 500;
         font-size: 0.95rem;
+        padding-right: 15px; /* Separación limpia con el input */
       }
 
       .input-container input, .input-container select {
-          width: 50%;
-          padding: 4px 8px; /* Reducido para que la caja no sea tan alta */
+          flex: 1; /* El input toma todo el resto del espacio disponible uniformemente */
+          padding: 6px 8px; 
           border: 1px solid #ccc;
           border-radius: 4px;
           font-size: 0.95rem;
@@ -97,7 +97,13 @@
           flex-direction: column;
           align-items: flex-start;
         }
-        .input-container label, .input-container input, .input-container select {
+        .input-container label {
+          flex: none;
+          width: 100%;
+          margin-bottom: 4px;
+        }
+        .input-container input, .input-container select {
+          flex: none;
           width: 100%;
         }
       }
@@ -159,7 +165,6 @@
           white-space: pre-line;
           min-height: 40px;
           
-          /* BLOQUEO DE SELECCIÓN Y ARRASTRE CON EL CURSOR */
           user-select: none;
           -webkit-user-select: none;
           -moz-user-select: none;
@@ -209,7 +214,7 @@
           display: block;
       }
 
-      /* --- ESTADOS DE AVISO (VERDE / ROJO) --- */
+      /* --- ESTADOS DE AVISO BOTÓN (VERDE / ROJO) --- */
       #aviso-status {
           margin: 8px 0;
           padding: 10px;
@@ -227,6 +232,31 @@
           background-color: #fce8e6;
           color: #c5221f;
           border: 1px solid #c5221f;
+      }
+
+      /* --- NUEVA ALERTA FLOTANTE PREMIUM PARA SGU --- */
+      #custom-alert-sgu {
+          display: none;
+          position: fixed;
+          top: 30px;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: #ffffff;
+          color: #c5221f;
+          padding: 15px 25px;
+          border-radius: 8px;
+          border-left: 6px solid #c5221f;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+          z-index: 9999;
+          font-weight: bold;
+          font-size: 0.95rem;
+          text-align: center;
+          animation: slideDownFade 0.4s ease-out;
+      }
+
+      @keyframes slideDownFade {
+          0% { top: -20px; opacity: 0; }
+          100% { top: 30px; opacity: 1; }
       }
 
       .footer-autor {
@@ -249,6 +279,9 @@
     </style>
 </head>
 <body oncontextmenu="return false"> 
+  
+  <div id="custom-alert-sgu">⚠️ El código correlativo SGU debe iniciar obligatoriamente con las siglas 'CA'</div>
+
   <div class="container">
     <div class="icon-animation"></div>
 
@@ -258,7 +291,7 @@
     
     <center class="code-container">
     <p>
-    <input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="color: #0c477e; text-align: center; font-weight: bold; width: 160px; padding: 2px;" />
+    <input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="color: #0c477e; text-align: center; font-weight: bold; width: 160px; padding: 4px; border: 1px solid #ccc; border-radius: 4px;" />
     // Cliente solicita GB que no usó por los problemas con el internet // Se genera incidencia a BO123 para acreditación de GB por compensación
     </p>
     </center>
@@ -329,7 +362,7 @@ CAPVXXXXXXXXXX<br><br>
     <label for="labelID">Codigo de llamada:</label>
     <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #0c477e;" />
     </div>
-
+<br>
     <p id="resultado"></p>
 
     <div id="aviso-status"></div>
@@ -362,7 +395,7 @@ CAPVXXXXXXXXXX<br><br>
 
 <br><br><br><br><br>
     <div class="footer-autor">
-    Developed by Cristhian Francia &copy; 2026 | All rights reserved.
+    Developed by <strong>Cristhian Francia</strong> &copy; 2026 | All rights reserved.
     </div>
   </div>
 
@@ -406,6 +439,7 @@ CAPVXXXXXXXXXX<br><br>
       const labelIDInput = document.querySelector("#labelID");
       const resultadoOutput = document.querySelector("#resultado");
       const avisoStatus = document.querySelector("#aviso-status");
+      let alertTimeout; // Variable para manejar el temporizador de la nueva alerta
 
       label0Input.addEventListener("input", updateResultadoOutput);
       label_1Input.addEventListener("input", updateResultadoOutput);
@@ -416,16 +450,30 @@ CAPVXXXXXXXXXX<br><br>
       label_7Input.addEventListener("change", updateResultadoOutput);
       labelIDInput.addEventListener("input", updateResultadoOutput);
 
+      /* --- FUNCIÓN PARA MOSTRAR ALERTA PREMIUM --- */
+      function showPremiumAlert() {
+          const alertBox = document.getElementById("custom-alert-sgu");
+          alertBox.style.display = "block";
+          
+          // Limpia el temporizador anterior si el usuario vuelve a tipear rápido
+          clearTimeout(alertTimeout);
+          
+          // Desaparece después de 3.5 segundos
+          alertTimeout = setTimeout(() => {
+              alertBox.style.display = "none";
+          }, 3500);
+      }
+
       /* --- RESTRICCIÓN SGU ("CA") --- */
       label_3Input.addEventListener("input", function() {
           this.value = this.value.toUpperCase(); 
           let val = this.value;
           
           if (val.length === 1 && val !== 'C') {
-              alert("El código correlativo SGU debe iniciar obligatoriamente con las siglas 'CA'");
+              showPremiumAlert();
               this.value = "";
           } else if (val.length >= 2 && !val.startsWith('CA')) {
-              alert("El código correlativo SGU debe iniciar obligatoriamente con las siglas 'CA'");
+              showPremiumAlert();
               this.value = "";
           }
           updateResultadoOutput();

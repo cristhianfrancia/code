@@ -253,7 +253,7 @@
           z-index: 1010;
           box-shadow: 0 4px 12px rgba(0,0,0,0.1);
           width: 250px;
-          bottom: 125%; /* Aparece justo arriba del botón */
+          bottom: 125%; 
           right: 0;
           pointer-events: none;
           line-height: 1.3;
@@ -411,9 +411,7 @@
       </select>
     </div>
 
-    <!-- CAMPO 7 PERFECCIONADO: TEXTO Y SELECTOR TOTALMENTE EN LÍNEA -->
     <div class="input-container">
-      <!-- Lado izquierdo: Label + Botón alineados perfectamente de forma horizontal -->
       <div class="label-wrapper-inline">
           <label for="label_7">7. Vigencia del plan o paquete activo:</label>
           <div class="cycle-selector-container">
@@ -444,7 +442,6 @@
                   <option value="27">Ciclo 27</option>
                   <option value="28">Ciclo 28</option>
               </select>
-              <!-- Mensaje flotante de aviso exclusivo -->
               <div class="tooltip-cycle">
                   ⚠️ Úsalo solo si es control<br><br>
                   Se añadirá la: <strong>"Fecha de cierre de ciclo"</strong>
@@ -452,29 +449,26 @@
           </div>
       </div>
 
-      <!-- Lado derecho: Ocupa todo su espacio natural original -->
       <input type="date" id="label_7" style="color: #0c477e;" />
       
       <div class="tooltip-box">
           <span style="color: #0c477e; font-weight: bold; font-size: 0.95rem;">💡 Ejemplos de llenado correcto:</span><br><br>
-
           <span style="color: #0c477e; font-weight: bold;">CONTROL: Selecciona el ciclo en el botón gris de la izquierda de forma rápida.</span><br><br>
+          <span style="color: #ff0000;">¿Qué colocaré?:</span> <strong>Fecha de cierre de ciclo</strong><br>
+          <span style="color: #ff0000;">Ejemplo:</span> Si es ciclo 26, añadiré la fecha 25/XX/XXXX<br><br>
 
-        <span style="color: #ff0000;">¿Qué colocaré?:</span> <strong>Fecha de cierre de ciclo</strong><br>
-        <span style="color: #ff0000;">Ejemplo:</span> Si es ciclo 26, añadiré la fecha 25/XX/XXXX<br>
+<span style="color: #ff0000;">Nota:</span> Si el cliente llama el mismo día de su cierre de ciclo se programará para el siguiente cierre de mes (Ejemplo: Llama el 01/06/2026 y tiene ciclo 02, no se colocará 01/06/2026, se deberá colocar 01/07/2026)<br>
 
-<hr>
-
+          <hr>
           <span style="color: #0c477e; font-weight: bold;">PREPAGO: Ignora el selector de ciclo e ingresa manualmente la fecha con el calendario.</span><br><br>
+          <span style="color: #ff0000;">¿Qué colocaré?:</span> <strong>Fecha de expiración del paquete</strong><br>
+          <span style="color: #ff0000;">Ejemplo:</span> Cliente compra paquete DM5 que expira el 03/06/2026, se colocará esa fecha 03/06/2026<br><br> </div>
+    </div>
 
-        <span style="color: #ff0000;">¿Qué colocaré?:</span> <strong>Fecha de expiración del paquete</strong><br>
-        <span style="color: #ff0000;">Ejemplo:</span> Cliente compra paquete DM5 que expira el 03/06/2026, se colocará esa fecha 03/06/2026<br><br> </div></div>
-
-
-<div class="input-container">
-<label for="labelID">Codigo de llamada:</label>
-<input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #0c477e;" />
-</div>
+    <div class="input-container">
+    <label for="labelID">Codigo de llamada:</label>
+    <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #0c477e;" />
+    </div>
 <br>
 
 <p id="resultado"></p>
@@ -567,7 +561,7 @@
       });
       labelIDInput.addEventListener("input", updateResultadoOutput);
 
-      /* --- CÁLCULO INTELIGENTE Y TRASPASO AL INPUT DE FECHA NATIVO --- */
+      /* --- CÁLCULO INTELIGENTE ACTUALIZADO (INCLUYE IGUALDAD PARA MISMO DÍA) --- */
       function completarFechaDesdeCiclo() {
           const cicloVal = fast_cicloSelect.value;
           
@@ -593,7 +587,8 @@
               diaCierre = ciclo - 1;
           }
 
-          if (diaActual > diaCierre) {
+          // CAMBIO CLAVE: Si hoy es mayor O IGUAL (>=) al día de cierre, salta automáticamente al periodo del siguiente mes
+          if (diaActual >= diaCierre) {
               mesCierre++;
               if (mesCierre > 11) {
                   mesCierre = 0;

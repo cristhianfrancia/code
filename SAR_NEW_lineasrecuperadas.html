@@ -542,44 +542,47 @@
             actualizarResultados();
         }
 
-        // ----- MAGIA BLOB PARA FORZAR EL NOMBRE DEL ARCHIVO CON ENLACES ÚNICOS -----
-        async function descargarWordPersonalizado() {
-            let numeroAbonado = document.getElementById("numeroAbonado").value.trim();
-            let nombreArchivo = "";
-            let url = "https://docs.google.com/document/d/1JsXx0XjHTQOiIZ_h69xzrrh8MFMdve8BgfkMllTeRhw/export?format=docx";
-            
-            if (numeroAbonado === "") {
-                nombreArchivo = "EVIDENCIA DE SAR - 9XXXXXXXX.docx";
-            } else {
-                nombreArchivo = `EVIDENCIA DE SAR - ${numeroAbonado}.docx`;
-            }
+async function descargarWordPersonalizado() {
+    let numeroAbonado = document.getElementById("numeroAbonado").value.trim();
+    let nombreArchivo = "";
+    
+    // ID extraído de tu enlace actual. Añadimos un timestamp para romper la caché del navegador
+    let documentoId = "1M093HZvGI1GdplHb2_gZOCDyTA0PoPmM5LQ0Zv0we04";
+    let url = `https://docs.google.com/document/d/${documentoId}/export?format=docx&v=${new Date().getTime()}`;
+    
+    if (numeroAbonado === "") {
+        nombreArchivo = "EVIDENCIA DE SAR - 9XXXXXXXX.docx";
+    } else {
+        nombreArchivo = `EVIDENCIA DE SAR - ${numeroAbonado}.docx`;
+    }
 
-            mostrarNotificacion("Preparando documento...", "success");
+    mostrarNotificacion("Preparando documento...", "success");
 
-            try {
-                let respuesta = await fetch(url);
-                if (!respuesta.ok) throw new Error("Error de red");
-                let blob = await respuesta.blob();
-                
-                let urlLocal = window.URL.createObjectURL(blob);
-                let linkTemporal = document.createElement("a");
-                linkTemporal.href = urlLocal;
-                linkTemporal.download = nombreArchivo;
-                
-                document.body.appendChild(linkTemporal);
-                linkTemporal.click();
-                document.body.removeChild(linkTemporal);
-                window.URL.revokeObjectURL(urlLocal);
-                
-            } catch (error) {
-                let linkTemporal = document.createElement("a");
-                linkTemporal.href = url;
-                linkTemporal.download = nombreArchivo; 
-                document.body.appendChild(linkTemporal);
-                linkTemporal.click();
-                document.body.removeChild(linkTemporal);
-            }
-        }
+    try {
+        let respuesta = await fetch(url);
+        if (!respuesta.ok) throw new Error("Error de red o permisos");
+        let blob = await respuesta.blob();
+        
+        let urlLocal = window.URL.createObjectURL(blob);
+        let linkTemporal = document.createElement("a");
+        linkTemporal.href = urlLocal;
+        linkTemporal.download = nombreArchivo;
+        
+        document.body.appendChild(linkTemporal);
+        linkTemporal.click();
+        document.body.removeChild(linkTemporal);
+        window.URL.revokeObjectURL(urlLocal);
+        
+    } catch (error) {
+        console.error("Error con fetch, usando descarga directa como fallback:", error);
+        let linkTemporal = document.createElement("a");
+        linkTemporal.href = url;
+        linkTemporal.download = nombreArchivo; 
+        document.body.appendChild(linkTemporal);
+        linkTemporal.click();
+        document.body.removeChild(linkTemporal);
+    }
+}
 
         function copiarTexto() {
             let tipo = document.querySelector('input[name="tipoDescuento"]:checked').value;
@@ -912,7 +915,30 @@ $$_<span id="resId"></span>_&&
 </div>
 
 <div class="ruta-container">
-Other / Solución anticipada / Solución anticipada / SAR - Infundado / Ajuste / Facturación y cobro (✅ con check a BO)
+Ruta: Other / Solución anticipada / Solución anticipada / SAR - Fundado / Ajuste / Calidad de idoneidad en la prestación del servicio (✅ con check a BO)<br><br>
+
+- Inconvenientes con la recepción de llamadas de otras empresas operadoras.<br>
+- Inconvenientes con la recepción de SMS de otras empresas operadoras.<br>
+- Inconvenientes con la recepción de llamadas y SMS de otras empresas operadoras.<br>
+- Falta de servicio internet o llamadas.
+</div>
+
+<div class="ruta-container">
+Ruta: Other / Solución anticipada / Solución anticipada / SAR - Fundado / Ajuste / Falta de servicio (✅ con check a BO)<br><br>
+
+- Falta total de servicio
+</div>
+
+<div class="ruta-container">
+Ruta: Other / Solución anticipada / Solución anticipada / SAR - Fundado / Ajuste / Portabilidad (✅ con check a BO)<br><br>
+
+- Portabilidad de su línea Bitel sin su consentimiento.
+</div>
+
+<div class="ruta-container">
+Ruta: Other / Solución anticipada / Solución anticipada / SAR - Fundado / Ajuste / Falta de ejecución de baja o suspensión del servicio (✅ con check a BO)<br><br>
+
+- Baja de su línea Bitel sin su consentimiento.
 </div>
 
 <br>

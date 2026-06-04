@@ -2,13 +2,6 @@
 <html>
 <head>
 
-  <!-- 
-    Proyecto: Plantillas
-    Creado por: Cristhian Francia
-    Año: 2025
-    Derechos reservados © Cristhian Francia
-  -->
-
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -32,7 +25,7 @@
       width: 240px;
       background: #ffffff;
       color: black;
-      border: 2px solid #fb8162;
+      border: 2px solid #0c477e; /* 🔵 Color de borde actualizado */
       padding: 10px 20px;
       font-size: 13px;
       font-weight: bold;
@@ -44,7 +37,7 @@
     }
 
     .btn:hover {
-      background: #fb8162;
+      background: #0c477e; /* 🔵 Fondo actualizado al pasar el cursor */
       color: #ffffff;
       transform: translateY(-3px);
       box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25);
@@ -82,7 +75,6 @@
       );
     }
 
-
     function Despedida() {
       window.open(
         "https://drive.google.com/file/d/1zhT3U4p4N7_wUFkEilCP6nOsRi5W3SST/view?usp=sharing",
@@ -91,18 +83,15 @@
       );
     }
 
-
     function TipiAvanzada() {
       const url = "https://script.google.com/macros/s/AKfycbyOHFm6zxT5EPUio0OEv2SrKgOvdTAZ6uC1b9ZQmuxCVm17m7mge_u2nFOpKLXZRit_ew/exec";
       abrirPopup(url, 1600, 800, 0.90); // zoom 90%
     }
 
-
     function MiBitel() {
       const url = "https://canva.link/6b7gggh079zg08a";
       abrirPopup(url, 1400, 850, 0.90); // zoom 90%
     }
-
 
     /* 📌 Función estándar para abrir popups centrados + zoom */
     function abrirPopup(url, ancho, alto, zoomNivel) {

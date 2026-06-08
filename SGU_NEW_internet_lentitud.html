@@ -285,6 +285,11 @@
 </div>
 
 <div class="input-container">
+<label for="label_BTS">- BTS: </label>
+<input type="text" id="label_BTS" oninput="updateResultadoOutput()" placeholder="(BTS de la línea)" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
 <label for="labelID">- Codigo de llamada:</label>
 <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
 </div>
@@ -356,25 +361,26 @@ window.onload = function() {
       const label_LimiteMBInput = document.querySelector("#label_LimiteMB");
       const label_LugarInput = document.querySelector("#label_Lugar");
       const label_CoberturaInput = document.querySelector("#label_Cobertura");
-
       const label_DireccionInput = document.querySelector("#label_Direccion");
       const label_GoogleEarthInput = document.querySelector("#label_GoogleEarth");
       const label_DetalleIncInput = document.querySelector("#label_DetalleInc");
+      const label_BTSInput = document.querySelector("#label_BTS");
       const labelIDInput = document.querySelector("#labelID");
       const resultadoOutput = document.querySelector("#resultado");
 
-      label0Input.addEventListener("input", updateResultadoOutput);
 
+      label0Input.addEventListener("input", updateResultadoOutput);
       label_LineaInput.addEventListener("input", updateResultadoOutput);
       label_MBInput.addEventListener("change", updateResultadoOutput);
       label_LimiteMBInput.addEventListener("input", updateResultadoOutput);
       label_LugarInput.addEventListener("change", updateResultadoOutput);
       label_CoberturaInput.addEventListener("change", updateResultadoOutput);
-
       label_DireccionInput.addEventListener("input", updateResultadoOutput);
       label_GoogleEarthInput.addEventListener("input", updateResultadoOutput);
       label_DetalleIncInput.addEventListener("input", updateResultadoOutput);
+      label_BTSInput.addEventListener("input", updateResultadoOutput);
       labelIDInput.addEventListener("input", updateResultadoOutput);
+
 
 function formatDateToDDMMYYYYHHMM(dateString) {
   if (!dateString) return ""; 
@@ -405,10 +411,10 @@ const label_MB = label_MBInput.value;
 const label_LimiteMB = label_LimiteMBInput.value;
 const label_Lugar = label_LugarInput.value;
 const label_Cobertura = label_CoberturaInput.value;
-
 const label_Direccion = label_DireccionInput.value;
 const label_GoogleEarth = label_GoogleEarthInput.value;
 const label_DetalleInc = label_DetalleIncInput.value;
+const label_BTS = label_BTSInput.value;
 const labelID = labelIDInput.value;
 
 resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // El cliente logra conectarse, pero la navegación es muy lenta o las páginas no cargan. (Lentitud) // "Se genera incidencia a BO123"
@@ -421,6 +427,7 @@ Cobertura que presenta problema (3G/4G/5G): <span class="resultado-label">${labe
 Dirección exacta del inconveniente: <span class="resultado-label">${label_Direccion}</span>
 Coordenadas Google Earth: <span class="resultado-label">${label_GoogleEarth}</span>
 Observaciones: <span class="resultado-label">${label_DetalleInc}</span>
+BTS: <span class="resultado-label">${label_BTS}</span>
 Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
 }
 
@@ -463,6 +470,7 @@ Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
         label_DireccionInput.value = "";
         label_GoogleEarthInput.value = "";
         label_DetalleIncInput.value = "";
+        label_BTSInput.value = "";
         labelIDInput.value = "";
         resultadoOutput.innerHTML = "";
       }

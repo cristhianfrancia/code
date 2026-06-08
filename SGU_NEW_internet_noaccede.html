@@ -340,6 +340,12 @@
     <input type="text" id="label_DetalleInc" oninput="updateResultadoOutput()" placeholder="(Observaciones del inconveniente)" style="color: #007BFF;" />
     </div>
 
+
+    <div class="input-container">
+    <label for="label_BTS">- BTS: </label>
+    <input type="text" id="label_BTS" oninput="updateResultadoOutput()" placeholder="(BTS de la línea)" style="color: #007BFF;" />
+    </div>
+
     <div class="input-container">
     <label for="labelID">- Codigo de llamada:</label>
     <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
@@ -442,6 +448,7 @@
       const label_DireccionInput = document.querySelector("#label_Direccion");
       const label_GoogleEarthInput = document.querySelector("#label_GoogleEarth");
       const label_DetalleIncInput = document.querySelector("#label_DetalleInc");
+      const label_BTSInput = document.querySelector("#label_BTS");
       const labelIDInput = document.querySelector("#labelID");
       const resultadoOutput = document.querySelector("#resultado");
 
@@ -459,6 +466,7 @@
       label_DireccionInput.addEventListener("input", updateResultadoOutput);
       label_GoogleEarthInput.addEventListener("input", updateResultadoOutput);
       label_DetalleIncInput.addEventListener("input", updateResultadoOutput);
+      label_BTSInput.addEventListener("input", updateResultadoOutput);
       labelIDInput.addEventListener("input", updateResultadoOutput);
 
     function formatDateToDDMMYYYYHHMM(dateString) {
@@ -496,6 +504,7 @@
     const label_Direccion = label_DireccionInput.value;
     const label_GoogleEarth = label_GoogleEarthInput.value;
     const label_DetalleInc = label_DetalleIncInput.value;
+    const label_BTS = label_BTSInput.value;
     const labelID = labelIDInput.value;
 
     resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // El cliente no puede conectarse a internet en ningún momento, sin importar la red. // "Se genera incidencia a BO123"
@@ -512,6 +521,7 @@
     Dirección exacta del inconveniente: <span class="resultado-label">${label_Direccion}</span>
     Coordenadas Google Earth: <span class="resultado-label">${label_GoogleEarth}</span>
     Observaciones: <span class="resultado-label">${label_DetalleInc}</span>
+    BTS: <span class="resultado-label">${label_BTS}</span>
     Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
     }
 
@@ -558,6 +568,7 @@
             label_DireccionInput.value = "";
             label_GoogleEarthInput.value = "";
             label_DetalleIncInput.value = "";
+            label_BTSInput.value = "";
             labelIDInput.value = "";
             resultadoOutput.innerHTML = "";
           }

@@ -654,10 +654,13 @@ function leerSpeech() {
             let fechaActual = obtenerFechaActual();
             let speech = "";
 
-            if (plazo === "10 días hábiles") {
-                speech = `👉 10 días hábiles 👈\n\n"Sr(a). <span style="color: #007BFF">("Primer nombre" y "Primer apellido" del cliente)</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia <span style="color: #007BFF">${materia}</span> en aceptación del ofrecimiento efectuado por Bitel donde realizaremos ${accionOfrecimiento} incluido IGV, la cual se ejecutará en un plazo no mayor a 10 días hábiles de acuerdo al articulo 20° Del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
-            } else if (plazo === "1 día hábil") {
-                speech = `👉 1 día hábil 👈\n\n"Estimado cliente, como le mencionaba el plazo legal establecido por OSIPTEL es no mayor a 10 días hábiles; sin embargo, le ofrecemos ejecutar el cumplimiento en un plazo mínimo de 1 día hábil".\n\n**********************************\nSi el cliente acepta, continuamos\n**********************************\n\n"Sr(a). <span style="color: #007BFF">("Primer nombre" y "Primer apellido" del cliente)</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia <span style="color: #007BFF">${materia}</span>, en aceptación del ofrecimiento efectuado por Bitel donde realizaremos ${accionOfrecimiento} incluido IGV, la cual se ejecutará en un plazo no mayor a 1 día hábil de acuerdo al articulo 20° Del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
+ if (plazo === "10 días hábiles") {
+
+speech = `👉 10 días hábiles 👈\n\n"Sr(a). <span style="color: #007BFF">("Primer nombre" y "Primer apellido" del cliente)</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia <span style="color: #007BFF">${materia}</span> en aceptación del ofrecimiento efectuado por Bitel donde realizaremos ${accionOfrecimiento} incluido IGV, la cual se ejecutará en un plazo no mayor a 10 días hábiles de acuerdo al articulo 20° Del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
+
+} else if (plazo === "1 día hábil") {
+
+ speech = `👉 1 día hábil 👈\n\n"Sr(a). <span style="color: #007BFF">("Primer nombre" y "Primer apellido" del cliente)</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia <span style="color: #007BFF">${materia}</span>, en aceptación del ofrecimiento efectuado por Bitel donde realizaremos ${accionOfrecimiento} incluido IGV, la cual se ejecutará en un plazo no mayor a 1 día hábil de acuerdo al articulo 20° Del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
             }
 
             if (speech !== "") {
@@ -853,7 +856,6 @@ function leerSpeech() {
 <label>9. Plazo de ejecución del SAR:</label>
 <select id="plazo" onchange="actualizarResultados()">
 <option value="">Seleccionar</option>
-<option value="10 días hábiles">10 días hábiles</option>
 <option value="1 día hábil">1 día hábil</option>
 </select>
 <button type="button" onclick="leerSpeech()" style="cursor: pointer; border-radius: 6px; border: 1px solid #ccc; padding: 4px 10px; background: #0c477e; color: white; font-weight: bold;">Leer speech de grabación</button>

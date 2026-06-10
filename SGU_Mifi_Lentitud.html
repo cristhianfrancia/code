@@ -60,6 +60,7 @@
 
       .input-container label {
         width: 50%;
+        transition: color 0.3s ease;
       }
 
         .input-container input, .input-container select {
@@ -236,6 +237,22 @@
         background-color: #dc3545; /* Rojo */
     }
 
+    /* Clases de Error Dinámicas */
+    .input-error {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 5px rgba(220, 53, 69, 0.5) !important;
+    }
+
+    .input-error::placeholder {
+        color: #dc3545 !important;
+        opacity: 0.7;
+    }
+
+    .label-error {
+        color: #dc3545 !important;
+        font-weight: bold;
+    }
+
 </style>
 </head>
 <body oncontextmenu="return false"> <div class="container">
@@ -253,22 +270,22 @@
 </center>
 
 <div class="input-container">
-<label for="label_Linea">- Línea:</label>
+<label for="label_Linea" id="lbl_label_Linea">- Línea:</label>
 <input type="text" id="label_Linea" oninput="updateResultadoOutput()" placeholder="(Línea del inconveniente)" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
-<label for="label_Plan">- Plan:</label>
+<label for="label_Plan" id="lbl_label_Plan">- Plan:</label>
 <input type="text" id="label_Plan" oninput="updateResultadoOutput()" placeholder="(Plan que figura en Customer Care)" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
-  <label for="label_FechaHora">- Fecha y hora del inconveniente:</label>
+  <label for="label_FechaHora" id="lbl_label_FechaHora">- Fecha y hora del inconveniente:</label>
   <input type="datetime-local" id="label_FechaHora" oninput="updateResultadoOutput()" />
 </div>
 
     <div class="input-container">
-      <label for="label_Cobertura">- Indicador de cobertura:</label>
+      <label for="label_Cobertura" id="lbl_label_Cobertura">- Indicador de cobertura:</label>
       <select id="label_Cobertura" onchange="updateResultadoOutput()">
         <option value="">Seleccionar</option>
         <option value="-">-</option>
@@ -283,13 +300,13 @@
 
 
 <div class="input-container">
-<label for="label_BarraSeñal">- Barra de Señal:</label>
+<label for="label_BarraSeñal" id="lbl_label_BarraSeñal">- Barra de Señal:</label>
 <input type="text" id="label_BarraSeñal" oninput="updateResultadoOutput()" placeholder="(Lo que figura en la barra)" style="color: #007BFF;" />
 </div>
 
 
     <div class="input-container">
-      <label for="label_TipoInconveniente">- Tipo de inconveniente:</label>
+      <label for="label_TipoInconveniente" id="lbl_label_TipoInconveniente">- Tipo de inconveniente:</label>
       <select id="label_TipoInconveniente" onchange="updateResultadoOutput()">
         <option value="">Seleccionar</option>
         <option value="-">-</option>
@@ -302,24 +319,24 @@
 
 
 <div class="input-container">
-<label for="label_EstadoLinea">- Estado de línea:</label>
+<label for="label_EstadoLinea" id="lbl_label_EstadoLinea">- Estado de línea:</label>
 <input type="text" id="label_EstadoLinea" oninput="updateResultadoOutput()" style="color: #007BFF;" />
 </div>
 
 
 <div class="input-container">
-<label for="label_Parametros">- Parámetros correctos (Barring): </label>
+<label for="label_Parametros" id="lbl_label_Parametros">- Parámetros correctos (Barring): </label>
 <input type="text" id="label_Parametros" oninput="updateResultadoOutput()" placeholder="(Barring)" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
-<label for="label_Direccion">- Dirección exacta del inconveniente: </label>
+<label for="label_Direccion" id="lbl_label_Direccion">- Dirección exacta del inconveniente: </label>
 <input type="text" id="label_Direccion" oninput="updateResultadoOutput()" placeholder="(Departamento, Provincia, Distrito, Dirección del inconveniente)" style="color: #007BFF;" />
 </div>
 
 
 <div class="input-container">
-<label for="label_GoogleEarth">- Coordenadas Google Earth: <a href="#" onclick="return showImagePopup(event)">👉Clic para ver donde lo obtienes👈</a></label>
+<label for="label_GoogleEarth" id="lbl_label_GoogleEarth">- Coordenadas Google Earth: <a href="#" onclick="return showImagePopup(event)">👉Clic para ver donde lo obtienes👈</a></label>
 <input type="text" id="label_GoogleEarth" oninput="updateResultadoOutput()" placeholder="(Ejemplo: -12.111846867998418, -77.00713689016001)" style="color: #007BFF;">
 </div>
 
@@ -330,19 +347,19 @@
 
 
 <div class="input-container">
-<label for="label_DetalleInc">- Detalle del inconveniente: </label>
+<label for="label_DetalleInc" id="lbl_label_DetalleInc">- Detalle del inconveniente: </label>
 <input type="text" id="label_DetalleInc" oninput="updateResultadoOutput()" placeholder="(Descripción del problema)" style="color: #007BFF;" />
 </div>
 
 
 <div class="input-container">
-<label for="label_BTS">- BTS: </label>
+<label for="label_BTS" id="lbl_label_BTS">- BTS: </label>
 <input type="text" id="label_BTS" oninput="updateResultadoOutput()" placeholder="(Action link: Processes / Check network quality problem)" style="color: #007BFF;" />
 </div>
 
 
 <div class="input-container">
-<label for="labelID">- ID de llamada:</label>
+<label for="labelID" id="lbl_labelID">- ID de llamada:</label>
 <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
 </div>
 
@@ -537,6 +554,27 @@ resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <s
           { id: 'labelID', name: 'ID de llamada' }
       ];
 
+      // Evento para limpiar el error dinámicamente cuando el agente escribe
+      inputDefinitions.forEach(field => {
+          let el = document.getElementById(field.id);
+          if (el) {
+              el.addEventListener('input', function() {
+                  if (this.value.trim() !== "") {
+                      this.classList.remove("input-error");
+                      let labelEl = document.getElementById("lbl_" + this.id);
+                      if (labelEl) labelEl.classList.remove("label-error");
+                  }
+              });
+              el.addEventListener('change', function() { // Para los <select>
+                  if (this.value.trim() !== "") {
+                      this.classList.remove("input-error");
+                      let labelEl = document.getElementById("lbl_" + this.id);
+                      if (labelEl) labelEl.classList.remove("label-error");
+                  }
+              });
+          }
+      });
+
       function showToast(message, type) {
           const toast = document.getElementById("toast");
           toast.innerHTML = message;
@@ -548,11 +586,18 @@ resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <s
       function copiarResultado() {
         let missingFields = [];
 
-        // Validar campos vacíos
+        // Validar campos vacíos y aplicar estilos de error
         inputDefinitions.forEach(field => {
             let el = document.getElementById(field.id);
+            let labelEl = document.getElementById("lbl_" + field.id);
+            
             if (!el || !el.value.trim()) {
                 missingFields.push("• " + field.name);
+                if (el) el.classList.add("input-error");
+                if (labelEl) labelEl.classList.add("label-error");
+            } else {
+                if (el) el.classList.remove("input-error");
+                if (labelEl) labelEl.classList.remove("label-error");
             }
         });
 
@@ -578,9 +623,9 @@ resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <s
 
 
       function limpiarInputs() {
+        // Limpiar los valores
         label0Input.value = "";
         label0_1Input.value = "";
-
         label_LineaInput.value = "";
         label_PlanInput.value = "";
         label_FechaHoraInput.value = "";
@@ -595,6 +640,14 @@ resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <s
         label_BTSInput.value = "";
         labelIDInput.value = "";
         resultadoOutput.innerHTML = "";
+
+        // Remover todas las alertas rojas al borrar
+        inputDefinitions.forEach(field => {
+            let el = document.getElementById(field.id);
+            let labelEl = document.getElementById("lbl_" + field.id);
+            if (el) el.classList.remove("input-error");
+            if (labelEl) labelEl.classList.remove("label-error");
+        });
       }
 
     // Función para mostrar la ventana emergente de la imagen

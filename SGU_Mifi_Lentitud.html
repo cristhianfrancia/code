@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Plantillas - SGU - MIFI</title>
+    <title>SGU - MIFI</title>
     <style>
-        body {	
-            font-family: Calibri, Arial, sans-serif;
+        /* --- REGLA MAESTRA PARA ALINEACIÓN PERFECTA --- */
+        *, *::before, *::after {
+            box-sizing: border-box !important;
+            font-family: Calibri, Arial, sans-serif !important;
+        }
+
+        body {  
+            background-color: #ffffff;
+            margin: 0;
+            padding: 10px;
         }
 
         .container {
-            width: 95%;
-            max-width: 1000px auto;
-            margin: 10px auto;
+            width: 96%; 
+            max-width: 1200px; 
+            margin: 0 auto;
             background-color: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
-            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
+            padding: 20px 50px; 
             position: relative;
-            transition: box-shadow 0.3s ease;
         }
 
-        .container:hover {
-            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        /* --- TÍTULO --- */
+        .elegant-title {
+            text-align: center;
+            color: #1d1d1f;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 20px;
         }
 
         .icon-animation {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 40px;
-            height: 40px;
-            background-color: #007BFF;
+            top: 15px;
+            right: 20px;
+            width: 35px;
+            height: 35px;
+            background-color: #0c477e;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -39,7 +52,7 @@
 
         .icon-animation::before {
             content: "🟡";
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: white;
         }
 
@@ -48,245 +61,251 @@
           to { transform: rotate(360deg); }
       }
 
-        .input-container {
-            display: flex;
-            align-items: center;
-            transition: transform 0.3s ease;
-        }
-
-        .input-container:hover {
-            transform: scale(1.00);
-        }
-
-      .input-container label {
-        width: 50%;
-        transition: color 0.3s ease;
+      /* --- ESPACIADO Y ALINEACIÓN PERFECTA DE CAMPOS --- */
+      .input-container {
+          display: flex;
+          align-items: center;
+          position: relative;
+          margin-bottom: 6px; 
+          width: 100%;
       }
 
-        .input-container input, .input-container select {
-            width: 50%;
-            padding: 4px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
+      .input-container label {
+        flex: 0 0 45%; 
+        font-weight: 500;
+        font-size: 0.95rem;
+        padding-right: 10px; 
+      }
 
+      .input-container input, .input-container select {
+          flex: 1; 
+          padding: 4px 8px; 
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 0.95rem;
+          color: #0c477e;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      }
 
-        .input-container input:focus, .input-container select:focus {
-            border-color: #007BFF;
-            outline: none;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
+      .input-container input:focus, .input-container select:focus {
+          border-color: #0c477e;
+          outline: none;
+          box-shadow: 0 0 5px rgba(12, 71, 126, 0.4);
+      }
 
-      /* Estilos responsive */
+      /* --- CLASE PARA RESALTAR ERRORES EN ROJO --- */
+      .input-error {
+          border: 1px solid #d93025 !important;
+          background-color: #fce8e6 !important;
+          box-shadow: 0 0 4px rgba(217, 48, 37, 0.3) !important;
+      }
+
       @media screen and (max-width: 600px) {
         .input-container {
           flex-direction: column;
+          align-items: flex-start;
         }
-        .input-container label, .input-container input, .input-container select {
+        .input-container label {
+          flex: none;
+          width: 100%;
+          margin-bottom: 4px;
+          padding-right: 0;
+        }
+        .input-container input, .input-container select {
+          flex: none;
           width: 100%;
         }
       }
 
-
       .resultado-label {
-        color: #007BFF;
-      }
-      .dark-mode .resultado-label {
-        color: yellow;
+        color: #0c477e;
+        font-weight: bold;
       }
 
+      .ruta-container {
+          background-color: #fff5e9;
+          padding: 10px;
+          border-radius: 6px;
+          margin: 10px 0;
+          border-left: 4px solid #fd8261;
+          font-size: 0.9rem;
+          color: #333;
+      }
 
-        .ruta-container {
-            background-color: #fff5e9;
-            padding: 10px;
-            border-radius: 4px;
-            margin: 10px 0;
-            border-left: 4px solid #e67a00;
-            font-size: 0.9rem;
-            color: #333;
-        }
+      hr {
+          border: 1px solid #fd8261;
+          margin: 10px 0;
+      }
 
-        hr {
-            border: 1px solid #e67a00;
-            margin: 10px 0;
-        }
+      button {
+          background-color: #0c477e; 
+          color: white;
+          padding: 8px 18px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-weight: bold;
+          font-size: 0.95rem;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+          margin: 5px 5px 5px 0;
+      }
 
-        button {
-            background-color: #e67a00;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            margin: 5px;
-        }
+      button:hover {
+          background-color: #08325a;
+          transform: translateY(-1px);
+      }
 
-        button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
+      button:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
 
-        button:active {
-            background-color: #004085;
-            transform: scale(0.98);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+      button:focus {
+          outline: none;
+      }
 
-        button:focus {
-            outline: none;
-        }
+      #resultado {
+          margin: 10px 0;
+          font-size: 0.95rem;
+          background-color: #f8f9fa;
+          padding: 12px;
+          border-left: 4px solid #0c477e;
+          border-radius: 0 6px 6px 0;
+          white-space: pre-line;
+          min-height: 40px;
+          
+          user-select: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+      }
 
-        #resultado {
-            margin: 15px 0;
-            font-size: 0.9rem;
-            background-color: #fff5e9;
-            padding: 10px;
-            border-left: 4px solid #e67a00;
-            white-space: pre-line;
-            min-height: 50px;
-            transition: background-color 0.3s ease;
-            
-            /* Bloqueo de selección de texto */
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
+      /* --- ESTADOS DE AVISO BOTÓN (VERDE / ROJO) --- */
+      #aviso-status {
+          margin: 8px 0;
+          padding: 10px;
+          border-radius: 6px;
+          font-weight: bold;
+          font-size: 0.9rem;
+          display: none;
+      }
+      .aviso-exito {
+          background-color: #e6f4ea;
+          color: #137333;
+          border: 1px solid #137333;
+      }
+      .aviso-error {
+          background-color: #fce8e6;
+          color: #c5221f;
+          border: 1px solid #c5221f;
+      }
 
+      .footer-autor {
+        text-align: center;
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 0.8rem;
+        color: #888;
+        border-top: 1px solid #eee;
+        user-select: none;
+      }
+      .footer-autor strong {
+        color: #0c477e;
+      }
 
-      /* Estilos para el contenedor de la vista previa */
-      #imagePopup {
+      .code-container p {
+          margin: 5px 0 15px 0;
+          font-size: 0.95rem;
+      }
+
+      .link-ejemplo {
+          color: #fd8261;
+          text-decoration: none;
+          font-size: 0.85rem;
+          font-weight: bold;
+          margin-left: 5px;
+      }
+      .link-ejemplo:hover {
+          text-decoration: underline;
+      }
+
+      /* --- POPUPS DE IMÁGENES UNIFICADOS --- */
+      .popup-overlay {
         display: none;
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.85);
         text-align: center;
-        z-index: 9999;
+        z-index: 1000;
+        backdrop-filter: blur(4px);
       }
 
-      /* Estilos para la imagen de la vista previa */
-      #imagePopup img {
-        max-width: 100%;
-        max-height: 100vh;
-        margin-top: 20px;
+      .popup-overlay img {
+        max-width: 90%;
+        max-height: 85vh;
+        margin-top: 5vh;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       }
 
-      /* Estilos para el botón de cerrar */
       .close-button {
         position: absolute;
-        top: 10px;
-        left: 50%;
-        background-color: #fff;
-        color: #000;
+        top: 20px;
+        right: 20px;
+        background-color: #ffffff;
+        color: #c5221f;
         border: none;
         padding: 8px 16px;
         font-size: 14px;
+        font-weight: bold;
         cursor: pointer;
+        border-radius: 5px;
+        transition: transform 0.2s ease;
+      }
+      .close-button:hover {
+          transform: scale(1.05);
       }
 
-    .footer-autor {
-      text-align: center;
-      margin-top: 30px;
-      padding: 15px;
-      font-size: 0.8rem;
-      color: #aaa;
-      border-top: 1px solid #eee;
-      user-select: none;
-    }
-    .footer-autor strong {
-      color: var(--bitel-blue);
-    }
-
-    /* Notificaciones Modernas */
-    .toast {
-        visibility: hidden;
-        min-width: 300px;
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        border-radius: 8px;
-        padding: 16px;
-        position: fixed;
-        z-index: 1000;
-        left: 50%;
-        bottom: 30px;
-        transform: translateX(-50%);
-        font-size: 16px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        transition: visibility 0s, opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-        opacity: 0;
-        line-height: 1.5;
-    }
-
-    .toast.show {
-        visibility: visible;
-        opacity: 1;
-        transform: translateX(-50%) translateY(-20px);
-    }
-
-    .toast.success {
-        background-color: #28a745; /* Verde */
-    }
-
-    .toast.error {
-        background-color: #dc3545; /* Rojo */
-    }
-
-    /* Clases de Error Dinámicas */
-    .input-error {
-        border-color: #dc3545 !important;
-        box-shadow: 0 0 5px rgba(220, 53, 69, 0.5) !important;
-    }
-
-    .input-error::placeholder {
-        color: #dc3545 !important;
-        opacity: 0.7;
-    }
-
-    .label-error {
-        color: #dc3545 !important;
-        font-weight: bold;
-    }
-
-</style>
+    </style>
 </head>
-<body oncontextmenu="return false"> <div class="container">
-<div class="icon-animation"></div>
+<body oncontextmenu="return false"> 
+  
+  <div class="container">
+    <div class="icon-animation"></div>
 
-<label style="color: red;"><strong>1. Plantilla:</strong></label>
-<p></p>
+    <h2 class="elegant-title">Pedido SGU: MIFI LENTITUD</h2>
+
+    <label style="color: red; font-size: 1.1rem;"><strong>1. Plantilla:</strong></label><br><br>
 
 <center class="code-container">
 <p>
-<input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="color: #007BFF;" />
-// <input type="text" id="label0_1" oninput="updateResultadoOutput()" placeholder="(Problema del cliente)" style="color: #007BFF;" />
-// Se genera Pedido SGU
+<input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="text-align: center; font-weight: bold; width: 160px;" />
+ // <input type="text" id="label0_1" placeholder="(Problema del cliente)" style="text-align: center; width: 250px;" />
+ // Se genera Pedido SGU
 </p>
 </center>
 
-<div class="input-container">
-<label for="label_Linea" id="lbl_label_Linea">- Línea:</label>
-<input type="text" id="label_Linea" oninput="updateResultadoOutput()" placeholder="(Línea del inconveniente)" style="color: #007BFF;" />
-</div>
-
-<div class="input-container">
-<label for="label_Plan" id="lbl_label_Plan">- Plan:</label>
-<input type="text" id="label_Plan" oninput="updateResultadoOutput()" placeholder="(Plan que figura en Customer Care)" style="color: #007BFF;" />
-</div>
-
-<div class="input-container">
-  <label for="label_FechaHora" id="lbl_label_FechaHora">- Fecha y hora del inconveniente:</label>
-  <input type="datetime-local" id="label_FechaHora" oninput="updateResultadoOutput()" />
-</div>
+    <div class="input-container">
+    <label for="label_Linea">- Línea:</label>
+    <input type="text" id="label_Linea" placeholder="(Línea del inconveniente)" />
+    </div>
 
     <div class="input-container">
-      <label for="label_Cobertura" id="lbl_label_Cobertura">- Indicador de cobertura:</label>
-      <select id="label_Cobertura" onchange="updateResultadoOutput()">
+    <label for="label_Plan">- Plan:</label>
+    <input type="text" id="label_Plan" placeholder="(Plan que figura en Customer Care)" />
+    </div>
+
+    <div class="input-container">
+      <label for="label_FechaHora">- Fecha y hora del inconveniente:</label>
+      <input type="datetime-local" id="label_FechaHora" />
+    </div>
+
+    <div class="input-container">
+      <label for="label_Cobertura">- Indicador de cobertura:</label>
+      <select id="label_Cobertura">
         <option value="">Seleccionar</option>
         <option value="-">-</option>
         <option value="E">E</option>
@@ -298,16 +317,14 @@
       </select>
     </div>
 
-
-<div class="input-container">
-<label for="label_BarraSeñal" id="lbl_label_BarraSeñal">- Barra de Señal:</label>
-<input type="text" id="label_BarraSeñal" oninput="updateResultadoOutput()" placeholder="(Lo que figura en la barra)" style="color: #007BFF;" />
-</div>
-
+    <div class="input-container">
+    <label for="label_BarraSeñal">- Barra de Señal:</label>
+    <input type="text" id="label_BarraSeñal" placeholder="(Lo que figura en la barra)" />
+    </div>
 
     <div class="input-container">
-      <label for="label_TipoInconveniente" id="lbl_label_TipoInconveniente">- Tipo de inconveniente:</label>
-      <select id="label_TipoInconveniente" onchange="updateResultadoOutput()">
+      <label for="label_TipoInconveniente">- Tipo de inconveniente:</label>
+      <select id="label_TipoInconveniente">
         <option value="">Seleccionar</option>
         <option value="-">-</option>
         <option value="Internet">Internet</option>
@@ -317,189 +334,194 @@
       </select>
     </div>
 
+    <div class="input-container">
+    <label for="label_EstadoLinea">- Estado de línea:</label>
+    <input type="text" id="label_EstadoLinea" />
+    </div>
 
-<div class="input-container">
-<label for="label_EstadoLinea" id="lbl_label_EstadoLinea">- Estado de línea:</label>
-<input type="text" id="label_EstadoLinea" oninput="updateResultadoOutput()" style="color: #007BFF;" />
-</div>
+    <div class="input-container">
+    <label for="label_Parametros">- Parámetros correctos (Barring): </label>
+    <input type="text" id="label_Parametros" placeholder="(Barring)" />
+    </div>
 
+    <div class="input-container">
+    <label for="label_Direccion">- Dirección exacta del inconveniente: </label>
+    <input type="text" id="label_Direccion" placeholder="(Departamento, Provincia, Distrito, Dirección del inconveniente)" />
+    </div>
 
-<div class="input-container">
-<label for="label_Parametros" id="lbl_label_Parametros">- Parámetros correctos (Barring): </label>
-<input type="text" id="label_Parametros" oninput="updateResultadoOutput()" placeholder="(Barring)" style="color: #007BFF;" />
-</div>
+    <div class="input-container">
+    <label for="label_GoogleEarth">- Coordenadas Google Earth: <a href="#" class="link-ejemplo" onclick="return showPopup('imagePopupMaps')">👉Ejemplo</a></label>
+    <input type="text" id="label_GoogleEarth" placeholder="(Ejemplo: -12.111846867998418, -77.00713689016001)">
+    </div>
 
-<div class="input-container">
-<label for="label_Direccion" id="lbl_label_Direccion">- Dirección exacta del inconveniente: </label>
-<input type="text" id="label_Direccion" oninput="updateResultadoOutput()" placeholder="(Departamento, Provincia, Distrito, Dirección del inconveniente)" style="color: #007BFF;" />
-</div>
+    <div id="imagePopupMaps" class="popup-overlay">
+    <button class="close-button" onclick="hidePopup('imagePopupMaps')">CERRAR</button>
+    <img src="https://i.postimg.cc/fyJXFWkg/Google-Maps.png">
+    </div>
 
+    <div class="input-container">
+    <label for="label_DetalleInc">- Detalle del inconveniente: </label>
+    <input type="text" id="label_DetalleInc" placeholder="(Descripción del problema)" />
+    </div>
 
-<div class="input-container">
-<label for="label_GoogleEarth" id="lbl_label_GoogleEarth">- Coordenadas Google Earth: <a href="#" onclick="return showImagePopup(event)">👉Clic para ver donde lo obtienes👈</a></label>
-<input type="text" id="label_GoogleEarth" oninput="updateResultadoOutput()" placeholder="(Ejemplo: -12.111846867998418, -77.00713689016001)" style="color: #007BFF;">
-</div>
+    <div class="input-container">
+    <label for="label_BTS">- BTS: </label>
+    <input type="text" id="label_BTS" placeholder="(Action link: Processes / Check network quality problem)" />
+    </div>
 
-<div id="imagePopup">
-<button class="close-button" onclick="hideImagePopup()">CERRAR</button>
-<img src="https://i.postimg.cc/fyJXFWkg/Google-Maps.png">
-</div>
+    <div class="input-container">
+    <label for="labelID">- ID de llamada:</label>
+    <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" />
+    </div>
 
+    <br>
+    
+    <p id="resultado"></p>
+    <div id="aviso-status"></div>
 
-<div class="input-container">
-<label for="label_DetalleInc" id="lbl_label_DetalleInc">- Detalle del inconveniente: </label>
-<input type="text" id="label_DetalleInc" oninput="updateResultadoOutput()" placeholder="(Descripción del problema)" style="color: #007BFF;" />
-</div>
+    <button onclick="copiarResultado()">Copiar</button>
+    <button onclick="limpiarInputs()">Borrar</button>
 
+    <br />
+    <br />
 
-<div class="input-container">
-<label for="label_BTS" id="lbl_label_BTS">- BTS: </label>
-<input type="text" id="label_BTS" oninput="updateResultadoOutput()" placeholder="(Action link: Processes / Check network quality problem)" style="color: #007BFF;" />
-</div>
+    <label style="color: red; font-size: 1.1rem;"><strong>2. Tipificación:</strong></label>
 
+    <div class="ruta-container">
+    - <strong>Address:</strong> DIRECCIÓN DEL PROBLEMA, REFERENCIA DEL PROBLEMA, LUG@R: DEPARTAMENTO - PROVINCIA - DISTRITO
+    <br><br>
+    - <strong>Ruta:</strong> Other / Pedido SGU / Pedido SGU / Problemas SGU / Calidad / Problemas de velocidad (con check a BO ✅)
+    </div>
 
-<div class="input-container">
-<label for="labelID" id="lbl_labelID">- ID de llamada:</label>
-<input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
-</div>
+    <br />
+    <hr />
+    <br />
 
-<p id="resultado" class="dark-mode-text" onselectstart="return false;"></p>
+    <label style="color: red; font-size: 1.1rem;"><strong>3. Speech:</strong></label>
 
-<button onclick="copiarResultado()">Copiar</button>
-<button onclick="limpiarInputs()">Borrar</button>
+    <p style="margin-top: 5px;"><strong><span style="color: #0c477e">🎧 Agente: </span></strong><span style="color: #0c477e">(Nombre del cliente)</span>, le confirmamos que hemos recibido y registrado su pedido con el código <span style="color: #0c477e">(CASSXXXXXXXXXX) o (CAPVXXXXXXXXXX)</span>. El plazo estimado de atención es de 05 días calendario. Nuestra respuesta será enviada vía mensaje de texto en 1 día hábil luego del plazo de atención.</p>
 
-<br />
-<br />
+    <label style="color: red; font-size: 1.1rem;"><strong>4. Despedida:</strong></label>
 
-<label style="color: red;"><strong>2. Tipificación:</strong></label>
+    <p style="margin-top: 5px;"><strong><span style="color: #0c477e">🎧 Agente: </span></strong>Eso sería todo de mi parte, muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada. </p>
 
-<div class="ruta-container">
-- <strong>Address:</strong> DIRECCIÓN DEL PROBLEMA, REFERENCIA DEL PROBLEMA, LUG@R: DEPARTAMENTO - PROVINCIA - DISTRITO
-<br><br>
-- <strong>Ruta:</strong> Other / Pedido SGU / Pedido SGU / Problemas SGU / Calidad / Problemas de velocidad (con check a BO ✅)
-</div>
+    <br><br>
+    <strong>Ejemplo de código para Pedido SGU:</strong>
+    <br><br>
+    <img src="https://i.postimg.cc/Y2FYwHwH/COD-Pedido-SGU.png" style="max-width: 100%; border-radius: 8px;">
 
-<br />
-<hr />
-<br />
+    <br><br><br><br>
+    <div class="footer-autor">
+    Developed by <strong>Cristhian Francia</strong> &copy; 2026 | All rights reserved.
+    </div>
+  </div>
 
-<label style="color: red;"><strong>3. Speech:</strong></label>
+  <script>
+    // Protecciones
+    document.addEventListener('contextmenu', event => {
+        event.preventDefault();
+        alert('El menú contextual (clic derecho) está deshabilitado.'); 
+    });
 
-<p><strong><span style="color: #01768b">🎧 Agente: </span></strong><span style="color: #007BFF">(Nombre del cliente)</span>, le confirmamos que hemos recibido y registrado su pedido con el código <span style="color: #007BFF">(CASSXXXXXXXXXX) o (CAPVXXXXXXXXXX)</span>. El plazo estimado de atención es de 05 días calendario. Nuestra respuesta será enviada vía mensaje de texto en 1 día hábil luego del plazo de atención.</p>
+    document.onkeydown = function(e) {
+        if (e.key === 'F12' || e.keyCode === 123) {
+            alert('Las herramientas de desarrollador están deshabilitadas.'); 
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I' || e.keyCode === 74 || e.key === 'J' || e.keyCode === 67 || e.key === 'C')) {
+            return false;
+        }
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+            return false;
+        }
+    };
 
-<label style="color: red;"><strong>4. Despedida:</strong></label>
+    window.onload = function() {
+        let fechaLimite = new Date("2026-12-30T23:59:59");
+        let fechaActual = new Date();
+        if (fechaActual > fechaLimite) {
+            document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%; font-family: Calibri, sans-serif;'>Revisar la variable de mantenimiento<br></h1><h5 style='text-align:center; color:red; font-family: Calibri, sans-serif;'>(Requiere actualización)</h5>";
+        }
+    };
 
-<p><strong><span style="color: #01768b">🎧 Agente: </span></strong>Eso sería todo de mi parte, muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada. </p>
+    // Arreglo con los 15 inputs exactos para esta plantilla
+    const inputsArray = [
+        document.querySelector("#label0"),
+        document.querySelector("#label0_1"),
+        document.querySelector("#label_Linea"),
+        document.querySelector("#label_Plan"),
+        document.querySelector("#label_FechaHora"),
+        document.querySelector("#label_Cobertura"),
+        document.querySelector("#label_BarraSeñal"),
+        document.querySelector("#label_TipoInconveniente"),
+        document.querySelector("#label_EstadoLinea"),
+        document.querySelector("#label_Parametros"),
+        document.querySelector("#label_Direccion"),
+        document.querySelector("#label_GoogleEarth"),
+        document.querySelector("#label_DetalleInc"),
+        document.querySelector("#label_BTS"),
+        document.querySelector("#labelID")
+    ];
 
-<br><br>
-<strong>Ejemplo de código para Pedido SGU:</strong>
-<br><br>
-<img src="https://i.postimg.cc/Y2FYwHwH/COD-Pedido-SGU.png">
-</div>
+    const resultadoOutput = document.querySelector("#resultado");
+    const avisoStatus = document.querySelector("#aviso-status");
 
-<br><br><br><br><br><br>
-<textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+    // Asignar eventos globales a todos los campos
+    inputsArray.forEach(input => {
+        const updateEvent = input.tagName === 'SELECT' ? 'change' : 'input';
+        
+        input.addEventListener(updateEvent, function() {
+            this.classList.remove('input-error'); 
+            updateResultadoOutput(); 
+        });
+    });
 
-<div class="footer-autor">
-Developed by c&f &copy; 2020 | All rights reserved.
-</div>
-</div>
-
-<div id="toast" class="toast"></div>
-
-
-    <script>
-
-window.onload = function() {
-    let fechaLimite = new Date("2026-06-30T23:59:59");
-    let fechaActual = new Date();
-
-    if (fechaActual > fechaLimite) {
-        document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Actualización en proceso)</h5>";
+    // Funciones de Formateo
+    function capitalizeFirstLetter(string) {
+      if (!string) return "";
+      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
     }
-};
 
-      const label0Input = document.querySelector("#label0");
-      const label0_1Input = document.querySelector("#label0_1");
+    function capitalizeName(input) {
+      if (!input) return "";
+      return input
+        .toLowerCase()
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    }
 
-      const label_LineaInput = document.querySelector("#label_Linea");
-      const label_PlanInput = document.querySelector("#label_Plan");
-      const label_FechaHoraInput = document.querySelector("#label_FechaHora");
-      const label_CoberturaInput = document.querySelector("#label_Cobertura");
-      const label_BarraSeñalInput = document.querySelector("#label_BarraSeñal");
-      const label_TipoInconvenienteInput = document.querySelector("#label_TipoInconveniente");
-      const label_EstadoLineaInput = document.querySelector("#label_EstadoLinea");
-      const label_ParametrosInput = document.querySelector("#label_Parametros");
-      const label_DireccionInput = document.querySelector("#label_Direccion");
-      const label_GoogleEarthInput = document.querySelector("#label_GoogleEarth");
-      const label_DetalleIncInput = document.querySelector("#label_DetalleInc");
-      const label_BTSInput = document.querySelector("#label_BTS");
-      const labelIDInput = document.querySelector("#labelID");
-      const resultadoOutput = document.querySelector("#resultado");
+    function formatDateToDDMMYYYYHHMM(dateString) {
+      if (!dateString) return "";
+      const dateParts = dateString.split("T"); 
+      const date = dateParts[0];
+      const time = dateParts[1] ? dateParts[1].slice(0, 5) : ""; 
+      const datePartsFormatted = date.split("-");
+      if (datePartsFormatted.length < 3) return dateString; // Fallback
+      const day = datePartsFormatted[2];
+      const month = datePartsFormatted[1];
+      const year = datePartsFormatted[0];
+      return `${day}/${month}/${year} ${time}`;
+    }
 
+    function updateResultadoOutput() {
+        const label0 = inputsArray[0].value;
+        const label0_1 = capitalizeFirstLetter(inputsArray[1].value);
+        const label_Linea = inputsArray[2].value;
+        const label_Plan = capitalizeName(inputsArray[3].value);
+        const label_FechaHora = formatDateToDDMMYYYYHHMM(inputsArray[4].value);
+        const label_Cobertura = inputsArray[5].value;
+        const label_BarraSeñal = inputsArray[6].value;
+        const label_TipoInconveniente = inputsArray[7].value;
+        const label_EstadoLinea = inputsArray[8].value;
+        const label_Parametros = inputsArray[9].value;
+        const label_Direccion = inputsArray[10].value;
+        const label_GoogleEarth = inputsArray[11].value;
+        const label_DetalleInc = inputsArray[12].value;
+        const label_BTS = inputsArray[13].value;
+        const labelID = inputsArray[14].value;
 
-
-      label0Input.addEventListener("input", updateResultadoOutput);
-      label0_1Input.addEventListener("input", updateResultadoOutput);
-
-      label_LineaInput.addEventListener("input", updateResultadoOutput);
-      label_PlanInput.addEventListener("input", updateResultadoOutput);
-      label_FechaHoraInput.addEventListener("input", updateResultadoOutput);
-      label_CoberturaInput.addEventListener("change", updateResultadoOutput);
-      label_BarraSeñalInput.addEventListener("input", updateResultadoOutput);
-      label_TipoInconvenienteInput.addEventListener("change", updateResultadoOutput);
-      label_EstadoLineaInput.addEventListener("input", updateResultadoOutput);
-      label_ParametrosInput.addEventListener("input", updateResultadoOutput);
-      label_DireccionInput.addEventListener("input", updateResultadoOutput);
-      label_GoogleEarthInput.addEventListener("input", updateResultadoOutput);
-      label_DetalleIncInput.addEventListener("input", updateResultadoOutput);
-      label_BTSInput.addEventListener("input", updateResultadoOutput);
-      labelIDInput.addEventListener("input", updateResultadoOutput);
-
-
-function formatDateToDDMMYYYYHHMM(dateString) {
-  if (!dateString) return ""; // Manejo para fechas nulas o no definidas
-
-  const dateParts = dateString.split("T"); // Separar fecha y hora
-  const date = dateParts[0];
-  const time = dateParts[1].slice(0, 5); // Tomar solo las primeras 5 letras para obtener HH:MM
-  const datePartsFormatted = date.split("-");
-  const day = datePartsFormatted[2];
-  const month = datePartsFormatted[1];
-  const year = datePartsFormatted[0];
-  return `${day}/${month}/${year} ${time}`;
-}
-
-
-  function formatDateToDDMMYYYY(dateString) {
-    const dateParts = dateString.split("-");
-    const day = dateParts[2];
-    const month = dateParts[1];
-    const year = dateParts[0];
-    return `${day}/${month}/${year}`;
-  }
-
-function updateResultadoOutput() {
-
-const label0 = label0Input.value;
-const label0_1 = capitalizeFirstLetter(label0_1Input.value);
-
-const label_Linea = label_LineaInput.value;
-const label_Plan = capitalizeName(label_PlanInput.value);
-const label_FechaHora = formatDateToDDMMYYYYHHMM(label_FechaHoraInput.value);
-const label_Cobertura = label_CoberturaInput.value;
-const label_BarraSeñal = label_BarraSeñalInput.value;
-const label_TipoInconveniente = label_TipoInconvenienteInput.value;
-const label_EstadoLinea = label_EstadoLineaInput.value;
-const label_Parametros = label_ParametrosInput.value;
-const label_Direccion = label_DireccionInput.value;
-const label_GoogleEarth = label_GoogleEarthInput.value;
-const label_DetalleInc = label_DetalleIncInput.value;
-const label_BTS = label_BTSInput.value;
-const labelID = labelIDInput.value;
-
-
-resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> // Se genera Pedido SGU
+        resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> // Se genera Pedido SGU
 
 - Línea: <span class="resultado-label">${label_Linea}</span>
 - Plan: <span class="resultado-label">${label_Plan}</span>
@@ -514,19 +536,6 @@ resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <s
 - Detalle del inconveniente: <span class="resultado-label">${label_DetalleInc}</span>
 - BTS: <span class="resultado-label">${label_BTS}</span>
 - $$_<span class="resultado-label">${labelID}</span>_&&`;
-}
-
-
- function capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-    }
-
-    function capitalizeName(input) {
-      return input
-        .toLowerCase()
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
     }
 
       function checkLength(input) {
@@ -535,135 +544,61 @@ resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <s
         }
       }
 
-      // Arrays con las definiciones de los inputs para validación
-      const inputDefinitions = [
-          { id: 'label0', name: 'Número del que llama' },
-          { id: 'label0_1', name: 'Problema del cliente' },
-          { id: 'label_Linea', name: 'Línea' },
-          { id: 'label_Plan', name: 'Plan' },
-          { id: 'label_FechaHora', name: 'Fecha y hora' },
-          { id: 'label_Cobertura', name: 'Indicador de cobertura' },
-          { id: 'label_BarraSeñal', name: 'Barra de Señal' },
-          { id: 'label_TipoInconveniente', name: 'Tipo de inconveniente' },
-          { id: 'label_EstadoLinea', name: 'Estado de línea' },
-          { id: 'label_Parametros', name: 'Parámetros correctos' },
-          { id: 'label_Direccion', name: 'Dirección exacta' },
-          { id: 'label_GoogleEarth', name: 'Coordenadas Google Earth' },
-          { id: 'label_DetalleInc', name: 'Detalle del inconveniente' },
-          { id: 'label_BTS', name: 'BTS' },
-          { id: 'labelID', name: 'ID de llamada' }
-      ];
-
-      // Evento para limpiar el error dinámicamente cuando el agente escribe
-      inputDefinitions.forEach(field => {
-          let el = document.getElementById(field.id);
-          if (el) {
-              el.addEventListener('input', function() {
-                  if (this.value.trim() !== "") {
-                      this.classList.remove("input-error");
-                      let labelEl = document.getElementById("lbl_" + this.id);
-                      if (labelEl) labelEl.classList.remove("label-error");
-                  }
-              });
-              el.addEventListener('change', function() { // Para los <select>
-                  if (this.value.trim() !== "") {
-                      this.classList.remove("input-error");
-                      let labelEl = document.getElementById("lbl_" + this.id);
-                      if (labelEl) labelEl.classList.remove("label-error");
-                  }
-              });
-          }
-      });
-
-      function showToast(message, type) {
-          const toast = document.getElementById("toast");
-          toast.innerHTML = message;
-          toast.className = "toast show " + type;
-          // Ocultar después de 4.5 segundos
-          setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 4500); 
-      }
-
+      /* --- FUNCIÓN COPIAR CON VALIDACIÓN Y RESALTADO DE ERRORES --- */
       function copiarResultado() {
-        let missingFields = [];
+          let hayErrores = false;
 
-        // Validar campos vacíos y aplicar estilos de error
-        inputDefinitions.forEach(field => {
-            let el = document.getElementById(field.id);
-            let labelEl = document.getElementById("lbl_" + field.id);
-            
-            if (!el || !el.value.trim()) {
-                missingFields.push("• " + field.name);
-                if (el) el.classList.add("input-error");
-                if (labelEl) labelEl.classList.add("label-error");
-            } else {
-                if (el) el.classList.remove("input-error");
-                if (labelEl) labelEl.classList.remove("label-error");
-            }
-        });
+          // Revisamos cada input, si está vacío le ponemos la clase roja
+          inputsArray.forEach(input => {
+              if (!input.value.trim()) {
+                  input.classList.add('input-error');
+                  hayErrores = true;
+              } else {
+                  input.classList.remove('input-error');
+              }
+          });
 
-        // Si faltan campos, mostrar error y detener
-        if (missingFields.length > 0) {
-            let errorMsg = "<strong>¡Faltan completar campos!</strong><br><br>" + missingFields.join("<br>");
-            showToast(errorMsg, "error");
-            return;
-        }
+          if (hayErrores) {
+              avisoStatus.textContent = "❌ Error: Faltan datos obligatorios. Por favor completa los campos resaltados en rojo.";
+              avisoStatus.className = "aviso-error";
+              avisoStatus.style.display = "block";
+              return;
+          }
 
-        // Proceso de copiado
-        const resultadoTexto = resultadoOutput.innerText.trim();
-        const textarea = document.createElement("textarea");
-        textarea.value = resultadoTexto;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textarea);
-        
-        // Notificación de éxito
-        showToast("✅ ¡Resultado copiado exitosamente!", "success");
+          const resultadoTexto = resultadoOutput.innerText.trim();
+          const textarea = document.createElement("textarea");
+          textarea.value = resultadoTexto;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+          
+          avisoStatus.textContent = "✅ ¡Copiado excelente! Los datos se han estructurado de forma correcta en el portapapeles.";
+          avisoStatus.className = "aviso-exito";
+          avisoStatus.style.display = "block";
       }
-
 
       function limpiarInputs() {
-        // Limpiar los valores
-        label0Input.value = "";
-        label0_1Input.value = "";
-        label_LineaInput.value = "";
-        label_PlanInput.value = "";
-        label_FechaHoraInput.value = "";
-        label_CoberturaInput.value = "";
-        label_BarraSeñalInput.value = "";
-        label_TipoInconvenienteInput.value = "";
-        label_EstadoLineaInput.value = "";
-        label_ParametrosInput.value = "";
-        label_DireccionInput.value = "";
-        label_GoogleEarthInput.value = "";
-        label_DetalleIncInput.value = "";
-        label_BTSInput.value = "";
-        labelIDInput.value = "";
-        resultadoOutput.innerHTML = "";
-
-        // Remover todas las alertas rojas al borrar
-        inputDefinitions.forEach(field => {
-            let el = document.getElementById(field.id);
-            let labelEl = document.getElementById("lbl_" + field.id);
-            if (el) el.classList.remove("input-error");
-            if (labelEl) labelEl.classList.remove("label-error");
+        inputsArray.forEach(input => {
+            input.value = "";
+            input.classList.remove('input-error'); 
         });
+        
+        resultadoOutput.innerHTML = "";
+        avisoStatus.style.display = "none";
+        avisoStatus.innerHTML = "";
       }
 
-    // Función para mostrar la ventana emergente de la imagen
-    function showImagePopup(event) {
-      event.preventDefault();
-      const imagePopup = document.getElementById("imagePopup");
-      imagePopup.style.display = "block";
-      return false;
-    }
+  /* --- FUNCIÓN UNIFICADA DE POPUPS --- */
+  function showPopup(id) {
+    event.preventDefault();
+    document.getElementById(id).style.display = "block";
+    return false;
+  }
+  function hidePopup(id) {
+    document.getElementById(id).style.display = "none";
+  }
 
-    // Función para ocultar la ventana emergente de la imagen
-    function hideImagePopup() {
-      const imagePopup = document.getElementById("imagePopup");
-      imagePopup.style.display = "none";
-    }
-
-</script>
+  </script>
 </body>
 </html>

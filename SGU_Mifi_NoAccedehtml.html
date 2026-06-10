@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Plantillas - SGU - Internet - No accede</title>
+  <title>Plantillas - SGU - Mifi - No accede</title>
     <style>
         body {	
             font-family: Calibri, Arial, sans-serif;
@@ -9,7 +9,7 @@
 
         .container {
             width: 95%;
-            max-width: 1200px; /* Corregido: removido 'auto' */
+            max-width: 1200px;
             margin: 10px auto;
             background-color: #ffffff;
             border-radius: 20px;
@@ -60,9 +60,10 @@
 
       .input-container label {
         width: 50%;
+        transition: color 0.3s ease;
       }
 
-        .input-container input {
+        .input-container input, .input-container select {
             width: 50%;
             padding: 4px;
             border: 1px solid #ccc;
@@ -70,7 +71,7 @@
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .input-container input:focus {
+        .input-container input:focus, .input-container select:focus {
             border-color: #007BFF;
             outline: none;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
@@ -81,7 +82,7 @@
         .input-container {
           flex-direction: column;
         }
-        .input-container label, .input-container input {
+        .input-container label, .input-container input, .input-container select {
           width: 100%;
         }
       }
@@ -143,6 +144,12 @@
             white-space: pre-line;
             min-height: 50px;
             transition: background-color 0.3s ease;
+            
+            /* Bloqueo de selección de texto */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
       /* Estilos para el contenedor de la vista previa */
@@ -155,6 +162,7 @@
         bottom: 0;
         background-color: rgba(0, 0, 0, 0.8);
         text-align: center;
+        z-index: 9999;
       }
 
       /* Estilos para la imagen de la vista previa */
@@ -189,6 +197,57 @@
     .footer-autor strong {
       color: var(--bitel-blue);
     }
+
+    /* Notificaciones Modernas */
+    .toast {
+        visibility: hidden;
+        min-width: 300px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 8px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1000;
+        left: 50%;
+        bottom: 30px;
+        transform: translateX(-50%);
+        font-size: 16px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: visibility 0s, opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        opacity: 0;
+        line-height: 1.5;
+    }
+
+    .toast.show {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(-50%) translateY(-20px);
+    }
+
+    .toast.success {
+        background-color: #28a745; /* Verde */
+    }
+
+    .toast.error {
+        background-color: #dc3545; /* Rojo */
+    }
+
+    /* Clases de Error Dinámicas */
+    .input-error {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 5px rgba(220, 53, 69, 0.5) !important;
+    }
+
+    .input-error::placeholder {
+        color: #dc3545 !important;
+        opacity: 0.7;
+    }
+
+    .label-error {
+        color: #dc3545 !important;
+        font-weight: bold;
+    }
 </style>
 </head>
 <body oncontextmenu="return false"> 
@@ -207,22 +266,22 @@
 </center>
 
 <div class="input-container">
-<label for="label_Linea">- Línea:</label>
+<label for="label_Linea" id="lbl_label_Linea">- Línea:</label>
 <input type="text" id="label_Linea" oninput="updateResultadoOutput()" placeholder="(Línea del inconveniente)" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
-<label for="label_Plan">- Plan:</label>
+<label for="label_Plan" id="lbl_label_Plan">- Plan:</label>
 <input type="text" id="label_Plan" oninput="updateResultadoOutput()" placeholder="(Plan que figura en Customer Care)" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
-  <label for="label_FechaHora">- Fecha y hora del inconveniente:</label>
+  <label for="label_FechaHora" id="lbl_label_FechaHora">- Fecha y hora del inconveniente:</label>
   <input type="datetime-local" id="label_FechaHora" oninput="updateResultadoOutput()" />
 </div>
 
 <div class="input-container">
-  <label for="label_Cobertura">- Indicador de cobertura:</label>
+  <label for="label_Cobertura" id="lbl_label_Cobertura">- Indicador de cobertura:</label>
   <select id="label_Cobertura" onchange="updateResultadoOutput()">
     <option value="">Seleccionar</option>
     <option value="-">-</option>
@@ -236,12 +295,12 @@
 </div>
 
 <div class="input-container">
-<label for="label_BarraSeñal">- Barra de Señal:</label>
+<label for="label_BarraSeñal" id="lbl_label_BarraSeñal">- Barra de Señal:</label>
 <input type="text" id="label_BarraSeñal" oninput="updateResultadoOutput()" placeholder="(Lo que figura en la barra)" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
-  <label for="label_TipoInconveniente">- Tipo de inconveniente:</label>
+  <label for="label_TipoInconveniente" id="lbl_label_TipoInconveniente">- Tipo de inconveniente:</label>
   <select id="label_TipoInconveniente" onchange="updateResultadoOutput()">
     <option value="">Seleccionar</option>
     <option value="-">-</option>
@@ -253,22 +312,22 @@
 </div>
 
 <div class="input-container">
-<label for="label_EstadoLinea">- Estado de línea:</label>
+<label for="label_EstadoLinea" id="lbl_label_EstadoLinea">- Estado de línea:</label>
 <input type="text" id="label_EstadoLinea" oninput="updateResultadoOutput()" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
-<label for="label_Parametros">- Parámetros correctos (Barring): </label>
+<label for="label_Parametros" id="lbl_label_Parametros">- Parámetros correctos (Barring): </label>
 <input type="text" id="label_Parametros" oninput="updateResultadoOutput()" placeholder="(Barring)" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
-<label for="label_Direccion">- Dirección exacta del inconveniente: </label>
+<label for="label_Direccion" id="lbl_label_Direccion">- Dirección exacta del inconveniente: </label>
 <input type="text" id="label_Direccion" oninput="updateResultadoOutput()" placeholder="(Departamento, Provincia, Distrito, Dirección del inconveniente)" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
-<label for="label_GoogleEarth">- Coordenadas Google Earth: <a href="#" onclick="return showImagePopup(event)">👉Clic para ver donde lo obtienes👈</a></label>
+<label for="label_GoogleEarth" id="lbl_label_GoogleEarth">- Coordenadas Google Earth: <a href="#" onclick="return showImagePopup(event)">👉Clic para ver donde lo obtienes👈</a></label>
 <input type="text" id="label_GoogleEarth" oninput="updateResultadoOutput()" placeholder="(Ejemplo: -12.111846867998418, -77.00713689016001)" style="color: #007BFF;">
 </div>
 
@@ -278,21 +337,21 @@
 </div>
 
 <div class="input-container">
-<label for="label_DetalleInc">- Detalle del inconveniente: </label>
+<label for="label_DetalleInc" id="lbl_label_DetalleInc">- Detalle del inconveniente: </label>
 <input type="text" id="label_DetalleInc" oninput="updateResultadoOutput()" placeholder="(Descripción del problema)" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
-<label for="label_BTS">- BTS: </label>
+<label for="label_BTS" id="lbl_label_BTS">- BTS: </label>
 <input type="text" id="label_BTS" oninput="updateResultadoOutput()" placeholder="(BTS de la línea)" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
-<label for="labelID">- ID de llamada:</label>
+<label for="labelID" id="lbl_labelID">- ID de llamada:</label>
 <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
 </div>
 
-<p id="resultado" class="dark-mode-text"></p>
+<p id="resultado" class="dark-mode-text" onselectstart="return false;"></p>
 
 <button onclick="copiarResultado()">Copiar</button>
 <button onclick="limpiarInputs()">Borrar</button>
@@ -330,6 +389,8 @@
 <div class="footer-autor">
 Developed by c&f &copy; 2020 | All rights reserved.
 </div>
+
+<div id="toast" class="toast"></div>
 
 <script>
 window.onload = function() {
@@ -400,7 +461,7 @@ function updateResultadoOutput() {
   const label_Direccion = label_DireccionInput.value;
   const label_GoogleEarth = label_GoogleEarthInput.value;
   const label_DetalleInc = label_DetalleIncInput.value;
-  const label_BTS = label_BTSInput.value; // Corregido: antes decía label_BTSIncInput
+  const label_BTS = label_BTSInput.value; 
   const labelID = labelIDInput.value;
 
   resultadoOutput.innerHTML = `<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> // Se genera Pedido SGU<br><br>` +
@@ -437,7 +498,79 @@ function checkLength(input) {
   }
 }
 
+// Arrays con las definiciones de los inputs para validación
+const inputDefinitions = [
+    { id: 'label0', name: 'Número del que llama' },
+    { id: 'label0_1', name: 'Problema del cliente' },
+    { id: 'label_Linea', name: 'Línea' },
+    { id: 'label_Plan', name: 'Plan' },
+    { id: 'label_FechaHora', name: 'Fecha y hora' },
+    { id: 'label_Cobertura', name: 'Indicador de cobertura' },
+    { id: 'label_BarraSeñal', name: 'Barra de Señal' },
+    { id: 'label_TipoInconveniente', name: 'Tipo de inconveniente' },
+    { id: 'label_EstadoLinea', name: 'Estado de línea' },
+    { id: 'label_Parametros', name: 'Parámetros correctos' },
+    { id: 'label_Direccion', name: 'Dirección exacta' },
+    { id: 'label_GoogleEarth', name: 'Coordenadas Google Earth' },
+    { id: 'label_DetalleInc', name: 'Detalle del inconveniente' },
+    { id: 'label_BTS', name: 'BTS' },
+    { id: 'labelID', name: 'ID de llamada' }
+];
+
+// Evento para limpiar el error dinámicamente cuando el agente escribe
+inputDefinitions.forEach(field => {
+    let el = document.getElementById(field.id);
+    if (el) {
+        el.addEventListener('input', function() {
+            if (this.value.trim() !== "") {
+                this.classList.remove("input-error");
+                let labelEl = document.getElementById("lbl_" + this.id);
+                if (labelEl) labelEl.classList.remove("label-error");
+            }
+        });
+        el.addEventListener('change', function() { 
+            if (this.value.trim() !== "") {
+                this.classList.remove("input-error");
+                let labelEl = document.getElementById("lbl_" + this.id);
+                if (labelEl) labelEl.classList.remove("label-error");
+            }
+        });
+    }
+});
+
+function showToast(message, type) {
+    const toast = document.getElementById("toast");
+    toast.innerHTML = message;
+    toast.className = "toast show " + type;
+    setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 4500); 
+}
+
 function copiarResultado() {
+  let missingFields = [];
+
+  // Validar campos vacíos y aplicar estilos de error
+  inputDefinitions.forEach(field => {
+      let el = document.getElementById(field.id);
+      let labelEl = document.getElementById("lbl_" + field.id);
+      
+      if (!el || !el.value.trim()) {
+          missingFields.push("• " + field.name);
+          if (el) el.classList.add("input-error");
+          if (labelEl) labelEl.classList.add("label-error");
+      } else {
+          if (el) el.classList.remove("input-error");
+          if (labelEl) labelEl.classList.remove("label-error");
+      }
+  });
+
+  // Si faltan campos, mostrar error y detener
+  if (missingFields.length > 0) {
+      let errorMsg = "<strong>¡Faltan completar campos!</strong><br><br>" + missingFields.join("<br>");
+      showToast(errorMsg, "error");
+      return;
+  }
+
+  // Proceso de copiado
   const resultadoTexto = resultadoOutput.innerText.trim();
   const textarea = document.createElement("textarea");
   textarea.value = resultadoTexto;
@@ -445,7 +578,9 @@ function copiarResultado() {
   textarea.select();
   document.execCommand("copy");
   document.body.removeChild(textarea);
-  alert("Resultado copiado al portapapeles");
+  
+  // Notificación de éxito
+  showToast("✅ ¡Resultado copiado exitosamente!", "success");
 }
 
 function limpiarInputs() {
@@ -465,6 +600,14 @@ function limpiarInputs() {
   label_BTSInput.value = "";
   labelIDInput.value = "";
   resultadoOutput.innerHTML = "";
+
+  // Remover todas las alertas rojas al borrar
+  inputDefinitions.forEach(field => {
+      let el = document.getElementById(field.id);
+      let labelEl = document.getElementById("lbl_" + field.id);
+      if (el) el.classList.remove("input-error");
+      if (labelEl) labelEl.classList.remove("label-error");
+  });
 }
 
 function showImagePopup(event) {

@@ -457,7 +457,7 @@
           <span style="color: #ff0000;">¿Qué colocaré?:</span> <strong>Fecha de cierre de ciclo</strong><br>
           <span style="color: #ff0000;">Ejemplo:</span> Si es ciclo 26, añadiré la fecha 25/XX/XXXX<br><br>
 
-<span style="color: #ff0000;">Nota:</span> Si el cliente llama el mismo día de su cierre de ciclo se programará para el siguiente cierre de mes (Ejemplo: Llama el 01/06/2026 y tiene ciclo 02, no se colocará 01/06/2026, se deberá colocar 01/07/2026)<br>
+<span style="color: #ff0000;">Nota:</span> Si el cliente llama hasta 48 horas ante de su inicio de ciclo, la fecha de cierre será para el siguiente mes (Ejemplo: Llama el 12/06/2026 y tiene ciclo 14, no se colocará el cierre 13/06/2026, se deberá colocar 13/07/2026)<br>
 
           <hr>
           <span style="color: #0c477e; font-weight: bold;">PREPAGO: Ignora el selector de ciclo e ingresa manualmente la fecha con el calendario.</span><br><br>
@@ -502,7 +502,7 @@
 
 <br><br><br><br><br>
     <div class="footer-autor">
-    Developed by <strong>Cristhian Francia</strong> &copy; 2026 | All rights reserved.
+    Developed by Cristhian Francia &copy; 2026 | All rights reserved.
     </div>
   </div>
 
@@ -561,7 +561,7 @@
       });
       labelIDInput.addEventListener("input", updateResultadoOutput);
 
-      /* --- CÁLCULO INTELIGENTE ACTUALIZADO (INCLUYE IGUALDAD PARA MISMO DÍA) --- */
+/* --- CÁLCULO INTELIGENTE ACTUALIZADO (REGLA 48 HORAS ANTES) --- */
       function completarFechaDesdeCiclo() {
           const cicloVal = fast_cicloSelect.value;
           
@@ -573,36 +573,61 @@
 
           let ciclo = parseInt(cicloVal);
           let hoy = new Date();
-          let diaActual = hoy.getDate();
-          let mesActual = hoy.getMonth();
-          let anioActual = hoy.getFullYear();
+          // Normalizamos la fecha actual a medianoche para evitar bugs por la hora exacta del día
+          hoy.setHours(0, 0, 0, 0);
 
+          let mesCierre = hoy.getMonth();
+          let anioCierre = hoy.getFullYear();
           let diaCierre;
-          let mesCierre = mesActual;
-          let anioCierre = anioActual;
 
-          if (ciclo === 1) {
-              diaCierre = new Date(anioActual, mesActual + 1, 0).getDate();
-          } else {
-              diaCierre = ciclo - 1;
+          // Función auxiliar para obtener el día exacto de cierre según el mes/año
+          function obtenerDiaCierre(mes, anio) {
+              if (ciclo === 1) {
+                  // Si es ciclo 1, el cierre es el último día del mes
+                  return new Date(anio, mes + 1, 0).getDate();
+              } else {
+                  return ciclo - 1;
+              }
           }
 
-          // CAMBIO CLAVE: Si hoy es mayor O IGUAL (>=) al día de cierre, salta automáticamente al periodo del siguiente mes
-          if (diaActual >= diaCierre) {
+          diaCierre = obtenerDiaCierre(mesCierre, anioCierre);
+          let proximoCierre = new Date(anioCierre, mesCierre, diaCierre);
+
+          // 1. Si el cierre de este mes ya pasó de forma natural,
+          // el "próximo cierre" base es el del mes siguiente.
+          if (hoy.getTime() > proximoCierre.getTime()) {
               mesCierre++;
               if (mesCierre > 11) {
                   mesCierre = 0;
                   anioCierre++;
               }
-              if (ciclo === 1) {
-                  diaCierre = new Date(anioCierre, mesCierre + 1, 0).getDate();
-              }
+              diaCierre = obtenerDiaCierre(mesCierre, anioCierre);
+              proximoCierre = new Date(anioCierre, mesCierre, diaCierre);
           }
 
-          let mesStr = (mesCierre + 1).toString().padStart(2, '0');
-          let diaStr = diaCierre.toString().padStart(2, '0');
+          // 2. Aplicamos la regla de "48 horas antes del inicio del ciclo"
+          // El inicio de ciclo es proximoCierre + 1 día.
+          // Por ende, 48 horas (2 días) antes del inicio es: proximoCierre - 1 día.
+          let limite48h = new Date(proximoCierre);
+          limite48h.setDate(limite48h.getDate() - 1);
+
+          // Si hoy alcanzó ese límite de 48h previas, salta un mes más
+          if (hoy.getTime() >= limite48h.getTime()) {
+              mesCierre++;
+              if (mesCierre > 11) {
+                  mesCierre = 0;
+                  anioCierre++;
+              }
+              diaCierre = obtenerDiaCierre(mesCierre, anioCierre);
+              proximoCierre = new Date(anioCierre, mesCierre, diaCierre);
+          }
+
+          // Formatear la fecha para el input type="date" (Formato YYYY-MM-DD)
+          let mesStr = (proximoCierre.getMonth() + 1).toString().padStart(2, '0');
+          let diaStr = proximoCierre.getDate().toString().padStart(2, '0');
+          let anioStr = proximoCierre.getFullYear();
           
-          label_7Input.value = `${anioCierre}-${mesStr}-${diaStr}`;
+          label_7Input.value = `${anioStr}-${mesStr}-${diaStr}`;
           
           updateResultadoOutput();
       }

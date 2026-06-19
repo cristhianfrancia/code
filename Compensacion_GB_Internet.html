@@ -377,7 +377,7 @@
     </center>
 
     <div class="input-container">
-    <label for="label_1">1. Servicio o número que presenta la afectación:</label>
+    <label for="label_1">1. Servicio o número que presenta el problema:</label>
     <input type="number" id="label_1" oninput="checkLength(this)" placeholder="(Número del inconveniente)" style="color: #0c477e;" />
     </div>
 
@@ -387,20 +387,16 @@
     </div>
 
     <div class="input-container">
-    <label for="label_3">3. Código correlativo SGU:</label>
-    <input type="text" id="label_3" placeholder="(CASSXXXXXXXXXX | CAPVXXXXXXXXXX)" style="color: #0c477e; text-transform: uppercase;" />
-    
-    <div class="tooltip-box">
-        <span style="color: #0c477e; font-weight: bold; font-size: 0.95rem;">💡 Ejemplos de llenado correcto:</span><br><br>
-        CASSXXXXXXXXXX<br>
-        CAPVXXXXXXXXXX<br><br>
-        <span style="color: #0c477e; font-weight: bold;">CÓDIGO DE PEDIDO SGU:</span><br>
-        <span style="color: #ff0000;">Debe iniciar obligatoriamente con CA</span><br><br>
-    </div>
+      <label for="label_3">3. Tipo de servicio:</label>
+      <select id="label_3" onchange="updateResultadoOutput()" style="color: #0c477e;">
+        <option value="">Seleccionar</option>
+        <option value="Control">Control</option>
+        <option value="Prepago">Prepago</option>
+      </select>
     </div>
 
     <div class="input-container">
-      <label for="label_4">4. Tipo de compensación aplicada:</label>
+      <label for="label_4">4. Tipo de compensación:</label>
       <select id="label_4" onchange="updateResultadoOutput()" style="color: #0c477e;">
         <option value="">Seleccionar</option>
         <option value="Primera llamada">Primera llamada</option>
@@ -409,13 +405,8 @@
     </div>
 
     <div class="input-container">
-    <label for="label_5">5. Plan o paquete activo del cliente:</label>
-    <input type="text" id="label_5" oninput="updateResultadoOutput()" placeholder="(Nombre del plan o paquete activo)" style="color: #0c477e;" />
-    </div>
-
-    <div class="input-container">
-      <label for="label_6">6. Cantidad de GB a acreditar:</label>
-      <select id="label_6" onchange="updateResultadoOutput()" style="color: #0c477e;" disabled>
+      <label for="label_5">5. Cantidad de GB a acreditar:</label>
+      <select id="label_5" onchange="updateResultadoOutput()" style="color: #0c477e;" disabled>
         <option value="">🔒 Seleccione el campo 4 primero</option>
         <option value="5 GB">5 GB</option>
         <option value="10 GB">10 GB</option>
@@ -424,7 +415,7 @@
 
     <div class="input-container">
       <div class="label-wrapper-inline">
-          <label for="label_7">7. Vigencia del plan o paquete activo:</label>
+          <label for="label_6">6. Vigencia del plan o paquete activo:</label>
           <div class="cycle-selector-container">
               <select id="fast_ciclo" class="select-ciclo-fast" onchange="completarFechaDesdeCiclo()">
                   <option value="">⚙️ Control</option>
@@ -460,7 +451,7 @@
           </div>
       </div>
 
-      <input type="date" id="label_7" style="color: #0c477e;" />
+      <input type="date" id="label_6" style="color: #0c477e;" />
       
       <div class="tooltip-box">
           <span style="color: #0c477e; font-weight: bold; font-size: 0.95rem;">💡 Ejemplos de llenado correcto:</span><br><br>
@@ -473,7 +464,21 @@
           <hr>
           <span style="color: #0c477e; font-weight: bold;">PREPAGO: Ignora el selector de ciclo e ingresa manualmente la fecha con el calendario.</span><br><br>
           <span style="color: #ff0000;">¿Qué colocaré?:</span> <strong>Fecha de expiración del paquete</strong><br>
-          <span style="color: #ff0000;">Ejemplo:</span> Cliente compra paquete DM5 que expira el 03/06/2026, se colocará esa fecha 03/06/2026<br><br> </div>
+          <span style="color: #ff0000;">Ejemplo:</span> Cliente compra paquete DM5 que expira el 03/06/2026, se colocará esa fecha 03/06/2026<br><br> 
+      </div>
+    </div>
+
+    <div class="input-container" id="container-sgu">
+    <label for="label_7">7. Código correlativo SGU:</label>
+    <input type="text" id="label_7" placeholder="(CASSXXXXXXXXXX | CAPVXXXXXXXXXX)" style="color: #0c477e; text-transform: uppercase;" />
+    
+    <div class="tooltip-box">
+        <span style="color: #0c477e; font-weight: bold; font-size: 0.95rem;">💡 Ejemplos de llenado correcto:</span><br><br>
+        CASSXXXXXXXXXX<br>
+        CAPVXXXXXXXXXX<br><br>
+        <span style="color: #0c477e; font-weight: bold;">CÓDIGO DE PEDIDO SGU:</span><br>
+        <span style="color: #ff0000;">Debe iniciar obligatoriamente con CA</span><br><br>
+    </div>
     </div>
 
     <div class="input-container">
@@ -499,13 +504,13 @@
 
     <strong>CONTROL:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / No accede a internet / Primera llamada - Bono control - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / No accede a internet / Segunda llamada - Bono control - 10 GB <br><br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / No accede a internet / Primera llamada - Bono control - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / No accede a internet / Segunda llamada - Bono control - 10 GB <br><br>
 
     <strong>PREPAGO:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / No accede a internet / Primera llamada - Bono prepago - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / No accede a internet / Segunda llamada - Bono prepago - 10 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / No accede a internet / Primera llamada - Bono prepago - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / No accede a internet / Segunda llamada - Bono prepago - 10 GB <br>
 
     </div>
 
@@ -515,13 +520,13 @@
 
     <strong>CONTROL:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet /  Intermitencia en el acceso a internet / Primera llamada - Bono control - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet /  Intermitencia en el acceso a internet / Segunda llamada - Bono control - 10 GB <br><br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red /  Intermitencia en el acceso a internet / Primera llamada - Bono control - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red /  Intermitencia en el acceso a internet / Segunda llamada - Bono control - 10 GB <br><br>
 
     <strong>PREPAGO:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet /  Intermitencia en el acceso a internet / Primera llamada - Bono prepago - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet /  Intermitencia en el acceso a internet / Segunda llamada - Bono prepago - 10 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red /  Intermitencia en el acceso a internet / Primera llamada - Bono prepago - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red /  Intermitencia en el acceso a internet / Segunda llamada - Bono prepago - 10 GB <br>
 
     </div>
 
@@ -530,13 +535,13 @@
 
     <strong>CONTROL:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / Lentitud en el acceso a internet / Primera llamada - Bono control - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / Lentitud en el acceso a internet / Segunda llamada - Bono control - 10 GB <br><br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / Lentitud en el acceso a internet / Primera llamada - Bono control - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / Lentitud en el acceso a internet / Segunda llamada - Bono control - 10 GB <br><br>
 
     <strong>PREPAGO:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / Lentitud en el acceso a internet / Primera llamada - Bono prepago - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / Lentitud en el acceso a internet / Segunda llamada - Bono prepago - 10 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / Lentitud en el acceso a internet / Primera llamada - Bono prepago - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / Lentitud en el acceso a internet / Segunda llamada - Bono prepago - 10 GB <br>
     </div>
 
 
@@ -590,17 +595,16 @@
       const label0Input = document.querySelector("#label0");
       const label_1Input = document.querySelector("#label_1");
       const label_2Input = document.querySelector("#label_2");
-      const label_3Input = document.querySelector("#label_3");
-      const label_4Input = document.querySelector("#label_4");
-      const label_5Input = document.querySelector("#label_5");
-      const label_6Input = document.querySelector("#label_6");
-      const label_7Input = document.querySelector("#label_7");
+      const label_3Input = document.querySelector("#label_3"); // Tipo de servicio
+      const label_4Input = document.querySelector("#label_4"); // Tipo de compensacion
+      const label_5Input = document.querySelector("#label_5"); // GB
+      const label_6Input = document.querySelector("#label_6"); // Fecha
+      const label_7Input = document.querySelector("#label_7"); // SGU
       const fast_cicloSelect = document.querySelector("#fast_ciclo");
       const labelIDInput = document.querySelector("#labelID");
       const resultadoOutput = document.querySelector("#resultado");
       const avisoStatus = document.querySelector("#aviso-status");
       
-      // Nueva variable para el Speech
       const speechGbOutput = document.querySelector("#speech-gb"); 
       
       let alertTimeout; 
@@ -608,29 +612,39 @@
       label0Input.addEventListener("input", updateResultadoOutput);
       label_1Input.addEventListener("input", updateResultadoOutput);
       label_2Input.addEventListener("input", updateResultadoOutput);
+      label_3Input.addEventListener("change", updateResultadoOutput);
 
       label_4Input.addEventListener("change", function() {
           if (this.value === "Primera llamada") {
-              label_6Input.options[0].text = "Seleccionar"; 
-              label_6Input.value = "5 GB";
-              speechGbOutput.textContent = "5 GB"; // Actualiza el speech
+              // Oculta el contenedor SGU y limpia su valor
+              document.getElementById("container-sgu").style.display = "none";
+              label_7Input.value = "";
+              
+              label_5Input.options[0].text = "Seleccionar"; 
+              label_5Input.value = "5 GB";
+              speechGbOutput.textContent = "5 GB"; 
           } else if (this.value === "Segunda llamada") {
-              label_6Input.options[0].text = "Seleccionar"; 
-              label_6Input.value = "10 GB";
-              speechGbOutput.textContent = "10 GB"; // Actualiza el speech
+              // Muestra el contenedor SGU
+              document.getElementById("container-sgu").style.display = "flex";
+              
+              label_5Input.options[0].text = "Seleccionar"; 
+              label_5Input.value = "10 GB";
+              speechGbOutput.textContent = "10 GB"; 
           } else {
-              label_6Input.value = "";
-              label_6Input.options[0].text = "🔒 Seleccione el campo 4 primero";
-              speechGbOutput.textContent = "[XX GB]"; // Restablece el speech
+              // Por defecto (mostrar todo y reiniciar)
+              document.getElementById("container-sgu").style.display = "flex";
+
+              label_5Input.value = "";
+              label_5Input.options[0].text = "🔒 Seleccione el campo 4 primero";
+              speechGbOutput.textContent = "[XX GB]"; 
           }
           
           updateResultadoOutput();
       });
 
-      label_5Input.addEventListener("input", updateResultadoOutput);
-      label_6Input.addEventListener("change", updateResultadoOutput);
-      label_7Input.addEventListener("change", function() {
-          if(label_7Input.value) fast_cicloSelect.value = "";
+      label_5Input.addEventListener("change", updateResultadoOutput);
+      label_6Input.addEventListener("change", function() {
+          if(label_6Input.value) fast_cicloSelect.value = "";
           updateResultadoOutput();
       });
       labelIDInput.addEventListener("input", updateResultadoOutput);
@@ -640,24 +654,21 @@
           const cicloVal = fast_cicloSelect.value;
           
           if (!cicloVal) {
-              label_7Input.value = "";
+              label_6Input.value = "";
               updateResultadoOutput();
               return;
           }
 
           let ciclo = parseInt(cicloVal);
           let hoy = new Date();
-          // Normalizamos la fecha actual a medianoche para evitar bugs por la hora exacta del día
           hoy.setHours(0, 0, 0, 0);
 
           let mesCierre = hoy.getMonth();
           let anioCierre = hoy.getFullYear();
           let diaCierre;
 
-          // Función auxiliar para obtener el día exacto de cierre según el mes/año
           function obtenerDiaCierre(mes, anio) {
               if (ciclo === 1) {
-                  // Si es ciclo 1, el cierre es el último día del mes
                   return new Date(anio, mes + 1, 0).getDate();
               } else {
                   return ciclo - 1;
@@ -667,8 +678,6 @@
           diaCierre = obtenerDiaCierre(mesCierre, anioCierre);
           let proximoCierre = new Date(anioCierre, mesCierre, diaCierre);
 
-          // 1. Si el cierre de este mes ya pasó de forma natural,
-          // el "próximo cierre" base es el del mes siguiente.
           if (hoy.getTime() > proximoCierre.getTime()) {
               mesCierre++;
               if (mesCierre > 11) {
@@ -679,13 +688,9 @@
               proximoCierre = new Date(anioCierre, mesCierre, diaCierre);
           }
 
-          // 2. Aplicamos la regla de "48 horas antes del inicio del ciclo"
-          // El inicio de ciclo es proximoCierre + 1 día.
-          // Por ende, 48 horas (2 días) antes del inicio es: proximoCierre - 1 día.
           let limite48h = new Date(proximoCierre);
           limite48h.setDate(limite48h.getDate() - 1);
 
-          // Si hoy alcanzó ese límite de 48h previas, salta un mes más
           if (hoy.getTime() >= limite48h.getTime()) {
               mesCierre++;
               if (mesCierre > 11) {
@@ -696,12 +701,11 @@
               proximoCierre = new Date(anioCierre, mesCierre, diaCierre);
           }
 
-          // Formatear la fecha para el input type="date" (Formato YYYY-MM-DD)
           let mesStr = (proximoCierre.getMonth() + 1).toString().padStart(2, '0');
           let diaStr = proximoCierre.getDate().toString().padStart(2, '0');
           let anioStr = proximoCierre.getFullYear();
           
-          label_7Input.value = `${anioStr}-${mesStr}-${diaStr}`;
+          label_6Input.value = `${anioStr}-${mesStr}-${diaStr}`;
           
           updateResultadoOutput();
       }
@@ -719,7 +723,7 @@
       }
 
       /* --- RESTRICCIÓN SGU ("CA") --- */
-      label_3Input.addEventListener("input", function() {
+      label_7Input.addEventListener("input", function() {
           this.value = this.value.toUpperCase(); 
           let val = this.value;
           
@@ -749,20 +753,26 @@
         const label_3 = label_3Input.value;
         const label_4 = label_4Input.value;
         const label_5 = label_5Input.value;
-        const label_6 = label_6Input.value;
-        const label_7 = formatDateToDDMMYYYY(label_7Input.value);
+        const label_6 = formatDateToDDMMYYYY(label_6Input.value);
+        const label_7 = label_7Input.value;
         const labelID = labelIDInput.value;
 
-        resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // Cliente manifiesta inconformidad ya que no pudo usar el servicio de internet // Se genera incidencia a BO123 para compensación de GB
+        // Construcción de la plantilla final
+        let resultadoTexto = `<span class="resultado-label">${label0}</span> // Cliente solicita GB que no usó por los problemas con el internet // Se genera incidencia a BO123 para acreditación de GB por compensación\n\n`;
+        resultadoTexto += `1. Servicio o número que presenta el problema: <span class="resultado-label">${label_1}</span>\n`;
+        resultadoTexto += `2. Nombre y apellidos del cliente: <span class="resultado-label">${label_2}</span>\n`;
+        resultadoTexto += `3. Tipo de servicio: <span class="resultado-label">${label_3}</span>\n`;
+        resultadoTexto += `4. Tipo de compensación: <span class="resultado-label">${label_4}</span>\n`;
+        resultadoTexto += `5. Cantidad de GB a acreditar: <span class="resultado-label">${label_5}</span>\n`;
+        resultadoTexto += `6. Vigencia del plan o paquete activo: <span class="resultado-label">${label_6}</span>\n`;
 
-1. Servicio o número que presenta la afectación: <span class="resultado-label">${label_1}</span>
-2. Nombre y apellidos del cliente: <span class="resultado-label">${label_2}</span>
-3. Código correlativo SGU: <span class="resultado-label">${label_3}</span>
-4. Tipo de compensación aplicada: <span class="resultado-label">${label_4}</span>
-5. Plan o paquete activo del cliente: <span class="resultado-label">${label_5}</span>
-6. Cantidad de GB a acreditar: <span class="resultado-label">${label_6}</span>
-7. Vigencia del plan o paquete activo: <span class="resultado-label">${label_7}</span>
-Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
+        if (label_4 === "Segunda llamada") {
+            resultadoTexto += `7. Código correlativo SGU: <span class="resultado-label">${label_7}</span>\n`;
+        }
+
+        resultadoTexto += `Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
+
+        resultadoOutput.innerHTML = resultadoTexto;
     }
 
     function checkLength(input) {
@@ -771,19 +781,22 @@ Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
         }
     }
 
-    /* --- FUNCIÓN COPIAR CON VALIDACIÓN OBLIGATORIA --- */
+    /* --- FUNCIÓN COPIAR CON VALIDACIÓN DINÁMICA --- */
     function copiarResultado() {
+        // Si no es Primera Llamada, el campo SGU es obligatorio
+        let sguRequerido = (label_4Input.value === "Segunda llamada");
+
         if (!label0Input.value.trim() || 
             !label_1Input.value.trim() || 
             !label_2Input.value.trim() || 
-            !label_3Input.value.trim() || 
+            !label_3Input.value || 
             !label_4Input.value || 
-            !label_5Input.value.trim() || 
+            !label_5Input.value || 
             !label_6Input.value || 
-            !label_7Input.value || 
+            (sguRequerido && !label_7Input.value.trim()) || 
             !labelIDInput.value.trim()) {
             
-            avisoStatus.textContent = "❌ Error: No se puede copiar. Todos los campos de la plantilla son obligatorios.";
+            avisoStatus.textContent = "❌ Error: No se puede copiar. Faltan completar campos obligatorios.";
             avisoStatus.className = "aviso-error";
             avisoStatus.style.display = "block";
             return;
@@ -802,29 +815,31 @@ Codigo de llamada: $$_<span class="resultado-label">${labelID}</span>_&&`;
         avisoStatus.style.display = "block";
     }
 
-    /* --- LIMPIEZA DE INPUTS CON RESTAURACIÓN DEL CAMPO 6 Y SPEECH --- */
+    /* --- LIMPIEZA DE INPUTS Y RESTAURACIÓN DEL UI --- */
     function limpiarInputs() {
         label0Input.value = "";
         label_1Input.value = "";
         label_2Input.value = "";
         label_3Input.value = "";
         label_4Input.value = "";	
-        label_5Input.value = "";
         
-        // Restauración total del campo 6
-        label_6Input.value = "";
-        label_6Input.options[0].text = "🔒 Seleccione el campo 4 primero";
-        label_6Input.disabled = true; 
+        // Restauración total del campo 5 (GB)
+        label_5Input.value = "";
+        label_5Input.options[0].text = "🔒 Seleccione el campo 4 primero";
+        label_5Input.disabled = true; 
 
+        label_6Input.value = "";
         label_7Input.value = "";
         fast_cicloSelect.value = "";
         labelIDInput.value = "";
+        
+        // Restauración del UI a su estado inicial
+        document.getElementById("container-sgu").style.display = "flex";
+        speechGbOutput.textContent = "[XX GB]"; 
+
         resultadoOutput.innerHTML = "";
         avisoStatus.style.display = "none";
         avisoStatus.innerHTML = "";
-
-        // Restauración del Speech
-        speechGbOutput.textContent = "[XX GB]"; 
     }
   </script>
 </body>

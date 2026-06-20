@@ -82,7 +82,7 @@
           flex: 0 0 45%;
           display: inline-flex;
           align-items: center;
-          justify-content: space-between; /* Empuja el botón al extremo derecho del label */
+          justify-content: space-between; 
           padding-right: 20px;
           position: relative;
       }
@@ -237,7 +237,7 @@
       .cycle-selector-container {
           position: relative;
           display: inline-block;
-          width: 140px;
+          width: 110px;
       }
 
       .tooltip-cycle {
@@ -270,6 +270,48 @@
       }
 
       .cycle-selector-container:hover .tooltip-cycle {
+          display: block;
+      }
+
+      /* --- EXCLUSIVO: TOOLTIP DE ADVERTENCIA PARA BOTÓN DE PREPAGO --- */
+      .prepago-btn-container {
+          position: relative;
+          display: inline-block;
+      }
+
+      .tooltip-prepago {
+          display: none;
+          position: absolute;
+          background-color: #fff5e9;
+          color: #d84315;
+          padding: 8px 12px;
+          border-radius: 6px;
+          border: 1px solid #fd8261;
+          font-size: 0.82rem;
+          font-weight: bold;
+          z-index: 1010;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          width: 200px;
+          bottom: 125%; 
+          left: 50%;
+          transform: translateX(-50%);
+          pointer-events: none;
+          line-height: 1.3;
+          text-align: center;
+      }
+
+      .tooltip-prepago::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          border-width: 6px;
+          border-style: solid;
+          border-color: #fd8261 transparent transparent transparent;
+      }
+
+      .prepago-btn-container:hover .tooltip-prepago {
           display: block;
       }
 
@@ -348,6 +390,29 @@
           font-size: 0.85rem;
       }
 
+      /* Botón de Prepago rápido */
+      .btn-prepago-fast {
+          background-color: #fff5e9;
+          border: 1px dashed #fd8261 !important;
+          color: #fd8261;
+          font-weight: bold;
+          cursor: pointer;
+          padding: 4px 8px !important;
+          border-radius: 4px;
+          font-size: 0.85rem;
+          margin: 0;
+          transition: all 0.2s ease;
+      }
+      
+      .btn-prepago-fast:hover {
+          background-color: #ffebee;
+          transform: translateY(-1px);
+      }
+
+      .btn-prepago-fast:active {
+          transform: translateY(0);
+      }
+
       /* Estilo para campos bloqueados */
       .input-container select:disabled {
           background-color: #f1f3f4;
@@ -416,37 +481,46 @@
     <div class="input-container">
       <div class="label-wrapper-inline">
           <label for="label_6">6. Vigencia del plan o paquete activo:</label>
-          <div class="cycle-selector-container">
-              <select id="fast_ciclo" class="select-ciclo-fast" onchange="completarFechaDesdeCiclo()">
-                  <option value="">⚙️ Control</option>
-                  <option value="1">Ciclo 01</option>
-                  <option value="2">Ciclo 02</option>
-                  <option value="3">Ciclo 03</option>
-                  <option value="4">Ciclo 04</option>
-                  <option value="6">Ciclo 06</option>
-                  <option value="7">Ciclo 07</option>
-                  <option value="8">Ciclo 08</option>
-                  <option value="9">Ciclo 09</option>
-                  <option value="10">Ciclo 10</option>
-                  <option value="11">Ciclo 11</option>
-                  <option value="12">Ciclo 12</option>
-                  <option value="13">Ciclo 13</option>
-                  <option value="14">Ciclo 14</option>
-                  <option value="16">Ciclo 16</option>
-                  <option value="17">Ciclo 17</option>
-                  <option value="18">Ciclo 18</option>
-                  <option value="21">Ciclo 21</option>
-                  <option value="22">Ciclo 22</option>
-                  <option value="23">Ciclo 23</option>
-                  <option value="24">Ciclo 24</option>
-                  <option value="25">Ciclo 25</option>
-                  <option value="26">Ciclo 26</option>
-                  <option value="27">Ciclo 27</option>
-                  <option value="28">Ciclo 28</option>
-              </select>
-              <div class="tooltip-cycle">
-                  ⚠️ Úsalo solo si es control<br><br>
-                  Se añadirá la: <strong>"Fecha de cierre de ciclo"</strong>
+          <div style="display: flex; gap: 8px; align-items: center;">
+              <div class="cycle-selector-container">
+                  <select id="fast_ciclo" class="select-ciclo-fast" onchange="completarFechaDesdeCiclo()">
+                      <option value="">⚙️ Control</option>
+                      <option value="1">Ciclo 01</option>
+                      <option value="2">Ciclo 02</option>
+                      <option value="3">Ciclo 03</option>
+                      <option value="4">Ciclo 04</option>
+                      <option value="6">Ciclo 06</option>
+                      <option value="7">Ciclo 07</option>
+                      <option value="8">Ciclo 08</option>
+                      <option value="9">Ciclo 09</option>
+                      <option value="10">Ciclo 10</option>
+                      <option value="11">Ciclo 11</option>
+                      <option value="12">Ciclo 12</option>
+                      <option value="13">Ciclo 13</option>
+                      <option value="14">Ciclo 14</option>
+                      <option value="16">Ciclo 16</option>
+                      <option value="17">Ciclo 17</option>
+                      <option value="18">Ciclo 18</option>
+                      <option value="21">Ciclo 21</option>
+                      <option value="22">Ciclo 22</option>
+                      <option value="23">Ciclo 23</option>
+                      <option value="24">Ciclo 24</option>
+                      <option value="25">Ciclo 25</option>
+                      <option value="26">Ciclo 26</option>
+                      <option value="27">Ciclo 27</option>
+                      <option value="28">Ciclo 28</option>
+                  </select>
+                  <div class="tooltip-cycle">
+                      ⚠️ Úsalo solo si es control<br><br>
+                      Se añadirá la: <strong>"Fecha de cierre de ciclo"</strong>
+                  </div>
+              </div>
+              <div class="prepago-btn-container">
+                  <button type="button" id="btn_prepago" class="btn-prepago-fast" onclick="completarFechaPrepago()">🔋 Prepago</button>
+                  <div class="tooltip-prepago">
+                      ⚠️ Úsalo solo si es prepago<br><br>
+                      Se añadirá <strong>automáticamente</strong>
+                  </div>
               </div>
           </div>
       </div>
@@ -462,9 +536,9 @@
           <span style="color: #ff0000;">Nota:</span> Si el cliente llama hasta 48 horas ante de su inicio de ciclo, la fecha de cierre será para el siguiente mes (Ejemplo: Llama el 15/06/2026 y tiene ciclo 17, no se colocará el cierre 16/06/2026, se deberá colocar 16/07/2026)<br>
 
           <hr>
-          <span style="color: #0c477e; font-weight: bold;">PREPAGO: Ignora el selector de ciclo e ingresa manualmente la fecha con el calendario.</span><br><br>
-          <span style="color: #ff0000;">¿Qué colocaré?:</span> <strong>1 día contando desde el día siguiente de realizado el registro</strong><br>
-          <span style="color: #ff0000;">Ejemplo:</span>Cliente prepago llama el 19/06/2026 -> El día posterior es 20/06/2026 + 1 día deberíamos colocar: 21/06/2026<br><br> 
+          <span style="color: #0c477e; font-weight: bold;">PREPAGO: Haz clic en el botón naranja "🔋 Prepago".</span><br><br>
+          <span style="color: #ff0000;">¿Qué hace?:</span> <strong>Calcula automáticamente Hoy + 2 días (Día siguiente + 1 día extra)</strong><br>
+          <span style="color: #ff0000;">Ejemplo:</span> Si hoy es 19/06/2026, el sistema colocará automáticamente 21/06/2026.<br><br> 
       </div>
     </div>
 
@@ -504,13 +578,13 @@
 
     <strong>CONTROL:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / No accede a internet / Primera llamada - Bono control - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / No accede a internet / Segunda llamada - Bono control - 10 GB <br><br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / No accede a internet / Primera llamada - Bono control - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / No accede a internet / Segunda llamada - Bono control - 10 GB <br><br>
 
     <strong>PREPAGO:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / No accede a internet / Primera llamada - Bono prepago - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / No accede a internet / Segunda llamada - Bono prepago - 10 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / No accede a internet / Primera llamada - Bono prepago - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / No accede a internet / Segunda llamada - Bono prepago - 10 GB <br>
 
     </div>
 
@@ -520,13 +594,13 @@
 
     <strong>CONTROL:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red /  Intermitencia en el acceso a internet / Primera llamada - Bono control - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red /  Intermitencia en el acceso a internet / Segunda llamada - Bono control - 10 GB <br><br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet /  Intermitencia en el acceso a internet / Primera llamada - Bono control - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet /  Intermitencia en el acceso a internet / Segunda llamada - Bono control - 10 GB <br><br>
 
     <strong>PREPAGO:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red /  Intermitencia en el acceso a internet / Primera llamada - Bono prepago - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red /  Intermitencia en el acceso a internet / Segunda llamada - Bono prepago - 10 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet /  Intermitencia en el acceso a internet / Primera llamada - Bono prepago - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet /  Intermitencia en el acceso a internet / Segunda llamada - Bono prepago - 10 GB <br>
 
     </div>
 
@@ -535,13 +609,13 @@
 
     <strong>CONTROL:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / Lentitud en el acceso a internet / Primera llamada - Bono control - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / Lentitud en el acceso a internet / Segunda llamada - Bono control - 10 GB <br><br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / Lentitud en el acceso a internet / Primera llamada - Bono control - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / Lentitud en el acceso a internet / Segunda llamada - Bono control - 10 GB <br><br>
 
     <strong>PREPAGO:</STRONG><br>
 
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / Lentitud en el acceso a internet / Primera llamada - Bono prepago - 5 GB <br>
-    Other / Operación - 9018 / Operación - 9018 / Compensación - Calidad de red / Lentitud en el acceso a internet / Segunda llamada - Bono prepago - 10 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / Lentitud en el acceso a internet / Primera llamada - Bono prepago - 5 GB <br>
+    Other / Operación - 9018 / Operación - 9018 / Compensación - Problemas con internet / Lentitud en el acceso a internet / Segunda llamada - Bono prepago - 10 GB <br>
     </div>
 
 
@@ -707,6 +781,23 @@
           
           label_6Input.value = `${anioStr}-${mesStr}-${diaStr}`;
           
+          updateResultadoOutput();
+      }
+
+      /* --- CÁLCULO INTELIGENTE PREPAGO (+2 DÍAS) --- */
+      function completarFechaPrepago() {
+          let fecha = new Date();
+          // Lógica: Día siguiente (+1) + 1 día de vigencia = Hoy + 2 días.
+          fecha.setDate(fecha.getDate() + 2);
+
+          let mesStr = (fecha.getMonth() + 1).toString().padStart(2, '0');
+          let diaStr = fecha.getDate().toString().padStart(2, '0');
+          let anioStr = fecha.getFullYear();
+          
+          label_6Input.value = `${anioStr}-${mesStr}-${diaStr}`;
+          
+          // Resetea el selector de control para evitar confusiones
+          fast_cicloSelect.value = ""; 
           updateResultadoOutput();
       }
 

@@ -75,6 +75,10 @@
         font-weight: 500;
         font-size: 0.95rem;
         padding-right: 10px; 
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 5px;
       }
 
       .input-container input, .input-container select {
@@ -137,7 +141,8 @@
           margin: 10px 0;
       }
 
-      button {
+      /* Botones principales de acción */
+      .btn-principal {
           background-color: #0c477e; 
           color: white;
           padding: 8px 18px;
@@ -150,18 +155,131 @@
           margin: 5px 5px 5px 0;
       }
 
-      button:hover {
+      .btn-principal:hover {
           background-color: #08325a;
           transform: translateY(-1px);
       }
 
-      button:active {
+      .btn-principal:active {
           transform: translateY(0);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
 
-      button:focus {
-          outline: none;
+      /* --- BOTONES PEQUEÑOS EN FORMULARIO --- */
+      .btn-accion {
+          background-color: #f1f3f4;
+          color: #0c477e;
+          border: 1px solid #cdd0d5;
+          padding: 3px 8px;
+          border-radius: 12px;
+          cursor: pointer;
+          font-size: 0.8rem;
+          font-weight: bold;
+          text-decoration: none;
+          transition: all 0.2s ease;
+      }
+      
+      .btn-accion:hover {
+          background-color: #e2e6ea;
+          border-color: #0c477e;
+      }
+
+      .btn-gsm {
+          background-color: #fd8261;
+          color: white;
+          border: none;
+          padding: 3px 10px;
+          border-radius: 12px;
+          cursor: pointer;
+          font-size: 0.8rem;
+          font-weight: bold;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 4px rgba(253, 130, 97, 0.3);
+      }
+
+      .btn-gsm:hover {
+          background-color: #e66a48;
+          transform: translateY(-1px);
+      }
+
+      /* --- TOOLTIP PARA LA CAJA DE SELECCIÓN (HOVER) --- */
+      .tooltip-wrapper {
+          position: relative;
+          flex: 1; 
+          display: flex;
+      }
+
+      .tooltip-wrapper select {
+          width: 100%;
+          cursor: help;
+      }
+
+      /* GLOBO FLOTANTE AJUSTADO PARA ABRIR HACIA ABAJO Y SER MÁS ANCHO */
+      .tooltip-text {
+          visibility: hidden;
+          width: 620px; 
+          background-color: #1d1d1f;
+          color: #ffffff;
+          text-align: left;
+          border-radius: 10px;
+          padding: 18px 25px;
+          position: absolute;
+          z-index: 999; 
+          top: 115%; /* Abre hacia ABAJO del select */
+          bottom: auto;
+          left: 50%;
+          transform: translateX(-50%);
+          opacity: 0;
+          transition: opacity 0.3s ease, transform 0.3s ease;
+          font-size: 0.85rem;
+          font-weight: normal;
+          box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+          pointer-events: auto; 
+          line-height: 1.5;
+      }
+
+      /* Puente invisible (ahora por encima del globo) */
+      .tooltip-text::before {
+          content: "";
+          position: absolute;
+          bottom: 100%;
+          top: auto;
+          left: 0;
+          width: 100%;
+          height: 25px; 
+          background-color: transparent;
+      }
+
+      /* Flechita (ahora apunta hacia arriba) */
+      .tooltip-text::after {
+          content: "";
+          position: absolute;
+          bottom: 100%;
+          top: auto;
+          left: 50%;
+          margin-left: -6px;
+          border-width: 6px;
+          border-style: solid;
+          border-color: transparent transparent #1d1d1f transparent;
+      }
+
+      .tooltip-text strong {
+          color: #fd8261;
+          font-size: 0.95rem;
+      }
+      
+      .tooltip-text .btn-accion {
+          padding: 2px 8px;
+          font-size: 0.75rem;
+          margin-left: 5px;
+      }
+
+      /* Animación del hover (baja ligeramente) */
+      .tooltip-wrapper:hover .tooltip-text,
+      .tooltip-text:hover {
+          visibility: visible;
+          opacity: 1;
+          transform: translateX(-50%) translateY(5px);
       }
 
       #resultado {
@@ -218,18 +336,7 @@
           font-size: 0.95rem;
       }
 
-      .link-ejemplo {
-          color: #fd8261;
-          text-decoration: none;
-          font-size: 0.85rem;
-          font-weight: bold;
-          margin-left: 5px;
-      }
-      .link-ejemplo:hover {
-          text-decoration: underline;
-      }
-
-      /* --- POPUPS DE IMÁGENES UNIFICADOS --- */
+      /* --- POPUPS DE IMÁGENES INTERNOS --- */
       .popup-overlay {
         display: none;
         position: fixed;
@@ -302,7 +409,9 @@
     </div>
 
     <div class="input-container">
-    <label for="label_LimiteMB">- Fecha limite de uso de MB: <a href="#" class="link-ejemplo" onclick="return showPopup('imagePopupLimiteMB')">👉Ver ejemplo👈</a></label>
+    <label for="label_LimiteMB">- Fecha limite de uso de MB: 
+        <button type="button" class="btn-accion" onclick="return showPopup('imagePopupLimiteMB')">👉Ver ejemplo👈</button>
+    </label>
     <input type="text" id="label_LimiteMB" placeholder="(Fecha de expiración en PCRF u OCS)" />
     </div>
 
@@ -312,7 +421,9 @@
     </div>
 
     <div class="input-container">
-    <label for="label_IMEI">- Existe cambio de IMEI?: <a href="#" class="link-ejemplo" onclick="return showPopup('imagePopupIMEI')">👉Ver ejemplo👈</a></label>
+    <label for="label_IMEI">- Existe cambio de IMEI?: 
+        <button type="button" class="btn-accion" onclick="return showPopup('imagePopupIMEI')">👉Ver ejemplo👈</button>
+    </label>
     <select id="label_IMEI">
       <option value="">Seleccionar</option>
       <option value="Si">Si</option>
@@ -332,7 +443,9 @@
     </div>
 
     <div class="input-container">
-    <label for="label_FechaNavegacion">- Fecha y hora de la ultima navegacion segun consumo: <a href="#" class="link-ejemplo" onclick="return showPopup('imagePopupNavegacion')">👉Ver ejemplo👈</a></label>
+    <label for="label_FechaNavegacion">- Fecha y hora de la ultima navegacion segun consumo: 
+        <button type="button" class="btn-accion" onclick="return showPopup('imagePopupNavegacion')">👉Ver ejemplo👈</button>
+    </label>
     <input type="text" id="label_FechaNavegacion" placeholder="(Pegar lo que sale en plantilla de customer care)" />
     </div>
 
@@ -342,7 +455,9 @@
     </div>
 
     <div class="input-container">
-    <label for="label_Marca">- Marca y modelo de equipo: <a href="#" class="link-ejemplo" onclick="return showPopup('imagePopupMarca')">👉Ver ejemplo👈</a></label>
+    <label for="label_Marca">- Marca y modelo de equipo: 
+        <button type="button" class="btn-accion" onclick="return showPopup('imagePopupMarca')">👉Ver ejemplo👈</button>
+    </label>
     <input type="text" id="label_Marca" placeholder="(Pegar lo que sale en plantilla de customer care)" />
     </div>
 
@@ -352,19 +467,57 @@
     </div>
 
     <div class="input-container">
-      <label for="label_Cobertura">- Cobertura que presenta problema (3G/4G/5G):</label>
-      <select id="label_Cobertura">
-        <option value="">Seleccionar</option>
-        <option value="3G">3G | 3.5G | H | H+</option>
-       <option value="4G LTE">4G | LTE</option>
-       <option value="5G">5G</option>
-        <option value="E">E</option>
-        <option value="-">-</option>
-      </select>
-    </div>
+      <label for="label_Cobertura">
+          - Cobertura que presenta problema (3G/4G/5G):
+          <button type="button" class="btn-gsm" style="margin-left: 5px;" onclick="abrirGsmArena()">GSM ARENA</button>
+      </label>
+      
+      <div class="tooltip-wrapper">
+          <select id="label_Cobertura">
+            <option value="">Seleccionar</option>
+           <option value="5G">5G</option>
+           <option value="4G LTE">4G | LTE</option>
+            <option value="3G">3G | 3.5G | H | H+</option>
+            <option value="E">E</option>
+            <option value="-">-</option>
+          </select>
+          
+<div class="tooltip-text">
+<strong>📶 Ver si equipo es compatible con 5G</strong><br><br>
+
+<strong>#1. Ver EIR:</strong> Para identificar marca y modelo. <button type="button" class="btn-accion" onclick="abrirPopupDrive('https://drive.google.com/file/d/10twFW6OobvFl7siWZH9HsQmvWIJB70wF/view?usp=sharing')">👉Ver ejemplo👈</button>
+<br>
+
+<strong>#2. Abrimos GSM ARENA:</strong> Para buscar las bandas del equipo. <button type="button" class="btn-gsm" style="margin-left: 5px;" onclick="abrirGsmArena()">Abrir</button>
+<br>
+
+<strong>#3. Identificar bandas:</strong> Debe tener "n66" y/o "n78" para ser compatible. <button type="button" class="btn-accion" onclick="abrirPopupDrive('https://drive.google.com/file/d/1xh2DMfS5_PYY0tWKVnh6kD-IoahDbGRH/view?usp=sharing')">👉Ver ejemplo👈</button>
+<br><br>
+
+👉 n66 (1700 / 2100 MHz)<br>
+👉 n78 (3500 MHz)<br><br>
+
+<span style="color: #4caf50; font-weight: bold;">✅ EQUIPO SI TIENE LAS BANDAS</span><br>
+😃 Continuamos con el Pedido SGU<br><br>
+
+<span style="color: #fd8261; font-weight: bold;">❌ EQUIPO NO TIENE LAS BANDAS</span> <br>
+😭 No se continua con Pedido SGU de 5G, solo se informa que el equipo no es compatible.<br><br>
+
+<strong>⚙️ Tipificación:</strong> <button type="button" class="btn-accion" onclick="abrirPopupDrive('https://drive.google.com/file/d/1gHYHoegj2NimfgHSKipBTWjDwx6P5oKU/view?usp=sharing')">👉Ver ejemplo👈</button><br>
+Other / Información / Información / Información comercial 5G / 5G / No puede acceder equipo no compatible 5G<br><br>
+
+<strong>✍️ Comentario:</strong><br>
+Número del que llama // Cliente menciona que no puede conectarse a internet en 5G // Equipo no compatible // $$_ID DE LLAMADA_&&<br><br>
+
+<span style="color: #ccc; font-size: 0.8rem;">Importante: si cliente menciona que tiene problema también con las otras coberturas 4G / 3G, podemos continuar y seleccionamos la cobertura correcta.</span>
+</div>
+</div>
+</div>
 
     <div class="input-container">
-    <label for="label_Barring">- Parámetros correctos (Barring) (Si/No): <a href="#" class="link-ejemplo" onclick="return showPopup('imagePopupBarring')">👉Ver ejemplo👈</a></label>
+    <label for="label_Barring">- Parámetros correctos (Barring) (Si/No): 
+        <button type="button" class="btn-accion" onclick="return showPopup('imagePopupBarring')">👉Ver ejemplo👈</button>
+    </label>
     <select id="label_Barring">
         <option value="">Seleccionar</option>
         <option value="Si">Si</option>
@@ -382,7 +535,9 @@
     </div>
 
     <div class="input-container">
-    <label for="label_GoogleEarth">- Coordenadas Google Earth: <a href="#" class="link-ejemplo" onclick="return showPopup('imagePopupMaps')">👉Ver ejemplo👈</a></label>
+    <label for="label_GoogleEarth">- Coordenadas Google Earth: 
+        <button type="button" class="btn-accion" onclick="return showPopup('imagePopupMaps')">👉Ver ejemplo👈</button>
+    </label>
     <input type="text" id="label_GoogleEarth" placeholder="(Ejemplo: -12.111846867998418, -77.00713689016001)">
     </div>
 
@@ -411,8 +566,8 @@
     <p id="resultado"></p>
     <div id="aviso-status"></div>
 
-    <button onclick="copiarResultado()">Copiar</button>
-    <button onclick="limpiarInputs()">Borrar</button>
+    <button class="btn-principal" onclick="copiarResultado()">Copiar</button>
+    <button class="btn-principal" onclick="limpiarInputs()">Borrar</button>
 
     <br />
     <br />
@@ -426,7 +581,7 @@
 <br><br>
 
 - <strong>Ruta:</strong> No full internet access / Pedido SGU / Pedido SGU / Problemas SGU / Calidad / Sin servicio y está al día en sus pagos (con check a BO ✅) 
-<a href="#" class="link-ejemplo" onclick="return showPopup('imagePopupTip')"> 👉Ver ejemplo👈</a>
+<button type="button" class="btn-accion" onclick="return showPopup('imagePopupTip')">👉Ver ejemplo👈</button>
 
 <div id="imagePopupTip" class="popup-overlay">
 <button class="close-button" onclick="hidePopup('imagePopupTip')">Cerrar</button>
@@ -482,7 +637,6 @@
         }
     };
 
-    // Arreglo con los 15 inputs exactos para esta plantilla
     const inputsArray = [
         document.querySelector("#label0"),
         document.querySelector("#label_Linea"),
@@ -504,7 +658,7 @@
     const resultadoOutput = document.querySelector("#resultado");
     const avisoStatus = document.querySelector("#aviso-status");
 
-    // Asignar eventos globales a todos los campos
+    // Asignar eventos globales
     inputsArray.forEach(input => {
         const updateEvent = input.tagName === 'SELECT' ? 'change' : 'input';
         
@@ -512,6 +666,13 @@
             this.classList.remove('input-error'); 
             updateResultadoOutput(); 
         });
+    });
+
+    // Lógica para detectar selección de 5G y ABRIR GSM ARENA automáticamente
+    document.querySelector("#label_Cobertura").addEventListener('change', function() {
+        if (this.value === '5G') {
+            abrirGsmArena();
+        }
     });
 
     function updateResultadoOutput() {
@@ -541,11 +702,8 @@ Codigo de llamada: $$_<span class="resultado-label">${valores[14]}</span>_&&`;
         }
       }
 
-      /* --- FUNCIÓN COPIAR CON VALIDACIÓN Y RESALTADO DE ERRORES --- */
       function copiarResultado() {
           let hayErrores = false;
-
-          // Revisamos cada input, si está vacío le ponemos la clase roja
           inputsArray.forEach(input => {
               if (!input.value.trim()) {
                   input.classList.add('input-error');
@@ -586,14 +744,33 @@ Codigo de llamada: $$_<span class="resultado-label">${valores[14]}</span>_&&`;
         avisoStatus.innerHTML = "";
       }
 
-  /* --- FUNCIÓN UNIFICADA DE POPUPS --- */
+  /* --- POPUPS INTERNOS (IMÁGENES NORMALES) --- */
   function showPopup(id) {
     event.preventDefault();
     document.getElementById(id).style.display = "block";
     return false;
   }
+  
   function hidePopup(id) {
     document.getElementById(id).style.display = "none";
+  }
+
+  /* --- ABRIR GSM ARENA EN POPUP CENTRADO --- */
+  function abrirGsmArena() {
+      const width = 1200;
+      const height = 850;
+      const left = (window.screen.width / 2) - (width / 2);
+      const top = (window.screen.height / 2) - (height / 2);
+      window.open('https://www.gsmarena.com/', 'GSMArenaPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
+  }
+
+  /* --- ABRIR ENLACES DE GOOGLE DRIVE EN POPUP CENTRADO --- */
+  function abrirPopupDrive(url) {
+      const width = 1000;
+      const height = 700;
+      const left = (window.screen.width / 2) - (width / 2);
+      const top = (window.screen.height / 2) - (height / 2);
+      window.open(url, '_blank', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
   }
 
   </script>

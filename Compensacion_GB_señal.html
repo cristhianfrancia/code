@@ -453,7 +453,7 @@
 
     <div class="input-container">
       <label for="label_3">3. Tipo de servicio:</label>
-      <select id="label_3" onchange="updateResultadoOutput()" style="color: #0c477e;">
+      <select id="label_3" style="color: #0c477e;">
         <option value="">Seleccionar</option>
         <option value="Control">Control</option>
         <option value="Prepago">Prepago</option>
@@ -482,7 +482,9 @@
       <div class="label-wrapper-inline">
           <label for="label_6">6. Vigencia del plan o paquete activo:</label>
           <div style="display: flex; gap: 8px; align-items: center;">
-              <div class="cycle-selector-container">
+              <span id="hint-servicio" style="font-size: 0.85rem; color: #888; font-style: italic;">👈 Elija el Tipo de servicio (Campo 3)</span>
+              
+              <div class="cycle-selector-container" id="btn-control-wrapper" style="display: none;">
                   <select id="fast_ciclo" class="select-ciclo-fast" onchange="completarFechaDesdeCiclo()">
                       <option value="">⚙️ Control</option>
                       <option value="1">Ciclo 01</option>
@@ -515,7 +517,8 @@
                       Se añadirá la: <strong>"Fecha de cierre de ciclo"</strong>
                   </div>
               </div>
-              <div class="prepago-btn-container">
+
+              <div class="prepago-btn-container" id="btn-prepago-wrapper" style="display: none;">
                   <button type="button" id="btn_prepago" class="btn-prepago-fast" onclick="completarFechaPrepago()">🔋 Prepago</button>
                   <div class="tooltip-prepago">
                       ⚠️ Úsalo solo si es prepago<br><br>
@@ -654,24 +657,49 @@
       const label0Input = document.querySelector("#label0");
       const label_1Input = document.querySelector("#label_1");
       const label_2Input = document.querySelector("#label_2");
-      const label_3Input = document.querySelector("#label_3"); // Tipo de servicio
-      const label_4Input = document.querySelector("#label_4"); // Tipo de compensacion
-      const label_5Input = document.querySelector("#label_5"); // GB
-      const label_6Input = document.querySelector("#label_6"); // Fecha
-      const label_7Input = document.querySelector("#label_7"); // SGU
+      const label_3Input = document.querySelector("#label_3"); 
+      const label_4Input = document.querySelector("#label_4"); 
+      const label_5Input = document.querySelector("#label_5"); 
+      const label_6Input = document.querySelector("#label_6"); 
+      const label_7Input = document.querySelector("#label_7"); 
       const fast_cicloSelect = document.querySelector("#fast_ciclo");
       const labelIDInput = document.querySelector("#labelID");
       const resultadoOutput = document.querySelector("#resultado");
       const avisoStatus = document.querySelector("#aviso-status");
-      
       const speechGbOutput = document.querySelector("#speech-gb"); 
+      
+      // Wrappers para Ocultar/Mostrar Botones
+      const btnControlWrapper = document.getElementById("btn-control-wrapper");
+      const btnPrepagoWrapper = document.getElementById("btn-prepago-wrapper");
+      const hintServicio = document.getElementById("hint-servicio");
       
       let alertTimeout; 
 
       label0Input.addEventListener("input", updateResultadoOutput);
       label_1Input.addEventListener("input", updateResultadoOutput);
       label_2Input.addEventListener("input", updateResultadoOutput);
-      label_3Input.addEventListener("change", updateResultadoOutput);
+
+      // LÓGICA DE OCULTAR/MOSTRAR BOTONES SEGÚN EL SERVICIO
+      label_3Input.addEventListener("change", function() {
+          if (this.value === "Control") {
+              btnControlWrapper.style.display = "inline-block";
+              btnPrepagoWrapper.style.display = "none";
+              hintServicio.style.display = "none";
+          } else if (this.value === "Prepago") {
+              btnControlWrapper.style.display = "none";
+              btnPrepagoWrapper.style.display = "inline-block";
+              hintServicio.style.display = "none";
+          } else {
+              btnControlWrapper.style.display = "none";
+              btnPrepagoWrapper.style.display = "none";
+              hintServicio.style.display = "inline-block";
+          }
+          
+          // Limpiar el campo de fecha si se cambia de tipo para evitar errores
+          label_6Input.value = "";
+          fast_cicloSelect.value = "";
+          updateResultadoOutput();
+      });
 
       label_4Input.addEventListener("change", function() {
           if (this.value === "Primera llamada") {
@@ -903,6 +931,11 @@
         label_5Input.value = "";
         label_5Input.options[0].text = "🔒 Seleccione el campo 4 primero";
         label_5Input.disabled = true; 
+
+        // Restauración botones campo 6
+        btnControlWrapper.style.display = "none";
+        btnPrepagoWrapper.style.display = "none";
+        hintServicio.style.display = "inline-block";
 
         label_6Input.value = "";
         label_7Input.value = "";

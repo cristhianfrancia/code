@@ -211,10 +211,10 @@
 
       .tooltip-wrapper select {
           width: 100%;
-          cursor: help;
+          cursor: pointer; /* Cambiado a pointer para interacción natural */
       }
 
-      /* GLOBO FLOTANTE AJUSTADO PARA ABRIR HACIA ABAJO Y SER MÁS ANCHO */
+      /* GLOBO FLOTANTE AJUSTADO PARA NO ROBAR CLICS */
       .tooltip-text {
           visibility: hidden;
           width: 620px; 
@@ -225,37 +225,34 @@
           padding: 18px 25px;
           position: absolute;
           z-index: 999; 
-          top: 115%; /* Abre hacia ABAJO del select */
-          bottom: auto;
+          top: calc(100% + 12px); /* Separación exacta por debajo */
           left: 50%;
           transform: translateX(-50%);
           opacity: 0;
-          transition: opacity 0.3s ease, transform 0.3s ease;
+          transition: opacity 0.2s ease;
           font-size: 0.85rem;
           font-weight: normal;
           box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-          pointer-events: auto; 
+          pointer-events: none; /* Desactivado por defecto para no bloquear nada */
           line-height: 1.5;
       }
 
-      /* Puente invisible (ahora por encima del globo) */
+      /* Puente invisible de tamaño exacto */
       .tooltip-text::before {
           content: "";
           position: absolute;
           bottom: 100%;
-          top: auto;
           left: 0;
           width: 100%;
-          height: 25px; 
+          height: 12px; /* Mide exactamente la separación (12px), sin invadir el select */
           background-color: transparent;
       }
 
-      /* Flechita (ahora apunta hacia arriba) */
+      /* Flechita decorativa */
       .tooltip-text::after {
           content: "";
           position: absolute;
           bottom: 100%;
-          top: auto;
           left: 50%;
           margin-left: -6px;
           border-width: 6px;
@@ -274,12 +271,12 @@
           margin-left: 5px;
       }
 
-      /* Animación del hover (baja ligeramente) */
+      /* Animación del hover */
       .tooltip-wrapper:hover .tooltip-text,
       .tooltip-text:hover {
           visibility: visible;
           opacity: 1;
-          transform: translateX(-50%) translateY(5px);
+          pointer-events: auto; /* Permite dar clic a los botones internos solo cuando ya está visible */
       }
 
       #resultado {
@@ -472,6 +469,7 @@
           <button type="button" class="btn-gsm" style="margin-left: 5px;" onclick="abrirGsmArena()">GSM ARENA</button>
       </label>
       
+      <!-- TOOLTIP WRAPPER SOBRE EL SELECT -->
       <div class="tooltip-wrapper">
           <select id="label_Cobertura">
             <option value="">Seleccionar</option>
@@ -482,6 +480,7 @@
             <option value="-">-</option>
           </select>
           
+
 <div class="tooltip-text">
 <strong>📶 Ver si equipo es compatible con 5G</strong><br><br>
 
@@ -490,9 +489,6 @@
 
 <strong>#2. Abrimos GSM ARENA:</strong> Para buscar las bandas del equipo. <button type="button" class="btn-accion" onclick="abrirPopupDrive('https://drive.google.com/file/d/1xh2DMfS5_PYY0tWKVnh6kD-IoahDbGRH/view?usp=sharing')">👉Ver ejemplo👈</button> <button type="button" class="btn-gsm" style="margin-left: 5px;" onclick="abrirGsmArena()">Abrir</button>
 <br><br>
-
-Para ser compatible el equipo debe tener cualquiera de las siguientes bandas:
-<br>
 
 👉 n66 (1700 / 2100 MHz)<br>
 👉 n78 (3500 MHz)<br><br>
@@ -757,8 +753,8 @@ Codigo de llamada: $$_<span class="resultado-label">${valores[14]}</span>_&&`;
 
   /* --- ABRIR GSM ARENA EN POPUP CENTRADO --- */
   function abrirGsmArena() {
-      const width = 1200;
-      const height = 850;
+      const width = 1000;
+      const height = 700;
       const left = (window.screen.width / 2) - (width / 2);
       const top = (window.screen.height / 2) - (height / 2);
       window.open('https://www.gsmarena.com/', 'GSMArenaPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);

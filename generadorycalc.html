@@ -112,9 +112,9 @@
       box-shadow: 0 2px 8px rgba(12, 71, 126, 0.2);
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 700px) {
       .nav-brand { display: none; }
-      .menu-item { padding: 8px 16px; }
+      .menu-item { padding: 8px 12px; font-size: 0.8rem; }
     }
 
     /* =========================================
@@ -174,14 +174,23 @@
     .inline-form { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
     .inline-form input, .inline-form textarea {
       padding: 8px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 10px;
-      flex: 1; min-width: 180px; outline: none; background: #fafafa; box-sizing: border-box; transition: all 0.2s;
+      flex: 1; min-width: 180px; outline: none; background: #fafafa; box-sizing: border-box; 
+      /* Corrección clave: Animamos solo el color y la sombra, NUNCA el ancho o el alto */
+      transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s, transform 0.2s;
     }
     .inline-form input:focus, .inline-form textarea:focus {
-      border-color: var(--bitel-teal); background: #ffffff; transform: translateY(-1px);
+      border-color: var(--bitel-teal); background: #ffffff; transform: translateY(-1px); box-shadow: 0 0 0 2px rgba(1,118,139,0.1);
     }
     .inline-form label { font-size: 0.78rem; font-weight: 600; color: #666; flex-basis: 100%; margin: 4px 0; }
     .fila-campo { display: flex; flex-direction: column; flex: 1; min-width: 180px; width: 100%; max-width: 300px; position: relative; }
-    .campo-resizable { resize: both; overflow: auto; min-height: 38px; height: 38px; width: 100%; }
+    
+    /* Corrección del área redimensionable */
+    .campo-resizable { 
+      resize: both !important; /* Permite arrastrar hacia cualquier lado */
+      overflow: auto; 
+      min-height: 38px; 
+      width: 100%; 
+    }
 
     .output {
       background: #e8f7f9; padding: 12px 15px; margin-top: 18px;
@@ -223,7 +232,7 @@
     .historial-copy-btn:hover { background: #0056b3; }
 
     /* =========================================
-       5. ESTILOS DE LA CALCULADORA Y PORCENTAJE
+       5. ESTILOS DE LA CALCULADORA, PORCENTAJE Y FECHAS
        ========================================= */
     .container-calc {
       width: 100%; max-width: 1000px; margin: 0 auto; background: var(--card-bg);
@@ -288,9 +297,7 @@
       font-weight: 800; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    /* =========================================
-       6. ESTILOS DE DÍAS HÁBILES Y BOTONES LÍNEA
-       ========================================= */
+    /* Estilos específicos de Días Hábiles */
     .calc-dias-container { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
     .radio-card {
       flex: 1; min-width: 250px; background: white; border: 2px solid #e1e4e8; border-radius: 12px;
@@ -333,22 +340,26 @@
       display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 30px; 
       flex-wrap: wrap; background: #fafafa; padding: 15px; border-radius: 12px; border: 1px solid #eee;
     }
+    
+    .fecha-inputs-group { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; flex: 1; }
+
     .input-fechas-row input {
-      padding: 8px; border: 1px solid #ccc; border-radius: 8px; font-size: 0.95rem; 
+      padding: 8px 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 0.95rem; 
       outline: none; font-family: inherit; transition: 0.2s;
     }
     .input-fechas-row input:focus { border-color: var(--bitel-teal); box-shadow: 0 0 0 2px rgba(1,118,139,0.1); }
     
-    /* BOTONES MÁS COMPACTOS */
+    .fecha-btns-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
     .btn-calcular-fecha {
-      background: var(--bitel-blue); color: white; border: none; padding: 8px 16px;
-      border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(12,71,126,0.2);
+      background: var(--bitel-blue); color: white; border: none; padding: 10px 18px;
+      border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(12,71,126,0.2);
     }
     .btn-calcular-fecha:hover { background: #08325e; transform: translateY(-1px); }
     
     .btn-gob-pe {
-      background: #6c757d; color: white; border: none; padding: 8px 16px;
-      border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: 0.2s; 
+      background: #6c757d; color: white; border: none; padding: 10px 16px;
+      border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.2s; 
       text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
     }
     .btn-gob-pe:hover { background: #5a6268; transform: translateY(-1px); }
@@ -370,7 +381,7 @@
     .lista-feriados li::before { content: "●"; color: #28a745; font-size: 1.2rem; line-height: 0.5; }
 
     /* =========================================
-       7. WIDGETS FLOTANTES (LIKES, SESIONES, FEEDBACK)
+       6. WIDGETS FLOTANTES (LIKES, SESIONES, FEEDBACK)
        ========================================= */
     .bottom-widgets {
       position: fixed; right: 22px; bottom: 22px; display: flex; gap: 12px; 
@@ -402,7 +413,7 @@
     .footer-autor strong { color: var(--bitel-blue); }
 
     /* =========================================
-       8. MODALES
+       7. MODALES
        ========================================= */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -429,11 +440,10 @@
 </head>
 
 <body> 
-  <!-- NAVEGACIÓN SUPERIOR -->
   <div class="top-navbar">
-    <div class="nav-brand"><span class="app-icon">💡</span> Generador</div>
+    <div class="nav-brand"><span class="app-icon">💡</span> Herramientas</div>
     <ul class="nav-menu">
-      <li class="menu-item active" onclick="switchApp('generadorApp', this)"><span>📝</span> Plantillas</li>
+      <li class="menu-item active" onclick="switchApp('generadorApp', this)"><span>📝</span> Generador</li>
       <li class="menu-item" onclick="switchApp('calculadoraApp', this)"><span>🧮</span> Calculadora</li>
       <li class="menu-item" onclick="switchApp('porcentajeApp', this)"><span>📊</span> Porcentaje</li>
       <li class="menu-item" onclick="switchApp('diasApp', this)"><span>📅</span> Calcular días</li>
@@ -442,7 +452,6 @@
 
   <div class="main-content">
     
-    <!-- PESTAÑA 1: GENERADOR -->
     <div id="generadorApp" class="app-section active">
       <div class="container">
         <h1 class="titulo-principal">Generador de plantillas 🧑‍💻</h1>
@@ -532,7 +541,6 @@
       </div>
     </div>
 
-    <!-- PESTAÑA 2: CALCULADORA -->
     <div id="calculadoraApp" class="app-section">
       <div class="container-calc">
         <div class="top">
@@ -541,7 +549,7 @@
             <p class="subtitle">Conversión precisa de unidades</p>
           </div>
           <div class="toolbar">
-             <div class="toggle"><button id="btn-1024" class="active">1024</button><button id="btn-1000">1000</button></div>
+             <div class="toggle"><button id="btn-1024" class="active">1024 (Bitel)</button><button id="btn-1000">1000</button></div>
              <div class="select-dec"><button data-dec="0">0</button><button data-dec="2">2</button><button data-dec="4" class="active">4</button></div>
           </div>
         </div>
@@ -564,7 +572,6 @@
       </div>
     </div>
 
-    <!-- PESTAÑA 3: PORCENTAJE -->
     <div id="porcentajeApp" class="app-section">
       <div class="container-calc">
         <div class="top">
@@ -612,7 +619,6 @@
       </div>
     </div>
 
-    <!-- PESTAÑA 4: DÍAS HÁBILES -->
     <div id="diasApp" class="app-section">
       <div class="container-calc">
         <div class="top">
@@ -657,21 +663,22 @@
           </ul>
         </div>
 
-        <!-- FILA COMPACTA DE INPUTS Y BOTONES -->
         <div class="input-fechas-row">
-          <div style="display:flex; align-items:center; gap:6px;">
-            <label style="color:#555; font-weight:600; font-size: 0.9rem;">Contar:</label>
-            <input type="number" id="inputCantidadDias" style="width: 70px;" min="0" placeholder="Ej: 3">
-          </div>
-          <div style="display:flex; align-items:center; gap:6px;">
-            <label style="color:#555; font-weight:600; font-size: 0.9rem;"><span id="labelTipoDia">días cal. desde el:</span></label>
-            <input type="date" id="inputFechaInicio">
+          <div class="fecha-inputs-group">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="color:#555; font-weight:600; font-size: 0.9rem;">Contar:</label>
+              <input type="number" id="inputCantidadDias" style="width: 70px;" min="0" placeholder="Ej: 3">
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="color:#555; font-weight:600; font-size: 0.9rem;"><span id="labelTipoDia">días cal. desde el:</span></label>
+              <input type="date" id="inputFechaInicio">
+            </div>
           </div>
           
-          <div style="display:flex; align-items:center; gap:8px; flex-wrap: nowrap;">
+          <div class="fecha-btns-group">
             <button class="btn-calcular-fecha" onclick="calcularDias()">Calcular</button>
-            <button class="limpiar-btn" onclick="limpiarDias()" style="padding: 8px 14px; font-size: 0.9rem; border-radius: 8px;">🧹 Limpiar</button>
-            <button class="btn-gob-pe" onclick="window.open('https://www.gob.pe/8283-calcular-dias-habiles-o-calendario', '_blank')">🏛️ gob.pe</button>
+            <button class="limpiar-btn" onclick="limpiarDias()" style="padding: 10px 15px; font-size: 13px; border-radius: 8px;">🧹 Limpiar</button>
+            <button class="btn-gob-pe" onclick="window.open('https://www.gob.pe/8283-calcular-dias-habiles-o-calendario', '_blank')">🏛️ GOB.PE</button>
           </div>
         </div>
 
@@ -684,8 +691,7 @@
           <div id="boxFeriadosOmitidos" class="feriados-omitidos-box" style="display: none;">
             <p>Este cálculo omite los siguientes días feriados o no laborables:</p>
             <ul id="listaFeriadosOmitidos" class="lista-feriados">
-              <!-- Llenado por JS -->
-            </ul>
+              </ul>
           </div>
         </div>
 
@@ -695,7 +701,6 @@
 
   </div>
   
-  <!-- DOCK DE WIDGETS FLOTANTES -->
   <div class="bottom-widgets">
     <div class="widget-item widget-likes" title="Valoración de la herramienta">
       <span class="heart">❤️</span> <span id="contadorLikes" style="color: var(--text-main);">...</span>
@@ -711,7 +716,6 @@
     </div>
   </div>
 
-  <!-- MODALES DE LA APLICACIÓN -->
   <div id="modalError" class="modal-overlay" onclick="cerrarModal(event)">
     <div class="modal-box">
       <span class="modal-icon" style="font-size:40px;">⚠️</span>
@@ -729,7 +733,6 @@
     </div>
   </div>
 
-  <!-- MODAL FEEDBACK -->
   <div id="modalFeedback" class="modal-overlay" onclick="cerrarModalFeedbackExt(event)">
     <div class="modal-box feedback-box" id="cajaFeedbackInterna">
       <h3 class="modal-title" style="margin-bottom: 5px;">¿Qué te parece?</h3>

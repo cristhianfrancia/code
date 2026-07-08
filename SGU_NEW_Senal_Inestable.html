@@ -16,13 +16,13 @@
         }
 
         .container {
-            width: 96%; 
+            width: 96%;
             max-width: 1200px; 
             margin: 0 auto;
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
-            padding: 20px 50px; 
+            padding: 20px 50px;
             position: relative;
         }
 
@@ -71,14 +71,14 @@
       }
 
       .input-container label {
-        flex: 0 0 45%; 
+        flex: 0 0 45%;
         font-weight: 500;
         font-size: 0.95rem;
         padding-right: 10px; 
       }
 
       .input-container input, .input-container select {
-          flex: 1; 
+          flex: 1;
           padding: 4px 8px; 
           border: 1px solid #ccc;
           border-radius: 4px;
@@ -133,11 +133,11 @@
 
       hr {
           border: 1px solid #fd8261;
-          margin: 10px 0;
+          margin: 15px 0;
       }
 
       button {
-          background-color: #0c477e; 
+          background-color: #0c477e;
           color: white;
           padding: 8px 18px;
           border: none;
@@ -172,7 +172,6 @@
           border-radius: 0 6px 6px 0;
           white-space: pre-line;
           min-height: 40px;
-          
           user-select: none;
           -webkit-user-select: none;
           -moz-user-select: none;
@@ -282,7 +281,8 @@
     <center class="code-container">
     <p>
     <input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="color: #0c477e; text-align: center; font-weight: bold; width: 160px; padding: 4px; border: 1px solid #ccc; border-radius: 4px;" />
-    // La señal sufre cambios de red o se pierde algunas veces. // "Se genera incidencia a BO123"
+    // La señal sufre cambios de red o se pierde algunas veces.
+    // "Se genera incidencia a BO123"
     </p>
     </center>
 
@@ -313,7 +313,7 @@
 
     <div class="input-container">
     <label for="label_barras">- Cuantas barras visualiza: <a href="#" class="link-ejemplo" onclick="return showImagePopupBarras(event)">👉Ver ejemplo</a></label>
-    <select id="label_barras" style="color: #0c477e;">
+     <select id="label_barras" style="color: #0c477e;">
         <option value="">Seleccionar</option>
         <option value="1 barra">1 barra</option>
         <option value="2 barras">2 barras</option>
@@ -350,12 +350,12 @@
     <div class="input-container">
       <label for="label_Cobertura">- Cobertura que presenta problema:</label>
       <select id="label_Cobertura" style="color: #0c477e;">
-        <option value="">Seleccionar</option>
-        <option value="3G">3G | 3.5G | H | H+</option>
-        <option value="4G LTE">4G | LTE</option>
-        <option value="5G">5G</option>
-        <option value="E">E</option>
-        <option value="-">-</option>
+            <option value="">Seleccionar</option>
+            <option value="5G">5G</option>
+            <option value="4G">4G</option>
+            <option value="3G">3G (3.5G | H | H+)</option>
+            <option value="E">E</option>
+            <option value="-">-</option>
       </select>
     </div>
 
@@ -374,6 +374,96 @@
     <img src="https://i.postimg.cc/fyJXFWkg/Google-Maps.png">
     </div>
 
+    <div id="container_5G_Extras" style="display: none;">
+        <hr>
+        
+        <div class="input-container">
+            <label for="label_5g_cuando">- ¿Cuándo y a qué hora ocurrió el problema y continúa presentándose?</label>
+            <input type="text" id="label_5g_cuando" placeholder="(Ejem: XX/XX/XXXX a las XX:XX, Si continúa presentándose)" style="color: #0c477e;" />
+        </div>
+        
+        <div class="input-container">
+            <label for="label_5g_problema">- ¿Cuál es el problema específico que presenta el cliente?</label>
+            <select id="label_5g_problema" onchange="toggleProblemaOtro()" style="color: #0c477e;">
+                <option value="">Seleccionar</option>
+                <option value="La señal 5G es baja / inestable">La señal 5G es baja / inestable</option>
+                <option value="Cambia entre 4G y 5G">Cambia entre 4G y 5G</option>
+                <option value="No le permite usar de forma estable el internet, llamadas, SMS">No le permite usar de forma estable el internet, llamadas, SMS</option>
+                <option value="Otro">Otro (Escribir manualmente)</option>
+            </select>
+        </div>
+        
+        <div class="input-container" id="container_5g_problema_otro" style="display: none;">
+            <label for="label_5g_problema_otro" style="color: #fd8261;">↳ Especificar problema:</label>
+            <input type="text" id="label_5g_problema_otro" placeholder="(Detallar problema específico)" style="color: #0c477e;" />
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_otras_lineas">- ¿Otras personas o líneas Bitel en la misma ubicación presentan el mismo problema?</label>
+            <select id="label_5g_otras_lineas" style="color: #0c477e;">
+                <option value="">Seleccionar</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+                <option value="No sabe">No sabe</option>
+            </select>
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_solo4g">- Si configura el teléfono en Solo 4G (4G Only), ¿el problema desaparece?</label>
+            <select id="label_5g_solo4g" style="color: #0c477e;">
+                <option value="">Seleccionar</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+                <option value="No sabe">No sabe</option>
+            </select>
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_estado_red">- En el momento de la incidencia, ¿qué estado de red mostraba el teléfono?</label>
+            <input type="text" id="label_5g_estado_red" value="5G" readonly style="background-color: #f1f3f4; color: #0c477e; cursor: not-allowed;" />
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_uso_anterior">- ¿El cliente había utilizado anteriormente el servicio 5G sin problemas en ese mismo lugar?</label>
+            <select id="label_5g_uso_anterior" style="color: #0c477e;">
+                <option value="">Seleccionar</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+                <option value="No sabe">No sabe</option>
+            </select>
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_interior_exterior">- El problema es en interiores o exteriores:</label>
+            <select id="label_5g_interior_exterior" style="color: #0c477e;">
+                <option value="">Seleccionar</option>
+                <option value="Interiores">Interiores</option>
+                <option value="Exteriores">Exteriores</option>
+            </select>
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_desplaza">- Si se desplaza al exterior o a otra ubicación, ¿el problema desaparece?</label>
+            <select id="label_5g_desplaza" style="color: #0c477e;">
+                <option value="">Seleccionar</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+                <option value="No sabe">No sabe</option>
+            </select>
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_reinicio">- Después de activar y desactivar el modo avión o reiniciar el teléfono, ¿el servicio se restablece?</label>
+            <select id="label_5g_reinicio" style="color: #0c477e;">
+                <option value="">Seleccionar</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+                <option value="No sabe">No sabe</option>
+            </select>
+        </div>
+        
+        <hr>
+    </div>
     <div class="input-container">
     <label for="label_DetalleInc">- Observaciones: </label>
     <input type="text" id="label_DetalleInc" placeholder="(Observaciones del inconveniente)" style="color: #0c477e;" />
@@ -430,7 +520,7 @@
 
     <br><br><br><br>
     <div class="footer-autor">
-    Developed by <strong>Cristhian Francia</strong> &copy; 2026 | All rights reserved.
+    Developed by Cristhian Francia &copy; 2026 | All rights reserved.
     </div>
   </div>
 
@@ -440,10 +530,9 @@
         event.preventDefault();
         alert('El menú contextual (clic derecho) está deshabilitado.'); 
     });
-
     document.onkeydown = function(e) {
         if (e.key === 'F12' || e.keyCode === 123) {
-            alert('Las herramientas de desarrollador están deshabilitadas.'); 
+            alert('Las herramientas de desarrollador están deshabilitadas.');
             return false;
         }
         if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I' || e.keyCode === 74 || e.key === 'J' || e.keyCode === 67 || e.key === 'C')) {
@@ -462,56 +551,86 @@
         }
     };
 
-    // Arreglo con todos los inputs/selects para gestionarlos fácilmente
-    const inputsArray = [
-        document.querySelector("#label0"),
-        document.querySelector("#label_Linea"),
-        document.querySelector("#label_LineaREF"),
-        document.querySelector("#label_LimiteMB"),
-        document.querySelector("#label_chipotroequipo"),
-        document.querySelector("#label_barras"),
-        document.querySelector("#label_otronumero"),
-        document.querySelector("#label_Lugar"),
-        document.querySelector("#label_Cobertura"),
-        document.querySelector("#label_Direccion"),
-        document.querySelector("#label_GoogleEarth"),
-        document.querySelector("#label_DetalleInc"),
-        document.querySelector("#label_BTS"),
-        document.querySelector("#labelID")
-    ];
-
     const resultadoOutput = document.querySelector("#resultado");
     const avisoStatus = document.querySelector("#aviso-status");
 
+    // Función auxiliar para obtener el valor formateado del span
+    function vHTML(id) {
+        const el = document.getElementById(id);
+        return el ? `<span class="resultado-label">${el.value}</span>` : '';
+    }
+
+    // Lógica para detectar selección de 5G
+    document.querySelector("#label_Cobertura").addEventListener('change', function() {
+        const is5G = this.value === '5G';
+        document.getElementById('container_5G_Extras').style.display = is5G ? 'block' : 'none';
+        updateResultadoOutput();
+    });
+
+    // Función para manejar el campo "Otro"
+    function toggleProblemaOtro() {
+        const select = document.getElementById('label_5g_problema');
+        const containerOtro = document.getElementById('container_5g_problema_otro');
+        const inputOtro = document.getElementById('label_5g_problema_otro');
+        
+        if (select.value === 'Otro') {
+            containerOtro.style.display = 'flex';
+        } else {
+            containerOtro.style.display = 'none';
+            inputOtro.value = '';
+            inputOtro.classList.remove('input-error');
+        }
+        updateResultadoOutput();
+    }
+
     // Asignar eventos globales a todos los campos
-    inputsArray.forEach(input => {
-        // Evento principal para actualizar el resultado y quitar el borde rojo al escribir/seleccionar
+    document.querySelectorAll('input, select').forEach(input => {
         const updateEvent = input.tagName === 'SELECT' ? 'change' : 'input';
         
         input.addEventListener(updateEvent, function() {
-            this.classList.remove('input-error'); // Quitar color rojo si lo tuviera
-            updateResultadoOutput(); // Actualizar el cajón de resultado
+            this.classList.remove('input-error'); 
+            updateResultadoOutput(); 
         });
     });
 
     function updateResultadoOutput() {
-        const valores = inputsArray.map(input => input.value);
-        
-        resultadoOutput.innerHTML =`<span class="resultado-label">${valores[0]}</span> // La señal sufre cambios de red o se pierde algunas veces. // "Se genera incidencia a BO123"
+        const is5G = document.querySelector("#label_Cobertura").value === '5G';
 
-Número de consulta: <span class="resultado-label">${valores[1]}</span>
-Numero de referencia (Importante): <span class="resultado-label">${valores[2]}</span>
-Fecha de ultimo consumo, sea llamada sms o internet: <span class="resultado-label">${valores[3]}</span>
-¿Probó chip en otro equipo? (Si/No/No puede): <span class="resultado-label">${valores[4]}</span>
-Cuantas barras visualiza: <span class="resultado-label">${valores[5]}</span>
-¿Sabe si hay otros numeros con problemas? (Si/No): <span class="resultado-label">${valores[6]}</span>
-Problema sucede en un solo lugar: <span class="resultado-label">${valores[7]}</span>
-Cobertura que presenta problema (3G/4G/5G): <span class="resultado-label">${valores[8]}</span>
-Dirección exacta del inconveniente: <span class="resultado-label">${valores[9]}</span>
-Coordenadas Google Earth: <span class="resultado-label">${valores[10]}</span>
-Observaciones: <span class="resultado-label">${valores[11]}</span>
-BTS: <span class="resultado-label">${valores[12]}</span>
-Codigo de llamada: $$_<span class="resultado-label">${valores[13]}</span>_&&`;
+        let texto = `${vHTML('label0')} // La señal sufre cambios de red o se pierde algunas veces.
+// "Se genera incidencia a BO123"
+
+Número de consulta: ${vHTML('label_Linea')}
+Numero de referencia (Importante): ${vHTML('label_LineaREF')}
+Fecha de ultimo consumo (llamada/sms/internet): ${vHTML('label_LimiteMB')}
+¿Probó chip en otro equipo?: ${vHTML('label_chipotroequipo')}
+Cuantas barras visualiza: ${vHTML('label_barras')}
+¿Sabe si hay otros numeros con problemas?: ${vHTML('label_otronumero')}
+Problema sucede en un solo lugar: ${vHTML('label_Lugar')}
+Cobertura que presenta problema: ${vHTML('label_Cobertura')}
+Dirección exacta del inconveniente: ${vHTML('label_Direccion')}
+Coordenadas Google Earth: ${vHTML('label_GoogleEarth')}\n`;
+
+        if (is5G) {
+            // Resolver si se muestra el select o el input manual
+            const problemaBase = document.getElementById('label_5g_problema').value;
+            const problemaFinal = problemaBase === 'Otro' ? vHTML('label_5g_problema_otro') : vHTML('label_5g_problema');
+
+            texto += `¿Cuándo y a qué hora ocurrió el problema y continúa presentándose?: ${vHTML('label_5g_cuando')}
+¿Cuál es el problema específico que presenta el cliente?: ${problemaFinal}
+¿Otras personas o líneas Bitel en la misma ubicación presentan el mismo problema? (Si/No/ No sabe): ${vHTML('label_5g_otras_lineas')}
+Si configura el teléfono en Solo 4G (4G Only), ¿el problema desaparece?: ${vHTML('label_5g_solo4g')}
+En el momento de la incidencia, ¿qué estado de red mostraba el teléfono? (3G/4G/5G/Sin servicio/Solo llamadas de emergencia): ${vHTML('label_5g_estado_red')}
+¿El cliente había utilizado anteriormente el servicio 5G sin problemas en ese mismo lugar? (Sí/No/No sabe): ${vHTML('label_5g_uso_anterior')}
+El problema es en interiores o exteriores: ${vHTML('label_5g_interior_exterior')}
+Si se desplaza al exterior o a otra ubicación, ¿el problema desaparece?: ${vHTML('label_5g_desplaza')}
+Después de activar y desactivar el modo avión o reiniciar el teléfono, ¿el servicio se restablece?: ${vHTML('label_5g_reinicio')}\n`;
+        }
+
+        texto += `Observaciones: ${vHTML('label_DetalleInc')}
+BTS: ${vHTML('label_BTS')}
+Codigo de llamada: $$_${vHTML('labelID')}_&&`;
+
+        resultadoOutput.innerHTML = texto;
     }
 
       function checkLength(input) {
@@ -523,10 +642,23 @@ Codigo de llamada: $$_<span class="resultado-label">${valores[13]}</span>_&&`;
       /* --- FUNCIÓN COPIAR CON VALIDACIÓN Y RESALTADO DE ERRORES --- */
       function copiarResultado() {
           let hayErrores = false;
+          const allInputs = document.querySelectorAll('input[type="text"], input[type="number"], select');
+          
+          allInputs.forEach(input => {
+              const container = input.closest('.input-container');
+              const parent5G = input.closest('#container_5G_Extras');
 
-          // Revisamos cada input, si está vacío le ponemos la clase roja
-          inputsArray.forEach(input => {
-              if (!input.value.trim()) {
+              // Ignorar campos que actualmente están ocultos
+              if (container && container.style.display === 'none') {
+                  input.classList.remove('input-error');
+                  return;
+              }
+              if (parent5G && document.getElementById('container_5G_Extras').style.display === 'none') {
+                  input.classList.remove('input-error');
+                  return;
+              }
+
+              if (!input.value.trim() && input.id !== 'label_5g_estado_red') {
                   input.classList.add('input-error');
                   hayErrores = true;
               } else {
@@ -555,11 +687,17 @@ Codigo de llamada: $$_<span class="resultado-label">${valores[13]}</span>_&&`;
       }
 
       function limpiarInputs() {
-        inputsArray.forEach(input => {
-            input.value = "";
-            input.classList.remove('input-error'); // Limpiamos también el rojo
+        document.querySelectorAll('input, select').forEach(input => {
+            if(input.id !== 'label_5g_estado_red') { // Mantener el valor default
+                input.value = "";
+            }
+            input.classList.remove('input-error'); 
         });
-        
+
+        // Resetear visualización
+        document.getElementById('container_5G_Extras').style.display = 'none';
+        document.getElementById('container_5g_problema_otro').style.display = 'none';
+
         resultadoOutput.innerHTML = "";
         avisoStatus.style.display = "none";
         avisoStatus.innerHTML = "";

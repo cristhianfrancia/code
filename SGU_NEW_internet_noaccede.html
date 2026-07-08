@@ -16,13 +16,13 @@
         }
 
         .container {
-            width: 96%; 
+            width: 96%;
             max-width: 1200px; 
             margin: 0 auto;
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
-            padding: 20px 50px; 
+            padding: 20px 50px;
             position: relative;
         }
 
@@ -71,7 +71,7 @@
       }
 
       .input-container label {
-        flex: 0 0 45%; 
+        flex: 0 0 45%;
         font-weight: 500;
         font-size: 0.95rem;
         padding-right: 10px; 
@@ -82,7 +82,7 @@
       }
 
       .input-container input, .input-container select {
-          flex: 1; 
+          flex: 1;
           padding: 4px 8px; 
           border: 1px solid #ccc;
           border-radius: 4px;
@@ -94,7 +94,7 @@
       .input-container input:focus, .input-container select:focus {
           border-color: #0c477e;
           outline: none;
-          box-shadow: 0 0 5px rgba(12, 71, 126, 0.4);
+          box-shadow: 0 0 5px rgba(1, 118, 139, 0.4);
       }
 
       /* --- CLASE PARA RESALTAR ERRORES EN ROJO --- */
@@ -138,12 +138,12 @@
 
       hr {
           border: 1px solid #fd8261;
-          margin: 10px 0;
+          margin: 15px 0;
       }
 
       /* Botones principales de acción */
       .btn-principal {
-          background-color: #0c477e; 
+          background-color: #0c477e;
           color: white;
           padding: 8px 18px;
           border: none;
@@ -211,10 +211,9 @@
 
       .tooltip-wrapper select {
           width: 100%;
-          cursor: pointer; /* Cambiado a pointer para interacción natural */
+          cursor: pointer; 
       }
 
-      /* GLOBO FLOTANTE AJUSTADO PARA NO ROBAR CLICS */
       .tooltip-text {
           visibility: hidden;
           width: 620px; 
@@ -224,8 +223,8 @@
           border-radius: 10px;
           padding: 18px 25px;
           position: absolute;
-          z-index: 999; 
-          top: calc(100% + 12px); /* Separación exacta por debajo */
+          z-index: 999;
+          top: calc(100% + 12px); 
           left: 50%;
           transform: translateX(-50%);
           opacity: 0;
@@ -233,22 +232,20 @@
           font-size: 0.85rem;
           font-weight: normal;
           box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-          pointer-events: none; /* Desactivado por defecto para no bloquear nada */
+          pointer-events: none;
           line-height: 1.5;
       }
 
-      /* Puente invisible de tamaño exacto */
       .tooltip-text::before {
           content: "";
           position: absolute;
           bottom: 100%;
           left: 0;
           width: 100%;
-          height: 12px; /* Mide exactamente la separación (12px), sin invadir el select */
+          height: 12px;
           background-color: transparent;
       }
 
-      /* Flechita decorativa */
       .tooltip-text::after {
           content: "";
           position: absolute;
@@ -271,12 +268,11 @@
           margin-left: 5px;
       }
 
-      /* Animación del hover */
       .tooltip-wrapper:hover .tooltip-text,
       .tooltip-text:hover {
           visibility: visible;
           opacity: 1;
-          pointer-events: auto; /* Permite dar clic a los botones internos solo cuando ya está visible */
+          pointer-events: auto; 
       }
 
       #resultado {
@@ -288,14 +284,12 @@
           border-radius: 0 6px 6px 0;
           white-space: pre-line;
           min-height: 40px;
-          
           user-select: none;
           -webkit-user-select: none;
           -moz-user-select: none;
           -ms-user-select: none;
       }
 
-      /* --- ESTADOS DE AVISO BOTÓN (VERDE / ROJO) --- */
       #aviso-status {
           margin: 8px 0;
           padding: 10px;
@@ -333,7 +327,6 @@
           font-size: 0.95rem;
       }
 
-      /* --- POPUPS DE IMÁGENES INTERNOS --- */
       .popup-overlay {
         display: none;
         position: fixed;
@@ -372,7 +365,6 @@
       .close-button:hover {
           transform: scale(1.05);
       }
-
     </style>
 </head>
 <body oncontextmenu="return false"> 
@@ -386,9 +378,7 @@
 
     <center class="code-container">
     <p>
-<input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="text-align: center; font-weight: bold; width: 160px; color: #0c477e; border: 1px solid #ccc; padding: 4px; border-radius: 4px;" />
-// El cliente no puede conectarse a internet en ningún momento, sin importar la red.
-// "Se genera incidencia a BO123"
+<input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="text-align: center; font-weight: bold; width: 160px; color: #0c477e; border: 1px solid #ccc; padding: 4px; border-radius: 4px;" /> // El cliente no puede conectarse a internet en ningún momento, sin importar la red. // "Se genera incidencia a BO123"
     </p>
     </center>
 
@@ -402,6 +392,7 @@
       <select id="label_MB">
         <option value="">Seleccionar</option>
         <option value="Si">Si</option>
+        <option value="No">No</option>
       </select>
     </div>
 
@@ -434,7 +425,7 @@
     <img src="https://i.postimg.cc/W4bMs9n6/Pedido-SGU-Internet-No-accede-Sistema-IMEI.png">
     </div>
 
-    <div class="input-container">
+    <div class="input-container" id="container_FechaNoaccede">
     <label for="label_FechaNoaccede">- Fecha desde cuando no accede:</label>
     <input type="text" id="label_FechaNoaccede" placeholder="(DD/MM/AAAA)" />
     </div>
@@ -469,46 +460,34 @@
           <button type="button" class="btn-gsm" style="margin-left: 5px;" onclick="abrirGsmArena()">GSM ARENA</button>
       </label>
       
-      <!-- TOOLTIP WRAPPER SOBRE EL SELECT -->
       <div class="tooltip-wrapper">
           <select id="label_Cobertura">
             <option value="">Seleccionar</option>
-           <option value="5G">5G</option>
-           <option value="4G LTE">4G | LTE</option>
-            <option value="3G">3G | 3.5G | H | H+</option>
+            <option value="5G">5G</option>
+            <option value="4G">4G</option>
+            <option value="3G">3G (3.5G | H | H+)</option>
             <option value="E">E</option>
             <option value="-">-</option>
           </select>
-          
 
-<div class="tooltip-text">
-<strong>📶 Ver si equipo es compatible con 5G</strong><br><br>
-
-<strong>#1. Ver EIR:</strong> Para identificar marca y modelo. <button type="button" class="btn-accion" onclick="abrirPopupDrive('https://drive.google.com/file/d/10twFW6OobvFl7siWZH9HsQmvWIJB70wF/view?usp=sharing')">👉Ver ejemplo👈</button>
-<br>
-
-<strong>#2. Abrimos GSM ARENA:</strong> Para buscar las bandas del equipo. <button type="button" class="btn-accion" onclick="abrirPopupDrive('https://drive.google.com/file/d/1xh2DMfS5_PYY0tWKVnh6kD-IoahDbGRH/view?usp=sharing')">👉Ver ejemplo👈</button> <button type="button" class="btn-gsm" style="margin-left: 5px;" onclick="abrirGsmArena()">Abrir</button>
-<br><br>
-
-👉 n66 (1700 / 2100 MHz)<br>
-👉 n78 (3500 MHz)<br><br>
-
-<span style="color: #4caf50; font-weight: bold;">✅ EQUIPO SI TIENE LAS BANDAS</span><br>
-😃 Continuamos con el Pedido SGU<br><br>
-
-<span style="color: #fd8261; font-weight: bold;">❌ EQUIPO NO TIENE LAS BANDAS</span> <br>
-😭 No se continua con Pedido SGU de 5G, solo se informa que el equipo no es compatible.<br><br>
-
-<strong>⚙️ Tipificación:</strong> <button type="button" class="btn-accion" onclick="abrirPopupDrive('https://drive.google.com/file/d/1gHYHoegj2NimfgHSKipBTWjDwx6P5oKU/view?usp=sharing')">👉Ver ejemplo👈</button><br>
-Other / Información / Información / Información comercial 5G / 5G / No puede acceder equipo no compatible 5G<br><br>
-
-<strong>✍️ Comentario:</strong><br>
-Número del que llama // Cliente menciona que no puede conectarse a internet en 5G // Equipo no compatible // $$_ID DE LLAMADA_&&<br><br>
-
-<span style="color: #ccc; font-size: 0.8rem;">Importante: Si el cliente menciona que tiene problema también con las otras coberturas 4G / 3G, podemos continuar con el SGU y seleccionamos la opción correcta.</span>
-</div>
-</div>
-</div>
+        <div class="tooltip-text">
+        <strong>📶 Ver si equipo es compatible con 5G</strong><br><br>
+        <strong>#1. Ver EIR:</strong> Para identificar marca y modelo. <button type="button" class="btn-accion" onclick="abrirPopupDrive('https://drive.google.com/file/d/10twFW6OobvFl7siWZH9HsQmvWIJB70wF/view?usp=sharing')">👉Ver ejemplo👈</button><br>
+        <strong>#2. Abrimos GSM ARENA:</strong> Para buscar las bandas del equipo. <button type="button" class="btn-accion" onclick="abrirPopupDrive('https://drive.google.com/file/d/1xh2DMfS5_PYY0tWKVnh6kD-IoahDbGRH/view?usp=sharing')">👉Ver ejemplo👈</button> <button type="button" class="btn-gsm" style="margin-left: 5px;" onclick="abrirGsmArena()">Abrir</button><br><br>
+        👉 n66 (1700 / 2100 MHz)<br>
+        👉 n78 (3500 MHz)<br><br>
+        <span style="color: #4caf50; font-weight: bold;">✅ EQUIPO SI TIENE LAS BANDAS</span><br>
+        😃 Continuamos con el Pedido SGU<br><br>
+        <span style="color: #fd8261; font-weight: bold;">❌ EQUIPO NO TIENE LAS BANDAS</span> <br>
+        😭 No se continua con Pedido SGU de 5G, solo se informa que el equipo no es compatible.<br><br>
+        <strong>⚙️ Tipificación:</strong> <button type="button" class="btn-accion" onclick="abrirPopupDrive('https://drive.google.com/file/d/1gHYHoegj2NimfgHSKipBTWjDwx6P5oKU/view?usp=sharing')">👉Ver ejemplo👈</button><br>
+        Other / Información / Información / Información comercial 5G / 5G / No puede acceder equipo no compatible 5G<br><br>
+        <strong>✍️ Comentario:</strong><br>
+        Número del que llama // Cliente menciona que no puede conectarse a internet en 5G // Equipo no compatible // $$_ID DE LLAMADA_&&<br><br>
+        <span style="color: #ccc; font-size: 0.8rem;">Importante: Si el cliente menciona que tiene problema también con las otras coberturas 4G / 3G, podemos continuar con el SGU y seleccionamos la opción correcta.</span>
+        </div>
+      </div>
+    </div>
 
     <div class="input-container">
     <label for="label_Barring">- Parámetros correctos (Barring) (Si/No): 
@@ -531,7 +510,7 @@ Número del que llama // Cliente menciona que no puede conectarse a internet en 
     </div>
 
     <div class="input-container">
-    <label for="label_GoogleEarth">- Coordenadas Google Earth: 
+    <label id="lbl_GoogleEarth" for="label_GoogleEarth">- Coordenadas Google Earth: 
         <button type="button" class="btn-accion" onclick="return showPopup('imagePopupMaps')">👉Ver ejemplo👈</button>
     </label>
     <input type="text" id="label_GoogleEarth" placeholder="(Ejemplo: -12.111846867998418, -77.00713689016001)">
@@ -542,6 +521,96 @@ Número del que llama // Cliente menciona que no puede conectarse a internet en 
     <img src="https://i.postimg.cc/fyJXFWkg/Google-Maps.png">
     </div>
 
+    <div id="container_5G_Extras" style="display: none;">
+        <hr>
+        
+        <div class="input-container">
+            <label for="label_5g_cuando">- ¿Cuándo y a qué hora ocurrió el problema y continúa presentándose?</label>
+            <input type="text" id="label_5g_cuando" placeholder="(Ejem: XX/XX/XXXX a las XX:XX, Si continúa presentándose)" />
+        </div>
+        
+        <div class="input-container">
+            <label for="label_5g_problema">- ¿Cuál es el problema específico que presenta el cliente?</label>
+            <select id="label_5g_problema" onchange="toggleProblemaOtro()">
+                <option value="">Seleccionar</option>
+                <option value="Tiene 5G pero no puede navegar por internet">Tiene 5G pero no puede navegar por internet</option>
+                <option value="Cambia entre 4G y 5G">Cambia entre 4G y 5G</option>
+                <option value="Solo una aplicación presenta lentitud en 5G">Solo una aplicación presenta lentitud en 5G</option>
+                <option value="Otro">Otro (Escribir manualmente)</option>
+            </select>
+        </div>
+        
+        <div class="input-container" id="container_5g_problema_otro" style="display: none;">
+            <label for="label_5g_problema_otro" style="color: #fd8261;">↳ Especificar problema:</label>
+            <input type="text" id="label_5g_problema_otro" placeholder="(Detallar problema específico)" />
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_otras_lineas">- ¿Otras personas o líneas Bitel en la misma ubicación presentan el mismo problema?</label>
+            <select id="label_5g_otras_lineas">
+                <option value="">Seleccionar</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+                <option value="No sabe">No sabe</option>
+            </select>
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_solo4g">- Si configura el teléfono en "Solo 4G" (4G Only), ¿el problema desaparece?</label>
+            <select id="label_5g_solo4g">
+                <option value="">Seleccionar</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+                <option value="No sabe">No sabe</option>
+            </select>
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_estado_red">- En el momento de la incidencia, ¿qué estado de red mostraba el teléfono?</label>
+            <input type="text" id="label_5g_estado_red" value="5G" readonly style="background-color: #f1f3f4; color: #0c477e; cursor: not-allowed;" />
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_uso_anterior">- ¿El cliente había utilizado anteriormente el servicio 5G sin problemas en ese mismo lugar?</label>
+            <select id="label_5g_uso_anterior">
+                <option value="">Seleccionar</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+                <option value="No sabe">No sabe</option>
+            </select>
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_interior_exterior">- El problema es en interiores o exteriores:</label>
+            <select id="label_5g_interior_exterior">
+                <option value="">Seleccionar</option>
+                <option value="Interiores">Interiores</option>
+                <option value="Exteriores">Exteriores</option>
+            </select>
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_desplaza">- Si se desplaza al exterior o a otra ubicación, ¿el problema desaparece?</label>
+            <select id="label_5g_desplaza">
+                <option value="">Seleccionar</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+                <option value="No sabe">No sabe</option>
+            </select>
+        </div>
+
+        <div class="input-container">
+            <label for="label_5g_reinicio">- Después de activar y desactivar el modo avión o reiniciar el teléfono, ¿el servicio se restablece?</label>
+            <select id="label_5g_reinicio">
+                <option value="">Seleccionar</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+                <option value="No sabe">No sabe</option>
+            </select>
+        </div>
+        
+        <hr>
+    </div>
     <div class="input-container">
     <label for="label_DetalleInc">- Observaciones: </label>
     <input type="text" id="label_DetalleInc" placeholder="(Observaciones del inconveniente)" />
@@ -565,43 +634,39 @@ Número del que llama // Cliente menciona que no puede conectarse a internet en 
     <button class="btn-principal" onclick="copiarResultado()">Copiar</button>
     <button class="btn-principal" onclick="limpiarInputs()">Borrar</button>
 
-    <br />
-    <br />
-    <br />
+    <br /><br /><br />
 
     <label style="color: red; font-size: 1.1rem;"><strong>2. Tipificación:</strong></label>
 
-<div class="ruta-container">
-- <strong>Address:</strong> DIRECCIÓN DEL PROBLEMA, REFERENCIA DEL PROBLEMA, LUG@R: DEPARTAMENTO - PROVINCIA - DISTRITO
+    <div class="ruta-container">
+    - <strong>Address:</strong> DIRECCIÓN DEL PROBLEMA, REFERENCIA DEL PROBLEMA, LUG@R: DEPARTAMENTO - PROVINCIA - DISTRITO
+    <br><br>
+    - <strong>Ruta:</strong> No full internet access / Pedido SGU / Pedido SGU / Problemas SGU / Calidad / Sin servicio y está al día en sus pagos (con check a BO ✅) 
+    <button type="button" class="btn-accion" onclick="return showPopup('imagePopupTip')">👉Ver ejemplo👈</button>
 
-<br><br>
+    <div id="imagePopupTip" class="popup-overlay">
+    <button class="close-button" onclick="hidePopup('imagePopupTip')">Cerrar</button>
+    <img src="https://i.postimg.cc/yNSkVrd2/Pedido-SGU-Internet-No-accede.png" alt="Imagen de vista previa 1">
+    </div>
+    </div>
 
-- <strong>Ruta:</strong> No full internet access / Pedido SGU / Pedido SGU / Problemas SGU / Calidad / Sin servicio y está al día en sus pagos (con check a BO ✅) 
-<button type="button" class="btn-accion" onclick="return showPopup('imagePopupTip')">👉Ver ejemplo👈</button>
+    <br />
 
-<div id="imagePopupTip" class="popup-overlay">
-<button class="close-button" onclick="hidePopup('imagePopupTip')">Cerrar</button>
-<img src="https://i.postimg.cc/yNSkVrd2/Pedido-SGU-Internet-No-accede.png" alt="Imagen de vista previa 1">
-</div>
-</div>
+    <label style="color: red; font-size: 1.1rem;"><strong>3. Speech:</strong></label>
 
-<br />
+    <div class="ruta-container">
+    <strong><span style="color: #0c477e">🎧 Agente: </span></strong> <span style="color: #0c477e">(Nombre del cliente)</span>, le confirmamos que hemos recibido y registrado su pedido con el código <span style="color: #0c477e">(CASSXXXXXXXXXX) o (CAPVXXXXXXXXXX)</span>. El plazo estimado de atención es de 03 días calendario. Nuestra respuesta será enviada vía mensaje de texto en 1 día hábil luego del plazo de atención.
+    </div>
 
-<label style="color: red; font-size: 1.1rem;"><strong>3. Speech:</strong></label>
+    <br><br><br>
 
-<div class="ruta-container">
-<strong><span style="color: #0c477e">🎧 Agente: </span></strong> <span style="color: #0c477e">(Nombre del cliente)</span>, le confirmamos que hemos recibido y registrado su pedido con el código <span style="color: #0c477e">(CASSXXXXXXXXXX) o (CAPVXXXXXXXXXX)</span>. El plazo estimado de atención es de 03 días calendario. Nuestra respuesta será enviada vía mensaje de texto en 1 día hábil luego del plazo de atención.
-</div>
+    <strong>Ejemplo de código para Pedido SGU:</strong>
+    <br><br>
+    <img src="https://i.postimg.cc/Y2FYwHwH/COD-Pedido-SGU.png" style="max-width: 100%; border-radius: 8px;">
 
-<br><br><br>
-
-<strong>Ejemplo de código para Pedido SGU:</strong>
-<br><br>
-<img src="https://i.postimg.cc/Y2FYwHwH/COD-Pedido-SGU.png" style="max-width: 100%; border-radius: 8px;">
-
-<br><br><br><br>
-<div class="footer-autor">
-    Developed by Cristhian Francia &copy; 2026 | All rights reserved.
+    <br><br><br><br>
+    <div class="footer-autor">
+        Developed by Cristhian Francia &copy; 2026 | All rights reserved.
     </div>
   </div>
 
@@ -633,112 +698,175 @@ Número del que llama // Cliente menciona que no puede conectarse a internet en 
         }
     };
 
-    const inputsArray = [
-        document.querySelector("#label0"),
-        document.querySelector("#label_Linea"),
-        document.querySelector("#label_MB"),
-        document.querySelector("#label_LimiteMB"),
-        document.querySelector("#label_IMEI"),
-        document.querySelector("#label_FechaNoaccede"),
-        document.querySelector("#label_FechaNavegacion"),
-        document.querySelector("#label_Marca"),
-        document.querySelector("#label_Cobertura"),
-        document.querySelector("#label_Barring"),
-        document.querySelector("#label_Direccion"),
-        document.querySelector("#label_GoogleEarth"),
-        document.querySelector("#label_DetalleInc"),
-        document.querySelector("#label_BTS"),
-        document.querySelector("#labelID")
-    ];
-
     const resultadoOutput = document.querySelector("#resultado");
     const avisoStatus = document.querySelector("#aviso-status");
 
-    // Asignar eventos globales
-    inputsArray.forEach(input => {
-        const updateEvent = input.tagName === 'SELECT' ? 'change' : 'input';
+    // Función auxiliar para obtener el valor formateado del span
+    function vHTML(id) {
+        return `<span class="resultado-label">${document.getElementById(id).value}</span>`;
+    }
+
+    // Lógica para detectar selección de 5G y manejar los contenedores
+    document.querySelector("#label_Cobertura").addEventListener('change', function() {
+        const is5G = this.value === '5G';
         
+        // Muestra u oculta los extras de 5G y la fecha de no accede
+        document.getElementById('container_5G_Extras').style.display = is5G ? 'block' : 'none';
+        document.getElementById('container_FechaNoaccede').style.display = is5G ? 'none' : 'flex';
+        
+        // Cambia el título de Earth a Maps dinámicamente
+        document.getElementById('lbl_GoogleEarth').innerHTML = is5G 
+            ? '- Coordenadas Google Maps: <button type="button" class="btn-accion" onclick="return showPopup(\'imagePopupMaps\')">👉Ver ejemplo👈</button>' 
+            : '- Coordenadas Google Earth: <button type="button" class="btn-accion" onclick="return showPopup(\'imagePopupMaps\')">👉Ver ejemplo👈</button>';
+
+        if (is5G) {
+            abrirGsmArena();
+        }
+        
+        updateResultadoOutput();
+    });
+
+    // Función para manejar el campo "Otro"
+    function toggleProblemaOtro() {
+        const select = document.getElementById('label_5g_problema');
+        const containerOtro = document.getElementById('container_5g_problema_otro');
+        const inputOtro = document.getElementById('label_5g_problema_otro');
+        
+        if (select.value === 'Otro') {
+            containerOtro.style.display = 'flex';
+        } else {
+            containerOtro.style.display = 'none';
+            inputOtro.value = '';
+            inputOtro.classList.remove('input-error');
+        }
+        updateResultadoOutput();
+    }
+
+    // Asignar eventos globales dinámicamente a todos los inputs y selects
+    document.querySelectorAll('input, select').forEach(input => {
+        const updateEvent = input.tagName === 'SELECT' ? 'change' : 'input';
         input.addEventListener(updateEvent, function() {
             this.classList.remove('input-error'); 
             updateResultadoOutput(); 
         });
     });
 
-    // Lógica para detectar selección de 5G y ABRIR GSM ARENA automáticamente
-    document.querySelector("#label_Cobertura").addEventListener('change', function() {
-        if (this.value === '5G') {
-            abrirGsmArena();
-        }
-    });
-
     function updateResultadoOutput() {
-        const valores = inputsArray.map(input => input.value);
+        const is5G = document.querySelector("#label_Cobertura").value === '5G';
         
-        resultadoOutput.innerHTML =`<span class="resultado-label">${valores[0]}</span> // El cliente no puede conectarse a internet en ningún momento, sin importar la red. // "Se genera incidencia a BO123"
+        let texto = `${vHTML('label0')} // El cliente no puede conectarse a internet en ningún momento, sin importar la red. // "Se genera incidencia a BO123"
 
-Número de consulta: <span class="resultado-label">${valores[1]}</span>
-Tiene MB o data ilimitada para navegar (Si/No): <span class="resultado-label">${valores[2]}</span>
-Fecha limite de uso de MB: <span class="resultado-label">${valores[3]}</span>
-Existe cambio de IMEI?: <span class="resultado-label">${valores[4]}</span>
-Fecha desde cuando no accede: <span class="resultado-label">${valores[5]}</span>
-Fecha y hora de la ultima navegacion segun consumo: <span class="resultado-label">${valores[6]}</span>
-Marca y modelo de equipo: <span class="resultado-label">${valores[7]}</span>
-Cobertura que presenta problema (3G/4G/5G): <span class="resultado-label">${valores[8]}</span>
-Parámetros correctos (Barring) (Si/No): <span class="resultado-label">${valores[9]}</span>
-Dirección exacta del inconveniente: <span class="resultado-label">${valores[10]}</span>
-Coordenadas Google Earth: <span class="resultado-label">${valores[11]}</span>
-Observaciones: <span class="resultado-label">${valores[12]}</span>
-BTS: <span class="resultado-label">${valores[13]}</span>
-Codigo de llamada: $$_<span class="resultado-label">${valores[14]}</span>_&&`;
+Número de consulta: ${vHTML('label_Linea')}
+Tiene MB o data ilimitada para navegar (Si/No): ${vHTML('label_MB')}
+Fecha limite de uso de MB: ${vHTML('label_LimiteMB')}
+Existe cambio de IMEI?: ${vHTML('label_IMEI')}\n`;
+
+        if (!is5G) {
+            texto += `Fecha desde cuando no accede: ${vHTML('label_FechaNoaccede')}\n`;
+        }
+
+        texto += `Fecha y hora de la ultima navegacion segun consumo: ${vHTML('label_FechaNavegacion')}
+Marca y modelo de equipo: ${vHTML('label_Marca')}
+Cobertura que presenta problema (3G/4G/5G): ${vHTML('label_Cobertura')}
+Parámetros correctos (Barring) (Si/No): ${vHTML('label_Barring')}
+Dirección exacta del inconveniente: ${vHTML('label_Direccion')}
+Coordenadas ${is5G ? 'Google Maps' : 'Google Earth'}: ${vHTML('label_GoogleEarth')}\n`;
+
+        if (is5G) {
+            // Resolver si se muestra el select o el input manual
+            const problemaBase = document.getElementById('label_5g_problema').value;
+            const problemaFinal = problemaBase === 'Otro' ? vHTML('label_5g_problema_otro') : vHTML('label_5g_problema');
+
+            texto += `¿Cuándo y a qué hora ocurrió el problema y continúa presentándose?: ${vHTML('label_5g_cuando')}
+¿Cuál es el problema específico que presenta el cliente?: ${problemaFinal}
+¿Otras personas o líneas Bitel en la misma ubicación presentan el mismo problema?: ${vHTML('label_5g_otras_lineas')}
+Si configura el teléfono en Solo 4G (4G Only), ¿el problema desaparece?: ${vHTML('label_5g_solo4g')}
+En el momento de la incidencia, ¿qué estado de red mostraba el teléfono?: ${vHTML('label_5g_estado_red')}
+¿El cliente había utilizado anteriormente el servicio 5G sin problemas en ese mismo lugar?: ${vHTML('label_5g_uso_anterior')}
+El problema es en interiores o exteriores: ${vHTML('label_5g_interior_exterior')}
+Si se desplaza al exterior o a otra ubicación, ¿el problema desaparece?: ${vHTML('label_5g_desplaza')}
+Después de activar y desactivar el modo avión o reiniciar el teléfono, ¿el servicio se restablece?: ${vHTML('label_5g_reinicio')}\n`;
+        }
+
+        texto += `Observaciones: ${vHTML('label_DetalleInc')}
+BTS: ${vHTML('label_BTS')}
+Codigo de llamada: $$_${vHTML('labelID')}_&&`;
+
+        resultadoOutput.innerHTML = texto;
     }
 
-      function checkLength(input) {
+    function checkLength(input) {
         if (input.value.length > 9) {
           input.value = input.value.slice(0, 9);
         }
-      }
+    }
 
-      function copiarResultado() {
-          let hayErrores = false;
-          inputsArray.forEach(input => {
-              if (!input.value.trim()) {
-                  input.classList.add('input-error');
-                  hayErrores = true;
-              } else {
-                  input.classList.remove('input-error');
-              }
-          });
+    function copiarResultado() {
+        let hayErrores = false;
+        const allInputs = document.querySelectorAll('input[type="text"], input[type="number"], select');
+        
+        allInputs.forEach(input => {
+            // Evaluamos el contenedor principal de cada input
+            const container = input.closest('.input-container');
+            const parent5G = input.closest('#container_5G_Extras');
 
-          if (hayErrores) {
-              avisoStatus.textContent = "❌ Error: Faltan datos obligatorios. Por favor completa los campos resaltados en rojo.";
-              avisoStatus.className = "aviso-error";
-              avisoStatus.style.display = "block";
-              return;
-          }
+            // Excepciones para ignorar campos que actualmente están ocultos
+            if (container && container.style.display === 'none') {
+                input.classList.remove('input-error');
+                return;
+            }
+            if (parent5G && document.getElementById('container_5G_Extras').style.display === 'none') {
+                input.classList.remove('input-error');
+                return;
+            }
 
-          const resultadoTexto = resultadoOutput.innerText.trim();
-          const textarea = document.createElement("textarea");
-          textarea.value = resultadoTexto;
-          document.body.appendChild(textarea);
-          textarea.select();
-          document.execCommand("copy");
-          document.body.removeChild(textarea);
-          
-          avisoStatus.textContent = "✅ ¡Copiado excelente! Los datos se han estructurado de forma correcta en el portapapeles.";
-          avisoStatus.className = "aviso-exito";
-          avisoStatus.style.display = "block";
-      }
+            // Excepción especial para el "label0" que no está dentro de .input-container
+            if (!input.value.trim() && input.id !== 'label_5g_estado_red') { 
+                input.classList.add('input-error');
+                hayErrores = true;
+            } else {
+                input.classList.remove('input-error');
+            }
+        });
 
-      function limpiarInputs() {
-        inputsArray.forEach(input => {
-            input.value = "";
+        if (hayErrores) {
+            avisoStatus.textContent = "❌ Error: Faltan datos obligatorios. Por favor completa los campos resaltados en rojo.";
+            avisoStatus.className = "aviso-error";
+            avisoStatus.style.display = "block";
+            return;
+        }
+
+        const resultadoTexto = resultadoOutput.innerText.trim();
+        const textarea = document.createElement("textarea");
+        textarea.value = resultadoTexto;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        
+        avisoStatus.textContent = "✅ ¡Copiado excelente! Los datos se han estructurado de forma correcta en el portapapeles.";
+        avisoStatus.className = "aviso-exito";
+        avisoStatus.style.display = "block";
+    }
+
+    function limpiarInputs() {
+        document.querySelectorAll('input, select').forEach(input => {
+            if(input.id !== 'label_5g_estado_red') { // Mantener el valor default para 5G
+                input.value = "";
+            }
             input.classList.remove('input-error'); 
         });
         
+        // Resetear visualización de contenedores dinámicos
+        document.getElementById('container_5G_Extras').style.display = 'none';
+        document.getElementById('container_FechaNoaccede').style.display = 'flex';
+        document.getElementById('container_5g_problema_otro').style.display = 'none';
+        document.getElementById('lbl_GoogleEarth').innerHTML = '- Coordenadas Google Earth: <button type="button" class="btn-accion" onclick="return showPopup(\'imagePopupMaps\')">👉Ver ejemplo👈</button>';
+
         resultadoOutput.innerHTML = "";
         avisoStatus.style.display = "none";
         avisoStatus.innerHTML = "";
-      }
+    }
 
   /* --- POPUPS INTERNOS (IMÁGENES NORMALES) --- */
   function showPopup(id) {

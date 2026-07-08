@@ -284,18 +284,27 @@
     }
     .input-porcentaje:focus { border-color: var(--bitel-teal); box-shadow: 0 0 0 2px rgba(1,118,139,0.1); transform: translateY(-1px);}
     
-    /* Banner Bipay Azul Corporativo */
-    .bipay-banner {
-      background: linear-gradient(135deg, var(--bitel-blue), var(--bitel-teal));
-      padding: 20px 25px; border-radius: 16px; display: flex; align-items: center; 
-      justify-content: space-between; box-shadow: 0 8px 20px rgba(12, 71, 126, 0.2); 
-      transition: transform 0.2s, box-shadow 0.2s; flex-wrap: wrap; gap: 15px;
-    }
+    /* Botón Bipay Compacto */
+.btn-bipay-compact {
+  background: linear-gradient(135deg, var(--bitel-blue), var(--bitel-teal));
+  color: white; 
+  padding: 8px 22px; 
+  border-radius: 999px; 
+  border: none; 
+  cursor: pointer;
+  font-weight: 700; 
+  font-size: 0.9rem; 
+  box-shadow: 0 4px 12px rgba(12, 71, 126, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-bipay-compact:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(12, 71, 126, 0.35);
+}
+
     .bipay-banner:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(12, 71, 126, 0.35); }
-    .btn-bipay-action {
-      background: white; color: var(--bitel-blue); padding: 10px 22px; border-radius: 999px; 
-      font-weight: 800; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+
 
     /* Estilos específicos de Días Hábiles */
     .calc-dias-container { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
@@ -602,18 +611,11 @@
           </div>
         </div>
 
-        <a href="https://bipayweb.bitel.com.pe/recarga-y-gana-gb-extra-con-bipay22?categoryId=1887544" target="_blank" style="text-decoration: none;">
-          <div class="bipay-banner">
-            <div style="display: flex; align-items: center; gap: 15px;">
-              <span style="font-size: 2.2rem; background: white; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">💧</span>
-              <div>
-                <h3 style="margin: 0; color: #ffffff; font-size: 1.3rem;">Recarga Bipay</h3>
-                <p style="margin: 4px 0 0; color: #e8f7f9; font-weight: 600; font-size: 0.9rem;">Recarga y gana GB Extra con Bipay</p>
-              </div>
-            </div>
-            <div class="btn-bipay-action">Abrir Bipay ➔</div>
-          </div>
-        </a>
+<div style="text-align: center; margin-top: -10px; margin-bottom: 25px;">
+  <a href="https://bipayweb.bitel.com.pe/recarga-y-gana-gb-extra-con-bipay22?categoryId=1887544" target="_blank" style="text-decoration: none;">
+    <button class="btn-bipay-compact">Abrir Bipay ➔</button>
+  </a>
+</div>
 
         <div class="footer-autor" style="margin-top:40px;">Developed by Cristhian Francia &copy; 2025 | All rights reserved.</div>
       </div>
@@ -876,7 +878,7 @@
       } else {
         var direccion = getUpperValue('direccion'); var referencia = getUpperValue('referencia'); var departamento = getUpperValue('departamento'); var provincia = getUpperValue('provincia'); var distrito = getUpperValue('distrito');
         var numeroCalidad = (document.getElementById('numeroCalidad').value || '').trim(); var consultaCalidad = (document.getElementById('consultaCalidad').value || '').trim(); var respuestaCalidad = (document.getElementById('respuestaCalidad').value || '').trim(); var idCalidad = (document.getElementById('idCalidad').value || '').trim(); var btsCalidad = (document.getElementById('btsCalidad').value || '').trim(); 
-        var outputAddress = ''; if (direccion || referencia || departamento || provincia || distrito) { outputAddress = direccion + ", " + referencia + ", LUG@R: " + departamento + " - " + provincia + " - " + distrito; }
+        var outputAddress = ''; if (direccion || referencia || departamento || provincia || distrito) { outputAddress = direccion + ", " + referencia + ", LUG@R: " + departamento + " - " + provincia + " - " + distrito + " - PERÚ";}
         var partesTipificacion = [];
         if (numeroCalidad || consultaCalidad || respuestaCalidad || idCalidad) { partesTipificacion.push(numeroCalidad + " // " + consultaCalidad + " // " + respuestaCalidad + " // $$_" + idCalidad + "_&&"); }
         if (document.getElementById('contenedorBts').style.display !== 'none' && btsCalidad) { partesTipificacion.push('BTS: ' + btsCalidad); }

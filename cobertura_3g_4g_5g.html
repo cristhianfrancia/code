@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tipificación | Bitel</title>
+    <style>
+        :root {
+            --bitel-teal: #01768b;
+            --bitel-blue: #0c477e;
+            --bitel-yellow: #fbf32f;
+            --text-main: #434343;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            height: 100vh;
+            /* 🔒 Evitar la selección de texto */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            overflow: hidden;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 10px;
+        }
+
+        /* 🌟 BOTÓN ESTILO BITEL UNIFICADO */
+        .abrir-btn {
+            background: transparent;
+            color: var(--bitel-blue);
+            border: 2px solid var(--bitel-blue);
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center; /* Centra el contenido horizontalmente */
+            width: 260px; /* Ancho fijo para mantener la simetría */
+            gap: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Efecto al pasar el mouse */
+        .abrir-btn:hover {
+            background: var(--bitel-blue);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(12,71,126,0.35);
+        }
+
+        .abrir-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(12,71,126,0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .button-group {
+                flex-direction: column;
+                width: 90%;
+            }
+            .abrir-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false">
+
+    <div class="button-group">
+        <button class="abrir-btn" onclick="abrirVentana('bt1')">
+            📶 Cobertura 3G y 4G
+        </button>
+
+        <button class="abrir-btn" onclick="abrirVentana('bt2')">
+            📡 Cobertura 5G
+        </button>
+
+    </div>
+
+<script>
+let popupVentana = null;
+
+function abrirVentana(tipo) {
+    let url = "";
+    let titulo = "";
+    let ancho = 800; // Valor por defecto de respaldo
+    let alto = 600;  // Valor por defecto de respaldo
+
+    // 🛠️ AQUÍ PUEDES PERSONALIZAR EL ANCHO Y ALTO DE CADA BOTÓN
+    switch(tipo) {
+        case 'bt1':
+            url = "https://bitel.com.pe/cobertura";
+            titulo = "bt1";
+            ancho = 1400; // Ancho personalizado para calc
+            alto = 800;   // Alto personalizado para calc
+            break;
+
+        case 'bt2':
+            url = "https://earth.google.com/earth/d/10kkrwD_yP33XziQU4h-K9lMHyrdHNo1M?usp=sharing";
+            titulo = "bt2";
+            ancho = 1400; // Puedes ajustar el ancho si lo deseas
+            alto = 800;   // Puedes ajustar el alto si lo deseas
+            break;
+    }
+
+    const left = (window.screen.width / 2) - (ancho / 2);
+    const top = (window.screen.height / 2) - (alto / 2);
+    const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=yes`;
+
+    const nuevaVentana = window.open(url, titulo, opciones);
+
+    if (tipo === 'calc' && nuevaVentana) {
+        nuevaVentana.onload = () => {
+            try {
+                const style = nuevaVentana.document.createElement("style");
+                style.textContent = `
+                    html, body {
+                        margin: 0; padding: 0;
+                        transform: scale(0.90);
+                        transform-origin: top center;
+                        overflow-y: auto;
+                    }
+                    ::-webkit-scrollbar { display: none; }
+                `;
+                nuevaVentana.document.head.appendChild(style);
+            } catch (e) {
+                console.warn("CORS: Zoom no aplicado.");
+            }
+        };
+    }
+
+    if (nuevaVentana) nuevaVentana.focus();
+}
+
+/* 🔒 SEGURIDAD */
+document.onkeydown = function(e) {
+    if (e.key === 'F12' || e.keyCode === 123) return false;
+    if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) return false;
+    if (e.ctrlKey && e.key.toUpperCase() === 'U') return false;
+    if (e.ctrlKey && e.key.toUpperCase() === 'P') { e.preventDefault(); return false; }
+};
+
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('dragstart', e => e.preventDefault());
+
+window.addEventListener('load', () => {
+    console.clear();
+    console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
+    console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
+});
+</script>
+</body>
+</html>

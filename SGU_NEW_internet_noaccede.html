@@ -202,6 +202,25 @@
           transform: translateY(-1px);
       }
 
+      /* ✨ ESTILO PARA EL NUEVO BOTÓN 5G ✨ */
+      .btn-cobertura {
+          background-color: #01768b;
+          color: white;
+          border: none;
+          padding: 3px 10px;
+          border-radius: 12px;
+          cursor: pointer;
+          font-size: 0.8rem;
+          font-weight: bold;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 4px rgba(1, 118, 139, 0.3);
+      }
+
+      .btn-cobertura:hover {
+          background-color: #015f70;
+          transform: translateY(-1px);
+      }
+
       /* --- TOOLTIP PARA LA CAJA DE SELECCIÓN (HOVER) --- */
       .tooltip-wrapper {
           position: relative;
@@ -457,7 +476,8 @@
     <div class="input-container">
       <label for="label_Cobertura">
           - Cobertura que presenta problema (3G/4G/5G):
-          <button type="button" class="btn-gsm" style="margin-left: 5px;" onclick="abrirGsmArena()">GSM ARENA</button>
+          <button type="button" id="btn_gsm_arena" class="btn-gsm" style="margin-left: 5px; display: none;" onclick="abrirGsmArena()">GSM ARENA</button>
+          <button type="button" id="btn_cobertura_5g" class="btn-cobertura" style="margin-left: 5px; display: none;" onclick="abrirCobertura5G()">Cobertura 5G</button>
       </label>
       
       <div class="tooltip-wrapper">
@@ -714,6 +734,10 @@
         document.getElementById('container_5G_Extras').style.display = is5G ? 'block' : 'none';
         document.getElementById('container_FechaNoaccede').style.display = is5G ? 'none' : 'flex';
         
+        // ✨ MOSTRAR/OCULTAR BOTONES DINÁMICOS DEPENDIENDO DE SI ES 5G ✨
+        document.getElementById('btn_gsm_arena').style.display = is5G ? 'inline-block' : 'none';
+        document.getElementById('btn_cobertura_5g').style.display = is5G ? 'inline-block' : 'none';
+
         // Cambia el título de Earth a Maps dinámicamente
         document.getElementById('lbl_GoogleEarth').innerHTML = is5G 
             ? '- Coordenadas Google Maps: <button type="button" class="btn-accion" onclick="return showPopup(\'imagePopupMaps\')">👉Ver ejemplo👈</button>' 
@@ -862,6 +886,10 @@ Codigo de llamada: $$_${vHTML('labelID')}_&&`;
         document.getElementById('container_FechaNoaccede').style.display = 'flex';
         document.getElementById('container_5g_problema_otro').style.display = 'none';
         document.getElementById('lbl_GoogleEarth').innerHTML = '- Coordenadas Google Earth: <button type="button" class="btn-accion" onclick="return showPopup(\'imagePopupMaps\')">👉Ver ejemplo👈</button>';
+        
+        // ✨ OCULTAR LOS BOTONES DE 5G AL LIMPIAR EL FORMULARIO ✨
+        document.getElementById('btn_gsm_arena').style.display = 'none';
+        document.getElementById('btn_cobertura_5g').style.display = 'none';
 
         resultadoOutput.innerHTML = "";
         avisoStatus.style.display = "none";
@@ -886,6 +914,15 @@ Codigo de llamada: $$_${vHTML('labelID')}_&&`;
       const left = (window.screen.width / 2) - (width / 2);
       const top = (window.screen.height / 2) - (height / 2);
       window.open('https://www.gsmarena.com/', 'GSMArenaPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
+  }
+
+  /* ✨ NUEVA FUNCIÓN PARA ABRIR LA COBERTURA 5G (GOOGLE EARTH) ✨ */
+  function abrirCobertura5G() {
+      const width = 1000;
+      const height = 700;
+      const left = (window.screen.width / 2) - (width / 2);
+      const top = (window.screen.height / 2) - (height / 2);
+      window.open('https://earth.google.com/earth/d/10kkrwD_yP33XziQU4h-K9lMHyrdHNo1M?usp=sharing', 'Cobertura5GPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
   }
 
   /* --- ABRIR ENLACES DE GOOGLE DRIVE EN POPUP CENTRADO --- */

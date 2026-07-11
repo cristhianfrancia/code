@@ -1,41 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- 
-    Proyecto: Plantillas
-    Creado por: Cristhian Francia
-    Año: 2020
-    Derechos reservados © Cristhian Francia
-  -->
-    <title>Plantillas - Migración - Elevar</title>
+  <title>Plantillas - Migración - Elevar</title>
     <style>
-        body {
-            font-family: Calibri, Arial, sans-serif;
+        /* --- VARIABLES DE COLOR --- */
+        :root {
+            --bitel-blue: #0c477e;
+            --bitel-yellow: #fde204;
+        }
+
+        /* --- REGLA MAESTRA PARA ALINEACIÓN PERFECTA --- */
+        *, *::before, *::after {
+            box-sizing: border-box !important;
+            font-family: Calibri, Arial, sans-serif !important;
+        }
+
+        body {  
+            background-color: #ffffff;
+            margin: 0;
+            padding: 10px;
         }
 
         .container {
-            width: 95%;
-            max-width: 1000px auto;
-            margin: 10px auto;
+            width: 96%;
+            max-width: 1200px; 
+            margin: 0 auto;
             background-color: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
-            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
+            padding: 20px 50px;
             position: relative;
-            transition: box-shadow 0.3s ease;
         }
 
-        .container:hover {
-            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        /* --- TÍTULO --- */
+        .elegant-title {
+            text-align: center;
+            color: #1d1d1f;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 20px;
         }
 
         .icon-animation {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 40px;
-            height: 40px;
-            background-color: #007BFF;
+            top: 15px;
+            right: 20px;
+            width: 35px;
+            height: 35px;
+            background-color: var(--bitel-blue);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -45,359 +58,421 @@
 
         .icon-animation::before {
             content: "🟡";
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: white;
         }
 
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
+      @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+      }
 
-            to {
-                transform: rotate(360deg);
-            }
-        }
+      /* --- ESPACIADO Y ALINEACIÓN PERFECTA DE CAMPOS --- */
+      .center-inputs {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+          margin-bottom: 15px;
+          font-size: 0.95rem;
+      }
 
+      .input-container {
+          display: flex;
+          align-items: center;
+          position: relative;
+          margin-bottom: 6px; 
+          width: 100%;
+      }
+
+      .input-container label {
+        flex: 0 0 45%;
+        font-weight: 500;
+        font-size: 0.95rem;
+        padding-right: 10px; 
+      }
+
+      .input-container input, .input-container select, .center-inputs input, .center-inputs select {
+          flex: 1;
+          padding: 4px 8px; 
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 0.95rem;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      }
+
+      .input-container input:focus, .input-container select:focus, .center-inputs input:focus, .center-inputs select:focus {
+          border-color: var(--bitel-blue);
+          outline: none;
+          box-shadow: 0 0 5px rgba(12, 71, 126, 0.4);
+      }
+
+/* --- TOOLTIP MEJORADO --- */
+      .tooltip-container {
+          position: relative;
+          display: inline-block;
+      }
+
+      .tooltip-text {
+          visibility: hidden;
+          background-color: black;
+          color: #fff;
+          text-align: left;
+          border-radius: 6px;
+          padding: 15px;
+          position: absolute;
+          z-index: 999; /* Asegura que pase por encima de los otros campos */
+          /* Ahora se posiciona ABAJO del input */
+          top: 135%; 
+          left: 50%;
+          transform: translateX(-50%);
+          width: 520px; 
+          font-size: 0.9rem;
+          line-height: 1.4;
+          opacity: 0;
+          transition: opacity 0.3s;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      }
+
+      /* Flechita del globo (ahora apunta hacia arriba) */
+      .tooltip-text::after {
+          content: "";
+          position: absolute;
+          bottom: 100%; /* Se coloca en el borde superior del tooltip */
+          left: 50%;
+          margin-left: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: transparent transparent #2c3e50 transparent;
+      }
+
+      .tooltip-container:hover .tooltip-text {
+          visibility: visible;
+          opacity: 1;
+      }
+
+      /* --- CLASE PARA RESALTAR ERRORES EN ROJO --- */
+      .input-error {
+          border: 1px solid #d93025 !important;
+          background-color: #fce8e6 !important;
+          box-shadow: 0 0 4px rgba(217, 48, 37, 0.3) !important;
+      }
+
+      @media screen and (max-width: 600px) {
         .input-container {
-            display: flex;
-            align-items: center;
-            transition: transform 0.3s ease;
+          flex-direction: column;
+          align-items: flex-start;
         }
-
-        .input-container:hover {
-            transform: scale(1.00);
-        }
-
         .input-container label {
-            width: 50%;
+          flex: none;
+          width: 100%;
+          margin-bottom: 4px;
+          padding-right: 0;
         }
-
-        .input-container input {
-            width: 50%;
-            padding: 4px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        .input-container input, .input-container select {
+          flex: none;
+          width: 100%;
         }
+      }
 
-        .input-container input:focus {
-            border-color: #007BFF;
-            outline: none;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
+      .resultado-label {
+        color: var(--bitel-blue);
+        font-weight: bold;
+      }
 
-        @media screen and (max-width: 600px) {
-            .input-container {
-                flex-direction: column;
-            }
-            .input-container label, .input-container input {
-                width: 100%;
-            }
-        }
+      .ruta-container {
+          background-color: #fff5e9;
+          padding: 10px;
+          border-radius: 6px;
+          margin: 10px 0;
+          border-left: 4px solid #fd8261;
+          font-size: 0.9rem;
+          color: #333;
+      }
 
-    .resultado-label {
-      color: #007BFF;
-    }
+      hr {
+          border: 1px solid #fd8261;
+          margin: 15px 0;
+      }
 
-    .ruta-container {
-        background-color: #fff5e9;
-        padding: 10px;
-        border-radius: 4px;
-        margin: 10px 0;
-        border-left: 4px solid #e67a00;
-        font-size: 0.9rem;
-        color: #333;
-    }
+      button {
+          background-color: var(--bitel-blue);
+          color: white;
+          padding: 8px 18px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-weight: bold;
+          font-size: 0.95rem;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+          margin: 5px 5px 5px 0;
+      }
 
-    hr {
-        border: 1px solid #e67a00;
-        margin: 10px 0;
-    }
+      button:hover {
+          background-color: #08325a;
+          transform: translateY(-1px);
+      }
 
-    button {
-        background-color: #e67a00;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        margin: 5px;
-    }
-    button:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-    }
-    button:active {
-        background-color: #004085;
-        transform: scale(0.98);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    button:focus {
-        outline: none;
-    }
+      button:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
 
-    #resultado {
-        margin: 15px 0;
-        font-size: 0.9rem;
-        background-color: #fff5e9;
-        padding: 10px;
-        border-left: 4px solid #e67a00;
-        white-space: pre-line;
-        min-height: 50px;
-        transition: background-color 0.3s ease;
-    }
+      button:focus {
+          outline: none;
+      }
 
+      #resultado {
+          margin: 10px 0;
+          font-size: 0.95rem;
+          background-color: #f8f9fa;
+          padding: 12px;
+          border-left: 4px solid var(--bitel-blue);
+          border-radius: 0 6px 6px 0;
+          white-space: pre-line;
+          min-height: 40px;
+          user-select: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+      }
 
+      /* --- MESSAGE BOX (COPIADO) --- */
+      .message-box {
+          visibility: hidden;
+          min-width: 250px;
+          background-color: #137333;
+          color: #fff;
+          text-align: center;
+          border-radius: 5px;
+          padding: 12px;
+          position: fixed;
+          z-index: 1000;
+          left: 50%;
+          bottom: 30px;
+          transform: translateX(-50%);
+          font-size: 0.95rem;
+          opacity: 0;
+          transition: opacity 0.3s, bottom 0.3s;
+      }
 
+      .message-box.show {
+          visibility: visible;
+          opacity: 1;
+          bottom: 50px;
+      }
 
-    .center-inputs {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-bottom: 15px;
-    }
-    .center-inputs input, .center-inputs select {
-        width: 250px; /* Ancho fijo para elementos centrales en escritorio */
-    }
-
-    .resultado-label {
-        color: #007BFF;
-    }
-
-    .popup-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        justify-content: center;
-        align-items: flex-start; /* Alinea el popup arriba */
-        z-index: 1100;
-        opacity: 0;
-        transition: opacity 0.22s ease-in-out;
-        padding: 40px 20px;
-        box-sizing: border-box;
-    }
-
-    .popup-overlay.active {
-        display: flex;
-        opacity: 1;
-    }
-
-    .popup-content {
-        background: #fff;
-        padding: 18px;
-        border-radius: 12px;
-        box-shadow: 0 12px 36px rgba(0,0,0,0.25);
-        position: relative;
-        transform: translateY(-8px);
-        transition: transform 0.2s ease;
-        max-width: 960px;
-        width: 100%;
-        overflow: auto;
+      .footer-autor {
         text-align: center;
-    }
-    .popup-overlay.active .popup-content { transform: translateY(0); }
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 0.8rem;
+        color: #888;
+        border-top: 1px solid #eee;
+        user-select: none;
+      }
+      .footer-autor strong {
+        color: var(--bitel-blue);
+      }
 
-    .popup-content img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        display: block;
-        margin: 0 auto;
-    }
+      .link-ejemplo {
+          color: #fd8261;
+          text-decoration: none;
+          font-size: 0.85rem;
+          font-weight: bold;
+          margin-left: 5px;
+      }
+      .link-ejemplo:hover {
+          text-decoration: underline;
+      }
 
-    .close-button {
+      /* --- DROPDOWN --- */
+      .dropdown-trigger {
+          color: var(--bitel-blue);
+          text-decoration: none;
+          font-weight: bold;
+          font-size: 1.05rem;
+          display: inline-block;
+          margin-bottom: 10px;
+      }
+      .dropdown-trigger:hover {
+          text-decoration: underline;
+      }
+      .dropdown-content {
+          display: none;
+          text-align: center;
+          margin-top: 10px;
+      }
+      .dropdown-content.show {
+          display: block;
+      }
+      .dropdown-content img {
+          max-width: 100%;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+
+      /* --- POPUPS DE IMÁGENES --- */
+      .popup-overlay {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0, 0, 0, 0.85);
+          z-index: 1000;
+          backdrop-filter: blur(4px);
+          justify-content: center;
+          align-items: center;
+      }
+      .popup-overlay.active {
+          display: flex;
+      }
+      .popup-content {
+          position: relative;
+          text-align: center;
+          max-width: 90%;
+          max-height: 90vh;
+      }
+      .popup-content img {
+          max-width: 100%;
+          max-height: 85vh;
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      }
+
+      .close-button {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: #e67a00;
-        color: white;
+        top: -15px;
+        right: -15px;
+        background-color: #ffffff;
+        color: #c5221f;
         border: none;
-        border-radius: 50%;
-        width: 34px;
-        height: 34px;
-        font-size: 1.1rem;
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+        font-weight: bold;
         cursor: pointer;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        transition: transform 0.2s ease;
         display: flex;
         justify-content: center;
         align-items: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    }
-    .close-button:hover { background-color: #c85c00; }
+      }
+      .close-button:hover {
+          transform: scale(1.1);
+      }
 
-    .message-box {
-        display: none;
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #4CAF50;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        z-index: 1200;
-        opacity: 0;
-        transition: opacity 0.24s ease-in-out;
-        font-size: 0.98rem;
-    }
-    .message-box.show { display: block; opacity: 1; }
-    
-    .ruta-container a {
-      color: #007BFF;
-      text-decoration: underline;
-      cursor: pointer;
-    }
+    </style>
+</head>
+<body oncontextmenu="return false"> 
+<div class="container">
+    <div class="icon-animation"></div>
 
-    .dropdown-trigger {
-        color: #007BFF;
-        cursor: pointer;
-        text-decoration: underline;
-        margin-bottom: 5px;
-        display: inline-block;
-    }
-
-    .dropdown-content {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        padding: 0 10px;
-        margin-top: 5px;
-        width: 100%;
-        box-sizing: border-box;
-        text-align: center;
-    }
-    .dropdown-content.show {
-        max-height: 600px;
-        padding: 10px;
-    }
-    .dropdown-content img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-        border-radius: 4px;
-    }
-
-    .footer-autor {
-      text-align: center;
-      margin-top: 30px;
-      padding: 15px;
-      font-size: 0.8rem;
-      color: #aaa;
-      border-top: 1px solid #eee;
-      user-select: none;
-    }
-    .footer-autor strong {
-      color: var(--bitel-blue);
-    }
-
-
-  </style>
- </head>
-<body oncontextmenu="return false"> <div class="container">
-<div class="icon-animation"></div>
-
-<label style="color: red;"><strong>1. Plantilla:</strong></label>
-<p></p>
+    <label style="color: var(--bitel-blue); font-size: 1.1rem;"><strong>1. Plantilla:</strong></label>
+    <p></p>
 
     <div class="center-inputs">
-        <input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
+        <input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" />
         // 
         <select id="label0_1" onchange="updateResultadoOutput()" >
             <option value="">Seleccionar</option>
             <option value="Cliente desea migrar a un plan Prepago por motivo de ">Cliente desea migrar a un plan Prepago por motivo de</option>
             <option value="Cliente desea migrar a un plan Control menor por motivo de">Cliente desea migrar a un plan Control menor por motivo de</option>
         </select>
-        <input type="text" id="label0_2" oninput="updateResultadoOutput()" placeholder="Motivo de migración" style="color: #007BFF;" />
+
+        <div class="tooltip-container">
+            <input type="text" id="label0_2" oninput="updateResultadoOutput()" placeholder="Motivo de migración" />
+            <span class="tooltip-text">
+                <span style="color: #ff6b6b; font-weight: bold; font-size: 1.05rem;">⚠️ ATENCIÓN</span><br>
+                No olvides que esto debes preguntarle al cliente de forma <strong>obligatoria</strong>, por favor no deduzcas el motivo.<br><br>
+                <strong style="color: var(--bitel-yellow);">💬 Speech referencial:</strong><br>
+                <em>"(Nombre del cliente), ¿cuál es el motivo principal de la migración?"</em><br><br>
+                <strong style="color: var(--bitel-yellow);">📌 Ejemplos a detallar:</strong><br>
+                • Económico<br>
+                • Viaje<br>
+                • No usa la línea<br>
+                • Mala experiencia<br>
+                • Otro (especificar)
+            </span>
+        </div>
+
         // Se transfiere al área de migraciones
     </div>
 
     <br>
     <div class="input-container">
       <label for="label1">- Plan actual:</label>
-      <input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="(Plan que figura en Customer Care)" style="color: #007BFF;" />
+      <input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="(Plan que figura en Customer Care)" />
     </div>
 
     <div class="input-container">
       <label for="labelID">- ID de llamada:</label>
-      <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
+      <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" />
     </div>
 
-<br>
-<div id="resultado"></div>
+    <br>
+    <div id="resultado"></div>
 
-<button onclick="copiarResultado()">Copiar</button>
-<button onclick="limpiarInputs()">Borrar</button>
+    <button onclick="copiarResultado()">Copiar</button>
+    <button onclick="limpiarInputs()">Borrar</button>
 
-<br />
-<br />
+    <br /><br />
 
-<label style="color: red;"><strong>2. Tipificación:</strong></label>
+    <label style="color: var(--bitel-blue); font-size: 1.1rem;"><strong>2. Tipificación:</strong></label>
 
-<div class="ruta-container">
-<strong>CONTROL A PREPAGO:</strong><br>
-Other / Información / Información / Transferencias / Migración de Control a Prepago / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS) (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
+    <div class="ruta-container">
+        <strong>CONTROL A PREPAGO:</strong><br>
+        Other / Información / Información / Transferencias / Migración de Control a Prepago / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS) (❌ sin check a BO) (<a href="#" class="link-ejemplo" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
+        <br><br>
+        <strong>CONTROL A CONTROL: (Plan menor)</strong><br>
+        Other / Información / Información / Transferencias / Migración de Control a Control - Cargo fijo menor / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS)  (❌ sin check a BO) (<a href="#" class="link-ejemplo" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
+    </div>
 
-<br><br>
+    <br />
+    <hr />
+    <br />
 
-<strong>CONTROL A CONTROL: (Plan menor)</strong><br>
-Other / Información / Información / Transferencias / Migración de Control a Control - Cargo fijo menor / (Elegimos el motivo | Si cliente no menciona, elegimos OTROS)  (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
-</div>
+    <label style="color: var(--bitel-blue); font-size: 1.1rem;"><strong>3. Speech:</strong></label>
+    <p><strong><span style="color: var(--bitel-blue);">🎧 Agente: </span></strong><span style="color: black;">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".</p>
 
-<br />
-<hr />
-<br />
-
-<label style="color: red;"><strong>3. Speech:</strong></label>
-<p><strong><span style="color: #01768b">🎧 Agente: </span></strong><span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".</p>
-
-<br>
+    <br>
 
     <div style="text-align: center;">
         <a href="#" class="dropdown-trigger" onclick="toggleDropdown(event, 'dropdownMod1')">Transferencia - Control a Prepago | Control a control menor</a>
     </div>
 
     <div id="dropdownMod1" class="dropdown-content show">
-        <img src="https://i.postimg.cc/jqF5v1Y2/Transferencia-Disminuir-plan.png" alt="Transferencia - Control a Prepago | Control a control menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
+        <img src="https://i.postimg.cc/jqF5v1Y2/Transferencia-Disminuir-plan.png" alt="Transferencia - Control a Prepago | Control a control menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0c477e/fde204?text=Error+al+cargar+imagen';">
     </div>
-  </div>
 
-  <div id="copyMessageBox" class="message-box">Resultado copiado al portapapeles</div>
+    <div id="copyMessageBox" class="message-box">¡Resultado copiado al portapapeles!</div>
   
-  <div id="popup1" class="popup-overlay" onclick="closePopup('popup1')">
-    <div class="popup-content" onclick="event.stopPropagation()">
-      <button class="close-button" onclick="closePopup('popup1')">×</button>
-      <img src="https://i.postimg.cc/nrz1xP3M/MIGRACI-N-CONTROL-A-PREPAGO.png" alt="Migración Control a Prepago | Control a Control (Plan menor)" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
+    <div id="popup1" class="popup-overlay" onclick="closePopup('popup1')">
+      <div class="popup-content" onclick="event.stopPropagation()">
+        <button class="close-button" onclick="closePopup('popup1')">×</button>
+        <img src="https://i.postimg.cc/nrz1xP3M/MIGRACI-N-CONTROL-A-PREPAGO.png" alt="Migración Control a Prepago | Control a Control (Plan menor)" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0c477e/fde204?text=Error+al+cargar+imagen';">
+      </div>
     </div>
-  </div>
 
-  <div id="popup2" class="popup-overlay" onclick="closePopup('popup2')">
-    <div class="popup-content" onclick="event.stopPropagation()">
-      <button class="close-button" onclick="closePopup('popup2')">×</button>
-      <img src="https://i.postimg.cc/PxKMBjzB/MIGRACI-N-CONTROL-A-CONTROL-PLAN-MENOR.png" alt="Migración Control a Control Plan Menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/FF0000/FFFFFF?text=Error+al+cargar+imagen';">
+    <div id="popup2" class="popup-overlay" onclick="closePopup('popup2')">
+      <div class="popup-content" onclick="event.stopPropagation()">
+        <button class="close-button" onclick="closePopup('popup2')">×</button>
+        <img src="https://i.postimg.cc/PxKMBjzB/MIGRACI-N-CONTROL-A-CONTROL-PLAN-MENOR.png" alt="Migración Control a Control Plan Menor" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0c477e/fde204?text=Error+al+cargar+imagen';">
+      </div>
     </div>
-  </div>
 
-<br><br><br><br><br><br>
-<textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+    <br><br><br><br><br><br>
+    <textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
 
-<div class="footer-autor">
-Developed by c&f &copy; 2020 | All rights reserved.
-</div>
+    <div class="footer-autor">
+        Developed by <strong>c&f</strong> &copy; 2020 | All rights reserved.
+    </div>
 </div>
 
 <script>
-
     document.addEventListener('contextmenu', event => {
         event.preventDefault();
         alert('El menú contextual (clic derecho) está deshabilitado.'); 
@@ -408,23 +483,13 @@ Developed by c&f &copy; 2020 | All rights reserved.
             alert('Las herramientas de desarrollador están deshabilitadas.'); 
             return false;
         }
-        if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I')) {
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && (e.keyCode === 74 || e.key === 'J')) {
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && (e.keyCode === 67 || e.key === 'C')) {
-            return false;
-        }
-        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
-            return false;
-        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I')) return false;
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 74 || e.key === 'J')) return false;
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 67 || e.key === 'C')) return false;
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) return false;
     };
-    // ===========================================
 
     document.addEventListener('DOMContentLoaded', () => {
-        // Inicializar el resultado al cargar la página
         updateResultadoOutput(); 
     });
 
@@ -432,7 +497,7 @@ Developed by c&f &copy; 2020 | All rights reserved.
         let fechaLimite = new Date("2026-12-30T23:59:59");
         let fechaActual = new Date();
         if (fechaActual > fechaLimite) {
-            document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Actualización en proceso)</h5>";
+            document.body.innerHTML = "<h1 style='text-align:center; color:var(--bitel-blue); margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:#333'>(Actualización en proceso)</h5>";
         }
     };
     
@@ -491,45 +556,36 @@ Developed by c&f &copy; 2020 | All rights reserved.
         }, 3000);
     }
     
-    // FUNCIÓN CORREGIDA
     function limpiarInputs() {
         document.querySelectorAll("input").forEach(input => input.value = "");
         document.querySelector("#label0_1").value = "";
-        document.querySelector("#label0_2").value = "";
-        // Llama a updateResultadoOutput() para refrescar el div con los campos vacíos.
         updateResultadoOutput(); 
     }
     
-    // Popup Functions (Restauradas)
     function openPopup(event, popupId) {
         event.preventDefault(); 
         document.getElementById(popupId).classList.add('active');
-        // Opcional: enfocar el botón de cerrar al abrir
         setTimeout(() => {
             const closeBtn = document.getElementById(popupId).querySelector('.close-button');
             if (closeBtn) closeBtn.focus();
         }, 150);
     }
+
     function closePopup(popupId) {
         document.getElementById(popupId).classList.remove('active');
     }
     
-    // Dropdown Toggle Function for image at the end
     function toggleDropdown(event, dropdownId) {
         event.preventDefault();
         const dropdownContent = document.getElementById(dropdownId);
         dropdownContent.classList.toggle('show');
     }
 
-    // Cerrar popups con la tecla ESC
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         document.querySelectorAll('.popup-overlay.active').forEach(p => closePopup(p.id));
       }
     });
-
-    </script>
- </body>
+</script>
+</body>
 </html>
-
-

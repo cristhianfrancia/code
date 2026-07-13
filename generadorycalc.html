@@ -103,6 +103,20 @@
       user-select: none;
     }
 
+    .brand-badge {
+      background: linear-gradient(90deg, var(--bitel-teal), var(--bitel-blue));
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 999px;
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(12, 71, 126, 0.25);
+      vertical-align: middle;
+    }
+
     .menu-item:hover { color: var(--text-main); }
 
     .menu-item.active {
@@ -597,7 +611,7 @@
 
 <body> 
   <div class="top-navbar">
-<div class="nav-brand"><span class="app-icon">✨</span> Lumina</div>
+<div class="nav-brand"><span class="app-icon">✨</span> Lumina <span class="brand-badge">Suite</span></div>
     <ul class="nav-menu">
       <li class="menu-item active" onclick="switchApp('generadorApp', this)"><span>📝</span> Generador</li>
       <li class="menu-item" onclick="switchApp('calculadoraApp', this)"><span>🧮</span> Calculadora</li>

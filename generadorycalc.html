@@ -89,6 +89,54 @@
       margin: 0;
     }
 
+/* =========================================
+       ANIMACIONES PREMIUM: LUMINA ONE
+       ========================================= */
+    
+    /* 1. Entrada suave del logo al cargar la página */
+    .animate-brand {
+      animation: fadeSlideIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      opacity: 0;
+    }
+    
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 2. Micro-flotación y resplandor del ícono */
+    .sparkle {
+      display: inline-block;
+      animation: gentleFloat 4s ease-in-out infinite;
+    }
+    
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 2px rgba(1, 118, 139, 0.1)); }
+      50% { transform: translateY(-2px); filter: drop-shadow(0 0 6px rgba(1, 118, 139, 0.6)); }
+    }
+
+    /* 3. Etiqueta ONE con efecto de luz (Shimmer) */
+    .brand-badge {
+      /* El degradado incluye un color más claro (#4dd0e1) en el centro para hacer el brillo */
+      background: linear-gradient(110deg, var(--bitel-blue) 0%, var(--bitel-teal) 40%, #4dd0e1 50%, var(--bitel-teal) 60%, var(--bitel-blue) 100%);
+      background-size: 200% auto;
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(12, 71, 126, 0.25);
+      vertical-align: middle;
+      animation: shineLight 3s linear infinite;
+    }
+
+    @keyframes shineLight {
+      to { background-position: 200% center; }
+    }
+
     .menu-item {
       padding: 8px 24px;
       cursor: pointer;
@@ -101,20 +149,6 @@
       align-items: center;
       gap: 8px;
       user-select: none;
-    }
-
-    .brand-badge {
-      background: linear-gradient(90deg, var(--bitel-teal), var(--bitel-blue));
-      color: white;
-      font-size: 0.65rem;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 999px;
-      margin-left: 6px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      box-shadow: 0 2px 8px rgba(12, 71, 126, 0.25);
-      vertical-align: middle;
     }
 
     .menu-item:hover { color: var(--text-main); }
@@ -611,7 +645,11 @@
 
 <body> 
   <div class="top-navbar">
-<div class="nav-brand"><span class="app-icon">✨</span> Lumina <span class="brand-badge">One</span></div>
+
+<div class="nav-brand animate-brand">
+  <span class="app-icon sparkle">✨</span> Lumina <span class="brand-badge">One</span>
+</div>
+
     <ul class="nav-menu">
       <li class="menu-item active" onclick="switchApp('generadorApp', this)"><span>📝</span> Generador</li>
       <li class="menu-item" onclick="switchApp('calculadoraApp', this)"><span>🧮</span> Calculadora</li>

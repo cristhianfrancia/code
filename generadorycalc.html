@@ -445,12 +445,159 @@
     .emoji-btn.selected { filter: grayscale(0%) opacity(1); transform: scale(1.2); }
     #textoFeedback { width: 100%; box-sizing: border-box; margin-top: 5px; background: #f4f6f8; border: 1px solid #e1e4e8; border-radius: 10px; outline: none; padding: 10px; font-family: inherit; resize: none; font-size: 13px; transition: 0.2s;}
     #textoFeedback:focus { border-color: var(--bitel-blue); background: #ffffff;}
+
+/* =========================================
+       CLARIA: DISEÑO MINIMALISTA Y PREMIUM
+       ========================================= */
+    .claria-box {
+      max-width: 460px !important;
+      padding: 35px !important;
+      border-radius: 24px !important;
+      background: #ffffff !important;
+      box-shadow: 0 25px 50px -12px rgba(12, 71, 126, 0.15) !important;
+      border: 1px solid rgba(0, 0, 0, 0.02) !important;
+    }
+
+    .claria-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--bitel-blue);
+      margin-bottom: 5px;
+      letter-spacing: -0.5px;
+    }
+
+    .claria-subtitle {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 25px;
+      line-height: 1.45;
+    }
+
+    .claria-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #4a5568;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .claria-input-field {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+      background: #f8fafc;
+      transition: all 0.25s ease;
+      box-sizing: border-box;
+    }
+
+    .claria-input-field:focus {
+      border-color: var(--bitel-teal);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(1, 118, 139, 0.1);
+    }
+
+    /* Selectores de Sentimiento Tipo Tarjeta */
+    .claria-emoji-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 18px 0 22px 0;
+    }
+
+    .claria-card-btn {
+      flex: 1;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 14px 10px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+
+    .claria-card-btn .emoji-pic {
+      font-size: 1.8rem;
+      transition: transform 0.2s ease;
+    }
+
+    .claria-card-btn .emoji-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .claria-card-btn:hover {
+      background: #edf2f7;
+      transform: translateY(-2px);
+    }
+
+    .claria-card-btn:hover .emoji-pic {
+      transform: scale(1.15);
+    }
+
+    /* Estado Seleccionado Elegante */
+    .claria-card-btn.selected {
+      background: #e8f7f9 !important;
+      border-color: var(--bitel-teal) !important;
+      box-shadow: 0 6px 15px rgba(1, 118, 139, 0.15) !important;
+      transform: scale(1.03);
+    }
+
+    .claria-card-btn.selected .emoji-pic {
+      transform: scale(1.2);
+    }
+
+    .claria-card-btn.selected .emoji-label {
+      color: var(--bitel-teal);
+    }
+
+    .claria-txt-area {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      background: #f8fafc;
+      outline: none;
+      resize: none;
+      min-height: 100px;
+      transition: all 0.25s ease;
+      line-height: 1.5;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .claria-txt-area:focus {
+      border-color: var(--bitel-teal);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(1, 118, 139, 0.1);
+    }
+
+    .claria-note {
+      font-size: 0.72rem;
+      color: #a0aec0;
+      margin-top: 15px;
+      line-height: 1.4;
+      text-align: center;
+    }
+
   </style>
 </head>
 
 <body> 
   <div class="top-navbar">
-    <div class="nav-brand"><span class="app-icon">💡</span> Herramientas</div>
+<div class="nav-brand"><span class="app-icon">✨</span> Lumina</div>
     <ul class="nav-menu">
       <li class="menu-item active" onclick="switchApp('generadorApp', this)"><span>📝</span> Generador</li>
       <li class="menu-item" onclick="switchApp('calculadoraApp', this)"><span>🧮</span> Calculadora</li>
@@ -703,13 +850,18 @@
 
   </div>
   
+<!-- DOCK DE WIDGETS FLOTANTES -->
   <div class="bottom-widgets">
-    <div class="widget-item widget-likes" title="Valoración de la herramienta">
-      <span class="heart">❤️</span> <span id="contadorLikes" style="color: var(--text-main);">...</span>
+    <div class="widget-item widget-claria" onclick="abrirClaria()" style="cursor: pointer; font-weight: 600; color: var(--bitel-teal);">
+      💠 Claria
     </div>
 
     <div class="widget-item widget-feedback" onclick="abrirFeedback()">
       ⭐ Opinar
+    </div>
+
+    <div class="widget-item widget-likes" title="Valoración de la herramienta">
+      <span class="heart">❤️</span> <span id="contadorLikes" style="color: var(--text-main);">...</span>
     </div>
     
     <div class="widget-item">
@@ -754,6 +906,57 @@
       </div>
     </div>
   </div>
+
+<div id="modalClaria" class="modal-overlay" onclick="cerrarModalClariaExt(event)">
+    <div class="modal-box claria-box" id="cajaClariaInterna">
+      <h2 class="claria-title">💠 Claria</h2>
+      <p class="claria-subtitle">Un espacio seguro y confidencial para expresarte con absoluta libertad de cara a nuestras áreas.</p>
+      
+      <div style="text-align: left; margin-bottom: 18px;">
+        <label class="claria-label">Área de destino</label>
+        <input id="inputAreaClaria" class="claria-input-field" list="listaAreasClaria" placeholder="Elige un área o escribe una nueva...">
+        <datalist id="listaAreasClaria">
+          <option value="Agente"></option>
+          <option value="Calidad"></option>
+          <option value="Formación"></option>
+          <option value="Operaciones"></option>
+          <option value="Recursos Humanos"></option>
+        </datalist>
+      </div>
+
+      <div style="text-align: left;">
+        <label class="claria-label">¿Cómo te hace sentir?</label>
+        <div class="claria-emoji-grid">
+          <div class="claria-card-btn emoji-claria" onclick="seleccionarEmojiClaria(this, 'Triste')">
+            <span class="emoji-pic">😔</span>
+            <span class="emoji-label">Frustrado</span>
+          </div>
+          <div class="claria-card-btn emoji-claria" onclick="seleccionarEmojiClaria(this, 'Neutral')">
+            <span class="emoji-pic">😐</span>
+            <span class="emoji-label">Sugerencia</span>
+          </div>
+          <div class="claria-card-btn emoji-claria" onclick="seleccionarEmojiClaria(this, 'Feliz')">
+            <span class="emoji-pic">😊</span>
+            <span class="emoji-label">Satisfecho</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: left;">
+        <label class="claria-label">Tu mensaje</label>
+        <textarea id="textoClaria" class="claria-txt-area" rows="4" placeholder="Cuéntanos con total confianza... ¿Qué podemos mejorar, qué te molesta o qué te alegra?"></textarea>
+      </div>
+
+      <p class="claria-note">🔒 Tu mensaje se procesa bajo estrictas políticas de confidencialidad para garantizar un espacio transparente de retroalimentación.</p>
+      
+      <div style="display:flex; gap:12px; margin-top:22px;">
+        <button class="modal-btn" onclick="cerrarClaria()" style="margin-top:0; background:#f0f2f5; color:#555; border-radius: 12px; font-weight: 700;">Cerrar</button>
+        <button class="modal-btn" onclick="enviarClaria()" style="margin-top:0; background: var(--bitel-teal); border-radius: 12px; font-weight: 700; box-shadow: 0 4px 12px rgba(1, 118, 139, 0.2);">Enviar al buzón</button>
+      </div>
+    </div>
+  </div>
+
+
 
   <script>
     // -----------------------------------------
@@ -810,6 +1013,57 @@
         cerrarFeedback();
         setTimeout(() => { modalBox.innerHTML = originalHTML; }, 300);
       }, 2000);
+    }
+
+// -----------------------------------------
+    // LÓGICA DE CLARIA (ANÓNIMO)
+    // -----------------------------------------
+    let emojiClariaSeleccionado = '';
+    
+    function abrirClaria() { document.getElementById('modalClaria').style.display = 'flex'; }
+    
+    function cerrarClaria() {
+      document.getElementById('modalClaria').style.display = 'none';
+      document.getElementById('textoClaria').value = '';
+      document.getElementById('inputAreaClaria').value = '';
+      document.querySelectorAll('.emoji-claria').forEach(btn => btn.classList.remove('selected'));
+      emojiClariaSeleccionado = '';
+    }
+    
+    function cerrarModalClariaExt(event) { if (event.target.id === 'modalClaria') cerrarClaria(); }
+    
+    function seleccionarEmojiClaria(element, valor) {
+      document.querySelectorAll('.emoji-claria').forEach(btn => btn.classList.remove('selected'));
+      element.classList.add('selected');
+      emojiClariaSeleccionado = valor;
+    }
+
+function enviarClaria() {
+      const area = document.getElementById('inputAreaClaria').value.trim();
+      const texto = document.getElementById('textoClaria').value.trim();
+      
+      if (!area) { alert('Por favor, selecciona o escribe el área de destino.'); return; }
+      if (!emojiClariaSeleccionado && texto === '') { alert('Por favor selecciona una carita o déjanos un comentario.'); return; }
+      
+      // Capturamos el navegador del usuario
+      const ua = navigator.userAgent || '';
+
+      // Agregamos sessionId y userAgent a los parámetros enviados al servidor
+      const params = { action: 'saveClaria', area: area, rating: emojiClariaSeleccionado, comment: texto, sessionId: SID_ACTUAL, userAgent: ua };
+      
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run.saveClariaData(area, emojiClariaSeleccionado, texto, SID_ACTUAL, ua);
+      } else {
+        fetch(CONST_URL_WEB_APP, { method: 'POST', body: JSON.stringify(params) }).catch(e => console.log(e));
+      }
+      
+      const modalBox = document.getElementById('cajaClariaInterna');
+      const originalHTML = modalBox.innerHTML;
+      
+      // Mensaje de éxito actualizado para reflejar "confidencialidad"
+      modalBox.innerHTML = '<span style="font-size:3rem; display:block; margin-bottom:15px;">💠</span><h3 class="modal-title">Mensaje enviado</h3><p class="modal-msg" style="margin-bottom:0;">Gracias por tu sinceridad. Tu voz ha sido escuchada de forma confidencial.</p>';
+      
+      setTimeout(() => { cerrarClaria(); setTimeout(() => { modalBox.innerHTML = originalHTML; }, 300); }, 3000);
     }
 
     function cargarLikesInicial() {

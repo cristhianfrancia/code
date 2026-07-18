@@ -514,7 +514,7 @@
                   </select>
                   <div class="tooltip-cycle">
                       ⚠️ Úsalo solo si es control<br><br>
-                      Se añadirá la: <strong>"Fecha de cierre de ciclo"</strong>
+                      Se añadirá la: <strong>"Fecha de inicio de ciclo"</strong>
                   </div>
               </div>
 
@@ -533,10 +533,10 @@
       <div class="tooltip-box">
           <span style="color: #0c477e; font-weight: bold; font-size: 0.95rem;">💡 Ejemplos de llenado correcto:</span><br><br>
           <span style="color: #0c477e; font-weight: bold;">CONTROL: Selecciona el ciclo en el botón gris de la izquierda de forma rápida.</span><br><br>
-          <span style="color: #ff0000;">¿Qué colocaré?:</span> <strong>Fecha de cierre de ciclo</strong><br>
-          <span style="color: #ff0000;">Ejemplo:</span> Si es ciclo 26, añadiré la fecha 25/XX/XXXX<br><br>
+          <span style="color: #ff0000;">¿Qué colocaré?:</span> <strong>Fecha de inicio de ciclo</strong><br>
+          <span style="color: #ff0000;">Ejemplo:</span> Si es ciclo 26, añadiré la fecha 26/XX/XXXX<br><br>
 
-          <span style="color: #ff0000;">Nota:</span> Si el cliente llama hasta 48 horas ante de su inicio de ciclo, la fecha de cierre será para el siguiente mes (Ejemplo: Llama el 15/06/2026 y tiene ciclo 17, no se colocará el cierre 16/06/2026, se deberá colocar 16/07/2026)<br>
+          <span style="color: #ff0000;">Nota:</span> Si el cliente llama hasta 48 horas antes de su inicio de ciclo, la fecha será para el siguiente mes (Ejemplo: Llama el 18/07/2026 y tiene ciclo 21, se deberá colocar 21/08/2026)<br>
 
           <hr>
           <span style="color: #0c477e; font-weight: bold;">PREPAGO: Haz clic en el botón naranja "🔋 Prepago".</span><br><br>
@@ -751,7 +751,7 @@
       });
       labelIDInput.addEventListener("input", updateResultadoOutput);
 
-      /* --- CÁLCULO INTELIGENTE ACTUALIZADO (REGLA 48 HORAS ANTES) --- */
+      /* --- CÁLCULO INTELIGENTE ACTUALIZADO (INICIO DE CICLO Y REGLA 48 HORAS) --- */
       function completarFechaDesdeCiclo() {
           const cicloVal = fast_cicloSelect.value;
           
@@ -765,47 +765,41 @@
           let hoy = new Date();
           hoy.setHours(0, 0, 0, 0);
 
-          let mesCierre = hoy.getMonth();
-          let anioCierre = hoy.getFullYear();
-          let diaCierre;
+          let mesInicio = hoy.getMonth();
+          let anioInicio = hoy.getFullYear();
 
-          function obtenerDiaCierre(mes, anio) {
-              if (ciclo === 1) {
-                  return new Date(anio, mes + 1, 0).getDate();
-              } else {
-                  return ciclo - 1;
+          // El inicio de ciclo es el mismo número del ciclo
+          let diaInicio = ciclo;
+
+          let proximoInicio = new Date(anioInicio, mesInicio, diaInicio);
+
+          // Si el día de hoy ya pasó el día de inicio de este mes, pasamos al mes siguiente
+          if (hoy.getTime() > proximoInicio.getTime()) {
+              mesInicio++;
+              if (mesInicio > 11) {
+                  mesInicio = 0;
+                  anioInicio++;
               }
+              proximoInicio = new Date(anioInicio, mesInicio, diaInicio);
           }
 
-          diaCierre = obtenerDiaCierre(mesCierre, anioCierre);
-          let proximoCierre = new Date(anioCierre, mesCierre, diaCierre);
-
-          if (hoy.getTime() > proximoCierre.getTime()) {
-              mesCierre++;
-              if (mesCierre > 11) {
-                  mesCierre = 0;
-                  anioCierre++;
-              }
-              diaCierre = obtenerDiaCierre(mesCierre, anioCierre);
-              proximoCierre = new Date(anioCierre, mesCierre, diaCierre);
-          }
-
-          let limite48h = new Date(proximoCierre);
-          limite48h.setDate(limite48h.getDate() - 1);
+          // Límite de 48 horas previas calculadas de forma estricta:
+          // Si es ciclo 21 y llama el 18, cae en el límite (ya que restan los días enteros 19 y 20)
+          let limite48h = new Date(proximoInicio);
+          limite48h.setDate(limite48h.getDate() - 3);
 
           if (hoy.getTime() >= limite48h.getTime()) {
-              mesCierre++;
-              if (mesCierre > 11) {
-                  mesCierre = 0;
-                  anioCierre++;
+              mesInicio++;
+              if (mesInicio > 11) {
+                  mesInicio = 0;
+                  anioInicio++;
               }
-              diaCierre = obtenerDiaCierre(mesCierre, anioCierre);
-              proximoCierre = new Date(anioCierre, mesCierre, diaCierre);
+              proximoInicio = new Date(anioInicio, mesInicio, diaInicio);
           }
 
-          let mesStr = (proximoCierre.getMonth() + 1).toString().padStart(2, '0');
-          let diaStr = proximoCierre.getDate().toString().padStart(2, '0');
-          let anioStr = proximoCierre.getFullYear();
+          let mesStr = (proximoInicio.getMonth() + 1).toString().padStart(2, '0');
+          let diaStr = proximoInicio.getDate().toString().padStart(2, '0');
+          let anioStr = proximoInicio.getFullYear();
           
           label_6Input.value = `${anioStr}-${mesStr}-${diaStr}`;
           

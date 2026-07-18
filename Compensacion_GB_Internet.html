@@ -536,7 +536,7 @@
           <span style="color: #ff0000;">¿Qué colocaré?:</span> <strong>Fecha de inicio de ciclo</strong><br>
           <span style="color: #ff0000;">Ejemplo:</span> Si es ciclo 26, añadiré la fecha 26/XX/XXXX<br><br>
 
-          <span style="color: #ff0000;">Nota:</span> Si el cliente llama hasta 48 horas antes de su inicio de ciclo, la fecha será para el siguiente mes (Ejemplo: Llama el 18/07/2026 y tiene ciclo 21, se deberá colocar 21/08/2026)<br>
+          <span style="color: #ff0000;">Nota:</span> El sistema evalúa el <strong>día siguiente</strong> a la llamada. Si este cae 48 horas previas al ciclo (día anterior o el mismo día del ciclo), se asignará el ciclo del mes siguiente. (Ejemplo: Cliente llama el 19/07/2026, el día siguiente es 20/07. Para un ciclo 21 ya entra en las 48h, por lo que se colocará 21/08/2026).<br>
 
           <hr>
           <span style="color: #0c477e; font-weight: bold;">PREPAGO: Haz clic en el botón naranja "🔋 Prepago".</span><br><br>
@@ -751,7 +751,7 @@
       });
       labelIDInput.addEventListener("input", updateResultadoOutput);
 
-      /* --- CÁLCULO INTELIGENTE ACTUALIZADO (INICIO DE CICLO Y REGLA 48 HORAS) --- */
+      /* --- CÁLCULO INTELIGENTE ACTUALIZADO (DÍA SIGUIENTE VS 48h AL INICIO DE CICLO) --- */
       function completarFechaDesdeCiclo() {
           const cicloVal = fast_cicloSelect.value;
           
@@ -765,36 +765,38 @@
           let hoy = new Date();
           hoy.setHours(0, 0, 0, 0);
 
-          let mesInicio = hoy.getMonth();
-          let anioInicio = hoy.getFullYear();
+          // Variable para representar "el día siguiente"
+          let manana = new Date(hoy);
+          manana.setDate(manana.getDate() + 1);
 
-          // El inicio de ciclo es el mismo número del ciclo
-          let diaInicio = ciclo;
+          let mes = manana.getMonth();
+          let anio = manana.getFullYear();
 
-          let proximoInicio = new Date(anioInicio, mesInicio, diaInicio);
+          // Calculamos la fecha de inicio del ciclo en el mes de "mañana"
+          let proximoInicio = new Date(anio, mes, ciclo);
 
-          // Si el día de hoy ya pasó el día de inicio de este mes, pasamos al mes siguiente
-          if (hoy.getTime() > proximoInicio.getTime()) {
-              mesInicio++;
-              if (mesInicio > 11) {
-                  mesInicio = 0;
-                  anioInicio++;
+          // Si "mañana" ya pasó el inicio de ciclo de este mes, el objetivo es el mes siguiente
+          if (manana.getTime() > proximoInicio.getTime()) {
+              mes++;
+              if (mes > 11) {
+                  mes = 0;
+                  anio++;
               }
-              proximoInicio = new Date(anioInicio, mesInicio, diaInicio);
+              proximoInicio = new Date(anio, mes, ciclo);
           }
 
-          // Límite de 48 horas previas calculadas de forma estricta:
-          // Si es ciclo 21 y llama el 18, cae en el límite (ya que restan los días enteros 19 y 20)
+          // Definir límite de 48h: el día anterior al inicio de ciclo
           let limite48h = new Date(proximoInicio);
-          limite48h.setDate(limite48h.getDate() - 3);
+          limite48h.setDate(limite48h.getDate() - 1);
 
-          if (hoy.getTime() >= limite48h.getTime()) {
-              mesInicio++;
-              if (mesInicio > 11) {
-                  mesInicio = 0;
-                  anioInicio++;
+          // Si "mañana" es igual o mayor a ese límite, salta al mes subsiguiente
+          if (manana.getTime() >= limite48h.getTime()) {
+              mes++;
+              if (mes > 11) {
+                  mes = 0;
+                  anio++;
               }
-              proximoInicio = new Date(anioInicio, mesInicio, diaInicio);
+              proximoInicio = new Date(anio, mes, ciclo);
           }
 
           let mesStr = (proximoInicio.getMonth() + 1).toString().padStart(2, '0');

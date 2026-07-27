@@ -232,13 +232,20 @@
     .inline-form label { font-size: 0.78rem; font-weight: 600; color: #666; flex-basis: 100%; margin: 4px 0; }
     .fila-campo { display: flex; flex-direction: column; flex: 1; min-width: 180px; width: 100%; max-width: 300px; position: relative; }
     
-    /* Corrección del área redimensionable */
-    .campo-resizable { 
-      resize: both !important; /* Permite arrastrar hacia cualquier lado */
-      overflow: auto; 
-      min-height: 38px; 
-      width: 100%; 
-    }
+/* Campo que el agente puede estirar libremente hacia abajo */
+.campo-resizable {
+  flex: 0 0 auto !important;   /* CLAVE: saca la altura del cálculo flex */
+  resize: vertical !important; /* solo alto, nunca pierde el ancho */
+  width: 100% !important;
+  max-width: 100%;
+  min-height: 38px;
+  max-height: 260px;           /* tope para que no rompa el layout */
+  overflow-y: auto;
+  line-height: 1.4;
+  font-family: inherit;
+}
+/* el "salto" al enfocar hace que se escape el agarre de la esquina */
+.inline-form textarea:focus { transform: none !important; }
 
     .output {
       background: #e8f7f9; padding: 12px 15px; margin-top: 18px;
@@ -1163,6 +1170,7 @@ function enviarClaria() {
 
     function cargarInicial() { var guardado = localStorage.getItem(HIST_KEY); historial = guardado ? JSON.parse(guardado) : []; actualizarHistorial(); updateOutput(); }
     function plantillaSeleccionada() { return document.getElementById('plantilla').value; }
+
     function cambiarPlantilla() {
       var modo = plantillaSeleccionada(); var cmt = document.getElementById('plantillaComentario'); var cal = document.getElementById('plantillaCalidad');
       var btnGlobal = document.getElementById('copiarBtnGlobal'); var btnAddress = document.getElementById('copiarBtnAddress'); var btnTipificacion = document.getElementById('copiarBtnTipificacion');
@@ -1173,7 +1181,9 @@ function enviarClaria() {
         cmt.style.display = 'none'; cal.style.display = 'flex';
         if (btnGlobal) btnGlobal.style.display = 'none'; if (btnAddress) btnAddress.style.display = 'inline-flex'; if (btnTipificacion) btnTipificacion.style.display = 'inline-flex'; 
       } updateOutput();
-    }
+  document.querySelectorAll('.campo-resizable').forEach(autoGrow);   // ← aquí
+}
+
     function getUpperValue(id) { var el = document.getElementById(id); if (!el) return ''; el.value = (el.value || '').toUpperCase(); return el.value.trim(); }
     function updateOutput() {
       var modo = plantillaSeleccionada();
@@ -1258,14 +1268,21 @@ function enviarClaria() {
       button.innerHTML = success ? '✅ Copiado!' : '❌ Error'; button.classList.add('copied'); setTimeout(function() { button.innerHTML = originalText; button.classList.remove('copied'); }, 1500);
     }
     function copiarConFallback(texto, button) { var area = document.createElement('textarea'); area.value = texto; document.body.appendChild(area); area.select(); try { document.execCommand('copy'); showCopyFeedback(true, button); } catch (err) { showCopyFeedback(false, button); } document.body.removeChild(area); }
+
     function limpiarCampos() {
       inputs.forEach(id => { var el = document.getElementById(id); if (el) el.value = ''; });
       document.getElementById('resultadoGlobal').innerText = 'Resultado aparecerá aquí...'; document.getElementById('resultadoAddress').innerText = 'Resultado aparecerá aquí...'; document.getElementById('resultadoTipificacion').innerText = 'Resultado aparecerá aquí...';
       estadoDescarte.tipo = ''; estadoDescarte.red = ''; estadoDescarte.problema = ''; document.getElementById('opcionesRedProblema').style.display = 'none';
       var contBts = document.getElementById('contenedorBts'); var btsIn = document.getElementById('btsCalidad');
       if (contBts) contBts.style.display = 'none'; if (btsIn) { btsIn.disabled = true; btsIn.value = ''; }
-      document.querySelectorAll('.btn-selected').forEach(btn => btn.classList.remove('btn-selected')); document.getElementById('grupoProblemas').innerHTML = ''; document.querySelectorAll('.campo-resizable').forEach(function(textarea) { textarea.style.width = ''; textarea.style.height = ''; });
+      document.querySelectorAll('.btn-selected').forEach(btn => btn.classList.remove('btn-selected')); document.getElementById('grupoProblemas').innerHTML = ''; document.querySelectorAll('.campo-resizable').forEach(function (textarea) {
+  textarea.style.width = '';
+  textarea.style.height = '';
+  delete textarea.dataset.manual;
+  autoGrow(textarea);
+});
     }
+
     function validarNumero(input) { input.value = input.value.replace(/[^0-9]/g, ''); }
     function toggleOpciones() { var extra = document.getElementById('opcionesExtra'); var btn = document.querySelector('.mas-opciones-btn'); if (extra.style.display === 'none') { extra.style.display = 'flex'; btn.textContent = "⏹ Ocultar opciones"; } else { extra.style.display = 'none'; document.getElementById('historial').style.display = 'none'; btn.textContent = "⚙️ Más opciones"; } }
     function toggleHistorial() { var h = document.getElementById('historial'); h.style.display = (h.style.display === 'none') ? 'block' : 'none'; }
@@ -1570,11 +1587,29 @@ function enviarClaria() {
       document.getElementById("btn-1000").onclick = ()=>{ base = 1000; document.getElementById("btn-1000").classList.add("active"); document.getElementById("btn-1024").classList.remove("active"); renderCalc(); };
       document.querySelectorAll(".select-dec button").forEach(btn=>{ btn.onclick = ()=>{ document.querySelectorAll(".select-dec button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); precision = Number(btn.dataset.dec); renderCalc(); }; });
 
+
       const toggleExtra = document.getElementById("toggleExtra"); const extraContainer = document.getElementById("extraContainer");
       if(toggleExtra && extraContainer) { toggleExtra.onclick=()=>{ if(extraContainer.style.display==="none" || extraContainer.style.display===""){ extraContainer.style.display="grid"; toggleExtra.textContent="Ocultar resultados"; } else { extraContainer.style.display="none"; toggleExtra.textContent="Más resultados"; } }; }
       const btnClean = document.getElementById("btnClean");
       if(btnClean) { btnClean.onclick=()=>{ document.getElementById("unitSelect").value="KB"; document.getElementById("valueInput").value=""; extraContainer.style.display="none"; toggleExtra.textContent="Más resultados"; base = 1024; document.getElementById("btn-1024").classList.add("active"); document.getElementById("btn-1000").classList.remove("active"); precision = 4; document.querySelectorAll(".select-dec button").forEach(b=>b.classList.remove("active")); document.querySelector('[data-dec="4"]').classList.add("active"); renderCalc(); }; }
     });
-  </script>
+
+function autoGrow(el) {
+  if (el.dataset.manual === '1') return;
+  if (!el.scrollHeight) return;              // ← campo oculto: no lo tocamos
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight + 2, 260) + 'px';
+}
+
+document.querySelectorAll('.campo-resizable').forEach(function (ta) {
+  ta.addEventListener('input', function () { autoGrow(ta); });
+  ta.addEventListener('mousedown', function () { ta._h = ta.offsetHeight; });
+  ta.addEventListener('mouseup', function () {
+    if (ta.offsetHeight !== ta._h) ta.dataset.manual = '1'; // detecta arrastre real, no un clic
+  });
+  autoGrow(ta);
+});
+
+</script>
 </body>
 </html>

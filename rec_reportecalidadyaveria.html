@@ -71,7 +71,7 @@
         width: 50%;
       }
 
-      .input-container input {
+      .input-container input, .input-container select {
         width: 50%;
         padding: 4px;
         border: 1px solid #ccc;
@@ -79,7 +79,7 @@
         transition: border-color 0.3s ease, box-shadow 0.3s ease;
       }
 
-      .input-container input:focus {
+      .input-container input:focus, .input-container select:focus {
         border-color: #007BFF;
         outline: none;
         box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
@@ -90,7 +90,7 @@
         .input-container {
           flex-direction: column;
         }
-        .input-container label, .input-container input {
+        .input-container label, .input-container input, .input-container select {
           width: 100%;
         }
       }
@@ -152,87 +152,19 @@
         transition: background-color 0.3s ease;
       }
 
-      #resultadoADIC {
-        margin: 15px 0;
-        font-size: 0.9rem;
-        background-color: #fff5e9;
-        padding: 10px;
-        border-left: 4px solid #e67a00;
-        white-space: pre-line;
-        min-height: 50px;
-        transition: background-color 0.3s ease;
+      /* Estilos para el mensaje de copiado */
+      #mensaje-copia {
+        margin-left: 15px;
+        font-weight: bold;
+        font-size: 0.95rem;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        vertical-align: middle;
       }
 
-      /* Estilos para el contenedor de la vista previa */
-      #imagePopup {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.8);
-        text-align: center;
-        z-index: 1000; /* Añadido para asegurar que esté por encima de todo */
-      }
-
-      /* Estilos para la imagen de la vista previa */
-      #imagePopup img {
-        max-width: 90%; /* Un poco de margen */
-        max-height: 90vh; /* Un poco de margen */
-        margin-top: 5vh; /* Centrado vertical */
-      }
-
-      /* Estilos para el botón de cerrar */
-      .close-button {
-        position: absolute;
-        top: 20px;
-        right: 20px; /* Mejor posicionado */
-        background-color: white;
-        color: black;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-      }
-
-      /* Estilos para el contenedor de la vista previa 2 */
-      #imagePopup2 {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.8);
-        text-align: center;
-        z-index: 1000; /* Añadido para asegurar que esté por encima de todo */
-      }
-
-      /* Estilos para la imagen de la vista previa 2 */
-      #imagePopup2 img {
-        max-width: 90%; /* Un poco de margen */
-        max-height: 90vh; /* Un poco de margen */
-        margin-top: 5vh; /* Centrado vertical */
-      }
-
-      /* Estilos para el botón de cerrar 2 */
-      .close-button2 {
-        position: absolute;
-        top: 20px;
-        right: 20px; /* Mejor posicionado */
-        background-color: white;
-        color: black;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-      }
     </style>
-  </head>
-  <body>
+ </head>
+ <body>
 
 <label style="color: red;"><strong>Plantilla:</strong></label>
 <p></p>
@@ -279,7 +211,6 @@
 <input type="text" id="label_lugnac" oninput="updateResultadoOutput()" style="color: #007BFF;" />
 </div>
 
-
 <div class="input-container">
 <label for="label_validentidad">- Validó identidad:</label>
 <select id="label_validentidad" onchange="updateResultadoOutput()">
@@ -304,6 +235,18 @@
 <div class="input-container">
 <label for="label_direccion">- Dirección donde presenta los inconvenientes (con referencia válidas, cruce de avenidas, Urbanización – centro poblado - distrito – provincia - departamento):</label>
 <input type="text" id="label_direccion" oninput="updateResultadoOutput()" placeholder="(Ejem: Av. Aviación 2270, Frente a La Rambla, Lima - Lima - San Borja...)" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="label_coordenadas">- Coordenadas: 
+  <button type="button" onclick="abrirMapa()" style="padding: 2px 8px; font-size: 0.8rem; background-color: #4285F4; margin-left: 5px;">Google Maps</button>
+</label>
+<input type="text" id="label_coordenadas" oninput="updateResultadoOutput()" placeholder="(Ej: -12.046374, -77.042793)" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="label_bts">- BTS:</label>
+<input type="text" id="label_bts" oninput="updateResultadoOutput()" placeholder="(Ej: LIM1234)" style="color: #007BFF;" />
 </div>
 
 <div class="input-container">
@@ -398,7 +341,10 @@
 <label style="color: red;"><strong>Resultado</strong></label>
 <p id="resultado" class="dark-mode-text"></p>
 
-<button onclick="copiarResultado()">Copiar</button> <button onclick="limpiarInputs()">Borrar</button>
+<!-- BOTONES CON EL MENSAJE AL LADO -->
+<button onclick="copiarResultado()">Copiar</button> 
+<button onclick="limpiarInputs()">Borrar</button>
+<span id="mensaje-copia"></span>
 
 <script>
 window.onload = function() {
@@ -409,18 +355,21 @@ window.onload = function() {
     }
 };
 
+      // SELECCIÓN DE TODOS LOS ELEMENTOS
       const label0Input = document.querySelector("#label0");
       const label0_1Input = document.querySelector("#label0_1");
       const label_superInput = document.querySelector("#label_super");
       const label_reclamanteInput = document.querySelector("#label_reclamante");
-      const label_padreInput = document.querySelector("#label_padre");
-      const label_madreInput = document.querySelector("#label_madre");
-      const label_fecnacInput = document.querySelector("#label_fecnac");
-      const label_lugnacInput = document.querySelector("#label_lugnac");
+      const label_padreInput = document.querySelector("#label_padre");
+      const label_madreInput = document.querySelector("#label_madre");
+      const label_fecnacInput = document.querySelector("#label_fecnac");
+      const label_lugnacInput = document.querySelector("#label_lugnac");
       const label_validentidadInput = document.querySelector("#label_validentidad");
       const label_valdatosInput = document.querySelector("#label_valdatos");
       const label_FechaHoraInput = document.querySelector("#label_FechaHora");
       const label_direccionInput = document.querySelector("#label_direccion");
+      const label_coordenadasInput = document.querySelector("#label_coordenadas");
+      const label_btsInput = document.querySelector("#label_bts");
       const label_numerorefInput = document.querySelector("#label_numeroref");
       const label_CoberturaInput = document.querySelector("#label_Cobertura");
       const label_mensajeerrorInput = document.querySelector("#label_mensajeerror");
@@ -432,37 +381,31 @@ window.onload = function() {
       const label_otroequipoInput = document.querySelector("#label_otroequipo");
       const label_DetalleIncInput = document.querySelector("#label_DetalleInc");
       const labelIDInput = document.querySelector("#labelID");
+      
       const resultadoOutput = document.querySelector("#resultado");
 
-      label0Input.addEventListener("input", updateResultadoOutput);
-      label0_1Input.addEventListener("input", updateResultadoOutput);
-      label_superInput.addEventListener("input", updateResultadoOutput);
-      label_reclamanteInput.addEventListener("change", updateResultadoOutput);
-      label_padreInput.addEventListener("input", updateResultadoOutput);
-      label_madreInput.addEventListener("input", updateResultadoOutput);
-      label_fecnacInput.addEventListener("input", updateResultadoOutput);
-      label_lugnacInput.addEventListener("input", updateResultadoOutput);
-      label_validentidadInput.addEventListener("change", updateResultadoOutput);
-      label_valdatosInput.addEventListener("change", updateResultadoOutput);
-      label_FechaHoraInput.addEventListener("input", updateResultadoOutput);
-      label_direccionInput.addEventListener("input", updateResultadoOutput);
-      label_numerorefInput.addEventListener("input", updateResultadoOutput);
-      label_CoberturaInput.addEventListener("change", updateResultadoOutput);
-      label_mensajeerrorInput.addEventListener("input", updateResultadoOutput);
-      label_reinicioInput.addEventListener("change", updateResultadoOutput);
-      label_otralineaInput.addEventListener("change", updateResultadoOutput);
-      label_equipoInput.addEventListener("change", updateResultadoOutput);
-      label_osInput.addEventListener("change", updateResultadoOutput);
-      label_kbInput.addEventListener("input", updateResultadoOutput);
-      label_otroequipoInput.addEventListener("change", updateResultadoOutput);
-      label_DetalleIncInput.addEventListener("input", updateResultadoOutput);
-      labelIDInput.addEventListener("input", updateResultadoOutput);
+      // ARREGLO CON TODOS LOS INPUTS PARA VALIDAR SI ESTÁN VACÍOS AL COPIAR
+      const todosLosInputs = [
+        label0Input, label0_1Input, label_superInput, label_reclamanteInput,
+        label_padreInput, label_madreInput, label_fecnacInput, label_lugnacInput,
+        label_validentidadInput, label_valdatosInput, label_FechaHoraInput,
+        label_direccionInput, label_coordenadasInput, label_btsInput,
+        label_numerorefInput, label_CoberturaInput, label_mensajeerrorInput,
+        label_reinicioInput, label_otralineaInput, label_equipoInput,
+        label_osInput, label_kbInput, label_otroequipoInput,
+        label_DetalleIncInput, labelIDInput
+      ];
+
+      // LISTENERS
+      todosLosInputs.forEach(input => {
+          input.addEventListener(input.tagName === "SELECT" ? "change" : "input", updateResultadoOutput);
+      });
 
 function formatDateToDDMMYYYYHHMM(dateString) {
   if (!dateString) return "";
   const dateParts = dateString.split("T");
   const date = dateParts[0];
-  const time = dateParts[1] ? dateParts[1].slice(0, 5) : ""; // Corrección para evitar error si no hay hora
+  const time = dateParts[1] ? dateParts[1].slice(0, 5) : ""; 
   const datePartsFormatted = date.split("-");
   const day = datePartsFormatted[2];
   const month = datePartsFormatted[1];
@@ -471,59 +414,35 @@ function formatDateToDDMMYYYYHHMM(dateString) {
 }
 
 function updateResultadoOutput() {
-    const label0 = label0Input.value;
-    const label0_1 = capitalizeFirstLetter(label0_1Input.value);
-    const label_super = label_superInput.value;
-    const label_reclamante = label_reclamanteInput.value;
-    const label_padre = label_padreInput.value;
-    const label_madre = label_madreInput.value;
-    const label_fecnac = label_fecnacInput.value;
-    const label_lugnac = label_lugnacInput.value;
-    const label_validentidad = label_validentidadInput.value;
-    const label_valdatos = label_valdatosInput.value;
-    const label_FechaHora = formatDateToDDMMYYYYHHMM(label_FechaHoraInput.value);
-    const label_direccion = label_direccionInput.value;
-    const label_numeroref = label_numerorefInput.value;
-    const label_Cobertura = label_CoberturaInput.value;
-    const label_mensajeerror = label_mensajeerrorInput.value;
-    const label_reinicio = label_reinicioInput.value;
-    const label_otralinea = label_otralineaInput.value;
-    const label_equipo = label_equipoInput.value;
-    const label_os = label_osInput.value;
-    const label_DetalleInc = label_DetalleIncInput.value;
-    const labelID = labelIDInput.value;
-    
-    // VARIABLES AGREGADAS AQUÍ QUE FALTABAN:
-    const label_kb = label_kbInput.value;
-    const label_otroequipo = label_otroequipoInput.value;
+    resultadoOutput.innerHTML =`<span class="resultado-label">${label0Input.value}</span> // <span class="resultado-label">${capitalizeFirstLetter(label0_1Input.value)}</span> // Se genera reporte de calidad y avería
 
-    resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> // Se genera reporte de calidad y avería
-
-- Jefe/Supervisor aprobador del reporte: <span class="resultado-label">${label_super}</span>
-- Condición del Reclamante: <span class="resultado-label">${label_reclamante}</span>
-- Nombre del padre: <span class="resultado-label">${label_padre}</span>
-- Nombre de la madre: <span class="resultado-label">${label_madre}</span>
-- Fecha de nacimiento: <span class="resultado-label">${label_fecnac}</span>
-- Lugar de nacimiento: <span class="resultado-label">${label_lugnac}</span>
-- Validó identidad: <span class="resultado-label">Si</span>
-- Datos validados correctamente: <span class="resultado-label">Si</span>
-- Fecha y hora del inconveniente: <span class="resultado-label">${label_FechaHora}</span>
-- Dirección donde presenta los inconvenientes (con referencia válidas, cruce de avenidas, Urbanización – centro poblado - distrito – provincia - departamento): <span class="resultado-label">${label_direccion}</span>
-- Número de referencia: <span class="resultado-label">${label_numeroref}</span>
-- Indicador de cobertura: <span class="resultado-label">${label_Cobertura}</span>
-- Mensaje de Error: <span class="resultado-label">${label_mensajeerror}</span>
-- Reinicio su equipo: <span class="resultado-label">${label_reinicio}</span>
-- Cuenta con alguna otra línea que presenta la incidencia: <span class="resultado-label">${label_otralinea}</span>
-- Equipo fue adquirido en Bitel: <span class="resultado-label">${label_equipo}</span>
-- Sistema operativo del Dispositivo: <span class="resultado-label">${label_os}</span>
-- Cantidad de KB vigente al momento de escalar: <span class="resultado-label">${label_kb}</span>
-- ¿Se probó el chip en otro equipo y se solucionó el inconveniente?: <span class="resultado-label">${label_otroequipo}</span>
-- Detalle del inconveniente: <span class="resultado-label">${label_DetalleInc}</span>
-- $$_<span class="resultado-label">${labelID}</span>_&&`;
+- Jefe/Supervisor aprobador del reporte: <span class="resultado-label">${label_superInput.value}</span>
+- Condición del Reclamante: <span class="resultado-label">${label_reclamanteInput.value}</span>
+- Nombre del padre: <span class="resultado-label">${label_padreInput.value}</span>
+- Nombre de la madre: <span class="resultado-label">${label_madreInput.value}</span>
+- Fecha de nacimiento: <span class="resultado-label">${label_fecnacInput.value}</span>
+- Lugar de nacimiento: <span class="resultado-label">${label_lugnacInput.value}</span>
+- Validó identidad: <span class="resultado-label">${label_validentidadInput.value || "Si"}</span>
+- Datos validados correctamente: <span class="resultado-label">${label_valdatosInput.value || "Si"}</span>
+- Fecha y hora del inconveniente: <span class="resultado-label">${formatDateToDDMMYYYYHHMM(label_FechaHoraInput.value)}</span>
+- Dirección donde presenta los inconvenientes (con referencia válidas, cruce de avenidas, Urbanización – centro poblado - distrito – provincia - departamento): <span class="resultado-label">${label_direccionInput.value}</span>
+- Coordenadas: <span class="resultado-label">${label_coordenadasInput.value}</span>
+- BTS: <span class="resultado-label">${label_btsInput.value}</span>
+- Número de referencia: <span class="resultado-label">${label_numerorefInput.value}</span>
+- Indicador de cobertura: <span class="resultado-label">${label_CoberturaInput.value}</span>
+- Mensaje de Error: <span class="resultado-label">${label_mensajeerrorInput.value}</span>
+- Reinicio su equipo: <span class="resultado-label">${label_reinicioInput.value}</span>
+- Cuenta con alguna otra línea que presenta la incidencia: <span class="resultado-label">${label_otralineaInput.value}</span>
+- Equipo fue adquirido en Bitel: <span class="resultado-label">${label_equipoInput.value}</span>
+- Sistema operativo del Dispositivo: <span class="resultado-label">${label_osInput.value}</span>
+- Cantidad de KB vigente al momento de escalar: <span class="resultado-label">${label_kbInput.value}</span>
+- ¿Se probó el chip en otro equipo y se solucionó el inconveniente?: <span class="resultado-label">${label_otroequipoInput.value}</span>
+- Detalle del inconveniente: <span class="resultado-label">${label_DetalleIncInput.value}</span>
+- $$_<span class="resultado-label">${labelIDInput.value}</span>_&&`;
 }
 
     function capitalizeFirstLetter(string) {
-      if(!string) return ""; // Protección si el string está vacío
+      if(!string) return ""; 
       return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
     }
 
@@ -533,7 +452,26 @@ function updateResultadoOutput() {
         }
     }
 
+    // NUEVA FUNCIÓN PARA ABRIR MAPAS CENTRADO
+    function abrirMapa() {
+      const width = 800;
+      const height = 600;
+      const left = (window.screen.width / 2) - (width / 2);
+      const top = (window.screen.height / 2) - (height / 2);
+      window.open('https://www.google.com/maps', 'GoogleMapsPopup', `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,resizable=yes`);
+    }
+
     function copiarResultado() {
+        let camposFaltantes = false;
+        
+        // Verificamos si algún input está vacío
+        for (let i = 0; i < todosLosInputs.length; i++) {
+            if (todosLosInputs[i].value.trim() === "") {
+                camposFaltantes = true;
+                break;
+            }
+        }
+
         const resultadoTexto = resultadoOutput.innerText.trim();
         const textarea = document.createElement("textarea");
         textarea.value = resultadoTexto;
@@ -541,33 +479,29 @@ function updateResultadoOutput() {
         textarea.select();
         document.execCommand("copy");
         document.body.removeChild(textarea);
-        alert("Resultado copiado al portapapeles");
+
+        // Lógica del mensaje visual
+        const mensajeCopia = document.getElementById("mensaje-copia");
+        if (camposFaltantes) {
+            mensajeCopia.innerText = "⚠️ Copiado (Faltan campos por llenar)";
+            mensajeCopia.style.color = "#dc3545"; // Rojo
+        } else {
+            mensajeCopia.innerText = "✅ ¡Copiado exitosamente!";
+            mensajeCopia.style.color = "#28a745"; // Verde
+        }
+        
+        mensajeCopia.style.opacity = "1";
+
+        // Ocultar el mensaje después de 3 segundos
+        setTimeout(() => {
+            mensajeCopia.style.opacity = "0";
+        }, 3000);
     }
 
     function limpiarInputs() {
-        label0Input.value = "";
-        label0_1Input.value = "";
-        label_superInput.value = "";
-        label_reclamanteInput.value = "";
-        label_padreInput.value = "";
-        label_madreInput.value = "";
-        label_fecnacInput.value = "";
-        label_lugnacInput.value = "";
-        label_validentidadInput.value = "";
-        label_valdatosInput.value = "";
-        label_FechaHoraInput.value = "";
-        label_direccionInput.value = "";
-        label_numerorefInput.value = "";
-        label_CoberturaInput.value = "";
-        label_mensajeerrorInput.value = "";
-        label_reinicioInput.value = "";
-        label_otralineaInput.value = "";
-        label_equipoInput.value = "";
-        label_osInput.value = "";
-        label_kbInput.value = "";
-        label_otroequipoInput.value = ""; // Faltaba limpiar este también
-        label_DetalleIncInput.value = "";
-        labelIDInput.value = "";
+        todosLosInputs.forEach(input => {
+            input.value = "";
+        });
         resultadoOutput.innerHTML = "";
     }
 </script>

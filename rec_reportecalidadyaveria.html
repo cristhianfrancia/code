@@ -310,6 +310,36 @@
 </select>
 </div>
 
+<!-- NUEVOS CAMPOS AGREGADOS -->
+<div class="input-container">
+<label for="label_persistencia">- Persistencia al desplazamiento: ¿La señal vuelve al moverse?: </label>
+<select id="label_persistencia" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="Si">Si</option>
+<option value="No">No</option>
+<option value="No sabe">No sabe</option>
+</select>
+</div>
+
+<div class="input-container">
+<label for="label_marcamodelo">- Marca y modelo del equipo:</label>
+<input type="text" id="label_marcamodelo" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
+
+<div class="input-container">
+<label for="label_barras">- Barras de señal: </label>
+<select id="label_barras" onchange="updateResultadoOutput()">
+<option value="">Seleccionar</option>
+<option value="1 barra">1 barra</option>
+<option value="2 barras">2 barras</option>
+<option value="3 barras">3 barras</option>
+<option value="4 barras">4 barras</option>
+<option value="5 barras">5 barras</option>
+<option value="Sin señal">Sin señal</option>
+</select>
+</div>
+<!-- FIN DE NUEVOS CAMPOS -->
+
 <div class="input-container">
 <label for="label_kb">- Cantidad de KB vigente al momento de escalar:</label>
 <input type="text" id="label_kb" oninput="updateResultadoOutput()" placeholder="(Ver PCRF u OCS)" style="color: #007BFF;" />
@@ -377,6 +407,12 @@ window.onload = function() {
       const label_otralineaInput = document.querySelector("#label_otralinea");
       const label_equipoInput = document.querySelector("#label_equipo");
       const label_osInput = document.querySelector("#label_os");
+      
+      // VARIABLES PARA NUEVOS CAMPOS
+      const label_persistenciaInput = document.querySelector("#label_persistencia");
+      const label_marcamodeloInput = document.querySelector("#label_marcamodelo");
+      const label_barrasInput = document.querySelector("#label_barras");
+
       const label_kbInput = document.querySelector("#label_kb");
       const label_otroequipoInput = document.querySelector("#label_otroequipo");
       const label_DetalleIncInput = document.querySelector("#label_DetalleInc");
@@ -384,7 +420,7 @@ window.onload = function() {
       
       const resultadoOutput = document.querySelector("#resultado");
 
-      // ARREGLO CON TODOS LOS INPUTS PARA VALIDAR SI ESTÁN VACÍOS AL COPIAR
+      // ARREGLO CON TODOS LOS INPUTS PARA VALIDAR SI ESTÁN VACÍOS AL COPIAR (Actualizado con los nuevos campos)
       const todosLosInputs = [
         label0Input, label0_1Input, label_superInput, label_reclamanteInput,
         label_padreInput, label_madreInput, label_fecnacInput, label_lugnacInput,
@@ -392,8 +428,8 @@ window.onload = function() {
         label_direccionInput, label_coordenadasInput, label_btsInput,
         label_numerorefInput, label_CoberturaInput, label_mensajeerrorInput,
         label_reinicioInput, label_otralineaInput, label_equipoInput,
-        label_osInput, label_kbInput, label_otroequipoInput,
-        label_DetalleIncInput, labelIDInput
+        label_osInput, label_persistenciaInput, label_marcamodeloInput, label_barrasInput, 
+        label_kbInput, label_otroequipoInput, label_DetalleIncInput, labelIDInput
       ];
 
       // LISTENERS
@@ -435,6 +471,9 @@ function updateResultadoOutput() {
 - Cuenta con alguna otra línea que presenta la incidencia: <span class="resultado-label">${label_otralineaInput.value}</span>
 - Equipo fue adquirido en Bitel: <span class="resultado-label">${label_equipoInput.value}</span>
 - Sistema operativo del Dispositivo: <span class="resultado-label">${label_osInput.value}</span>
+- Persistencia al desplazamiento:  ¿La señal vuelve al moverse?: <span class="resultado-label">${label_persistenciaInput.value}</span>
+- Marca y modelo del equipo: <span class="resultado-label">${label_marcamodeloInput.value}</span>
+- Barras de señal: <span class="resultado-label">${label_barrasInput.value}</span>
 - Cantidad de KB vigente al momento de escalar: <span class="resultado-label">${label_kbInput.value}</span>
 - ¿Se probó el chip en otro equipo y se solucionó el inconveniente?: <span class="resultado-label">${label_otroequipoInput.value}</span>
 - Detalle del inconveniente: <span class="resultado-label">${label_DetalleIncInput.value}</span>

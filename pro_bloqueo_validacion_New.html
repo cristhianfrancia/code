@@ -9,7 +9,7 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: #ffffff;
     margin: 0;
-    padding: 10px 0; /* margen superior para que no quede pegado */
+    padding: 10px 0;
     color: #222;
     transition: all 0.4s ease;
   }
@@ -50,15 +50,15 @@
   .toggle-buttons {
     display: flex;
     justify-content: center;
-    gap: 10px; /* Reducido para 3 botones */
+    gap: 10px;
     margin-bottom: 25px;
     flex-wrap: wrap;
   }
 
   .toggle-buttons button {
     flex: 1;
-    padding: 14px 10px; /* Ajustado padding horizontal */
-    font-size: 0.95rem; /* Ajustado tamaño de fuente */
+    padding: 14px 10px;
+    font-size: 0.95rem;
     font-weight: 600;
     border: 2px solid #01768b;
     border-radius: 12px;
@@ -66,7 +66,7 @@
     background: #fff;
     color: #01768b;
     transition: 0.3s;
-    min-width: 0; /* Asegura que Flexbox los distribuya bien */
+    min-width: 0;
   }
 
   .toggle-buttons button:hover {
@@ -80,7 +80,6 @@
     border-color: #0c477e;
   }
   
-  /* ESTILO NUEVO: Botón No Valida Datos */
   #btnNoValida {
     border-color: #d93025;
     color: #d93025;
@@ -108,6 +107,13 @@
     border-radius: 10px;
     border-left: 4px solid #01768b;
     font-size: 0.97rem;
+  }
+
+  .action-line {
+    background: #fff8e1;
+    border-left: 4px solid #ffb300;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
   }
 
   .popup-btn {
@@ -205,33 +211,33 @@
     box-shadow: 0 3px 10px rgba(0,0,0,0.25);
   }
   
-  /* ESTILO DE LA SECCIÓN NO VALIDA DATOS - ¡AJUSTADO! */
   .speech-box {
-    background: #fffdf0; /* Más claro, acorde con tu amarillo Bitel */
-    border: 1px solid #fbf32f; /* Borde amarillo Bitel */
+    background: #fffdf0;
+    border: 1px solid #fbf32f;
     border-radius: 12px;
     padding: 20px;
     margin-top: 20px;
   }
   
   .speech-box h3 {
-    color: #0c477e; /* Azul oscuro de Bitel */
+    color: #0c477e;
     margin-top: 0;
     font-size: 1.1rem;
-    border-bottom: 1px dashed #fbf32f; /* Línea de borde amarilla Bitel */
+    border-bottom: 1px dashed #fbf32f;
     padding-bottom: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
   
   .speech-text {
     font-size: 1rem;
     line-height: 1.5;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    font-style: italic;
   }
   
   .tipificacion-box {
     background: #f0f4f7;
-    border-left: 5px solid #0c477e; /* Se mantiene el azul oscuro */
+    border-left: 5px solid #0c477e;
     padding: 12px 15px;
     border-radius: 8px;
     font-size: 0.9rem;
@@ -242,33 +248,54 @@
   .color-azul {
     color: #0c477e;
     font-weight: 700;
+    font-style: normal;
   }
 </style>
 </head>
 <body>
-
 
 <div class="container">
     <p class="pregunta-principal">¿Es usted titular de la línea?</p>
     <div class="toggle-buttons">
       <button id="btnTitular">Titular</button>
       <button id="btnUsuario">Usuario</button>
-      <button id="btnNoValida">No valida datos</button> </div>
+      <button id="btnNoValida">No valida datos</button> 
+    </div>
 
+    <!-- SECCIÓN ACTUALIZADA: NO VALIDA DATOS -->
     <div id="sectionNoValida" class="hidden">
       <div class="speech-box">
-        <h3>🚨 Speech:</h3>
         
+        <h3>🟡 1er intento fallido</h3>
         <div class="speech-text">
-          <span class="color-azul">(Nombre del cliente)</span>, me encantaría ayudarlo, pero los datos que me ha proporcionado no son los correctos, por tal motivo no sería posible continuar con el proceso de registro, lo invitamos a comunicarse nuevamente con los datos correctos y/o visitar uno de nuestros Centros de Atención más cercanos".
+          "<span class="color-azul">(Nombre del cliente)</span>, los datos proporcionados no permiten continuar con el proceso. No se preocupe, aún cuenta con 2 intentos más. Por favor, verifique la información y bríndemela nuevamente.”
+        </div>
+
+        <h3>🟠 2º intento fallido</h3>
+        <div class="speech-text">
+          "<span class="color-azul">(Nombre del cliente)</span>, los datos nuevamente no permiten continuar. Le queda 1 último intento por hoy. ¿Desea intentarlo nuevamente ahora o prefiere verificar sus datos y comunicarse más adelante?”
+        </div>
+        <div class="text-line action-line">
+          <strong>Acciones del Asesor:</strong>
+          <ul style="margin-top: 5px; font-style: normal;">
+            <li>Si el cliente decide continuar → proceder con el 3er intento.</li>
+            <li>Si el cliente decide colgar y volver a llamar → cerrar cordialmente, indicando que puede llamar cuando tenga los datos correctos, siempre dentro del mismo día.</li>
+          </ul>
+        </div>
+
+        <h3>🔴 3er intento fallido (agotó los intentos)</h3>
+        <div class="speech-text">
+          "<span class="color-azul">(Nombre del cliente)</span>, lamento informarle que no fue posible validar su identidad y se agotaron los intentos permitidos por hoy. Podrá realizar un nuevo intento a partir de las 00:00 horas de mañana. Le recomendamos tener sus datos correctos a la mano. Por seguridad, también le sugerimos bloquear sus cuentas bancarias y cambiar las claves de sus redes sociales y correo electrónico.”
         </div>
         
-        <h3>🏷️ Tipificación</h3>
+        <h3 style="margin-top: 25px;">🏷️ Tipificación (Para los 03 escenarios)</h3>
         <div class="tipificacion-box">
           Other / Información / Información / Transacciones de la línea / Bloqueo por sustracción - Pérdida / No valida datos completos
         </div>
       </div>
     </div>
+    <!-- FIN SECCIÓN ACTUALIZADA -->
+
     <div id="sectionTitular" class="hidden">
       <h2>Nivel 1</h2>
       <div class="form-section">
@@ -277,87 +304,72 @@
         <div class="text-line">- Número de documento de identidad del titular:</div>
       </div>
 
-<div class="nivel">
-<h2>Nivel 2</h2>
-<center><p class="note"><strong>(Cliente debe responder todas las preguntas que se muestran en el Utility de forma correcta para continuar)</strong></p></center>
-<div class="grid">
-<div class="card">
+      <div class="nivel">
+      <h2>Nivel 2</h2>
+      <center><p class="note"><strong>(Cliente debe responder todas las preguntas que se muestran en el Utility de forma correcta para continuar)</strong></p></center>
+      <div class="grid">
+      <div class="card">
+      <h3>PREPAGO</h3>
+      <ul>
+      <li><font color="red">Have you recharged this month?</font>
+      <br> (¿Ha hecho una recarga en este mes?)
+      <span class="ruta">(ver "Refil history")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1199-CE2UVAAP4iag9cKSQHL2eCIOLLIR/view?usp=drive_link')">👁️</button>
+      </li>
 
-<h3>PREPAGO</h3>
-<ul>
+      <li><font color="red"> Did you have a balance on the date of the theft or loss of the equipment?</font>
+      <br> (¿Contaba con saldo a la fecha del robo o pérdida del equipo?)
+      <span class="ruta">(ver "OCS" - "Basic Balance")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/13u1y-MDqw9H9wxkt4Y5A3KrVuNRAQ9XM/view?usp=drive_link')">👁️</button>
+      </li>
 
-<li><font color= red>Have you recharged this month?</font>
-<br> (¿Ha hecho una recarga en este mes?)
+      <li><font color="red">Did you do any portability this year?</font>
+      <br> (¿En el presente año hizo alguna portabilidad?)
+      <span class="ruta">(ver "Signing date" y "Connection date")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1yNmw1_iXl7m6xddxMo6nJTLZ_jR2du2I/view?usp=drive_link')">👁️</button>
+      </li>
 
-<span class="ruta">(ver "Refil history")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1199-CE2UVAAP4iag9cKSQHL2eCIOLLIR/view?usp=drive_link')">👁️</button>
-</li>
+      <li><font color="red">Have you requested to block your service due to theft or loss in the last 6 months?</font>
+      <br> (¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 6 meses?)
+      <span class="ruta">(ver "Subscriber service history")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1Fq4q_0WehL8zG6FWXY0f561Y52A8yawh/view?usp=drive_link')">👁️</button>
+      </li>
+      </ul>
+      </div>
 
+      <div class="card">
+      <h3>CONTROL</h3>
+      <ul>
+      <li><font color="red">Is your fixed charge in the range of between XX.XX and XX.XX soles?</font>
+      <br> (¿Su cargo fijo está en el rango entre S/XX y S/XX?)
+      <span class="ruta">(Ejemplo: Cliente tiene Flash 29.90, entonces se le preguntará: ¿Su cargo fijo está en el rango de S/29 y S/30? | Se tomará el rango con la diferencia de S/1 o S/2)</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1RtqNsvwh_OgbHs3Yl1s1G3-Ez9M8GChU/view?usp=drive_link')">👁️</button>
+      </li>
 
-<li><font color= red> Did you have a balance on the date of the theft or loss of the equipment?</font>
-<br> (¿Contaba con saldo a la fecha del robo o pérdida del equipo?)
+      <li><font color="red"> Do your receipts arrive by mail? </font>
+      <br> (¿Llegan tus recibos por correo electrónico?)
+      </li>
 
-<span class="ruta">(ver "OCS" - "Basic Balance")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/13u1y-MDqw9H9wxkt4Y5A3KrVuNRAQ9XM/view?usp=drive_link')">👁️</button>
-</li>
+      <li><font color="red">Did you do any portability this year?</font>
+      <br> (¿En el presente año hizo alguna portabilidad?)
+      <span class="ruta">(ver "Signing date" y "Connection date")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1yNmw1_iXl7m6xddxMo6nJTLZ_jR2du2I/view?usp=drive_link')">👁️</button>
+      </li>
 
-
-<li><font color= red>Did you do any portability this year?</font>
-<br> (¿En el presente año hizo alguna portabilidad?)
-
-<span class="ruta">(ver "Signing date" y "Connection date")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1yNmw1_iXl7m6xddxMo6nJTLZ_jR2du2I/view?usp=drive_link')">👁️</button>
-</li>
-
-
-<li><font color= red>Have you requested to block your service due to theft or loss in the last 6 months?</font>
-<br> (¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 6 meses?)
-
-<span class="ruta">(ver "Subscriber service history")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1Fq4q_0WehL8zG6FWXY0f561Y52A8yawh/view?usp=drive_link')">👁️</button>
-</li>
-
-</ul>
-</div>
-
-<div class="card">
-<h3>CONTROL</h3>
-<ul>
-
-<li><font color= red>Is your fixed charge in the range of between XX.XX and XX.XX soles?</font>
-<br> (¿Su cargo fijo está en el rango entre S/XX y S/XX?)
-
-<span class="ruta">(Ejemplo: Cliente tiene Flash 29.90, entonces se le preguntará: ¿Su cargo fijo está en el rango de S/29 y S/30? | Se tomará el rango con la diferencia de S/1 o S/2)</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1RtqNsvwh_OgbHs3Yl1s1G3-Ez9M8GChU/view?usp=drive_link')">👁️</button>
-</li>
-
-<li><font color= red>Did you do any portability this year?</font>
-<br> (¿En el presente año hizo alguna portabilidad?)
-
-<span class="ruta">(ver "Signing date" y "Connection date")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1yNmw1_iXl7m6xddxMo6nJTLZ_jR2du2I/view?usp=drive_link')">👁️</button>
-</li>
-
-
-<li><font color= red>Have you requested to block your service due to theft or loss in the last 6 months?</font>
-<br> (¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 6 meses?)
-
-<span class="ruta">(ver "Subscriber service history")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1Fq4q_0WehL8zG6FWXY0f561Y52A8yawh/view?usp=drive_link')">👁️</button>
-</li>
-
-
-</ul>
-</div>
-</div>
-</div>
-</div>
+      <li><font color="red">Have you requested to block your service due to theft or loss in the last 6 months?</font>
+      <br> (¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 6 meses?)
+      <span class="ruta">(ver "Subscriber service history")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1Fq4q_0WehL8zG6FWXY0f561Y52A8yawh/view?usp=drive_link')">👁️</button>
+      </li>
+      </ul>
+      </div>
+      </div>
+      </div>
+    </div>
 
     <div id="sectionUsuario" class="hidden">
       <h2>Datos del Usuario</h2>
-
         <center><p class="note">(🚨 Obligatorio: Primero se valida datos de usuario)</p></center>
-
       <div class="form-section">
         <div class="text-line">- Tipo de documento de identidad del usuario:</div>
         <div class="text-line">- Número de documento de identidad del usuario:</div>
@@ -368,85 +380,73 @@
       <div class="nivel">
         <h2>Datos del Titular (Nivel 1)</h2>
         <center><p class="note">(Luego de validar al usuario, validamos datos de titular -> Nivel 1 y Nivel 2)</p></center>
-
         <div class="text-line">- Nombres y apellidos completos del titular de la línea:</div>
         <div class="text-line">- Tipo de documento de identidad del titular:</div>
         <div class="text-line">- Número de documento de identidad del titular:</div>
       </div>
 
-<div class="nivel">
-<h2>Datos del Titular (Nivel 2)</h2>
-<center><p class="note"><strong>(Cliente debe responder todas las preguntas que se muestran en el Utility de forma correcta para continuar)</strong></p></center>
-<div class="grid" style="margin-top:15px;">
-<div class="card">
-<h3>PREPAGO</h3>
-<ul>
+      <div class="nivel">
+      <h2>Datos del Titular (Nivel 2)</h2>
+      <center><p class="note"><strong>(Cliente debe responder todas las preguntas que se muestran en el Utility de forma correcta para continuar)</strong></p></center>
+      <div class="grid" style="margin-top:15px;">
+      <div class="card">
+      <h3>PREPAGO</h3>
+      <ul>
+      <li><font color="red">Have you recharged this month?</font>
+      <br> (¿Ha hecho una recarga en este mes?)
+      <span class="ruta">(ver "Refil history")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1199-CE2UVAAP4iag9cKSQHL2eCIOLLIR/view?usp=drive_link')">👁️</button>
+      </li>
 
-<li><font color= red>Have you recharged this month?</font>
-<br> (¿Ha hecho una recarga en este mes?)
+      <li><font color="red">Did you have a balance on the date of the theft or loss of the equipment?</font>
+      <br> (¿Contaba con saldo a la fecha del robo o pérdida del equipo?)
+      <span class="ruta">(ver "OCS" - "Basic Balance")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/13u1y-MDqw9H9wxkt4Y5A3KrVuNRAQ9XM/view?usp=drive_link')">👁️</button>
+      </li>
 
-<span class="ruta">(ver "Refil history")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1199-CE2UVAAP4iag9cKSQHL2eCIOLLIR/view?usp=drive_link')">👁️</button>
-</li>
+      <li><font color="red">Did you do any portability this year?</font>
+      <br> (¿En el presente año hizo alguna portabilidad?)
+      <span class="ruta">(ver "Signing date" y "Connection date")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1yNmw1_iXl7m6xddxMo6nJTLZ_jR2du2I/view?usp=drive_link')">👁️</button>
+      </li>
 
+      <li><font color="red">Have you requested to block your service due to theft or loss in the last 6 months?</font>
+      <br> (¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 6 meses?)
+      <span class="ruta">(ver "Subscriber service history")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1Fq4q_0WehL8zG6FWXY0f561Y52A8yawh/view?usp=drive_link')">👁️</button>
+      </li>
+      </ul>
+      </div>
 
-<li><font color= red>Did you have a balance on the date of the theft or loss of the equipment?</font>
-<br> (¿Contaba con saldo a la fecha del robo o pérdida del equipo?)
+      <div class="card">
+      <h3>CONTROL</h3>
+      <ul>
+      <li><font color="red">Is your fixed charge in the range of between XX.XX and XX.XX soles? </font>
+      <br> (¿Su cargo fijo está en el rango entre S/XX y S/XX?)
+      <span class="ruta">(Ejemplo: Cliente tiene Flash 29.90, entonces se le preguntará: ¿Su cargo fijo está en el rango de S/29 y S/30? | Se tomará el rango con la diferencia de S/1 o S/2)</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1RtqNsvwh_OgbHs3Yl1s1G3-Ez9M8GChU/view?usp=drive_link')">👁️</button>
+      </li>
 
-<span class="ruta">(ver "OCS" - "Basic Balance")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/13u1y-MDqw9H9wxkt4Y5A3KrVuNRAQ9XM/view?usp=drive_link')">👁️</button>
-</li>
+      <li><font color="red"> Do your receipts arrive by mail? </font>
+      <br> (¿Llegan tus recibos por correo electrónico?)
+      </li>
 
+      <li><font color="red">Did you do any portability this year?</font>
+      <br> (¿En el presente año hizo alguna portabilidad?)
+      <span class="ruta">(ver "Signing date" y "Connection date")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1yNmw1_iXl7m6xddxMo6nJTLZ_jR2du2I/view?usp=drive_link')">👁️</button>
+      </li>
 
-<li><font color= red>Did you do any portability this year?</font>
-<br> (¿En el presente año hizo alguna portabilidad?)
-
-<span class="ruta">(ver "Signing date" y "Connection date")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1yNmw1_iXl7m6xddxMo6nJTLZ_jR2du2I/view?usp=drive_link')">👁️</button>
-</li>
-
-
-<li><font color= red>Have you requested to block your service due to theft or loss in the last 6 months?</font>
-<br> (¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 6 meses?)
-
-<span class="ruta">(ver "Subscriber service history")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1Fq4q_0WehL8zG6FWXY0f561Y52A8yawh/view?usp=drive_link')">👁️</button>
-</li>
-</ul>
-</div>
-
-<div class="card">
-<h3>CONTROL</h3>
-<ul>
-
-<li><font color= red>Is your fixed charge in the range of between XX.XX and XX.XX soles? </font>
-<br> (¿Su cargo fijo está en el rango entre S/XX y S/XX?)
-
-<span class="ruta">(Ejemplo: Cliente tiene Flash 29.90, entonces se le preguntará: ¿Su cargo fijo está en el rango de S/29 y S/30? | Se tomará el rango con la diferencia de S/1 o S/2)</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1RtqNsvwh_OgbHs3Yl1s1G3-Ez9M8GChU/view?usp=drive_link')">👁️</button>
-</li>
-
-
-<li><font color= red>Did you do any portability this year?</font>
-<br> (¿En el presente año hizo alguna portabilidad?)
-
-<span class="ruta">(ver "Signing date" y "Connection date")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1yNmw1_iXl7m6xddxMo6nJTLZ_jR2du2I/view?usp=drive_link')">👁️</button>
-</li>
-
-
-<li><font color= red>Have you requested to block your service due to theft or loss in the last 6 months? </font>
-<br> (¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 6 meses?)
-
-<span class="ruta">(ver "Subscriber service history")</span>
-<button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1Fq4q_0WehL8zG6FWXY0f561Y52A8yawh/view?usp=drive_link')">👁️</button>
-</li>
-
-</ul>
-</div>
-</div>
-</div>
-</div>
+      <li><font color="red">Have you requested to block your service due to theft or loss in the last 6 months? </font>
+      <br> (¿Ha solicitado bloquear su servicio por robo o pérdida en los últimos 6 meses?)
+      <span class="ruta">(ver "Subscriber service history")</span>
+      <button class="help-btn" onclick="verGuia('https://drive.google.com/file/d/1Fq4q_0WehL8zG6FWXY0f561Y52A8yawh/view?usp=drive_link')">👁️</button>
+      </li>
+      </ul>
+      </div>
+      </div>
+      </div>
+    </div>
 </div>
 
 <script>
@@ -491,7 +491,7 @@ btnUsuario.addEventListener("click", () => {
   }
 });
 
-// 5. LÓGICA para NO VALIDA DATOS (NUEVO)
+// 5. LÓGICA para NO VALIDA DATOS
 btnNoValida.addEventListener("click", () => {
   if (sectionNoValida.classList.contains("visible")) {
     ocultarTodasLasSecciones();
@@ -502,7 +502,6 @@ btnNoValida.addEventListener("click", () => {
     sectionNoValida.classList.add("visible");
   }
 });
-
 
 // 6. FUNCIONES DE POP-UP (Originales)
 function abrirDNI() {

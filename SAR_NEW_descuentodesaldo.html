@@ -935,7 +935,7 @@
         function cargarSupervisores() {
             if (cargaSupervisoresEnCurso) return;
             cargaSupervisoresEnCurso = true;
-            cambiarEstadoSupervisor("cargando", "Cargando personal de ESTRUCTURA 123...");
+            cambiarEstadoSupervisor("cargando", "Cargando personal autorizado...");
 
             let lista = document.getElementById("listaSupervisores");
             lista.replaceChildren();
@@ -947,7 +947,7 @@
             let parametros = new URLSearchParams({
                 sheet: NOMINA_HOJA,
                 headers: "1",
-                tq: "select C,D,E,N where L = 'ESTRUCTURA 123'",
+                tq: "select C,D,E,N where L = 'ESTRUCTURA 123' or L = 'ESTRUCTURA RECLAMOS INBOUND'",
                 tqx: "responseHandler:procesarRespuestaSupervisores",
                 _: Date.now().toString()
             });
@@ -972,7 +972,7 @@
 
         function procesarRespuestaSupervisores(respuesta) {
             if (respuesta?.status !== "ok") {
-                finalizarCargaSupervisores("error", "No se pudo leer el personal de ESTRUCTURA 123.");
+                finalizarCargaSupervisores("error", "No se pudo leer el personal autorizado.");
                 return;
             }
 
@@ -1599,7 +1599,7 @@ Derechos reservados &copy; 2020 Cristhian Francia
         <p>Filtra el personal disponible y selecciona quién autoriza el ajuste.</p>
         <div class="campana-supervisor-fija">
             <label for="campanaSupervisor">Campaña:</label>
-            <input type="text" id="campanaSupervisor" value="ESTRUCTURA 123" readonly aria-label="Campaña">
+            <input type="text" id="campanaSupervisor" value="ESTRUCTURA 123 / RECLAMOS INBOUND" readonly aria-label="Campaña">
         </div>
         <input type="search" id="buscarSupervisor" oninput="filtrarSupervisores()" placeholder="Busca cualquier autorizador por nombre o apellido..." autocomplete="off">
         <div id="listaSupervisores" class="lista-supervisores"></div>

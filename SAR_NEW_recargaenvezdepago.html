@@ -171,26 +171,25 @@
             font-size: 16px; 
         }
 
-#imagePopup, #imagePopup2, #imagePopup3 {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
-    text-align: center;
-    z-index: 10000;
-}
+        #imagePopup, #imagePopup2, #imagePopup3 {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            text-align: center;
+            z-index: 10000;
+        }
 
-#imagePopup img, #imagePopup2 img, #imagePopup3 img {
-    max-width: 100%;
-    max-height: 100vh;
-    margin-top: 20px;
-    border-radius: 12px;
-}
-
+        #imagePopup img, #imagePopup2 img, #imagePopup3 img {
+            max-width: 100%;
+            max-height: 100vh;
+            margin-top: 20px;
+            border-radius: 12px;
+        }
 
         .close-button, .close-button2, .close-button3 {
             position: absolute;
@@ -551,7 +550,6 @@
         .estado-consulta.exito { color: #28a745; }
         .estado-consulta.error { color: #FF3B30; }
 
-        /* Botón de descarga de Word ajustado */
         .btn-word {
             display: inline-block; 
             margin-bottom: 15px; 
@@ -1047,7 +1045,7 @@
         function cargarSupervisores() {
             if (cargaSupervisoresEnCurso) return;
             cargaSupervisoresEnCurso = true;
-            cambiarEstadoSupervisor("cargando", "Cargando personal de ESTRUCTURA 123...");
+            cambiarEstadoSupervisor("cargando", "Cargando personal autorizado...");
 
             let lista = document.getElementById("listaSupervisores");
             lista.replaceChildren();
@@ -1059,7 +1057,7 @@
             let parametros = new URLSearchParams({
                 sheet: NOMINA_HOJA,
                 headers: "1",
-                tq: "select C,D,E,N where L = 'ESTRUCTURA 123'",
+                tq: "select C,D,E,N where L = 'ESTRUCTURA 123' or L = 'ESTRUCTURA RECLAMOS INBOUND'",
                 tqx: "responseHandler:procesarRespuestaSupervisores",
                 _: Date.now().toString()
             });
@@ -1084,7 +1082,7 @@
 
         function procesarRespuestaSupervisores(respuesta) {
             if (respuesta?.status !== "ok") {
-                finalizarCargaSupervisores("error", "No se pudo leer el personal de ESTRUCTURA 123.");
+                finalizarCargaSupervisores("error", "No se pudo leer el personal autorizado.");
                 return;
             }
 
@@ -1479,7 +1477,7 @@ speech = `👉 1 día hábil 👈\n\n"Sr(a). <span style="color: #007BFF">("Prim
             imagePopup2.style.display = "none";
         }
 
-function showImagePopup3(event) {
+        function showImagePopup3(event) {
             event.preventDefault();
             const imagePopup3 = document.getElementById("imagePopup3");
             imagePopup3.style.display = "block";
@@ -1740,14 +1738,12 @@ SAR - Recharge Instead of Payment / Solución anticipada / Solución anticipada 
 
 <br>
 
-
 <label style="color: red;"><strong>Select type of adjustment: </strong></label><a href="#" onclick="return showImagePopup3(event)" style="text-decoration: none; color: #007BFF;"><strong>(Ver ejemplo)</strong></a>
 
 <div id="imagePopup3">
 <button class="close-button3" onclick="hideImagePopup3()">Cerrar</button>
 <img src="https://i.postimg.cc/Wzsh0tqR/CPC-Comunicados-2026-(1).png" alt="Imagen de vista previa 3">
 </div>
-
 
 <div class="ruta-container">
 
@@ -1765,7 +1761,6 @@ No olvidar colocar solo 2 decimales si es con descuento que si se visualiza.
 
 </div>
 <br>
-
 
 <label style="color: red;"><strong>3. Evidencias: </strong></label> <a href="#" onclick="return showImagePopup2(event)" style="text-decoration: none; color: #007BFF;"><strong>(Ver ejemplo)</strong></a>
 
@@ -1848,7 +1843,7 @@ Derechos reservados &copy; 2020 Cristhian Francia
         <p>Filtra el personal disponible y selecciona quién autoriza el ajuste.</p>
         <div class="campana-supervisor-fija">
             <label for="campanaSupervisor">Campaña:</label>
-            <input type="text" id="campanaSupervisor" value="ESTRUCTURA 123" readonly aria-label="Campaña">
+            <input type="text" id="campanaSupervisor" value="ESTRUCTURA 123 / RECLAMOS INBOUND" readonly aria-label="Campaña">
         </div>
         <input type="search" id="buscarSupervisor" oninput="filtrarSupervisores()" placeholder="Busca cualquier autorizador por nombre o apellido..." autocomplete="off">
         <div id="listaSupervisores" class="lista-supervisores"></div>

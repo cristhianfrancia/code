@@ -1597,7 +1597,7 @@ function showImagePopup3(event) {
 <label>2. Nombres y apellidos completos del personal de Bitel que atendió al abonado/usuario:</label>
 <span class="consulta-personal">
     <input type="text" id="nombrePersonal" readonly placeholder="(Se completa al consultar al personal)" title="Este campo se completa automáticamente" required>
-    <button type="button" class="btn-consulta btn-abrir-consulta" onclick="abrirConsultaPersonal()">🔍 Consultar personal</button>
+    <button type="button" class="btn-consulta btn-abrir-consulta" onclick="abrirConsultaPersonal()">🔍 Consultar Mis Datos</button>
     <span id="estadoPersonalResumen" class="estado-personal-resumen" aria-live="polite"></span>
 </span><br>
 
@@ -1832,7 +1832,7 @@ Derechos reservados &copy; 2020 Cristhian Francia
     <div id="popupOverlayPersonal" class="popup-overlay-personal" onclick="cerrarConsultaPersonal()"></div>
     <div id="popupConsultaPersonal" class="popup-consulta-personal" role="dialog" aria-modal="true" aria-labelledby="tituloConsultaPersonal">
         <button type="button" class="cerrar-consulta-personal" onclick="cerrarConsultaPersonal()" aria-label="Cerrar">×</button>
-        <h2 id="tituloConsultaPersonal">Consultar personal</h2>
+        <h2 id="tituloConsultaPersonal">Consultar Mis datos</h2>
         <p>Ingresa el usuario o documento registrado en la pestaña Activos.</p>
         <div class="fila-busqueda-personal">
             <input type="text" id="busquedaPersonal" onkeydown="manejarTeclaConsultaPersonal(event)" placeholder="Usuario o DNI" title="Ejemplo: cpc_danitzatc_vtp o 41911530" autocomplete="off">

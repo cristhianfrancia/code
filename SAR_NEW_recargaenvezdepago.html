@@ -901,7 +901,7 @@
             let apellidoPaterno = celdas[0]?.v?.toString().trim() || "";
             let apellidoMaterno = celdas[1]?.v?.toString().trim() || "";
             let nombres = celdas[2]?.v?.toString().trim() || "";
-            let nombreCompleto = [nombres, apellidoMaterno, apellidoPaterno]
+            let nombreCompleto = [nombres, apellidoPaterno, apellidoMaterno]
                 .filter(Boolean)
                 .join(" ");
 

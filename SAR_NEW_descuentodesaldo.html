@@ -10,7 +10,7 @@
 
         .container {
             width: 95%;
-            max-width: 1000px auto;
+            max-width: 1000px;
             margin: 10px auto;
             background-color: #ffffff;
             border-radius: 20px;
@@ -1188,7 +1188,7 @@
 
         function copiarTexto() {
             let camposObligatorios = [
-                "Numero1", "codigo", "nombrePersonal", "nombreAbonado", 
+                "Numero1", "codigo", "nombrePersonal", "nombreAbonado", "dniAbonado",
                 "numeroAbonado", "monto", "fecha1", "hora1", "consumo", "lab6", "fecha5", 
                 "hora5", "fecha3", "hora3", "plazo", "referencia", "id", "supervisorAutoriza"
             ];
@@ -1235,21 +1235,29 @@
             }, 3500);
         }
 
+        function obtenerNombreYApellidoFormateado(nombreCompleto) {
+            let partes = nombreCompleto.trim().split(/\s+/);
+            if (!partes[0]) return '("Primer nombre" y "Primer apellido" del cliente)';
+            if (partes.length === 1) return partes[0];
+            if (partes.length === 2) return `${partes[0]} ${partes[1]}`;
+            if (partes.length >= 4) return `${partes[0]} ${partes[2]}`;
+            return `${partes[0]} ${partes[1]}`;
+        }
+
         function leerSpeech() {
             let plazo = document.getElementById("plazo").value;
             let numeroAbonado = document.getElementById("numeroAbonado").value || "XXXXXX";
             let dniAbonado = document.getElementById("dniAbonado")?.value || "XXXXXX";
             let lab6 = document.getElementById("lab6").value || "XX";
+            let nombreAbonadoInput = document.getElementById("nombreAbonado")?.value || "";
+            let clienteNombreApellido = obtenerNombreYApellidoFormateado(nombreAbonadoInput);
             let fechaActual = obtenerFechaActual();
             let speech = "";
 
-if (plazo === "10 días hábiles") {
-
-speech = `👉 10 días hábiles 👈\n\n"Sr(a). <span style="color: #007BFF">("Primer nombre" y "Primer apellido" del cliente)</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia: Recargas en aceptación del ofrecimiento efectuado por Bitel donde realizaremos la asignación del saldo de S/<span style="color: #007BFF">${lab6}</span> incluido IGV, la cual se ejecutará en un plazo no mayor a 10 días hábiles de acuerdo al articulo 20° Del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
-
-} else if (plazo === "1 día hábil") {
-
-speech = `👉 1 día hábil 👈\n\n"Sr(a). <span style="color: #007BFF">("Primer nombre" y "Primer apellido" del cliente)</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia: Recargas, en aceptación del ofrecimiento efectuado por Bitel donde realizaremos la asignación del saldo de S/<span style="color: #007BFF">${lab6}</span> incluido IGV, la cual se ejecutará en un plazo no mayor a 1 día hábil de acuerdo al articulo 20° Del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
+            if (plazo === "10 días hábiles") {
+                speech = `👉 10 días hábiles 👈\n\n"Sr(a). <span style="color: #007BFF">${clienteNombreApellido}</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia: Recargas en aceptación del ofrecimiento efectuado por Bitel donde realizaremos la asignación del saldo de S/<span style="color: #007BFF">${lab6}</span> incluido IGV, la cual se ejecutará en un plazo no mayor a 10 días hábiles de acuerdo al articulo 20° Del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
+            } else if (plazo === "1 día hábil") {
+                speech = `👉 1 día hábil 👈\n\n"Sr(a). <span style="color: #007BFF">${clienteNombreApellido}</span>, identificado como abonado de la línea <span style="color: #007BFF">${numeroAbonado}</span>, con DNI <span style="color: #007BFF">${dniAbonado}</span>, con fecha <span style="color: #007BFF">${fechaActual}</span>, expresa con libre voluntad, encontrarse de acuerdo con la solución anticipada brindada por Bitel ante la problemática descrita respecto a la materia: Recargas, en aceptación del ofrecimiento efectuado por Bitel donde realizaremos la asignación del saldo de S/<span style="color: #007BFF">${lab6}</span> incluido IGV, la cual se ejecutará en un plazo no mayor a 1 día hábil de acuerdo al articulo 20° Del reglamento de reclamos.\n\nDe encontrarse de acuerdo con lo manifestado diga fuerte y claro, SI ACEPTO."`;
             }
 
             if (speech !== "") {
@@ -1404,6 +1412,9 @@ speech = `👉 1 día hábil 👈\n\n"Sr(a). <span style="color: #007BFF">("Prim
 <button type="button" class="btn-consulta" onclick="abrirVentana('https://eldni.com/')">El dni</button>
 <button type="button" class="btn-consulta" onclick="abrirVentana('https://sel.migraciones.gob.pe/servmig-valreg/VerificarCE?AspxAutoDetectCookieSupport=1')">Migraciones</button><br>
 
+<label>DNI / Documento del abonado:</label>
+<input type="text" id="dniAbonado" oninput="checkLength(this); actualizarResultados()" placeholder="(DNI o CE del cliente)" title="Documento de identidad" required><br>
+
 <label>4. Número o código del servicio del abonado/usuario:</label> <input type="tel" id="numeroAbonado" oninput="checkLength(this); actualizarResultados()" placeholder="(Número celular SAR)" title="Máximo 9 dígitos" required><br>
 
 <div class="radio-group">
@@ -1446,7 +1457,7 @@ speech = `👉 1 día hábil 👈\n\n"Sr(a). <span style="color: #007BFF">("Prim
         </span>
     </span> 
     
-. Fecha: <input type="date" id="fecha5" oninput="actualizarResultados()"> Hora: <input type="time" id="hora5" oninput="checkLength(this); actualizarResultados()">.</label> <span style="color: red; font-size: 0.9em; font-weight: bold;">(Fecha y Hora de petición)</span>
+. Fecha: <input type="date" id="fecha5" oninput="actualizarResultados()"> Hora: <input type="time" id="hora5" oninput="actualizarResultados()"></label> <span style="color: red; font-size: 0.9em; font-weight: bold;">(Fecha y Hora de petición)</span>
 </div>
 
 <label>6. Ofrecimiento realizado al abonado/usuario de acuerdo al punto anterior: Se ofrece recarga de saldo por el monto de S/<input type="text" id="lab6" oninput="checkLength(this); actualizarResultados()" placeholder="X.XX | XX.XX" title="Ejemplo: 3.00 | 10.00" required> sin beneficios adicionales.</label><br>
@@ -1458,10 +1469,11 @@ speech = `👉 1 día hábil 👈\n\n"Sr(a). <span style="color: #007BFF">("Prim
 <select id="plazo" onchange="actualizarResultados()">
 <option value="">Seleccionar</option>
 <option value="1 día hábil">1 día hábil</option>
+<option value="10 días hábiles">10 días hábiles</option>
 </select>
 <button type="button" onclick="leerSpeech()" style="cursor: pointer; border-radius: 6px; border: 1px solid #ccc; padding: 4px 10px; background: #0c477e; color: white; font-weight: bold;">Leer speech de grabación</button>
 
-<br><label>10. Número de referencia:</label> <input type="text" id="referencia" oninput="checkLength(this); actualizarResultados()" title="Máximo 9 caracteres, incluye guion si no hay número" required> <span style="color: red; font-size: 0.9em; font-weight: bold;"> (Si no brinda, colocar un guion: "-")</span>
+<br><label>10. Número de referencia:</label> <input type="text" id="referencia" oninput="actualizarResultados()" title="Máximo 9 caracteres, incluye guion si no hay número" required> <span style="color: red; font-size: 0.9em; font-weight: bold;"> (Si no brinda, colocar un guion: "-")</span>
 
 <br><label>$$_<input type="text" id="id" placeholder="ID de llamada" oninput="actualizarResultados()">_&&</label><br>
 <label>Autorizado por <input type="text" id="supervisorAutoriza" readonly placeholder="Selecciona al supervisor que autoriza" title="Este campo se completa automáticamente" required> <button type="button" id="btnAbrirConsultaSupervisor" class="btn-consulta" onclick="abrirConsultaSupervisor()">🔍 Consultar supervisor</button> <span id="estadoSupervisorResumen" class="estado-personal-resumen" aria-live="polite"></span>.</label>

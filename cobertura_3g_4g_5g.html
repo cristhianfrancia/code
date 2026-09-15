@@ -1,172 +1,148 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Tipificación | Bitel</title>
-    <style>
-        :root {
-            --bitel-teal: #01768b;
-            --bitel-blue: #0c477e;
-            --bitel-yellow: #fbf32f;
-            --text-main: #434343;
-        }
+<meta charset="UTF-8">
+<title>Botón</title>
+<style>
+  :root {
+    --bitel-teal: #01768b;
+    --bitel-blue: #0c477e;
+    --bitel-yellow: #fbf32f;
+    --ink: #1d1d1f;
+    --surface: #ffffff;
+  }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            display: flex;
-            justify-content: left;
-            align-items: center;
-            height: 100vh;
-            /* 🔒 Evitar la selección de texto */
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            overflow: hidden;
-        }
+  * { box-sizing: border-box; }
 
-        .button-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            padding: 10px;
-        }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    -webkit-user-select: none;
+    user-select: none;
+  }
 
-        /* 🌟 BOTÓN ESTILO BITEL UNIFICADO */
-        .abrir-btn {
-            background: transparent;
-            color: var(--bitel-blue);
-            border: 2px solid var(--bitel-blue);
-            padding: 12px 24px;
-            border-radius: 999px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center; /* Centra el contenido horizontalmente */
-            width: 260px; /* Ancho fijo para mantener la simetría */
-            gap: 8px;
-            letter-spacing: 0.3px;
-        }
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 8px;
+  }
 
-        /* Efecto al pasar el mouse */
-        .abrir-btn:hover {
-            background: var(--bitel-blue);
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(12,71,126,0.35);
-        }
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    border-radius: 980px;
+    border: none;
+    background: linear-gradient(180deg, var(--bitel-blue), #093a68);
+    color: var(--surface);
+    font-size: 12px;
+    font-weight: 590;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    box-shadow:
+      0 1px 2px rgba(9, 34, 58, 0.25),
+      0 6px 16px rgba(9, 34, 58, 0.18);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                background 0.35s ease;
+  }
 
-        .abrir-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 3px 10px rgba(12,71,126,0.2);
-        }
+  .btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0) 55%);
+    pointer-events: none;
+  }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            .button-group {
-                flex-direction: column;
-                width: 90%;
-            }
-            .abrir-btn {
-                width: 100%;
-            }
-        }
-    </style>
+  .btn .icon {
+    font-size: 15px;
+    line-height: 1;
+    filter: saturate(1.1);
+  }
+
+  .btn:hover {
+    background: linear-gradient(180deg, #1a5ea3, #0c477e);
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+    box-shadow:
+      0 1px 2px rgba(9, 34, 58, 0.22),
+      0 3px 8px rgba(9, 34, 58, 0.18);
+  }
+
+  .btn:focus-visible {
+    box-shadow:
+      0 0 0 3px rgba(255, 255, 255, 0.9),
+      0 0 0 6px rgba(12, 71, 126, 0.45),
+      0 6px 16px rgba(9, 34, 58, 0.18);
+  }
+</style>
 </head>
+<body>
 
-<body oncontextmenu="return false">
+  <div class="btn-container">
 
-    <div class="button-group">
-        <button class="abrir-btn" onclick="abrirVentana('bt1')">
-            📶 Cobertura 3G y 4G
-        </button>
 
-        <button class="abrir-btn" onclick="abrirVentana('bt2')">
-            📡 Cobertura 5G
-        </button>
+<button class="btn" onclick="abrirPopup('https://bitel.com.pe/cobertura', 1400, 800, 0.9)">
+📶 Cobertura 3G y 4G
+</button>
 
-    </div>
 
-<script>
-let popupVentana = null;
+<button class="btn" onclick="abrirPopup('https://earth.google.com/earth/d/10kkrwD_yP33XziQU4h-K9lMHyrdHNo1M?usp=sharing', 1400, 800, 0.9)">
+📡 Cobertura 5G
+</button>
 
-function abrirVentana(tipo) {
-    let url = "";
-    let titulo = "";
-    let ancho = 800; // Valor por defecto de respaldo
-    let alto = 600;  // Valor por defecto de respaldo
 
-    // 🛠️ AQUÍ PUEDES PERSONALIZAR EL ANCHO Y ALTO DE CADA BOTÓN
-    switch(tipo) {
-        case 'bt1':
-            url = "https://bitel.com.pe/cobertura";
-            titulo = "bt1";
-            ancho = 1400; // Ancho personalizado para calc
-            alto = 800;   // Alto personalizado para calc
-            break;
+  </div>
 
-        case 'bt2':
-            url = "https://earth.google.com/earth/d/10kkrwD_yP33XziQU4h-K9lMHyrdHNo1M?usp=sharing";
-            titulo = "bt2";
-            ancho = 1400; // Puedes ajustar el ancho si lo deseas
-            alto = 800;   // Puedes ajustar el alto si lo deseas
-            break;
+  <script>
+    // Centra el popup respecto al MONITOR y lo hace responsive: si el
+    // monitor es más chico que el tamaño pedido, se reduce a un porcentaje
+    // del área disponible en vez de desbordarse o perder el centrado.
+    //
+    // "zoom" NO puede escalar el contenido de la página que se abre: Drive,
+    // Canva y el script de Apps Script viven en otro dominio, y el navegador
+    // bloquea por seguridad que se les inyecte CSS desde acá. Lo que sí se
+    // puede controlar de verdad es el tamaño de la VENTANA emergente, así
+    // que "zoom" ajusta eso sobre el ancho/alto que le pases: 1 (o dejarlo
+    // vacío) = tamaño tal cual lo escribiste, 0.9 = un 10% más chica, etc.
+    function abrirPopup(url, ancho = 1500, alto = 900, zoom = 1) {
+      const anchoDeseado = Math.round(ancho * zoom);
+      const altoDeseado = Math.round(alto * zoom);
+
+      const monitorLeft = window.screenLeft ?? window.screenX ?? 0;
+      const monitorTop = window.screenTop ?? window.screenY ?? 0;
+
+      const monitorWidth = window.screen.availWidth || window.screen.width;
+      const monitorHeight = window.screen.availHeight || window.screen.height;
+
+      const margen = 0.92; // deja un pequeño respiro respecto al borde de la pantalla
+      const anchoFinal = Math.min(anchoDeseado, Math.round(monitorWidth * margen));
+      const altoFinal = Math.min(altoDeseado, Math.round(monitorHeight * margen));
+
+      const left = Math.round(monitorLeft + (monitorWidth - anchoFinal) / 2);
+      const top = Math.round(monitorTop + (monitorHeight - altoFinal) / 2);
+
+      const opcionesVentana = `width=${anchoFinal},height=${altoFinal},left=${left},top=${top},resizable=yes,scrollbars=yes`;
+      window.open(url, "_blank", opcionesVentana);
     }
+  </script>
 
-    const left = (window.screen.width / 2) - (ancho / 2);
-    const top = (window.screen.height / 2) - (alto / 2);
-    const opciones = `width=${ancho},height=${alto},left=${left},top=${top},resizable=yes,scrollbars=yes`;
-
-    const nuevaVentana = window.open(url, titulo, opciones);
-
-    if (tipo === 'calc' && nuevaVentana) {
-        nuevaVentana.onload = () => {
-            try {
-                const style = nuevaVentana.document.createElement("style");
-                style.textContent = `
-                    html, body {
-                        margin: 0; padding: 0;
-                        transform: scale(0.90);
-                        transform-origin: top center;
-                        overflow-y: auto;
-                    }
-                    ::-webkit-scrollbar { display: none; }
-                `;
-                nuevaVentana.document.head.appendChild(style);
-            } catch (e) {
-                console.warn("CORS: Zoom no aplicado.");
-            }
-        };
-    }
-
-    if (nuevaVentana) nuevaVentana.focus();
-}
-
-/* 🔒 SEGURIDAD */
-document.onkeydown = function(e) {
-    if (e.key === 'F12' || e.keyCode === 123) return false;
-    if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) return false;
-    if (e.ctrlKey && e.key.toUpperCase() === 'U') return false;
-    if (e.ctrlKey && e.key.toUpperCase() === 'P') { e.preventDefault(); return false; }
-};
-
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('dragstart', e => e.preventDefault());
-
-window.addEventListener('load', () => {
-    console.clear();
-    console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
-    console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
-});
-</script>
 </body>
 </html>

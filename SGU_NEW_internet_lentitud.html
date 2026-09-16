@@ -346,10 +346,6 @@
     <input type="text" id="label_DetalleInc" placeholder="(Observaciones del inconveniente)" style="color: #0c477e;" />
     </div>
 
-    <div class="input-container">
-    <label for="label_BTS">- BTS: </label>
-    <input type="text" id="label_BTS" placeholder="(BTS de la línea)" style="color: #0c477e;" />
-    </div>
 
     <div class="input-container">
     <label for="labelID">- Codigo de llamada:</label>
@@ -451,7 +447,6 @@
         document.querySelector("#label_Direccion"),
         document.querySelector("#label_GoogleEarth"),
         document.querySelector("#label_DetalleInc"),
-        document.querySelector("#label_BTS"),
         document.querySelector("#labelID")
     ];
 
@@ -482,8 +477,7 @@ Cobertura que presenta problema (3G/4G/5G): <span class="resultado-label">${valo
 Dirección exacta del inconveniente: <span class="resultado-label">${valores[6]}</span>
 Coordenadas Google Earth: <span class="resultado-label">${valores[7]}</span>
 Observaciones: <span class="resultado-label">${valores[8]}</span>
-BTS: <span class="resultado-label">${valores[9]}</span>
-Codigo de llamada: $$_<span class="resultado-label">${valores[10]}</span>_&&`;
+Codigo de llamada: $$_<span class="resultado-label">${valores[9]}</span>_&&`;
     }
 
       function checkLength(input) {

@@ -605,6 +605,7 @@
                 <option value="">Seleccionar</option>
                 <option value="Interiores">Interiores</option>
                 <option value="Exteriores">Exteriores</option>
+                <option value="Ambos">Ambos</option>
             </select>
         </div>
 
@@ -635,10 +636,6 @@
     <input type="text" id="label_DetalleInc" placeholder="(Observaciones del inconveniente)" />
     </div>
 
-    <div class="input-container">
-    <label for="label_BTS">- BTS: </label>
-    <input type="text" id="label_BTS" placeholder="(BTS de la línea)" />
-    </div>
 
     <div class="input-container">
     <label for="labelID">- Codigo de llamada:</label>
@@ -812,7 +809,6 @@ Después de activar y desactivar el modo avión o reiniciar el teléfono, ¿el s
         }
 
         texto += `Observaciones: ${vHTML('label_DetalleInc')}
-BTS: ${vHTML('label_BTS')}
 Codigo de llamada: $$_${vHTML('labelID')}_&&`;
 
         resultadoOutput.innerHTML = texto;

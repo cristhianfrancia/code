@@ -365,11 +365,6 @@
     </div>
 
     <div class="input-container">
-    <label for="label_BTS">- BTS: </label>
-    <input type="text" id="label_BTS" placeholder="(BTS de la línea)" />
-    </div>
-
-    <div class="input-container">
     <label for="labelID">- ID de llamada:</label>
     <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" />
     </div>
@@ -457,7 +452,6 @@
         document.querySelector("#label_Direccion"),
         document.querySelector("#label_GoogleEarth"),
         document.querySelector("#label_DetalleInc"),
-        document.querySelector("#label_BTS"),
         document.querySelector("#labelID")
     ];
 
@@ -516,8 +510,7 @@
         const label_Direccion = inputsArray[10].value;
         const label_GoogleEarth = inputsArray[11].value;
         const label_DetalleInc = inputsArray[12].value;
-        const label_BTS = inputsArray[13].value;
-        const labelID = inputsArray[14].value;
+        const labelID = inputsArray[13].value;
 
         resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> // Se genera Pedido SGU
 
@@ -532,7 +525,6 @@
 - Dirección exacta del inconveniente: <span class="resultado-label">${label_Direccion}</span>
 - Coordenadas Google Earth: <span class="resultado-label">${label_GoogleEarth}</span>
 - Detalle del inconveniente: <span class="resultado-label">${label_DetalleInc}</span>
-- BTS: <span class="resultado-label">${label_BTS}</span>
 - $$_<span class="resultado-label">${labelID}</span>_&&`;
     }
 

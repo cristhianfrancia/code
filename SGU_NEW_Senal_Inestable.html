@@ -469,11 +469,6 @@
     </div>
 
     <div class="input-container">
-    <label for="label_BTS">- BTS: </label>
-    <input type="text" id="label_BTS" placeholder="(BTS de la línea)" style="color: #0c477e;" />
-    </div>
-
-    <div class="input-container">
     <label for="labelID">- Codigo de llamada:</label>
     <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" style="color: #0c477e;" />
     </div>
@@ -625,7 +620,6 @@ Después de activar y desactivar el modo avión o reiniciar el teléfono, ¿el s
         }
 
         texto += `Observaciones: ${vHTML('label_DetalleInc')}
-BTS: ${vHTML('label_BTS')}
 Codigo de llamada: $$_${vHTML('labelID')}_&&`;
 
         resultadoOutput.innerHTML = texto;

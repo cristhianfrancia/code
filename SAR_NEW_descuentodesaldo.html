@@ -850,11 +850,30 @@ function procesarRespuestaNomina(respuesta) {
             }
         }
 
-        // --- SELECTOR INTELIGENTE DE SUPERVISOR / AUTORIZADOR ---
-        let supervisoresNomina = [];
-        let supervisoresScript = null;
-        let supervisoresTimeout = null;
-        let cargaSupervisoresEnCurso = false;
+        // --- LISTA FIJA DE PERSONAL AUTORIZADO PARA SAR ---
+        const supervisoresVisibles = [
+            "Quispe Durand Giovanna Ornella",
+            "Quispe Alfaro Flor Santos",
+            "Zorrilla Aybar Hector Hugo",
+            "Pariona Contreras Ana Cristina Aidee",
+            "Diaz Broncano Jhon Alexander",
+            "Aguilera Fernandez Marisabel",
+            "Gonzales Castro Cielo Anghely",
+            "Solórzano Ferrer Maslov Alejandro",
+            "Espinoza Arteaga Mayra Evelyn",
+            "Perdomo González Karina Coromoto",
+            "Vargas Pita Andrea Maria",
+            "Maguiña Bozzeta Erika Del Carmen"
+        ].map(nombre => ({ nombre, oculto: false }));
+
+        const supervisoresSoloBusqueda = [
+            "Francia Vega Cristhian Víctor",
+            "Leiva Collas Jeinmy",
+            "Oyardo Suarez Cristhofer",
+            "Torres Gutarra Lyzbeht Martha"
+        ].map(nombre => ({ nombre, oculto: true }));
+
+        const personalAutorizadoSar = [...supervisoresVisibles, ...supervisoresSoloBusqueda];
         let posicionScrollConsultaSupervisor = 0;
 
         function normalizarBusqueda(texto) {
@@ -873,12 +892,8 @@ function procesarRespuestaNomina(respuesta) {
             document.getElementById("popupConsultaSupervisor").style.display = "block";
             posicionarConsultaSupervisor();
 
-            if (supervisoresNomina.length === 0) {
-                cargarSupervisores();
-            } else {
-                filtrarSupervisores();
-                posicionarConsultaSupervisor();
-            }
+            filtrarSupervisores();
+            posicionarConsultaSupervisor();
 
             setTimeout(() => {
                 document.getElementById("buscarSupervisor").focus({ preventScroll: true });
@@ -911,111 +926,13 @@ function procesarRespuestaNomina(respuesta) {
             });
         }
 
-        function cambiarEstadoSupervisor(tipo, mensaje) {
-            let estado = document.getElementById("estadoConsultaSupervisor");
-            estado.className = `estado-consulta ${tipo || ""}`;
-            estado.textContent = mensaje || "";
-        }
-
-        function limpiarRecursosSupervisores() {
-            if (supervisoresTimeout) {
-                clearTimeout(supervisoresTimeout);
-                supervisoresTimeout = null;
-            }
-            if (supervisoresScript && supervisoresScript.parentNode) {
-                supervisoresScript.parentNode.removeChild(supervisoresScript);
-            }
-            supervisoresScript = null;
-        }
-
-        function finalizarCargaSupervisores(tipo, mensaje) {
-            limpiarRecursosSupervisores();
-            cargaSupervisoresEnCurso = false;
-            cambiarEstadoSupervisor(tipo, mensaje);
-        }
-
-        function cargarSupervisores() {
-            if (cargaSupervisoresEnCurso) return;
-            cargaSupervisoresEnCurso = true;
-            cambiarEstadoSupervisor("cargando", "Cargando personal autorizado...");
-
-            let lista = document.getElementById("listaSupervisores");
-            lista.replaceChildren();
-            let aviso = document.createElement("div");
-            aviso.className = "lista-supervisores-vacia";
-            aviso.textContent = "Consultando la nómina...";
-            lista.appendChild(aviso);
-
-            let parametros = new URLSearchParams({
-                sheet: NOMINA_HOJA,
-                headers: "1",
-                tq: "select C,D,E,N where L = 'ESTRUCTURA 123' or L = 'ESTRUCTURA RECLAMOS INBOUND'",
-                tqx: "responseHandler:procesarRespuestaSupervisores",
-                _: Date.now().toString()
-            });
-
-            supervisoresScript = document.createElement("script");
-            supervisoresScript.src = `https://docs.google.com/spreadsheets/d/${NOMINA_SPREADSHEET_ID}/gviz/tq?${parametros.toString()}`;
-            supervisoresScript.async = true;
-            supervisoresScript.onerror = function() {
-                lista.replaceChildren();
-                let error = document.createElement("div");
-                error.className = "lista-supervisores-vacia";
-                error.textContent = "No se pudo cargar la nómina.";
-                lista.appendChild(error);
-                finalizarCargaSupervisores("error", "Verifica el acceso a la hoja e intenta nuevamente.");
-            };
-            document.head.appendChild(supervisoresScript);
-
-            supervisoresTimeout = setTimeout(function() {
-                finalizarCargaSupervisores("error", "La consulta tardó demasiado. Cierra y vuelve a intentar.");
-            }, 12000);
-        }
-
-        function procesarRespuestaSupervisores(respuesta) {
-            if (respuesta?.status !== "ok") {
-                finalizarCargaSupervisores("error", "No se pudo leer el personal autorizado.");
-                return;
-            }
-
-            let filas = respuesta?.table?.rows || [];
-            let registros = filas.map(fila => {
-                let celdas = fila.c || [];
-                let apellidoPaterno = celdas[0]?.v?.toString().trim() || "";
-                let apellidoMaterno = celdas[1]?.v?.toString().trim() || "";
-                let nombres = celdas[2]?.v?.toString().trim() || "";
-                let cargo = celdas[3]?.v?.toString().trim() || "";
-                return {
-                    nombre: formatearNombre([nombres, apellidoPaterno, apellidoMaterno].filter(Boolean).join(" ")),
-                    cargo: cargo
-                };
-            }).filter(item => item.nombre && item.cargo);
-
-            let vistos = new Set();
-            supervisoresNomina = registros
-                .filter(item => {
-                    let clave = `${item.nombre}|${item.cargo}`;
-                    if (vistos.has(clave)) return false;
-                    vistos.add(clave);
-                    return true;
-                })
-                .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
-
-            filtrarSupervisores();
-            finalizarCargaSupervisores("", "");
-            posicionarConsultaSupervisor();
-        }
-
         function filtrarSupervisores() {
             let texto = normalizarBusqueda(document.getElementById("buscarSupervisor").value);
             let palabras = texto.split(/\s+/).filter(Boolean);
 
-            let coincidencias = supervisoresNomina.filter(item => {
-                if (palabras.length === 0) {
-                    return normalizarBusqueda(item.cargo) === "supervisor de operaciones";
-                }
-
-                let contenidoNormalizado = normalizarBusqueda(`${item.nombre} ${item.cargo}`);
+            let coincidencias = personalAutorizadoSar.filter(item => {
+                if (palabras.length === 0) return !item.oculto;
+                let contenidoNormalizado = normalizarBusqueda(item.nombre);
                 return palabras.every(palabra => contenidoNormalizado.includes(palabra));
             });
 
@@ -1029,9 +946,7 @@ function procesarRespuestaNomina(respuesta) {
             if (personas.length === 0) {
                 let vacio = document.createElement("div");
                 vacio.className = "lista-supervisores-vacia";
-                vacio.textContent = supervisoresNomina.length
-                    ? "No se encontraron coincidencias."
-                    : "Aún no hay datos disponibles.";
+                vacio.textContent = "No se encontraron coincidencias.";
                 lista.appendChild(vacio);
                 return;
             }
@@ -1045,11 +960,7 @@ function procesarRespuestaNomina(respuesta) {
                 nombre.className = "nombre-opcion-supervisor";
                 nombre.textContent = persona.nombre;
 
-                let cargo = document.createElement("span");
-                cargo.className = "cargo-opcion-supervisor";
-                cargo.textContent = persona.cargo;
-
-                boton.append(nombre, cargo);
+                boton.append(nombre);
                 boton.addEventListener("click", () => seleccionarSupervisor(persona));
                 lista.appendChild(boton);
             });
@@ -1057,7 +968,7 @@ function procesarRespuestaNomina(respuesta) {
 
         function seleccionarSupervisor(persona) {
             document.getElementById("supervisorAutoriza").value = persona.nombre;
-            document.getElementById("estadoSupervisorResumen").textContent = `✓ ${persona.cargo}`;
+            document.getElementById("estadoSupervisorResumen").textContent = "✓ Personal autorizado seleccionado";
             actualizarResultados();
             cerrarConsultaSupervisor();
         }
@@ -1192,7 +1103,7 @@ function procesarRespuestaNomina(respuesta) {
             let camposObligatorios = [
                 "Numero1", "codigo", "nombrePersonal", "nombreAbonado", 
                 "numeroAbonado", "monto", "fecha1", "hora1", "consumo", "lab6", "fecha5", 
-                "hora5", "fecha3", "hora3", "plazo", "referencia", "id", "supervisorAutoriza"
+                "hora5", "fecha3", "hora3", "plazo", "referencia", "id"
             ];
 
             let faltanDatos = false;
@@ -1341,7 +1252,6 @@ speech = `👉 1 día hábil 👈\n\n"Sr(a). <span style="color: #007BFF">("Prim
             cerrarConsultaPersonal();
             document.getElementById("buscarSupervisor").value = "";
             document.getElementById("estadoSupervisorResumen").textContent = "";
-            cambiarEstadoSupervisor("", "");
             document.getElementById("popupOverlaySupervisor").style.display = "none";
             document.getElementById("popupConsultaSupervisor").style.display = "none";
 
@@ -1466,7 +1376,7 @@ speech = `👉 1 día hábil 👈\n\n"Sr(a). <span style="color: #007BFF">("Prim
 <br><label>10. Número de referencia:</label> <input type="text" id="referencia" oninput="checkLength(this); actualizarResultados()" title="Máximo 9 caracteres, incluye guion si no hay número" required> <span style="color: red; font-size: 0.9em; font-weight: bold;"> (Si no brinda, colocar un guion: "-")</span>
 
 <br><label>$$_<input type="text" id="id" placeholder="ID de llamada" oninput="actualizarResultados()">_&&</label><br>
-<label>Autorizado por <input type="text" id="supervisorAutoriza" readonly placeholder="Selecciona al supervisor que autoriza" title="Este campo se completa automáticamente" required> <button type="button" id="btnAbrirConsultaSupervisor" class="btn-consulta" onclick="abrirConsultaSupervisor()">🔍 Consultar supervisor</button> <span id="estadoSupervisorResumen" class="estado-personal-resumen" aria-live="polite"></span>.</label>
+<label>Autorizado por <input type="text" id="supervisorAutoriza" readonly placeholder="Selecciona al personal que autoriza (opcional)" title="Campo opcional; se completa al seleccionar una persona"> <button type="button" id="btnAbrirConsultaSupervisor" class="btn-consulta" onclick="abrirConsultaSupervisor()">🔍 Consultar personal autorizado</button> <span id="estadoSupervisorResumen" class="estado-personal-resumen" aria-live="polite"></span>.</label>
 </div>
 
 <br>
@@ -1597,12 +1507,8 @@ Derechos reservados &copy; 2020 Cristhian Francia
     <div id="popupOverlaySupervisor" class="popup-overlay-supervisor" onclick="cerrarConsultaSupervisor()"></div>
     <div id="popupConsultaSupervisor" class="popup-consulta-supervisor" role="dialog" aria-modal="true" aria-labelledby="tituloConsultaSupervisor">
         <button type="button" class="cerrar-consulta-supervisor" onclick="cerrarConsultaSupervisor()" aria-label="Cerrar">×</button>
-        <h2 id="tituloConsultaSupervisor">Consultar supervisor</h2>
-        <p>Filtra el personal disponible y selecciona quién autoriza el ajuste.</p>
-        <div class="campana-supervisor-fija">
-            <label for="campanaSupervisor">Campaña:</label>
-            <input type="text" id="campanaSupervisor" value="ESTRUCTURA 123 / RECLAMOS INBOUND" readonly aria-label="Campaña">
-        </div>
+        <h2 id="tituloConsultaSupervisor">Personal autorizado para SAR</h2>
+        <p>Selecciona una persona de la lista o búscala por nombre o apellido.</p>
         <input type="search" id="buscarSupervisor" oninput="filtrarSupervisores()" placeholder="Busca cualquier autorizador por nombre o apellido..." autocomplete="off">
         <div id="listaSupervisores" class="lista-supervisores"></div>
         <span id="estadoConsultaSupervisor" class="estado-consulta" aria-live="polite"></span>

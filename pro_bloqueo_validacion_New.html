@@ -211,38 +211,174 @@
     box-shadow: 0 3px 10px rgba(0,0,0,0.25);
   }
   
-  .speech-box {
-    background: #fffdf0;
-    border: 1px solid #fbf32f;
-    border-radius: 12px;
+  .no-valida-panel {
+    background: #f7f9fb;
+    border: 1px solid #dde5ec;
+    border-radius: 16px;
     padding: 20px;
     margin-top: 20px;
   }
-  
-  .speech-box h3 {
+
+  .no-valida-header {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .no-valida-header h2 {
+    background: none;
     color: #0c477e;
-    margin-top: 0;
-    font-size: 1.1rem;
-    border-bottom: 1px dashed #fbf32f;
-    padding-bottom: 8px;
-    margin-bottom: 10px;
+    padding: 0;
+    margin: 0 0 6px;
+    font-size: 1.2rem;
   }
-  
-  .speech-text {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    font-style: italic;
-  }
-  
-  .tipificacion-box {
-    background: #f0f4f7;
-    border-left: 5px solid #0c477e;
-    padding: 12px 15px;
-    border-radius: 8px;
+
+  .no-valida-header p {
+    margin: 0;
+    color: #5c6873;
     font-size: 0.9rem;
-    font-weight: 500;
-    color: #333;
+  }
+
+  .intentos-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .intento-card {
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #e2e7eb;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(12, 71, 126, 0.06);
+  }
+
+  .intento-card.intento-1 { border-left: 6px solid #e5b800; }
+  .intento-card.intento-2 { border-left: 6px solid #ee7d19; }
+  .intento-card.intento-3 { border-left: 6px solid #d93025; }
+
+  .intento-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .intento-1 .intento-header { background: #fff9d9; }
+  .intento-2 .intento-header { background: #fff0e1; }
+  .intento-3 .intento-header { background: #ffebea; }
+
+  .intento-numero {
+    display: grid;
+    place-items: center;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  .intento-1 .intento-numero { background: #c89f00; }
+  .intento-2 .intento-numero { background: #e56e08; }
+  .intento-3 .intento-numero { background: #d93025; }
+
+  .intento-titulo { min-width: 0; }
+
+  .intento-titulo h3 {
+    margin: 0 0 2px;
+    color: #263746;
+    font-size: 1rem;
+  }
+
+  .intento-titulo span {
+    color: #65737e;
+    font-size: 0.82rem;
+  }
+
+  .intento-body { padding: 16px; }
+
+  .bloque-label {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #0c477e;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+
+  .speech-text {
+    background: #f6f9fb;
+    border-left: 4px solid #0c477e;
+    border-radius: 8px;
+    margin: 0;
+    padding: 13px 15px;
+    color: #263746;
+    font-size: 0.96rem;
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .acciones-asesor {
+    background: #fff8e8;
+    border: 1px solid #f2d48d;
+    border-radius: 10px;
+    margin-top: 14px;
+    padding: 12px 14px;
+  }
+
+  .acciones-asesor ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .acciones-asesor li {
+    margin-bottom: 7px;
+    line-height: 1.45;
+  }
+
+  .acciones-asesor li:last-child { margin-bottom: 0; }
+
+  .tipificacion-section {
+    background: #edf4fa;
+    border: 1px solid #c7d8e8;
+    border-radius: 14px;
+    margin-top: 18px;
+    padding: 16px;
+  }
+
+  .tipificacion-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 5px;
+    color: #0c477e;
+    font-size: 1rem;
+  }
+
+  .tipificacion-help {
+    margin: 0 0 11px;
+    color: #5c6873;
+    font-size: 0.82rem;
+  }
+
+  .tipificacion-box {
+    background: #fff;
+    border: 1px solid #b9ccdc;
+    border-left: 5px solid #0c477e;
+    padding: 13px 15px;
+    border-radius: 9px;
+    color: #263746;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 560px) {
+    .no-valida-panel { padding: 12px; }
+    .intento-header { align-items: flex-start; }
+    .intento-body { padding: 13px; }
   }
 
   .color-azul {
@@ -264,33 +400,67 @@
 
     <!-- SECCIÓN ACTUALIZADA: NO VALIDA DATOS -->
     <div id="sectionNoValida" class="hidden">
-      <div class="speech-box">
-        
-        <h3>🟡 1er intento fallido</h3>
-        <div class="speech-text">
-          "<span class="color-azul">(Nombre del cliente)</span>, los datos proporcionados no permiten continuar con el proceso. No se preocupe, aún cuenta con 2 intentos más. Por favor, verifique la información y bríndemela nuevamente.”
+      <div class="no-valida-panel">
+        <div class="no-valida-header">
+          <h2>Validación de identidad no superada</h2>
+          <p>Selecciona el speech según la cantidad de intentos fallidos del cliente.</p>
         </div>
 
-        <h3>🟠 2º intento fallido</h3>
-        <div class="speech-text">
-          "<span class="color-azul">(Nombre del cliente)</span>, los datos nuevamente no permiten continuar. Le queda 1 último intento por hoy. ¿Desea intentarlo nuevamente ahora o prefiere verificar sus datos y comunicarse más adelante?”
-        </div>
-        <div class="text-line action-line">
-          <strong>Acciones del Asesor:</strong>
-          <ul style="margin-top: 5px; font-style: normal;">
-            <li>Si el cliente decide continuar → proceder con el 3er intento.</li>
-            <li>Si el cliente decide colgar y volver a llamar → cerrar cordialmente, indicando que puede llamar cuando tenga los datos correctos, siempre dentro del mismo día.</li>
-          </ul>
+        <div class="intentos-grid">
+          <article class="intento-card intento-1">
+            <div class="intento-header">
+              <span class="intento-numero">1</span>
+              <div class="intento-titulo">
+                <h3>Primer intento fallido</h3>
+                <span>Aún dispone de 2 intentos</span>
+              </div>
+            </div>
+            <div class="intento-body">
+              <span class="bloque-label">Speech para el cliente</span>
+              <p class="speech-text">“<span class="color-azul">(Nombre del cliente)</span>, los datos proporcionados no permiten continuar con el proceso. No se preocupe, aún cuenta con 2 intentos más. Por favor, verifique la información y bríndemela nuevamente”.</p>
+            </div>
+          </article>
+
+          <article class="intento-card intento-2">
+            <div class="intento-header">
+              <span class="intento-numero">2</span>
+              <div class="intento-titulo">
+                <h3>Segundo intento fallido</h3>
+                <span>Solo dispone de 1 último intento</span>
+              </div>
+            </div>
+            <div class="intento-body">
+              <span class="bloque-label">Speech para el cliente</span>
+              <p class="speech-text">“<span class="color-azul">(Nombre del cliente)</span>, los datos nuevamente no permiten continuar. Le queda 1 último intento por hoy. ¿Desea intentarlo nuevamente ahora o prefiere verificar sus datos y comunicarse más adelante?”.</p>
+              <div class="acciones-asesor">
+                <span class="bloque-label">Acciones del asesor</span>
+                <ul>
+                  <li><strong>Si desea continuar:</strong> proceder con el tercer intento.</li>
+                  <li><strong>Si prefiere volver a llamar:</strong> cerrar cordialmente e indicar que puede comunicarse cuando tenga los datos correctos, siempre dentro del mismo día.</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="intento-card intento-3">
+            <div class="intento-header">
+              <span class="intento-numero">3</span>
+              <div class="intento-titulo">
+                <h3>Tercer intento fallido</h3>
+                <span>Intentos agotados por hoy</span>
+              </div>
+            </div>
+            <div class="intento-body">
+              <span class="bloque-label">Speech para el cliente</span>
+              <p class="speech-text">“<span class="color-azul">(Nombre del cliente)</span>, lamento informarle que no fue posible validar su identidad y se agotaron los intentos permitidos por hoy. Podrá realizar un nuevo intento a partir de las 00:00 horas de mañana. Le recomendamos tener sus datos correctos a la mano. Por seguridad, también le sugerimos bloquear sus cuentas bancarias y cambiar las claves de sus redes sociales y correo electrónico”.</p>
+            </div>
+          </article>
         </div>
 
-        <h3>🔴 3er intento fallido (agotó los intentos)</h3>
-        <div class="speech-text">
-          "<span class="color-azul">(Nombre del cliente)</span>, lamento informarle que no fue posible validar su identidad y se agotaron los intentos permitidos por hoy. Podrá realizar un nuevo intento a partir de las 00:00 horas de mañana. Le recomendamos tener sus datos correctos a la mano. Por seguridad, también le sugerimos bloquear sus cuentas bancarias y cambiar las claves de sus redes sociales y correo electrónico.”
-        </div>
-        
-        <h3 style="margin-top: 25px;">🏷️ Tipificación (Para los 03 escenarios)</h3>
-        <div class="tipificacion-box">
-          Other / Información / Información / Transacciones de la línea / Bloqueo por sustracción - Pérdida / No valida datos completos
+        <div class="tipificacion-section">
+          <h3 class="tipificacion-title">🏷️ Tipificación</h3>
+          <p class="tipificacion-help">Usar la siguiente ruta en cualquiera de los tres escenarios:</p>
+          <div class="tipificacion-box">Other / Información / Información / Transacciones de la línea / Bloqueo por sustracción - Pérdida / No valida datos completos</div>
         </div>
       </div>
     </div>

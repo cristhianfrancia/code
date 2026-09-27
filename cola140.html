@@ -843,7 +843,114 @@
     .speech-text { background: #f7fafd; }
     .modal-content { box-shadow: 0 28px 80px rgba(8, 39, 68, 0.28); }
 
+    .trigger-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 210px;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 26px;
+      padding: 20px 22px;
+      border: 1px solid #d4e3ee;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f8fbfd 25%, #edf5fa);
+    }
+    .trigger-eyebrow { margin-bottom: 5px; color: #59738a; font-size: 10px; font-weight: 700; letter-spacing: 0.09em; }
+    .trigger-panel h2 { margin-bottom: 13px; color: #193f60; font-size: 16px; font-weight: 650; letter-spacing: -0.015em; }
+    .trigger-options { display: flex; align-items: stretch; gap: 9px; }
+    .trigger-options p {
+      flex: 1;
+      min-width: 0;
+      padding: 10px 11px;
+      border: 1px solid #e0eaf2;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.78);
+      color: #4c6174;
+      font-size: 11px;
+      line-height: 1.48;
+    }
+    .trigger-options strong { color: #193f60; font-weight: 650; }
+    .trigger-number {
+      display: inline-grid;
+      width: 19px;
+      height: 19px;
+      margin-right: 5px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      vertical-align: 1px;
+    }
+    .trigger-or { align-self: center; color: #668095; font-size: 11px; font-weight: 700; }
+    .trigger-action { margin-top: 9px; color: var(--accent-blue); font-size: 11px; font-weight: 600; line-height: 1.45; }
+    .cc-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      max-width: 100%;
+      min-height: 38px;
+      margin-top: 13px;
+      padding: 6px 12px 6px 8px;
+      border: 1px solid #bfd3e3;
+      border-radius: 10px;
+      background: #fff;
+      color: var(--accent-blue);
+      font: 650 12px var(--font-stack);
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .cc-switch:hover { background: #f2f8fc; border-color: #91b6d1; }
+    .cc-switch.is-on { background: #e7f2fa; border-color: #8cb3d0; box-shadow: 0 0 0 2px rgba(12, 71, 126, 0.06); }
+    .cc-switch:focus-visible { outline: 3px solid rgba(12, 71, 126, 0.4); outline-offset: 3px; }
+    .cc-switch-track { width: 32px; height: 19px; padding: 2px; flex-shrink: 0; border-radius: 999px; background: #bdcbd6; transition: background-color 200ms ease; }
+    .cc-switch-track span { display: block; width: 15px; height: 15px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(12, 39, 62, 0.17); transition: transform 200ms ease; }
+    .cc-switch.is-on .cc-switch-track { background: var(--accent-blue); }
+    .cc-switch.is-on .cc-switch-track span { transform: translateX(13px); }
+    .care-example {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #d1e0eb;
+      border-radius: 11px;
+      background: #fff;
+      color: var(--accent-blue);
+      font-family: var(--font-stack);
+      text-align: left;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 5px 16px rgba(12, 71, 126, 0.07);
+      transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+    }
+    .care-example:hover { transform: translateY(-2px); border-color: #a5c1d7; box-shadow: 0 9px 22px rgba(12, 71, 126, 0.12); }
+    .care-example:focus-visible { outline: 3px solid rgba(12, 71, 126, 0.4); outline-offset: 3px; }
+    .care-example img { display: block; width: 100%; height: 112px; border-radius: 7px; object-fit: contain; background: #fff; }
+    .care-example > span { display: flex; justify-content: space-between; gap: 8px; padding: 7px 3px 1px; font-size: 11px; font-weight: 650; }
+    .process-container { margin-top: 24px; }
+    #procedure[hidden] { display: none !important; }
+    #procedure:not([hidden]) { animation: fadeIn 280ms ease both; }
+    .result-not-found { background: #f1f7fb; border-color: #cddfeb; }
+    .not-found-badge { color: var(--accent-blue); }
+    .not-found-text { color: #3f5e76; }
+    .modal-body .care-modal-img { max-height: min(70vh, 720px); object-fit: contain; border-color: #e0e8ef; background: #fff; }
+
+    html, body, .modal-content { scrollbar-width: none; -ms-overflow-style: none; }
+    html::-webkit-scrollbar, body::-webkit-scrollbar, .modal-content::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+    @media (max-width: 860px) {
+      .trigger-panel { grid-template-columns: 1fr; }
+      .care-example { width: min(100%, 300px); }
+    }
+
     @media (max-width: 640px) {
+      .trigger-panel { padding: 17px; gap: 15px; }
+      .trigger-options { flex-direction: column; gap: 7px; }
+      .trigger-or { align-self: flex-start; margin-left: 12px; }
+      .cc-switch { width: 100%; }
+      .care-example { width: 100%; }
+      .care-example img { height: 150px; }
+      .modal-body .care-modal-img { max-height: 68vh; }
       .header { padding-inline: 0; }
       .header::before { inset-inline: 0; }
       .header-kicker { font-size: 8px; }
@@ -863,11 +970,31 @@
     <header class="header">
       <div class="header-kicker"><span class="header-kicker-dot" aria-hidden="true"></span> VOLTE y 5G </div>
       <h1><span class="title-main">Problema con llamadas</span> <span class="title-detail">(Derivación a la cola 140)</span></h1>
-      <p>Clientes con llamadas salientes restringidas y que se encuentren en la base deberán ser derivados para la atención</p>
+      <p>Dos señales, un mismo procedimiento de derivación a la cola 140.</p>
     </header>
 
     <!-- Módulo de Búsqueda -->
     <div class="card">
+      <section class="trigger-panel" aria-labelledby="triggerTitle">
+        <div class="trigger-copy">
+          <div class="trigger-eyebrow">CUÁNDO APLICAR EL FLUJO</div>
+          <h2 id="triggerTitle">Basta con una de estas dos</h2>
+          <div class="trigger-options">
+            <p><span class="trigger-number">1</span><strong>Aviso en Customer Care.</strong> Si aparece el mensaje de la imagen, activa la opción para ver los 3 pasos a realizar.</p>
+            <span class="trigger-or">o</span>
+            <p><span class="trigger-number">2</span><strong>Número encontrado en la base.</strong> Si al buscar el número, este si se encuentra en la base, entonces haremos los 3 pasos.</p>
+          </div>
+          <button class="cc-switch" id="ccSwitch" type="button" role="switch" aria-checked="false" onclick="alternarAvisoCC()">
+            <span class="cc-switch-track" aria-hidden="true"><span></span></span>
+            <span>Me apareció el aviso en Customer Care</span>
+          </button>
+
+        </div>
+        <button class="care-example" type="button" onclick="abrirAviso()" aria-label="Ampliar ejemplo del aviso en Customer Care">
+          <img src="https://drive.google.com/thumbnail?id=1LQq6ypUxg9Og6r62T81TP1sOWCOurE9d&sz=w800" alt="Ejemplo del aviso en Customer Care que activa la derivación" loading="lazy">
+          <span>Ver aviso completo <span aria-hidden="true">⤢</span></span>
+        </button>
+      </section>
       <div class="search-title">Consulta de Número Celular en Base Drive</div>
       <div class="search-container">
         <div class="search-input-wrapper">
@@ -906,10 +1033,21 @@
             <div class="val" id="valBranch">-</div>
           </div>
         </div>
+      </div>
+
+      <!-- La ausencia en la base solo descarta el flujo si tampoco aparece el aviso. -->
+      <div class="result-not-found" id="resultNotFound">
+        <div class="not-found-badge">
+          <span class="status-icon" aria-hidden="true">!</span> Número no encontrado en la base
+        </div>
+        <div class="not-found-text">
+          Si aparece el aviso en Customer Care, aplica igualmente los 3 pasos. Si no aparece el aviso, continúa con tu gestión regular.
+        </div>
+      </div>
 
         <!-- Flujo Operativo Unificado -->
-        <div class="process-container">
-          <h3>Flujo a seguir:</h3>
+        <div class="process-container" id="procedure" hidden>
+          <h3>3 pasos a seguir si se cumple cualquiera de las dos señales</h3>
           
           <!-- Paso 1 -->
           <div class="step">
@@ -950,17 +1088,6 @@
           </div>
 
         </div>
-      </div>
-
-      <!-- ESCENARIO B: NO EN BASE -->
-      <div class="result-not-found" id="resultNotFound">
-        <div class="not-found-badge">
-          <span class="status-icon" aria-hidden="true">!</span> Número No Encontrado
-        </div>
-        <div class="not-found-text">
-          <b>Número no se encuentra en la base.</b> Omite este procedimiento y ve a tu gestión regular.
-        </div>
-      </div>
     </div>
   </div>
 
@@ -974,6 +1101,18 @@
       <div class="modal-body">
         <iframe id="exampleFrame" title="Ejemplo de tipificación en Google Drive" loading="lazy" allow="fullscreen"></iframe>
         <a class="modal-link" href="https://drive.google.com/file/d/1NopbdfVNm66aK6HMc_nXUkBIzw2a7whF/view?usp=sharing" target="_blank" rel="noopener noreferrer">Abrir en Drive <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="careModal" onclick="cerrarModalExterno(event)" role="dialog" aria-modal="true" aria-labelledby="careModalTitle" aria-hidden="true">
+    <div class="modal-content" tabindex="-1">
+      <div class="modal-header">
+        <div><span class="modal-eyebrow">CUSTOMER CARE</span><h3 id="careModalTitle">Ejemplo del aviso</h3></div>
+        <button class="btn-close" type="button" onclick="cerrarModal()" aria-label="Cerrar aviso">✕</button>
+      </div>
+      <div class="modal-body">
+        <img class="care-modal-img" src="https://drive.google.com/thumbnail?id=1LQq6ypUxg9Og6r62T81TP1sOWCOurE9d&sz=w1600" alt="Aviso de Customer Care que indica aplicar el flujo de derivación">
       </div>
     </div>
   </div>
@@ -1051,6 +1190,21 @@
 
     const phoneInput = document.getElementById('phoneInput');
     const clearButton = document.getElementById('btnClear');
+    const procedure = document.getElementById('procedure');
+    const ccSwitch = document.getElementById('ccSwitch');
+    let hasFoundNumber = false;
+    let hasCcAlert = false;
+
+    function actualizarProcedimiento() {
+      procedure.hidden = !(hasFoundNumber || hasCcAlert);
+      ccSwitch.classList.toggle('is-on', hasCcAlert);
+      ccSwitch.setAttribute('aria-checked', String(hasCcAlert));
+    }
+
+    function alternarAvisoCC() {
+      hasCcAlert = !hasCcAlert;
+      actualizarProcedimiento();
+    }
 
     function actualizarBusqueda() {
       const hasValue = phoneInput.value.length > 0;
@@ -1059,6 +1213,8 @@
       clearButton.tabIndex = hasValue ? 0 : -1;
       document.getElementById('resultFound').style.display = 'none';
       document.getElementById('resultNotFound').style.display = 'none';
+      hasFoundNumber = false;
+      actualizarProcedimiento();
     }
 
     function limpiarBusqueda() {
@@ -1089,6 +1245,8 @@
         if (!loaded) {
           resFound.style.display = 'none';
           resNotFound.style.display = 'none';
+          hasFoundNumber = false;
+          actualizarProcedimiento();
           return;
         }
       }
@@ -1101,6 +1259,8 @@
         // ✔️ SÍ ESTÁ EN LA BASE
         resNotFound.style.display = 'none';
         resFound.style.display = 'flex';
+        hasFoundNumber = true;
+        actualizarProcedimiento();
         document.getElementById('valModel').innerText = registro.model || "-";
         document.getElementById('valPlan').innerText = registro.product || "-";
         document.getElementById('valBranch').innerText = registro.branch || "-";
@@ -1108,39 +1268,54 @@
         // ❌ NO ESTÁ EN LA BASE
         resFound.style.display = 'none';
         resNotFound.style.display = 'flex';
+        hasFoundNumber = false;
+        actualizarProcedimiento();
       }
     }
 
     // Funciones del Modal (Popup)
     const modal = document.getElementById('modalPopup');
+    const careModal = document.getElementById('careModal');
     const exampleFrame = document.getElementById('exampleFrame');
     let returnFocus = null;
+    let activeModal = null;
+
+    function mostrarModal(target) {
+      returnFocus = document.activeElement;
+      activeModal = target;
+      target.classList.add('active');
+      target.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden'; // Evita scroll de fondo
+      target.querySelector('.btn-close').focus();
+    }
 
     function abrirModal() {
-      returnFocus = document.activeElement;
       exampleFrame.src = 'https://drive.google.com/file/d/1NopbdfVNm66aK6HMc_nXUkBIzw2a7whF/preview';
-      modal.classList.add('active');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden'; // Evita scroll de fondo
-      modal.querySelector('.btn-close').focus();
+      mostrarModal(modal);
+    }
+
+    function abrirAviso() {
+      mostrarModal(careModal);
     }
 
     function cerrarModal() {
-      modal.classList.remove('active');
-      modal.setAttribute('aria-hidden', 'true');
-      exampleFrame.removeAttribute('src');
+      if (!activeModal) return;
+      activeModal.classList.remove('active');
+      activeModal.setAttribute('aria-hidden', 'true');
+      if (activeModal === modal) exampleFrame.removeAttribute('src');
+      activeModal = null;
       document.body.style.overflow = '';
       if (returnFocus) returnFocus.focus();
     }
 
     function cerrarModalExterno(event) {
-      if (event.target === modal) {
+      if (event.target === activeModal) {
         cerrarModal();
       }
     }
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && modal.classList.contains('active')) cerrarModal();
+      if (event.key === 'Escape' && activeModal) cerrarModal();
     });
 
     window.onload = initDB;

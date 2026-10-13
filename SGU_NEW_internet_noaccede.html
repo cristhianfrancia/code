@@ -221,6 +221,39 @@
           transform: translateY(-1px);
       }
 
+      /* ✨ ESTILO PARA EL BOTÓN DEL LISTADO 3G ✨ */
+      .btn-3g {
+          background-color: #c5221f;
+          color: white;
+          border: none;
+          padding: 3px 10px;
+          border-radius: 12px;
+          cursor: pointer;
+          font-size: 0.8rem;
+          font-weight: bold;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 4px rgba(197, 34, 31, 0.3);
+      }
+
+      .btn-3g:hover {
+          background-color: #a31a17;
+          transform: translateY(-1px);
+      }
+
+      /* ✨ AVISO CUANDO SE SELECCIONA 3G ✨ */
+      #aviso-3g {
+          display: none;
+          margin: 6px 0 10px 0;
+          padding: 10px 12px;
+          border-radius: 6px;
+          background-color: #fce8e6;
+          border: 1px solid #c5221f;
+          border-left: 4px solid #c5221f;
+          color: #c5221f;
+          font-size: 0.9rem;
+          font-weight: bold;
+      }
+
       /* --- TOOLTIP PARA LA CAJA DE SELECCIÓN (HOVER) --- */
       .tooltip-wrapper {
           position: relative;
@@ -476,7 +509,7 @@
     <div class="input-container">
       <label for="label_Cobertura">
           - Cobertura que presenta problema (3G/4G/5G):
-          <button type="button" id="btn_gsm_arena" class="btn-gsm" style="margin-left: 4px; display: none;" onclick="abrirGsmArena()">GSMARENA</button><button type="button" id="btn_cobertura_5g" class="btn-cobertura" style="margin-left: 4px; display: none;" onclick="abrirCobertura5G()">Cobertura 5G</button>
+          <button type="button" id="btn_gsm_arena" class="btn-gsm" style="margin-left: 4px; display: none;" onclick="abrirGsmArena()">GSMARENA</button><button type="button" id="btn_cobertura_5g" class="btn-cobertura" style="margin-left: 4px; display: none;" onclick="abrirCobertura5G()">Cobertura 5G</button><button type="button" id="btn_lista_3g" class="btn-3g" style="margin-left: 4px; display: none;" onclick="abrirListado3G()">Listado 3G</button>
       </label>
       
       <div class="tooltip-wrapper">
@@ -506,6 +539,11 @@
         <span style="color: #ccc; font-size: 0.8rem;">Importante: Si el cliente menciona que tiene problema también con las otras coberturas 4G / 3G, podemos continuar con el SGU y seleccionamos la opción correcta.</span>
         </div>
       </div>
+    </div>
+
+    <div id="aviso-3g">
+        ⚠️ COBERTURA 3G: Verifica en el listado (Excel) si la zona del cliente se encuentra incluida. Si está en el listado, NO generar Pedido SGU.
+        <button type="button" class="btn-3g" style="margin-left: 8px;" onclick="abrirListado3G()">Abrir listado 3G</button>
     </div>
 
     <div class="input-container">
@@ -717,14 +755,18 @@
     const resultadoOutput = document.querySelector("#resultado");
     const avisoStatus = document.querySelector("#aviso-status");
 
+    // Enlace del listado (Excel en Google Sheets) de zonas 3G
+    const URL_LISTADO_3G = 'https://docs.google.com/spreadsheets/d/1oLxGsVnzkwRxWpPB5I2Rp3L6UBWCaeRV/edit?usp=sharing&ouid=103539618879236828134&rtpof=true&sd=true';
+
     // Función auxiliar para obtener el valor formateado del span
     function vHTML(id) {
         return `<span class="resultado-label">${document.getElementById(id).value}</span>`;
     }
 
-    // Lógica para detectar selección de 5G y manejar los contenedores
+    // Lógica para detectar selección de 5G / 3G y manejar los contenedores
     document.querySelector("#label_Cobertura").addEventListener('change', function() {
         const is5G = this.value === '5G';
+        const is3G = this.value === '3G';
         
         // Muestra u oculta los extras de 5G y la fecha de no accede
         document.getElementById('container_5G_Extras').style.display = is5G ? 'block' : 'none';
@@ -734,6 +776,10 @@
         document.getElementById('btn_gsm_arena').style.display = is5G ? 'inline-block' : 'none';
         document.getElementById('btn_cobertura_5g').style.display = is5G ? 'inline-block' : 'none';
 
+        // ✨ MOSTRAR/OCULTAR BOTÓN Y AVISO DEL LISTADO 3G ✨
+        document.getElementById('btn_lista_3g').style.display = is3G ? 'inline-block' : 'none';
+        document.getElementById('aviso-3g').style.display = is3G ? 'block' : 'none';
+
         // Cambia el título de Earth a Maps dinámicamente
         document.getElementById('lbl_GoogleEarth').innerHTML = is5G 
             ? '- Coordenadas Google Maps: <button type="button" class="btn-accion" onclick="return showPopup(\'imagePopupMaps\')">👉Ver ejemplo👈</button>' 
@@ -741,6 +787,11 @@
 
         if (is5G) {
             abrirGsmArena();
+        }
+
+        // ✨ AL ELEGIR 3G SE ABRE EL LISTADO DE FORMA EMERGENTE ✨
+        if (is3G) {
+            abrirListado3G();
         }
         
         updateResultadoOutput();
@@ -882,9 +933,11 @@ Codigo de llamada: $$_${vHTML('labelID')}_&&`;
         document.getElementById('container_5g_problema_otro').style.display = 'none';
         document.getElementById('lbl_GoogleEarth').innerHTML = '- Coordenadas Google Earth: <button type="button" class="btn-accion" onclick="return showPopup(\'imagePopupMaps\')">👉Ver ejemplo👈</button>';
         
-        // ✨ OCULTAR LOS BOTONES DE 5G AL LIMPIAR EL FORMULARIO ✨
+        // ✨ OCULTAR LOS BOTONES DE 5G Y EL AVISO/BOTÓN 3G AL LIMPIAR EL FORMULARIO ✨
         document.getElementById('btn_gsm_arena').style.display = 'none';
         document.getElementById('btn_cobertura_5g').style.display = 'none';
+        document.getElementById('btn_lista_3g').style.display = 'none';
+        document.getElementById('aviso-3g').style.display = 'none';
 
         resultadoOutput.innerHTML = "";
         avisoStatus.style.display = "none";
@@ -918,6 +971,15 @@ Codigo de llamada: $$_${vHTML('labelID')}_&&`;
       const left = (window.screen.width / 2) - (width / 2);
       const top = (window.screen.height / 2) - (height / 2);
       window.open('https://earth.google.com/earth/d/10kkrwD_yP33XziQU4h-K9lMHyrdHNo1M?usp=sharing', 'Cobertura5GPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
+  }
+
+  /* ✨ NUEVA FUNCIÓN PARA ABRIR EL LISTADO 3G (GOOGLE SHEETS) EN POPUP CENTRADO ✨ */
+  function abrirListado3G() {
+      const width = 1100;
+      const height = 750;
+      const left = (window.screen.width / 2) - (width / 2);
+      const top = (window.screen.height / 2) - (height / 2);
+      window.open(URL_LISTADO_3G, 'Listado3GPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
   }
 
   /* --- ABRIR ENLACES DE GOOGLE DRIVE EN POPUP CENTRADO --- */

@@ -163,6 +163,38 @@
           outline: none;
       }
 
+      /* ✨ BOTÓN DEL LISTADO 3G (pequeño y rojo) ✨ */
+      button.btn-3g {
+          background-color: #c5221f;
+          color: white;
+          padding: 3px 10px;
+          border: none;
+          border-radius: 12px;
+          cursor: pointer;
+          font-size: 0.8rem;
+          font-weight: bold;
+          margin: 0 0 0 4px;
+          box-shadow: 0 2px 4px rgba(197, 34, 31, 0.3);
+      }
+
+      button.btn-3g:hover {
+          background-color: #a31a17;
+      }
+
+      /* ✨ AVISO CUANDO SE SELECCIONA 3G ✨ */
+      #aviso-3g {
+          display: none;
+          margin: 6px 0 10px 0;
+          padding: 10px 12px;
+          border-radius: 6px;
+          background-color: #fce8e6;
+          border: 1px solid #c5221f;
+          border-left: 4px solid #c5221f;
+          color: #c5221f;
+          font-size: 0.9rem;
+          font-weight: bold;
+      }
+
       #resultado {
           margin: 10px 0;
           font-size: 0.95rem;
@@ -315,7 +347,7 @@
     </div>
 
     <div class="input-container">
-      <label for="label_Cobertura"><Font color=red>- Cobertura que presenta problema:</font></label>
+      <label for="label_Cobertura"><Font color=red>- Cobertura que presenta problema:</font><button type="button" id="btn_lista_3g" class="btn-3g" style="display: none;" onclick="abrirListado3G()">Listado 3G</button></label>
       <select id="label_Cobertura" style="color: #0c477e;">
         <option value="">Seleccionar</option>
         <option value="5G">5G</option>
@@ -324,6 +356,11 @@
         <option value="E">E</option>
         <option value="-">-</option>
       </select>
+    </div>
+
+    <div id="aviso-3g">
+        ⚠️ COBERTURA 3G: Verifica en el listado (Excel) si la zona del cliente se encuentra incluida. Si está en el listado, NO generar Pedido SGU.
+        <button type="button" class="btn-3g" style="margin-left: 8px;" onclick="abrirListado3G()">Abrir listado 3G</button>
     </div>
 
     <div class="input-container">
@@ -436,6 +473,9 @@
         }
     };
 
+    // Enlace del listado (Excel en Google Sheets) de zonas 3G
+    const URL_LISTADO_3G = 'https://docs.google.com/spreadsheets/d/1oLxGsVnzkwRxWpPB5I2Rp3L6UBWCaeRV/edit?usp=sharing&ouid=103539618879236828134&rtpof=true&sd=true';
+
     // Arreglo con los 11 inputs exactos para esta plantilla
     const inputsArray = [
         document.querySelector("#label0"),
@@ -462,6 +502,18 @@
             this.classList.remove('input-error'); // Quitar color rojo si lo tuviera
             updateResultadoOutput(); // Actualizar el cajón de resultado
         });
+    });
+
+    // ✨ AL SELECCIONAR 3G: MOSTRAR BOTÓN, AVISO Y ABRIR EL LISTADO EMERGENTE ✨
+    document.querySelector("#label_Cobertura").addEventListener('change', function() {
+        const is3G = this.value === '3G';
+
+        document.getElementById('btn_lista_3g').style.display = is3G ? 'inline-block' : 'none';
+        document.getElementById('aviso-3g').style.display = is3G ? 'block' : 'none';
+
+        if (is3G) {
+            abrirListado3G();
+        }
     });
 
     function updateResultadoOutput() {
@@ -525,11 +577,24 @@ Codigo de llamada: $$_<span class="resultado-label">${valores[9]}</span>_&&`;
             input.value = "";
             input.classList.remove('input-error'); // Limpiamos también el rojo
         });
+
+        // ✨ OCULTAR BOTÓN Y AVISO DEL LISTADO 3G ✨
+        document.getElementById('btn_lista_3g').style.display = 'none';
+        document.getElementById('aviso-3g').style.display = 'none';
         
         resultadoOutput.innerHTML = "";
         avisoStatus.style.display = "none";
         avisoStatus.innerHTML = "";
       }
+
+  /* ✨ ABRIR EL LISTADO 3G (GOOGLE SHEETS) EN POPUP CENTRADO ✨ */
+  function abrirListado3G() {
+      const width = 1100;
+      const height = 750;
+      const left = (window.screen.width / 2) - (width / 2);
+      const top = (window.screen.height / 2) - (height / 2);
+      window.open(URL_LISTADO_3G, 'Listado3GPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
+  }
 
   /* --- FUNCIONES POPUPS --- */
   function showImagePopupTip(event) {

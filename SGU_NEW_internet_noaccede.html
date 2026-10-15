@@ -1,6 +1,8 @@
+<!-- Proyecto: Plantillas Creado por: Cristhian Francia Año: 2026 Derechos reservados © Cristhian Francia -->
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Pedido SGU - Internet - No accede</title>
     <style>
         /* --- REGLA MAESTRA PARA ALINEACIÓN PERFECTA --- */
@@ -26,14 +28,14 @@
             position: relative;
         }
 
-        /* --- TÍTULO --- */
+        /* --- TÍTULO PRINCIPAL --- */
         .elegant-title {
             text-align: center;
             color: #1d1d1f;
             font-size: 1.5rem;
             font-weight: bold;
             margin-top: 5px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .icon-animation {
@@ -56,367 +58,528 @@
             color: white;
         }
 
-      @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-      }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
-      /* --- ESPACIADO Y ALINEACIÓN PERFECTA DE CAMPOS --- */
-      .input-container {
-          display: flex;
-          align-items: center;
-          position: relative;
-          margin-bottom: 6px; 
-          width: 100%;
-      }
+        /* ====================================================
+           ESTILO UNIFICADO PARA SUBTÍTULOS DE SECCIÓN
+           (Address, 1. Plantilla, 2. Tipificación, 3. Speech)
+           ==================================================== */
+        .section-title {
+            color: #0c477e;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 25px 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #dcdcdc;
+        }
 
-      .input-container label {
-        flex: 0 0 45%;
-        font-weight: 500;
-        font-size: 0.95rem;
-        padding-right: 10px; 
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 5px;
-      }
+        /* ====================================================
+           ESTILOS PARA SECCIÓN: LLENADO PARA ADDRESS
+           ==================================================== */
+        .address-section {
+            margin-bottom: 25px;
+        }
 
-      .input-container input, .input-container select {
-          flex: 1;
-          padding: 4px 8px; 
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 0.95rem;
-          color: #0c477e;
-          transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-      }
+        .address-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+            margin-bottom: 16px;
+        }
 
-      .input-container input:focus, .input-container select:focus {
-          border-color: #0c477e;
-          outline: none;
-          box-shadow: 0 0 5px rgba(1, 118, 139, 0.4);
-      }
+        .address-field {
+            display: flex;
+            flex-direction: column;
+        }
 
-      /* --- CLASE PARA RESALTAR ERRORES EN ROJO --- */
-      .input-error {
-          border: 1px solid #d93025 !important;
-          background-color: #fce8e6 !important;
-          box-shadow: 0 0 4px rgba(217, 48, 37, 0.3) !important;
-      }
+        .address-field label {
+            font-size: 0.85rem;
+            color: #555;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
 
-      @media screen and (max-width: 600px) {
+        .address-field input {
+            padding: 9px 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            color: #0c477e;
+            outline: none;
+            text-transform: uppercase;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .address-field input::placeholder {
+            text-transform: none;
+            color: #888;
+        }
+
+        .address-field input:focus {
+            border-color: #0c477e;
+            box-shadow: 0 0 5px rgba(12, 71, 126, 0.35);
+        }
+
+        .address-result-box {
+            background-color: #fffde7;
+            border-left: 5px solid #0c477e;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .address-result-box .addr-res-title {
+            font-family: 'Courier New', Consolas, monospace !important;
+            font-weight: bold;
+            font-size: 0.92rem;
+            color: #0c477e;
+            margin-bottom: 4px;
+        }
+
+        .address-result-box .addr-res-text {
+            font-family: 'Courier New', Consolas, monospace !important;
+            font-size: 0.95rem;
+            color: #1d1d1f;
+            word-break: break-word;
+        }
+
+        .address-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-pill {
+            background-color: #0c477e;
+            color: #ffffff;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(12, 71, 126, 0.25);
+        }
+
+        .btn-pill:hover {
+            background-color: #08325a;
+            transform: translateY(-1px);
+        }
+
+        .btn-pill:active {
+            transform: translateY(0);
+        }
+
+        .btn-pill-secondary {
+            background-color: #f1f3f4;
+            color: #0c477e;
+            border: 1px solid #0c477e;
+            box-shadow: none;
+        }
+
+        .btn-pill-secondary:hover {
+            background-color: #e2e6ea;
+        }
+
+        #aviso-address {
+            margin: 10px 0 0 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        @media screen and (max-width: 900px) {
+            .address-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .address-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- ESPACIADO Y ALINEACIÓN PERFECTA DE CAMPOS --- */
         .input-container {
-          flex-direction: column;
-          align-items: flex-start;
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-bottom: 6px; 
+            width: 100%;
         }
+
         .input-container label {
-          flex: none;
-          width: 100%;
-          margin-bottom: 4px;
-          padding-right: 0;
+            flex: 0 0 45%;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding-right: 10px; 
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
         }
+
         .input-container input, .input-container select {
-          flex: none;
-          width: 100%;
+            flex: 1;
+            padding: 4px 8px; 
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            color: #0c477e;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
         }
-      }
 
-      .resultado-label {
-        color: #0c477e;
-        font-weight: bold;
-      }
+        .input-container input:focus, .input-container select:focus {
+            border-color: #0c477e;
+            outline: none;
+            box-shadow: 0 0 5px rgba(12, 71, 126, 0.35);
+        }
 
-      .ruta-container {
-          background-color: #fff5e9;
-          padding: 10px;
-          border-radius: 6px;
-          margin: 10px 0;
-          border-left: 4px solid #fd8261;
-          font-size: 0.9rem;
-          color: #333;
-      }
+        /* --- CLASE PARA RESALTAR ERRORES EN ROJO --- */
+        .input-error {
+            border: 1px solid #d93025 !important;
+            background-color: #fce8e6 !important;
+            box-shadow: 0 0 4px rgba(217, 48, 37, 0.3) !important;
+        }
 
-      hr {
-          border: 1px solid #fd8261;
-          margin: 15px 0;
-      }
+        @media screen and (max-width: 600px) {
+            .input-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .input-container label {
+                flex: none;
+                width: 100%;
+                margin-bottom: 4px;
+                padding-right: 0;
+            }
+            .input-container input, .input-container select {
+                flex: none;
+                width: 100%;
+            }
+        }
 
-      /* Botones principales de acción */
-      .btn-principal {
-          background-color: #0c477e;
-          color: white;
-          padding: 8px 18px;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          font-weight: bold;
-          font-size: 0.95rem;
-          transition: background-color 0.3s ease, transform 0.2s ease;
-          margin: 5px 5px 5px 0;
-      }
+        .resultado-label {
+            color: #0c477e;
+            font-weight: bold;
+        }
 
-      .btn-principal:hover {
-          background-color: #08325a;
-          transform: translateY(-1px);
-      }
+        .ruta-container {
+            background-color: #fffde7;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border-left: 4px solid #0c477e;
+            font-size: 0.92rem;
+            color: #1d1d1f;
+        }
 
-      .btn-principal:active {
-          transform: translateY(0);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
+        hr {
+            border: 0;
+            border-top: 1px solid #dcdcdc;
+            margin: 15px 0;
+        }
 
-      /* --- BOTONES PEQUEÑOS EN FORMULARIO --- */
-      .btn-accion {
-          background-color: #f1f3f4;
-          color: #0c477e;
-          border: 1px solid #cdd0d5;
-          padding: 3px 8px;
-          border-radius: 12px;
-          cursor: pointer;
-          font-size: 0.8rem;
-          font-weight: bold;
-          text-decoration: none;
-          transition: all 0.2s ease;
-      }
-      
-      .btn-accion:hover {
-          background-color: #e2e6ea;
-          border-color: #0c477e;
-      }
+        /* Botones principales de acción */
+        .btn-principal {
+            background-color: #0c477e;
+            color: white;
+            padding: 8px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 5px 5px 5px 0;
+        }
 
-      .btn-gsm {
-          background-color: #fd8261;
-          color: white;
-          border: none;
-          padding: 3px 10px;
-          border-radius: 12px;
-          cursor: pointer;
-          font-size: 0.8rem;
-          font-weight: bold;
-          transition: all 0.2s ease;
-          box-shadow: 0 2px 4px rgba(253, 130, 97, 0.3);
-      }
+        .btn-principal:hover {
+            background-color: #08325a;
+            transform: translateY(-1px);
+        }
 
-      .btn-gsm:hover {
-          background-color: #e66a48;
-          transform: translateY(-1px);
-      }
+        .btn-principal:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
 
-      /* ✨ ESTILO PARA EL NUEVO BOTÓN 5G ✨ */
-      .btn-cobertura {
-          background-color: #01768b;
-          color: white;
-          border: none;
-          padding: 3px 10px;
-          border-radius: 12px;
-          cursor: pointer;
-          font-size: 0.8rem;
-          font-weight: bold;
-          transition: all 0.2s ease;
-          box-shadow: 0 2px 4px rgba(1, 118, 139, 0.3);
-      }
+        .btn-secundario {
+            background-color: #f1f3f4;
+            color: #0c477e;
+            border: 1px solid #0c477e;
+        }
 
-      .btn-cobertura:hover {
-          background-color: #015f70;
-          transform: translateY(-1px);
-      }
+        .btn-secundario:hover {
+            background-color: #e2e6ea;
+        }
 
-      /* ✨ ESTILO PARA EL BOTÓN DEL LISTADO 3G ✨ */
-      .btn-3g {
-          background-color: #c5221f;
-          color: white;
-          border: none;
-          padding: 3px 10px;
-          border-radius: 12px;
-          cursor: pointer;
-          font-size: 0.8rem;
-          font-weight: bold;
-          transition: all 0.2s ease;
-          box-shadow: 0 2px 4px rgba(197, 34, 31, 0.3);
-      }
+        /* --- BOTONES PEQUEÑOS EN FORMULARIO --- */
+        .btn-accion {
+            background-color: #f1f3f4;
+            color: #0c477e;
+            border: 1px solid #cdd0d5;
+            padding: 3px 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-accion:hover {
+            background-color: #e2e6ea;
+            border-color: #0c477e;
+        }
 
-      .btn-3g:hover {
-          background-color: #a31a17;
-          transform: translateY(-1px);
-      }
+        .btn-gsm {
+            background-color: #fd8261;
+            color: white;
+            border: none;
+            padding: 3px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(253, 130, 97, 0.3);
+        }
 
-      /* ✨ AVISO CUANDO SE SELECCIONA 3G ✨ */
-      #aviso-3g {
-          display: none;
-          margin: 6px 0 10px 0;
-          padding: 10px 12px;
-          border-radius: 6px;
-          background-color: #fce8e6;
-          border: 1px solid #c5221f;
-          border-left: 4px solid #c5221f;
-          color: #c5221f;
-          font-size: 0.9rem;
-          font-weight: bold;
-      }
+        .btn-gsm:hover {
+            background-color: #e66a48;
+            transform: translateY(-1px);
+        }
 
-      /* --- TOOLTIP PARA LA CAJA DE SELECCIÓN (HOVER) --- */
-      .tooltip-wrapper {
-          position: relative;
-          flex: 1; 
-          display: flex;
-      }
+        /* ✨ ESTILO PARA EL BOTÓN 5G UNIFICADO AL AZUL ✨ */
+        .btn-cobertura {
+            background-color: #0c477e;
+            color: white;
+            border: none;
+            padding: 3px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(12, 71, 126, 0.3);
+        }
 
-      .tooltip-wrapper select {
-          width: 100%;
-          cursor: pointer; 
-      }
+        .btn-cobertura:hover {
+            background-color: #08325a;
+            transform: translateY(-1px);
+        }
 
-      .tooltip-text {
-          visibility: hidden;
-          width: 620px; 
-          background-color: #1d1d1f;
-          color: #ffffff;
-          text-align: left;
-          border-radius: 10px;
-          padding: 18px 25px;
-          position: absolute;
-          z-index: 999;
-          top: calc(100% + 12px); 
-          left: 50%;
-          transform: translateX(-50%);
-          opacity: 0;
-          transition: opacity 0.2s ease;
-          font-size: 0.85rem;
-          font-weight: normal;
-          box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-          pointer-events: none;
-          line-height: 1.5;
-      }
+        /* ✨ ESTILO PARA EL BOTÓN DEL LISTADO 3G ✨ */
+        .btn-3g {
+            background-color: #c5221f;
+            color: white;
+            border: none;
+            padding: 3px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(197, 34, 31, 0.3);
+        }
 
-      .tooltip-text::before {
-          content: "";
-          position: absolute;
-          bottom: 100%;
-          left: 0;
-          width: 100%;
-          height: 12px;
-          background-color: transparent;
-      }
+        .btn-3g:hover {
+            background-color: #a31a17;
+            transform: translateY(-1px);
+        }
 
-      .tooltip-text::after {
-          content: "";
-          position: absolute;
-          bottom: 100%;
-          left: 50%;
-          margin-left: -6px;
-          border-width: 6px;
-          border-style: solid;
-          border-color: transparent transparent #1d1d1f transparent;
-      }
+        /* ✨ AVISO CUANDO SE SELECCIONA 3G ✨ */
+        #aviso-3g {
+            display: none;
+            margin: 6px 0 10px 0;
+            padding: 10px 12px;
+            border-radius: 6px;
+            background-color: #fce8e6;
+            border: 1px solid #c5221f;
+            border-left: 4px solid #c5221f;
+            color: #c5221f;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
 
-      .tooltip-text strong {
-          color: #fd8261;
-          font-size: 0.95rem;
-      }
-      
-      .tooltip-text .btn-accion {
-          padding: 2px 8px;
-          font-size: 0.75rem;
-          margin-left: 5px;
-      }
+        /* --- TOOLTIP PARA LA CAJA DE SELECCIÓN (HOVER) --- */
+        .tooltip-wrapper {
+            position: relative;
+            flex: 1; 
+            display: flex;
+        }
 
-      .tooltip-wrapper:hover .tooltip-text,
-      .tooltip-text:hover {
-          visibility: visible;
-          opacity: 1;
-          pointer-events: auto; 
-      }
+        .tooltip-wrapper select {
+            width: 100%;
+            cursor: pointer; 
+        }
 
-      #resultado {
-          margin: 10px 0;
-          font-size: 0.95rem;
-          background-color: #f8f9fa;
-          padding: 12px;
-          border-left: 4px solid #0c477e;
-          border-radius: 0 6px 6px 0;
-          white-space: pre-line;
-          min-height: 40px;
-          user-select: none;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-      }
+        .tooltip-text {
+            visibility: hidden;
+            width: 620px; 
+            background-color: #1d1d1f;
+            color: #ffffff;
+            text-align: left;
+            border-radius: 10px;
+            padding: 18px 25px;
+            position: absolute;
+            z-index: 999;
+            top: calc(100% + 12px); 
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            font-size: 0.85rem;
+            font-weight: normal;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            pointer-events: none;
+            line-height: 1.5;
+        }
 
-      #aviso-status {
-          margin: 8px 0;
-          padding: 10px;
-          border-radius: 6px;
-          font-weight: bold;
-          font-size: 0.9rem;
-          display: none;
-      }
-      .aviso-exito {
-          background-color: #e6f4ea;
-          color: #137333;
-          border: 1px solid #137333;
-      }
-      .aviso-error {
-          background-color: #fce8e6;
-          color: #c5221f;
-          border: 1px solid #c5221f;
-      }
+        .tooltip-text::before {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background-color: transparent;
+        }
 
-      .footer-autor {
-        text-align: center;
-        margin-top: 20px;
-        padding: 10px;
-        font-size: 0.8rem;
-        color: #888;
-        border-top: 1px solid #eee;
-        user-select: none;
-      }
-      .footer-autor strong {
-        color: #0c477e;
-      }
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -6px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent transparent #1d1d1f transparent;
+        }
 
-      .code-container p {
-          margin: 5px 0 15px 0;
-          font-size: 0.95rem;
-      }
+        .tooltip-text strong {
+            color: #fd8261;
+            font-size: 0.95rem;
+        }
+        
+        .tooltip-text .btn-accion {
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            margin-left: 5px;
+        }
 
-      .popup-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.85);
-        text-align: center;
-        z-index: 1000;
-        backdrop-filter: blur(4px);
-      }
+        .tooltip-wrapper:hover .tooltip-text,
+        .tooltip-text:hover {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto; 
+        }
 
-      .popup-overlay img {
-        max-width: 90%;
-        max-height: 85vh;
-        margin-top: 5vh;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      }
+        #resultado {
+            margin: 10px 0;
+            font-size: 0.95rem;
+            background-color: #fffde7;
+            padding: 12px;
+            border-left: 4px solid #0c477e;
+            border-radius: 0 6px 6px 0;
+            white-space: pre-line;
+            min-height: 40px;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
 
-      .close-button {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background-color: #ffffff;
-        color: #c5221f;
-        border: none;
-        padding: 8px 16px;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: transform 0.2s ease;
-      }
-      .close-button:hover {
-          transform: scale(1.05);
-      }
+        #aviso-status {
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .aviso-exito {
+            background-color: #e6f4ea;
+            color: #137333;
+            border: 1px solid #137333;
+        }
+        .aviso-error {
+            background-color: #fce8e6;
+            color: #c5221f;
+            border: 1px solid #c5221f;
+        }
+
+        .footer-autor {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 0.8rem;
+            color: #888;
+            border-top: 1px solid #eee;
+            user-select: none;
+        }
+        .footer-autor strong {
+            color: #0c477e;
+        }
+
+        .code-container p {
+            margin: 5px 0 15px 0;
+            font-size: 0.95rem;
+        }
+
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.85);
+            text-align: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .popup-overlay img {
+            max-width: 90%;
+            max-height: 85vh;
+            margin-top: 5vh;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ffffff;
+            color: #c5221f;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s ease;
+        }
+        .close-button:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body oncontextmenu="return false"> 
@@ -426,7 +589,67 @@
 
     <h2 class="elegant-title">Pedido SGU: No accede - Desconexiones</h2>
 
-    <label style="color: red; font-size: 1.1rem;"><strong>1. Plantilla:</strong></label><br><br>
+    <!-- ==========================================
+         SECCIÓN: LLENADO PARA ADDRESS (CON UBIGEO DINÁMICO)
+         ========================================== -->
+    <div class="address-section">
+        <h3 class="section-title" style="margin-top: 0;">Llenado para Address:</h3>
+        
+        <div class="address-grid">
+            <div class="address-field">
+                <label for="addr_direccion">Dirección del problema,</label>
+                <input type="text" id="addr_direccion" class="addr-input" placeholder="Calle, Número, zona, etc." list="listaDireccion" />
+                <datalist id="listaDireccion">
+                    <option value="NO BRINDA DIRECCIÓN"></option>
+                </datalist>
+            </div>
+            <div class="address-field">
+                <label for="addr_referencia">Referencia del problema,</label>
+                <input type="text" id="addr_referencia" class="addr-input" placeholder="Mercados, paraderos, etc." list="listaReferencia" />
+                <datalist id="listaReferencia">
+                    <option value="NO BRINDA REFERENCIA"></option>
+                    <option value="NO OBLIGATORIO"></option>
+                </datalist>
+            </div>
+            <div class="address-field">
+                <label for="addr_departamento">Departamento -</label>
+                <input type="text" id="addr_departamento" class="addr-input" placeholder="Cargando lista..." list="listaDepartamento" />
+                <datalist id="listaDepartamento">
+                    <option value="NO BRINDA DEPARTAMENTO"></option>
+                </datalist>
+            </div>
+            <div class="address-field">
+                <label for="addr_provincia">Provincia -</label>
+                <input type="text" id="addr_provincia" class="addr-input" placeholder="Provincia" list="listaProvincia" />
+                <datalist id="listaProvincia">
+                    <option value="NO BRINDA PROVINCIA"></option>
+                </datalist>
+            </div>
+            <div class="address-field">
+                <label for="addr_distrito">Distrito</label>
+                <input type="text" id="addr_distrito" class="addr-input" placeholder="Distrito" list="listaDistrito" />
+                <datalist id="listaDistrito">
+                    <option value="NO BRINDA DISTRITO"></option>
+                </datalist>
+            </div>
+        </div>
+
+        <div class="address-result-box">
+            <div class="addr-res-title">Resultado Address:</div>
+            <div id="resultado-address" class="addr-res-text">Resultado aparecerá aquí...</div>
+        </div>
+
+        <div class="address-buttons">
+            <button type="button" class="btn-pill" onclick="copiarAddress()">📋 Copiar Address</button>
+            <button type="button" class="btn-pill btn-pill-secondary" onclick="limpiarAddress()">🗑️ Borrar Address</button>
+        </div>
+        <div id="aviso-address"></div>
+    </div>
+
+    <!-- ==========================================
+         SECCIÓN 1: PLANTILLA SGU
+         ========================================== -->
+    <h3 class="section-title">1. Plantilla:</h3>
 
     <center class="code-container">
     <p>
@@ -596,7 +819,7 @@
         </div>
         
         <div class="input-container" id="container_5g_problema_otro" style="display: none;">
-            <label for="label_5g_problema_otro" style="color: #fd8261;">↳ Especificar problema:</label>
+            <label for="label_5g_problema_otro" style="color: #0c477e; font-weight: bold;">↳ Especificar problema:</label>
             <input type="text" id="label_5g_problema_otro" placeholder="(Detallar problema específico)" />
         </div>
 
@@ -667,11 +890,11 @@
         
         <hr>
     </div>
+
     <div class="input-container">
     <label for="label_DetalleInc">- Observaciones: </label>
     <input type="text" id="label_DetalleInc" placeholder="(Observaciones del inconveniente)" />
     </div>
-
 
     <div class="input-container">
     <label for="labelID">- Codigo de llamada:</label>
@@ -684,11 +907,12 @@
     <div id="aviso-status"></div>
 
     <button class="btn-principal" onclick="copiarResultado()">Copiar</button>
-    <button class="btn-principal" onclick="limpiarInputs()">Borrar</button>
+    <button class="btn-principal btn-secundario" onclick="limpiarPlantilla()">Borrar</button>
 
-    <br /><br /><br />
-
-    <label style="color: red; font-size: 1.1rem;"><strong>2. Tipificación:</strong></label>
+    <!-- ==========================================
+         SECCIÓN 2: TIPIFICACIÓN
+         ========================================== -->
+    <h3 class="section-title">2. Tipificación:</h3>
 
     <div class="ruta-container">
     - <strong>Address:</strong> DIRECCIÓN DEL PROBLEMA, REFERENCIA DEL PROBLEMA, LUG@R: DEPARTAMENTO - PROVINCIA - DISTRITO - PERÚ
@@ -702,21 +926,22 @@
     </div>
     </div>
 
-    <br />
-
-    <label style="color: red; font-size: 1.1rem;"><strong>3. Speech:</strong></label>
+    <!-- ==========================================
+         SECCIÓN 3: SPEECH
+         ========================================== -->
+    <h3 class="section-title">3. Speech:</h3>
 
     <div class="ruta-container">
     <strong><span style="color: #0c477e">🎧 Agente: </span></strong> <span style="color: #0c477e">(Nombre del cliente)</span>, le confirmamos que hemos recibido y registrado su pedido con el código <span style="color: #0c477e">(CASSXXXXXXXXXX) o (CAPVXXXXXXXXXX)</span>. El plazo estimado de atención es de 03 días calendario. Nuestra respuesta será enviada vía mensaje de texto en 1 día hábil luego del plazo de atención.
     </div>
 
-    <br><br><br>
+    <br><br>
 
-    <strong>Ejemplo de código para Pedido SGU:</strong>
+    <strong style="color: #0c477e;">Ejemplo de código para Pedido SGU:</strong>
     <br><br>
     <img src="https://i.postimg.cc/Y2FYwHwH/COD-Pedido-SGU.png" style="max-width: 100%; border-radius: 8px;">
 
-    <br><br><br><br>
+    <br><br><br>
     <div class="footer-autor">
         Developed by Cristhian Francia &copy; 2026 | All rights reserved.
     </div>
@@ -742,21 +967,248 @@
         }
     };
 
-    window.onload = function() {
-        let fechaLimite = new Date("2026-10-30T23:59:59");
-        let fechaActual = new Date();
-        if (fechaActual > fechaLimite) {
-            document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%; font-family: Calibri, sans-serif;'>Revisar la variable de mantenimiento<br></h1><h5 style='text-align:center; color:red; font-family: Calibri, sans-serif;'>(Requiere actualización)</h5>";
-        }
-    };
-
     const resultadoOutput = document.querySelector("#resultado");
     const avisoStatus = document.querySelector("#aviso-status");
+    const resultadoAddressOutput = document.querySelector("#resultado-address");
+    const avisoAddress = document.querySelector("#aviso-address");
+
+    // Datos de tu Google Sheets y Apps Script
+    const SHEET_ID_UBIGEO = "153CjvlmWPMsBZbAxoDhcfpxQJ_mm9li26JTQjB3s9bA";
+    const NOMBRE_HOJA_UBIGEO = "Ubigeo";
+    const CONST_URL_WEB_APP = "https://script.google.com/macros/s/AKfycbzHHcr6MJDtbcbc3tJiO1hGESMdf9NZDagTAPuDJuWgyg_AiYqxCL3k_wLVdZu3PlLCsQ/exec";
 
     // Enlace del listado (Excel en Google Sheets) de zonas 3G
     const URL_LISTADO_3G = 'https://docs.google.com/spreadsheets/d/1oLxGsVnzkwRxWpPB5I2Rp3L6UBWCaeRV/edit?usp=sharing&ouid=103539618879236828134&rtpof=true&sd=true';
 
-    // Función auxiliar para obtener el valor formateado del span
+    /* ====================================================
+       CONEXIÓN HÍBRIDA AL EXCEL ONLINE PARA UBIGEO
+       (Funciona en Vista Previa Local, GitHub y Apps Script)
+       ==================================================== */
+    var ubigeoData = [];
+    var mapaUbigeo = {};
+    var ubigeoCargado = false;
+
+    function getUpperValue(id) {
+        var el = document.getElementById(id);
+        if (!el) return '';
+        el.value = (el.value || '').toUpperCase();
+        return el.value.trim();
+    }
+
+    // Callback para lectura directa de Google Sheets (sin bloqueo CORS en vista previa)
+    window.googleSheetUbigeoCallback = function(json) {
+        if (ubigeoCargado || !json || !json.table || !json.table.rows) return;
+        var rows = json.table.rows;
+        var result = [];
+        for (var i = 0; i < rows.length; i++) {
+            var c = rows[i].c;
+            if (!c) continue;
+            var dep = (c[0] && c[0].v) ? String(c[0].v) : '';
+            var prov = (c[1] && c[1].v) ? String(c[1].v) : '';
+            var dist = (c[2] && c[2].v) ? String(c[2].v) : '';
+            // Evitar fila de cabecera si viniera incluida
+            if (dep.toUpperCase() === 'DEPARTAMENTO') continue;
+            if (dep && prov && dist) {
+                result.push({ dep: dep, prov: prov, dist: dist });
+            }
+        }
+        if (result.length > 0) {
+            ubigeoCargado = true;
+            initUbigeo(result);
+        }
+    };
+
+    function callBackendUbigeo(onSuccess, onError) {
+        // 1. Si está dentro de Google Apps Script
+        if (typeof google !== 'undefined' && google.script && google.script.run) {
+            google.script.run.withSuccessHandler(function(res) {
+                ubigeoCargado = true;
+                onSuccess(res);
+            }).getUbigeoData();
+            return;
+        }
+
+        // 2. Intento vía Google Visualization JSONP (Funciona en local file:// y previews sin CORS)
+        var script = document.createElement('script');
+        script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID_UBIGEO}/gviz/tq?tqx=responseHandler:googleSheetUbigeoCallback&sheet=${encodeURIComponent(NOMBRE_HOJA_UBIGEO)}`;
+        document.body.appendChild(script);
+
+        // 3. Intento simultáneo vía Fetch POST a tu Web App con cabeceras compatibles con CORS
+        fetch(CONST_URL_WEB_APP, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: 'getUbigeoData' }),
+            redirect: 'follow'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!ubigeoCargado && data && data.result && data.result.length > 0) {
+                ubigeoCargado = true;
+                onSuccess(data.result);
+            }
+        })
+        .catch(err => {
+            if (onError) onError(err);
+        });
+    }
+
+    function poblarDatalist(id, opts) {
+        var dl = document.getElementById(id);
+        if (!dl) return;
+        dl.innerHTML = '';
+        var ph = (id === 'listaDepartamento') ? 'NO BRINDA DEPARTAMENTO' :
+                 (id === 'listaProvincia' ? 'NO BRINDA PROVINCIA' : 'NO BRINDA DISTRITO');
+        var opt0 = document.createElement('option');
+        opt0.value = ph;
+        dl.appendChild(opt0);
+
+        (opts || []).forEach(t => {
+            var o = document.createElement('option');
+            o.value = t;
+            dl.appendChild(o);
+        });
+    }
+
+    function initUbigeo(data) {
+        ubigeoData = data || [];
+        mapaUbigeo = {};
+        ubigeoData.forEach(r => {
+            var d = (r.dep || '').toUpperCase().trim(),
+                p = (r.prov || '').toUpperCase().trim(),
+                di = (r.dist || '').toUpperCase().trim();
+            if (!d || !p || !di) return;
+            if (!mapaUbigeo[d]) mapaUbigeo[d] = {};
+            if (!mapaUbigeo[d][p]) mapaUbigeo[d][p] = [];
+            if (mapaUbigeo[d][p].indexOf(di) === -1) mapaUbigeo[d][p].push(di);
+        });
+        poblarDatalist('listaDepartamento', Object.keys(mapaUbigeo).sort());
+        document.getElementById('addr_departamento').placeholder = "Departamento";
+    }
+
+    function onDepartamentoChange() {
+        var d = getUpperValue('addr_departamento');
+        var provs = (d && mapaUbigeo[d]) ? Object.keys(mapaUbigeo[d]).sort() : [];
+        document.getElementById('addr_provincia').value = '';
+        document.getElementById('addr_distrito').value = '';
+        poblarDatalist('listaProvincia', provs);
+        poblarDatalist('listaDistrito', []);
+        updateAddressOutput();
+    }
+
+    function onProvinciaChange() {
+        var d = getUpperValue('addr_departamento'),
+            p = getUpperValue('addr_provincia');
+        var dists = (d && p && mapaUbigeo[d] && mapaUbigeo[d][p]) ? mapaUbigeo[d][p].slice().sort() : [];
+        document.getElementById('addr_distrito').value = '';
+        poblarDatalist('listaDistrito', dists);
+        updateAddressOutput();
+    }
+
+    function cargarUbigeo() {
+        callBackendUbigeo(initUbigeo, function(err) {
+            console.log("Aviso Ubigeo:", err);
+            document.getElementById('addr_departamento').placeholder = "Departamento";
+        });
+        // Si luego de 4 segundos no cargó por red, restaurar el placeholder normal
+        setTimeout(() => {
+            document.getElementById('addr_departamento').placeholder = "Departamento";
+        }, 4000);
+    }
+
+    /* ====================================================
+       LÓGICA EN TIEMPO REAL PARA LLENADO DE ADDRESS
+       ==================================================== */
+    document.querySelectorAll('.addr-input').forEach(input => {
+        input.addEventListener('input', function() {
+            this.classList.remove('input-error');
+            avisoAddress.style.display = 'none';
+            updateAddressOutput();
+        });
+    });
+
+    // Detectamos tanto 'input' como 'change' para que la cascada sea inmediata al elegir de la lista
+    document.getElementById('addr_departamento').addEventListener('input', function() {
+        var d = getUpperValue('addr_departamento');
+        if (mapaUbigeo[d]) {
+            poblarDatalist('listaProvincia', Object.keys(mapaUbigeo[d]).sort());
+        }
+    });
+    document.getElementById('addr_departamento').addEventListener('change', onDepartamentoChange);
+
+    document.getElementById('addr_provincia').addEventListener('input', function() {
+        var d = getUpperValue('addr_departamento');
+        var p = getUpperValue('addr_provincia');
+        if (mapaUbigeo[d] && mapaUbigeo[d][p]) {
+            poblarDatalist('listaDistrito', mapaUbigeo[d][p].slice().sort());
+        }
+    });
+    document.getElementById('addr_provincia').addEventListener('change', onProvinciaChange);
+
+    function updateAddressOutput() {
+        const dir = getUpperValue('addr_direccion');
+        const ref = getUpperValue('addr_referencia');
+        const dep = getUpperValue('addr_departamento');
+        const prov = getUpperValue('addr_provincia');
+        const dist = getUpperValue('addr_distrito');
+
+        if (!dir && !ref && !dep && !prov && !dist) {
+            resultadoAddressOutput.textContent = "Resultado aparecerá aquí...";
+            return;
+        }
+
+        // Formato exacto: DIRECCIÓN, REFERENCIA, LUG@R: DEPARTAMENTO - PROVINCIA - DISTRITO - PERÚ
+        resultadoAddressOutput.textContent = `${dir}, ${ref}, LUG@R: ${dep} - ${prov} - ${dist} - PERÚ`;
+    }
+
+    function copiarAddress() {
+        let faltanDatos = false;
+        const addrInputs = document.querySelectorAll('.addr-input');
+
+        addrInputs.forEach(input => {
+            if (!input.value.trim()) {
+                input.classList.add('input-error');
+                faltanDatos = true;
+            } else {
+                input.classList.remove('input-error');
+            }
+        });
+
+        if (faltanDatos) {
+            avisoAddress.textContent = "❌ Error: Completa todos los campos de Address resaltados en rojo.";
+            avisoAddress.className = "aviso-error";
+            avisoAddress.style.display = "block";
+            return;
+        }
+
+        const textoACopiar = resultadoAddressOutput.textContent.trim();
+        const textarea = document.createElement("textarea");
+        textarea.value = textoACopiar;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+
+        avisoAddress.textContent = "✅ ¡Address copiado correctamente al portapapeles!";
+        avisoAddress.className = "aviso-exito";
+        avisoAddress.style.display = "block";
+    }
+
+    // Borrar exclusivo para la sección Address
+    function limpiarAddress() {
+        document.querySelectorAll('.addr-input').forEach(input => {
+            input.value = "";
+            input.classList.remove('input-error');
+        });
+        poblarDatalist('listaProvincia', []);
+        poblarDatalist('listaDistrito', []);
+        resultadoAddressOutput.textContent = "Resultado aparecerá aquí...";
+        avisoAddress.style.display = "none";
+        avisoAddress.innerHTML = "";
+    }
+
+    /* ====================================================
+       LÓGICA DE LA PLANTILLA SGU
+       ==================================================== */
     function vHTML(id) {
         return `<span class="resultado-label">${document.getElementById(id).value}</span>`;
     }
@@ -766,19 +1218,15 @@
         const is5G = this.value === '5G';
         const is3G = this.value === '3G';
         
-        // Muestra u oculta los extras de 5G y la fecha de no accede
         document.getElementById('container_5G_Extras').style.display = is5G ? 'block' : 'none';
         document.getElementById('container_FechaNoaccede').style.display = is5G ? 'none' : 'flex';
         
-        // ✨ MOSTRAR/OCULTAR BOTONES DINÁMICOS DEPENDIENDO DE SI ES 5G ✨
         document.getElementById('btn_gsm_arena').style.display = is5G ? 'inline-block' : 'none';
         document.getElementById('btn_cobertura_5g').style.display = is5G ? 'inline-block' : 'none';
 
-        // ✨ MOSTRAR/OCULTAR BOTÓN Y AVISO DEL LISTADO 3G ✨
         document.getElementById('btn_lista_3g').style.display = is3G ? 'inline-block' : 'none';
         document.getElementById('aviso-3g').style.display = is3G ? 'block' : 'none';
 
-        // Cambia el título de Earth a Maps dinámicamente
         document.getElementById('lbl_GoogleEarth').innerHTML = is5G 
             ? '- Coordenadas Google Maps: <button type="button" class="btn-accion" onclick="return showPopup(\'imagePopupMaps\')">👉Ver ejemplo👈</button>' 
             : '- Coordenadas Google Earth: <button type="button" class="btn-accion" onclick="return showPopup(\'imagePopupMaps\')">👉Ver ejemplo👈</button>';
@@ -787,7 +1235,6 @@
             abrirGsmArena();
         }
 
-        // ✨ AL ELEGIR 3G SE ABRE EL LISTADO DE FORMA EMERGENTE ✨
         if (is3G) {
             abrirListado3G();
         }
@@ -795,7 +1242,6 @@
         updateResultadoOutput();
     });
 
-    // Función para manejar el campo "Otro"
     function toggleProblemaOtro() {
         const select = document.getElementById('label_5g_problema');
         const containerOtro = document.getElementById('container_5g_problema_otro');
@@ -811,8 +1257,8 @@
         updateResultadoOutput();
     }
 
-    // Asignar eventos globales dinámicamente a todos los inputs y selects
-    document.querySelectorAll('input, select').forEach(input => {
+    // Asignar eventos globales dinámicamente solo a los inputs y selects de la plantilla SGU
+    document.querySelectorAll('input:not(.addr-input), select').forEach(input => {
         const updateEvent = input.tagName === 'SELECT' ? 'change' : 'input';
         input.addEventListener(updateEvent, function() {
             this.classList.remove('input-error'); 
@@ -842,7 +1288,6 @@ Dirección exacta del inconveniente: ${vHTML('label_Direccion')}
 Coordenadas ${is5G ? 'Google Maps' : 'Google Earth'}: ${vHTML('label_GoogleEarth')}\n`;
 
         if (is5G) {
-            // Resolver si se muestra el select o el input manual
             const problemaBase = document.getElementById('label_5g_problema').value;
             const problemaFinal = problemaBase === 'Otro' ? vHTML('label_5g_problema_otro') : vHTML('label_5g_problema');
 
@@ -871,14 +1316,12 @@ Codigo de llamada: $$_${vHTML('labelID')}_&&`;
 
     function copiarResultado() {
         let hayErrores = false;
-        const allInputs = document.querySelectorAll('input[type="text"], input[type="number"], select');
+        const allInputs = document.querySelectorAll('input[type="text"]:not(.addr-input), input[type="number"], select');
         
         allInputs.forEach(input => {
-            // Evaluamos el contenedor principal de cada input
             const container = input.closest('.input-container');
             const parent5G = input.closest('#container_5G_Extras');
 
-            // Excepciones para ignorar campos que actualmente están ocultos
             if (container && container.style.display === 'none') {
                 input.classList.remove('input-error');
                 return;
@@ -888,7 +1331,6 @@ Codigo de llamada: $$_${vHTML('labelID')}_&&`;
                 return;
             }
 
-            // Excepción especial para el "label0" que no está dentro de .input-container
             if (!input.value.trim() && input.id !== 'label_5g_estado_red') { 
                 input.classList.add('input-error');
                 hayErrores = true;
@@ -917,21 +1359,20 @@ Codigo de llamada: $$_${vHTML('labelID')}_&&`;
         avisoStatus.style.display = "block";
     }
 
-    function limpiarInputs() {
-        document.querySelectorAll('input, select').forEach(input => {
-            if(input.id !== 'label_5g_estado_red') { // Mantener el valor default para 5G
+    // Borrar exclusivo para la sección 1. Plantilla
+    function limpiarPlantilla() {
+        document.querySelectorAll('input:not(.addr-input), select').forEach(input => {
+            if(input.id !== 'label_5g_estado_red') {
                 input.value = "";
             }
             input.classList.remove('input-error'); 
         });
         
-        // Resetear visualización de contenedores dinámicos
         document.getElementById('container_5G_Extras').style.display = 'none';
         document.getElementById('container_FechaNoaccede').style.display = 'flex';
         document.getElementById('container_5g_problema_otro').style.display = 'none';
         document.getElementById('lbl_GoogleEarth').innerHTML = '- Coordenadas Google Earth: <button type="button" class="btn-accion" onclick="return showPopup(\'imagePopupMaps\')">👉Ver ejemplo👈</button>';
         
-        // ✨ OCULTAR LOS BOTONES DE 5G Y EL AVISO/BOTÓN 3G AL LIMPIAR EL FORMULARIO ✨
         document.getElementById('btn_gsm_arena').style.display = 'none';
         document.getElementById('btn_cobertura_5g').style.display = 'none';
         document.getElementById('btn_lista_3g').style.display = 'none';
@@ -942,53 +1383,64 @@ Codigo de llamada: $$_${vHTML('labelID')}_&&`;
         avisoStatus.innerHTML = "";
     }
 
-  /* --- POPUPS INTERNOS (IMÁGENES NORMALES) --- */
-  function showPopup(id) {
-    event.preventDefault();
-    document.getElementById(id).style.display = "block";
-    return false;
-  }
-  
-  function hidePopup(id) {
-    document.getElementById(id).style.display = "none";
-  }
+    /* --- POPUPS INTERNOS (IMÁGENES NORMALES) --- */
+    function showPopup(id) {
+        event.preventDefault();
+        document.getElementById(id).style.display = "block";
+        return false;
+    }
+    
+    function hidePopup(id) {
+        document.getElementById(id).style.display = "none";
+    }
 
-  /* --- ABRIR GSM ARENA EN POPUP CENTRADO --- */
-  function abrirGsmArena() {
-      const width = 1000;
-      const height = 700;
-      const left = (window.screen.width / 2) - (width / 2);
-      const top = (window.screen.height / 2) - (height / 2);
-      window.open('https://www.gsmarena.com/', 'GSMArenaPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
-  }
+    /* --- ABRIR GSM ARENA EN POPUP CENTRADO --- */
+    function abrirGsmArena() {
+        const width = 1000;
+        const height = 700;
+        const left = (window.screen.width / 2) - (width / 2);
+        const top = (window.screen.height / 2) - (height / 2);
+        window.open('https://www.gsmarena.com/', 'GSMArenaPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
+    }
 
-  /* ✨ NUEVA FUNCIÓN PARA ABRIR LA COBERTURA 5G (GOOGLE EARTH) ✨ */
-  function abrirCobertura5G() {
-      const width = 1000;
-      const height = 700;
-      const left = (window.screen.width / 2) - (width / 2);
-      const top = (window.screen.height / 2) - (height / 2);
-      window.open('https://earth.google.com/earth/d/10kkrwD_yP33XziQU4h-K9lMHyrdHNo1M?usp=sharing', 'Cobertura5GPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
-  }
+    /* --- ABRIR LA COBERTURA 5G (GOOGLE EARTH) --- */
+    function abrirCobertura5G() {
+        const width = 1000;
+        const height = 700;
+        const left = (window.screen.width / 2) - (width / 2);
+        const top = (window.screen.height / 2) - (height / 2);
+        window.open('https://earth.google.com/earth/d/10kkrwD_yP33XziQU4h-K9lMHyrdHNo1M?usp=sharing', 'Cobertura5GPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
+    }
 
-  /* ✨ NUEVA FUNCIÓN PARA ABRIR EL LISTADO 3G (GOOGLE SHEETS) EN POPUP CENTRADO ✨ */
-  function abrirListado3G() {
-      const width = 1100;
-      const height = 750;
-      const left = (window.screen.width / 2) - (width / 2);
-      const top = (window.screen.height / 2) - (height / 2);
-      window.open(URL_LISTADO_3G, 'Listado3GPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
-  }
+    /* --- ABRIR EL LISTADO 3G (GOOGLE SHEETS) EN POPUP CENTRADO --- */
+    function abrirListado3G() {
+        const width = 1100;
+        const height = 750;
+        const left = (window.screen.width / 2) - (width / 2);
+        const top = (window.screen.height / 2) - (height / 2);
+        window.open(URL_LISTADO_3G, 'Listado3GPopup', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
+    }
 
-  /* --- ABRIR ENLACES DE GOOGLE DRIVE EN POPUP CENTRADO --- */
-  function abrirPopupDrive(url) {
-      const width = 1000;
-      const height = 700;
-      const left = (window.screen.width / 2) - (width / 2);
-      const top = (window.screen.height / 2) - (height / 2);
-      window.open(url, '_blank', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
-  }
+    /* --- ABRIR ENLACES DE GOOGLE DRIVE EN POPUP CENTRADO --- */
+    function abrirPopupDrive(url) {
+        const width = 1000;
+        const height = 700;
+        const left = (window.screen.width / 2) - (width / 2);
+        const top = (window.screen.height / 2) - (height / 2);
+        window.open(url, '_blank', `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=no,location=no`);
+    }
 
+    // Inicialización al cargar la página
+    window.addEventListener('load', function() {
+        let fechaLimite = new Date("2026-10-30T23:59:59");
+        let fechaActual = new Date();
+        if (fechaActual > fechaLimite) {
+            document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%; font-family: Calibri, sans-serif;'>Revisar la variable de mantenimiento<br></h1><h5 style='text-align:center; color:red; font-family: Calibri, sans-serif;'>(Requiere actualización)</h5>";
+            return;
+        }
+        // Cargar Ubigeo desde el Excel online
+        cargarUbigeo();
+    });
   </script>
 </body>
 </html>

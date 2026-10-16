@@ -551,7 +551,7 @@
     <center class="code-container">
     <p>
     <input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="text-align: center; font-weight: bold; width: 160px; color: #0c477e; border: 1px solid #ccc; padding: 4px; border-radius: 4px;" />
-// <input type="text" id="label0_1" placeholder="(Problema del cliente)" style="text-align: center; width: 250px; color: #0c477e; border: 1px solid #ccc; padding: 4px; border-radius: 4px;" />
+// Cliente menciona que no puede enviar ningún mensaje de texto
 // Se genera Pedido SGU
     </p>
     </center>
@@ -591,7 +591,6 @@
       <label for="label_TipoInconveniente">- Tipo de inconveniente:</label>
       <select id="label_TipoInconveniente">
         <option value="">Seleccionar</option>
-        <option value="-">-</option>
         <option value="SMS">SMS</option>
       </select>
     </div>
@@ -934,7 +933,6 @@
     // Arreglo con los 14 inputs exactos para esta plantilla
     const inputsArray = [
         document.querySelector("#label0"),
-        document.querySelector("#label0_1"),
         document.querySelector("#label_Linea"),
         document.querySelector("#label_Plan"),
         document.querySelector("#label_FechaHora"),
@@ -996,21 +994,20 @@
 
     function updateResultadoOutput() {
         const label0 = inputsArray[0].value;
-        const label0_1 = capitalizeFirstLetter(inputsArray[1].value);
-        const label_Linea = inputsArray[2].value;
-        const label_Plan = capitalizeName(inputsArray[3].value);
-        const label_FechaHora = formatDateToDDMMYYYYHHMM(inputsArray[4].value);
-        const label_Cobertura = inputsArray[5].value;
-        const label_BarraSeñal = inputsArray[6].value;
-        const label_TipoInconveniente = inputsArray[7].value;
-        const label_EstadoLinea = inputsArray[8].value;
-        const label_Parametros = inputsArray[9].value;
-        const label_Direccion = inputsArray[10].value;
-        const label_GoogleEarth = inputsArray[11].value;
-        const label_DetalleInc = inputsArray[12].value;
-        const labelID = inputsArray[13].value;
+        const label_Linea = inputsArray[1].value;
+        const label_Plan = capitalizeName(inputsArray[2].value);
+        const label_FechaHora = formatDateToDDMMYYYYHHMM(inputsArray[3].value);
+        const label_Cobertura = inputsArray[4].value;
+        const label_BarraSeñal = inputsArray[5].value;
+        const label_TipoInconveniente = inputsArray[6].value;
+        const label_EstadoLinea = inputsArray[7].value;
+        const label_Parametros = inputsArray[8].value;
+        const label_Direccion = inputsArray[9].value;
+        const label_GoogleEarth = inputsArray[10].value;
+        const label_DetalleInc = inputsArray[11].value;
+        const labelID = inputsArray[12].value;
 
-        resultadoOutput.innerHTML =`<span class="resultado-label">${escapeHTML(label0)}</span> // <span class="resultado-label">${escapeHTML(label0_1)}</span> // Se genera Pedido SGU
+        resultadoOutput.innerHTML =`<span class="resultado-label">${escapeHTML(label0)}</span> // Cliente menciona que no puede enviar ningún mensaje de texto // Se genera Pedido SGU
 
 - Línea: <span class="resultado-label">${escapeHTML(label_Linea)}</span>
 - Plan: <span class="resultado-label">${escapeHTML(label_Plan)}</span>

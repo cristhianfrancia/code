@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- 
     Proyecto: Plantillas
     Creado por: Cristhian Francia
@@ -15,7 +16,7 @@
 
         .container {
             width: 95%;
-            max-width: 1000px auto;
+            max-width: 1200px;
             margin: 10px auto;
             background-color: #ffffff;
             border-radius: 20px;
@@ -35,7 +36,7 @@
             right: 10px;
             width: 40px;
             height: 40px;
-            background-color: #007BFF;
+            background-color: #0c477e;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -82,7 +83,7 @@
         }
 
         .input-container input:focus {
-            border-color: #007BFF;
+            border-color: #0c477e;
             outline: none;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
@@ -97,27 +98,27 @@
         }
 
     .resultado-label {
-      color: #007BFF;
+      color: #0c477e;
     }
 
     .ruta-container {
-      background-color: #fff5e9;
+      background-color: #fffbe5;
       padding: 10px;
       border-radius: 4px;
       margin: 10px 0;
-      border-left: 4px solid #e67a00;
+      border-left: 4px solid #0c477e;
       font-size: 0.95rem;
       color: #333;
       line-height: 1.4;
     }
 
     hr {
-      border: 1px solid #e67a00;
+      border: 1px solid #dce6f0;
       margin: 15px 0;
     }
 
         button {
-            background-color: #e67a00;
+            background-color: #0c477e;
             color: white;
             padding: 10px 15px;
             border: none;
@@ -128,12 +129,12 @@
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #08325a;
             transform: scale(1.05);
         }
 
         button:active {
-            background-color: #004085;
+            background-color: #062a4d;
             transform: scale(0.98);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -145,9 +146,9 @@
     #resultado {
       margin: 15px 0;
       font-size: 0.92rem;
-      background-color: #fff5e9;
+      background-color: #fffbe5;
       padding: 10px;
-      border-left: 4px solid #e67a00;
+      border-left: 4px solid #0c477e;
       white-space: pre-line;
       min-height: 50px;
       border-radius: 6px;
@@ -181,7 +182,7 @@
         margin: 5px auto 0;
     }
     .imagen-simple h4 {
-        color: #e67a00;
+        color: #0c477e;
         margin: 5px 0 0;
         font-size: 0.9rem;
     }
@@ -255,7 +256,7 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      background-color: #e67a00;
+      background-color: #0c477e;
       color: white;
       border: none;
       border-radius: 50%;
@@ -292,7 +293,7 @@
     
 
     .ruta-container a {
-      color: #007BFF;
+      color: #0c477e;
       text-decoration: underline;
       cursor: pointer;
     }
@@ -307,19 +308,51 @@
       user-select: none;
     }
     .footer-autor strong {
-      color: var(--bitel-blue);
+      color: #0c477e;
     }
 
+
+/* Estándar visual unificado de plantillas */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;padding:10px;background:#fff;color:#202124;font-family:Calibri,Arial,sans-serif}
+.container{width:96%;max-width:1200px;margin:0 auto;padding:20px 50px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.elegant-title{text-align:center;color:#1d1d1f;font-size:1.5rem;font-weight:700;margin:5px 45px 22px}
+.icon-animation{top:15px;right:20px;width:35px;height:35px;background:#0c477e}
+.icon-animation::before{font-size:1.2rem}
+.section-heading{display:block;color:#0c477e;font-size:1.1rem;font-weight:700;margin:16px 0 10px;padding-bottom:8px;border-bottom:1px solid #dce6f0}
+.input-container{margin-bottom:7px;gap:0}
+.input-container label{width:45%;flex:0 0 45%;padding-right:10px;font-size:.95rem}
+.input-container input,.input-container select{width:55%;flex:1;min-width:0;color:#0c477e;padding:5px 8px;border:1px solid #cdd0d5;border-radius:5px;font-size:.95rem}
+.input-container input:focus,.center-inputs input:focus,.center-inputs select:focus{border-color:#0c477e;outline:none;box-shadow:0 0 0 2px rgba(12,71,126,.12)}
+.center-inputs input,.center-inputs select{max-width:100%;padding:6px 9px;color:#0c477e;border:1px solid #cdd0d5;border-radius:5px;font:inherit}
+.center-inputs select{width:min(400px,100%)}
+.ruta-container{background:#fffbe5;border-left:4px solid #0c477e;border-radius:0 6px 6px 0;padding:13px 15px}
+#resultado{background:#fffbe5;border-left:4px solid #0c477e;border-radius:0 6px 6px 0;min-height:40px;padding:12px;margin:12px 0;font-size:.95rem}
+button{background:#0c477e;color:white;border-radius:5px;padding:8px 18px;font-weight:bold;font-size:.95rem;margin:5px 5px 5px 0;transform:none}
+button:hover{background:#08325a;transform:translateY(-1px)}
+.btn-accion{background:#f1f3f4;color:#0c477e;border:1px solid #cdd0d5;padding:3px 8px;border-radius:12px;font-size:.8rem;vertical-align:middle;margin-left:5px}
+.btn-accion:hover{background:#e2e6ea;color:#0c477e;border-color:#0c477e}
+.imagen-simple{min-width:0;flex:1 1 320px;max-width:calc(50% - 10px)}
+.imagen-simple h4{color:#0c477e}
+.popup-overlay{position:fixed;inset:0;padding:18px 20px 20px;background:rgba(0,0,0,.85);align-items:flex-start;justify-content:center;overflow:auto;z-index:9999;backdrop-filter:blur(3px)}
+.popup-content{max-width:1050px;max-height:calc(100vh - 36px);overflow:auto;padding:45px 15px 15px;margin:0 auto;flex-shrink:0}
+.popup-content img{max-width:100%;max-height:calc(100vh - 105px);object-fit:contain}
+.close-button{background:#0c477e;color:#fff;border-radius:6px;width:auto;height:auto;padding:7px 13px;top:8px;right:8px}
+.close-button:hover{background:#08325a}
+.input-error{border:1px solid #d93025!important;background:#fce8e6!important;box-shadow:0 0 0 2px rgba(217,48,37,.12)!important}
+.footer-autor{color:#888}.footer-autor strong{color:#0c477e}
+@media(max-width:650px){.container{width:100%;padding:18px 15px}.elegant-title{font-size:1.25rem;margin:8px 35px 20px}.input-container{flex-direction:column;align-items:stretch}.input-container label,.input-container input{width:100%;flex:none}.center-inputs{gap:6px}.center-inputs input,.center-inputs select{width:100%}.imagen-simple{max-width:100%;flex-basis:100%}}
 </style>
 </head>
 <body oncontextmenu="return false"> <div class="container">
 <div class="icon-animation"></div>
+<h2 class="elegant-title">Migración – Elevar</h2>
 
-    <label style="color: red;"><strong>1. Plantilla:</strong></label>
+    <label class="section-heading"><strong>1. Plantilla:</strong></label>
     <p></p>
     
     <div class="center-inputs">
-      <input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
+      <input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama"  />
       // 
       <select id="label0_1" onchange="updateResultadoOutput()" >
         <option value="">Seleccionar</option>
@@ -332,12 +365,12 @@
 
     <div class="input-container">
       <label for="label1">- Plan actual:</label>
-      <input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="(Plan que figura en Customer Care)" style="color: #007BFF;" />
+      <input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="(Plan que figura en Customer Care)"  />
     </div>
 
     <div class="input-container">
       <label for="labelID">- ID de llamada:</label>
-      <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
+      <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)"  />
     </div>
 
 <br>
@@ -349,23 +382,19 @@
 <br />
 <br />
 
-<label style="color: red;"><strong>2. Tipificación:</strong></label>
+<label class="section-heading"><strong>2. Tipificación:</strong></label>
 
 <div class="ruta-container">
 <strong>PREPAGO A CONTROL</strong><br>
-Other / Información / Información / Transferencias / Upsale / Migración de prepago a control (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup1')">Ejemplo</a>)
+Other / Información / Información / Transferencias / Upsale / Migración de prepago a control (❌ sin check a BO) <button type="button" class="btn-accion" onclick="openPopup(event, 'popup1')">👉Ver ejemplo👈</button>
 
 <br><br>
 
 <strong>CONTROL A CONTROL (Plan mayor)</strong><br>
-Other / Información / Información / Transferencias / Upsale / Migración de control a control - Cargo fijo mayor (❌ sin check a BO) (<a href="#" onclick="openPopup(event, 'popup2')">Ejemplo</a>)
+Other / Información / Información / Transferencias / Upsale / Migración de control a control - Cargo fijo mayor (❌ sin check a BO) <button type="button" class="btn-accion" onclick="openPopup(event, 'popup2')">👉Ver ejemplo👈</button>
 </div>
 
-<br />
-<hr />
-<br />
-
-<label style="color: red;"><strong>3. Speech:</strong></label>
+<label class="section-heading"><strong>3. Speech:</strong></label>
 <p><strong><span style="color: #01768b">🎧 Agente: </span></strong><span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de migraciones, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada".</p>
 
 <br>
@@ -385,7 +414,6 @@ Other / Información / Información / Transferencias / Upsale / Migración de co
               onerror="this.onerror=null;this.src='https://placehold.co/700x420/FFDDCC/333333?text=Error+al+cargar+imagen';">
       </div>
     </div>
-  </div>
     
   <div id="copyMessageBox" class="message-box">Resultado copiado al portapapeles</div>
 
@@ -452,10 +480,11 @@ Developed by c&f &copy; 2020 | All rights reserved.
         return;
       }
 
+      const safe = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
       document.querySelector("#resultado").innerHTML =
-        `<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> // Se transfiere al área de migraciones\n\n` +
-        `- Plan actual: <span class="resultado-label">${label1}</span>\n` +
-        `- $$_<span class="resultado-label">${labelID}</span>_&&`;
+        `<span class="resultado-label">${safe(label0)}</span> // <span class="resultado-label">${safe(label0_1)}</span> // Se transfiere al área de migraciones\n\n` +
+        `- Plan actual: <span class="resultado-label">${safe(label1)}</span>\n` +
+        `- $$_<span class="resultado-label">${safe(labelID)}</span>_&&`;
     }
 
     function capitalizeName(input) {
@@ -474,30 +503,48 @@ Developed by c&f &copy; 2020 | All rights reserved.
     }
 
 
-    function copiarResultado() {
-      const resultadoTexto = document.querySelector("#resultado").innerText.trim();
-      if (!resultadoTexto) return;
-      const textarea = document.createElement("textarea");
-      textarea.value = resultadoTexto;
-      document.body.appendChild(textarea);
-      textarea.select();
-      try {
-        document.execCommand("copy");
-      } catch (e) {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(textarea.value);
-        }
-      }
-      document.body.removeChild(textarea);
-      const messageBox = document.getElementById('copyMessageBox');
-      messageBox.classList.add('show');
-      setTimeout(() => { messageBox.classList.remove('show'); }, 3000);
-    }
+     async function copiarResultado() {
+       const obligatorios = ['label0','label0_1','label1','labelID'];
+       let faltan = false;
+       obligatorios.forEach(id => {
+         const campo = document.getElementById(id);
+         const vacio = !campo.value.trim();
+         campo.classList.toggle('input-error', vacio);
+         if (vacio) faltan = true;
+       });
+       if (faltan) {
+         mostrarMensaje('❌ Faltan datos obligatorios. Completa los campos resaltados en rojo.', false);
+         return;
+       }
+       updateResultadoOutput();
+       const resultadoTexto = document.querySelector('#resultado').innerText.trim();
+       let copiado = false;
+       const textarea = document.createElement('textarea');
+       textarea.value = resultadoTexto;
+       textarea.style.position = 'fixed'; textarea.style.opacity = '0';
+       document.body.appendChild(textarea); textarea.select();
+       try { copiado = document.execCommand('copy'); } catch (e) {}
+       textarea.remove();
+       if (!copiado && navigator.clipboard && navigator.clipboard.writeText) {
+         try { await navigator.clipboard.writeText(resultadoTexto); copiado = true; } catch(e) {}
+       }
+       mostrarMensaje(copiado ? '✅ Plantilla completa. Resultado copiado correctamente.' : '❌ No se pudo copiar. Comprueba los permisos del navegador.', copiado);
+     }
+     let mensajeTimer;
+     function mostrarMensaje(texto, exito) {
+       const box = document.getElementById('copyMessageBox');
+       box.textContent = texto;
+       box.style.backgroundColor = exito ? '#137333' : '#c5221f';
+       box.classList.add('show');
+       clearTimeout(mensajeTimer);
+       mensajeTimer = setTimeout(() => box.classList.remove('show'), 3000);
+     }
 
-
-    function limpiarInputs() {
+function limpiarInputs() {
       document.querySelectorAll("input").forEach(input => input.value = "");
       document.querySelector("#label0_1").value = "";
+      document.querySelectorAll('.input-error').forEach(campo => campo.classList.remove('input-error'));
+      document.getElementById('copyMessageBox').classList.remove('show');
       updateResultadoOutput(); 
     }
 
@@ -526,6 +573,10 @@ Developed by c&f &copy; 2020 | All rights reserved.
       a.addEventListener('click', e => e.preventDefault());
     });
 
+    document.querySelectorAll('#label0, #label0_1, #label1, #labelID').forEach(campo => {
+      campo.addEventListener('input', () => campo.classList.remove('input-error'));
+      campo.addEventListener('change', () => campo.classList.remove('input-error'));
+    });
     document.addEventListener('DOMContentLoaded', () => updateResultadoOutput());
   </script>
  </body>

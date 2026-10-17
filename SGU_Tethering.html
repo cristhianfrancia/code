@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Pedido SGU - Tethering</title>
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SGU – Tethering</title>
+<style>
         /* --- REGLA MAESTRA PARA ALINEACIÓN PERFECTA --- */
         *, *::before, *::after {
             box-sizing: border-box !important;
@@ -33,7 +35,7 @@
             font-size: 1.5rem;
             font-weight: bold;
             margin-top: 5px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .icon-animation {
@@ -56,10 +58,159 @@
             color: white;
         }
 
-      @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-      }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ====================================================
+           ESTILO UNIFICADO PARA SUBTÍTULOS DE SECCIÓN
+           ==================================================== */
+        .section-title {
+            color: #0c477e;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 25px 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #dcdcdc;
+        }
+
+        /* ====================================================
+           ESTILOS PARA SECCIÓN: LLENADO PARA ADDRESS
+           ==================================================== */
+        .address-section {
+            margin-bottom: 25px;
+        }
+
+        .address-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+            margin-bottom: 16px;
+        }
+
+        .address-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .address-field label {
+            font-size: 0.85rem;
+            color: #555;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .address-field input {
+            padding: 9px 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            color: #0c477e;
+            outline: none;
+            text-transform: uppercase;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .address-field input::placeholder {
+            text-transform: none;
+            color: #888;
+        }
+
+        .address-field input:focus {
+            border-color: #0c477e;
+            box-shadow: 0 0 5px rgba(12, 71, 126, 0.35);
+        }
+
+        .address-result-box {
+            background-color: #fffde7;
+            border-left: 5px solid #0c477e;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .address-result-box .addr-res-title {
+            font-family: 'Courier New', Consolas, monospace !important;
+            font-weight: bold;
+            font-size: 0.92rem;
+            color: #0c477e;
+            margin-bottom: 4px;
+        }
+
+        .address-result-box .addr-res-text {
+            font-family: 'Courier New', Consolas, monospace !important;
+            font-size: 0.95rem;
+            color: #1d1d1f;
+            word-break: break-word;
+        }
+
+        .address-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-pill {
+            background-color: #0c477e;
+            color: #ffffff;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(12, 71, 126, 0.25);
+        }
+
+        .btn-pill:hover {
+            background-color: #08325a;
+            transform: translateY(-1px);
+        }
+
+        .btn-pill:active {
+            transform: translateY(0);
+        }
+
+        .btn-pill-secondary {
+            background-color: #f1f3f4;
+            color: #0c477e;
+            border: 1px solid #0c477e;
+            box-shadow: none;
+        }
+
+        .btn-pill-secondary:hover {
+            background-color: #e2e6ea;
+        }
+
+        #aviso-address {
+            margin: 10px 0 0 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        @media screen and (max-width: 900px) {
+            .address-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .address-grid {
+                grid-template-columns: 1fr;
+            }
+        }
 
       /* --- ESPACIADO Y ALINEACIÓN PERFECTA DE CAMPOS --- */
       .input-container {
@@ -123,18 +274,19 @@
       }
 
       .ruta-container {
-          background-color: #fff5e9;
-          padding: 10px;
+          background-color: #fffde7;
+          padding: 12px 15px;
           border-radius: 6px;
           margin: 10px 0;
-          border-left: 4px solid #fd8261;
-          font-size: 0.9rem;
-          color: #333;
+          border-left: 4px solid #0c477e;
+          font-size: 0.92rem;
+          color: #1d1d1f;
       }
 
       hr {
-          border: 1px solid #fd8261;
-          margin: 10px 0;
+          border: 0;
+          border-top: 1px solid #dcdcdc;
+          margin: 15px 0;
       }
 
       button {
@@ -164,10 +316,52 @@
           outline: none;
       }
 
+      .btn-secundario {
+          background-color: #f1f3f4;
+          color: #0c477e;
+          border: 1px solid #0c477e;
+      }
+
+      .btn-secundario:hover {
+          background-color: #e2e6ea;
+      }
+
+      /* ✨ BOTÓN DEL LISTADO 3G (pequeño y rojo) ✨ */
+      button.btn-3g {
+          background-color: #c5221f;
+          color: white;
+          padding: 3px 10px;
+          border: none;
+          border-radius: 12px;
+          cursor: pointer;
+          font-size: 0.8rem;
+          font-weight: bold;
+          margin: 0 0 0 4px;
+          box-shadow: 0 2px 4px rgba(197, 34, 31, 0.3);
+      }
+
+      button.btn-3g:hover {
+          background-color: #a31a17;
+      }
+
+      /* ✨ AVISO CUANDO SE SELECCIONA 3G ✨ */
+      #aviso-3g {
+          display: none;
+          margin: 6px 0 10px 0;
+          padding: 10px 12px;
+          border-radius: 6px;
+          background-color: #fce8e6;
+          border: 1px solid #c5221f;
+          border-left: 4px solid #c5221f;
+          color: #c5221f;
+          font-size: 0.9rem;
+          font-weight: bold;
+      }
+
       #resultado {
           margin: 10px 0;
           font-size: 0.95rem;
-          background-color: #f8f9fa;
+          background-color: #fffde7;
           padding: 12px;
           border-left: 4px solid #0c477e;
           border-radius: 0 6px 6px 0;
@@ -219,7 +413,7 @@
       }
 
       .link-ejemplo {
-          color: #fd8261;
+          color: #0c477e;
           text-decoration: none;
           font-size: 0.85rem;
           font-weight: bold;
@@ -229,7 +423,27 @@
           text-decoration: underline;
       }
 
-      /* --- POPUPS DE IMÁGENES UNIFICADOS --- */
+        /* --- BOTONES PEQUEÑOS EN FORMULARIO --- */
+        .btn-accion {
+            background-color: #f1f3f4;
+            color: #0c477e;
+            border: 1px solid #cdd0d5;
+            padding: 3px 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-accion:hover {
+            background-color: #e2e6ea;
+            border-color: #0c477e;
+        }
+
+
+      /* --- POPUPS DE IMÁGENES --- */
       .popup-overlay {
         display: none;
         position: fixed;
@@ -244,6 +458,10 @@
       }
 
       .popup-overlay img {
+        display: inline-block;
+        width: auto;
+        height: auto;
+        object-fit: contain;
         max-width: 90%;
         max-height: 85vh;
         margin-top: 5vh;
@@ -251,7 +469,7 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       }
 
-      .close-button {
+      .popup-overlay .close-button, .close-button8 {
         position: absolute;
         top: 20px;
         right: 20px;
@@ -265,330 +483,510 @@
         border-radius: 5px;
         transition: transform 0.2s ease;
       }
-      .close-button:hover {
+      .popup-overlay .close-button:hover, .close-button8:hover {
           transform: scale(1.05);
       }
 
-    </style>
+    
+/* Ajustes específicos Tethering */
+.code-container input {max-width:100%;text-align:center;font-weight:bold;padding:5px 8px;border:1px solid #cdd0d5;border-radius:5px;}
+#label0 {width:160px;} #label0_1 {width:260px;}
+@media(max-width:600px){.container{padding:18px 14px}.code-container input{margin:4px 0}}
+</style>
 </head>
 <body oncontextmenu="return false"> 
-  
-  <div class="container">
-    <div class="icon-animation"></div>
+<div class="container">
+<div class="icon-animation"></div>
+<h2 class="elegant-title">Pedido SGU: Tethering</h2>
+    <!-- ==========================================
+         SECCIÓN: LLENADO PARA ADDRESS (CON UBIGEO DINÁMICO)
+         ========================================== -->
+    <div class="address-section">
+        <h3 class="section-title" style="margin-top: 0;">Llenado para Address:</h3>
+        
+        <div class="address-grid">
+            <div class="address-field">
+                <label for="addr_direccion">Dirección del problema,</label>
+                <input type="text" id="addr_direccion" class="addr-input" placeholder="Calle, Número, zona, etc." list="listaDireccion" />
+                <datalist id="listaDireccion">
+                    <option value="NO BRINDA DIRECCIÓN"></option>
+                </datalist>
+            </div>
+            <div class="address-field">
+                <label for="addr_referencia">Referencia del problema,</label>
+                <input type="text" id="addr_referencia" class="addr-input" placeholder="Mercados, paraderos, etc." list="listaReferencia" />
+                <datalist id="listaReferencia">
+                    <option value="NO BRINDA REFERENCIA"></option>
+                    <option value="NO OBLIGATORIO"></option>
+                </datalist>
+            </div>
+            <div class="address-field">
+                <label for="addr_departamento">Departamento -</label>
+                <input type="text" id="addr_departamento" class="addr-input" placeholder="Cargando lista..." list="listaDepartamento" />
+                <datalist id="listaDepartamento">
+                    <option value="NO BRINDA DEPARTAMENTO"></option>
+                </datalist>
+            </div>
+            <div class="address-field">
+                <label for="addr_provincia">Provincia -</label>
+                <input type="text" id="addr_provincia" class="addr-input" placeholder="Provincia" list="listaProvincia" />
+                <datalist id="listaProvincia">
+                    <option value="NO BRINDA PROVINCIA"></option>
+                </datalist>
+            </div>
+            <div class="address-field">
+                <label for="addr_distrito">Distrito</label>
+                <input type="text" id="addr_distrito" class="addr-input" placeholder="Distrito" list="listaDistrito" />
+                <datalist id="listaDistrito">
+                    <option value="NO BRINDA DISTRITO"></option>
+                </datalist>
+            </div>
+        </div>
 
-    <h2 class="elegant-title">Pedido SGU: Tethering</h2>
+        <div class="address-result-box">
+            <div class="addr-res-title">Resultado Address:</div>
+            <div id="resultado-address" class="addr-res-text">Resultado aparecerá aquí...</div>
+        </div>
 
-    <label style="color: red; font-size: 1.1rem;"><strong>1. Plantilla:</strong></label><br><br>
+        <div class="address-buttons">
+            <button type="button" class="btn-pill" onclick="copiarAddress()">📋 Copiar Address</button>
+            <button type="button" class="btn-pill btn-pill-secondary" onclick="limpiarAddress()">🗑️ Borrar Address</button>
+        </div>
+        <div id="aviso-address"></div>
+    </div>
 
-    <center class="code-container">
-    <p>
-    <input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="text-align: center; font-weight: bold; width: 160px; color: #0c477e; border: 1px solid #ccc; padding: 4px; border-radius: 4px;" />
-// <input type="text" id="label0_1" placeholder="(Problema del cliente)" style="text-align: center; width: 250px; color: #0c477e; border: 1px solid #ccc; padding: 4px; border-radius: 4px;" />
+
+
+<h3 class="section-title">1. Plantilla:</h3>
+<p></p>
+
+<center class="code-container">
+<p>
+<input type="number" id="label0" oninput="checkLength(this)" placeholder="(Número del que llama)" style="color: #007BFF;" />
+// <input type="text" id="label0_1" oninput="updateResultadoOutput()" placeholder="(Problema del cliente)" style="color: #007BFF;" />
 // Se genera Pedido SGU
-    </p>
-    </center>
+</p>
+</center>
 
-    <div class="input-container">
-    <label for="label_Linea">- Línea:</label>
-    <input type="text" id="label_Linea" placeholder="(Línea del inconveniente)" />
-    </div>
+<div class="input-container">
+<label for="label_Linea" id="lbl_label_Linea">- Línea:</label>
+<input type="text" id="label_Linea" oninput="updateResultadoOutput()" placeholder="(Línea del inconveniente)" style="color: #007BFF;" />
+</div>
 
-    <div class="input-container">
-    <label for="label_Plan">- Plan:</label>
-    <input type="text" id="label_Plan" placeholder="(Plan que figura en Customer Care)" />
-    </div>
+<div class="input-container">
+<label for="label_Plan" id="lbl_label_Plan">- Plan:</label>
+<input type="text" id="label_Plan" oninput="updateResultadoOutput()" placeholder="(Plan que figura en Customer Care)" style="color: #007BFF;" />
+</div>
 
-    <div class="input-container">
-      <label for="label_FechaHora">- Fecha y hora del inconveniente:</label>
-      <input type="datetime-local" id="label_FechaHora" />
-    </div>
+<div class="input-container">
+  <label for="label_FechaHora" id="lbl_label_FechaHora">- Fecha y hora del inconveniente:</label>
+  <input type="datetime-local" id="label_FechaHora" oninput="updateResultadoOutput()" />
+</div>
 
-    <div class="input-container">
-      <label for="label_Cobertura">- Indicador de cobertura:</label>
-      <select id="label_Cobertura">
-        <option value="">Seleccionar</option>
-        <option value="-">-</option>
-        <option value="E">E</option>
-        <option value="3G">3G</option>
-        <option value="H">H</option>
-        <option value="H+">H+</option>
-       <option value="4G LTE">4G LTE</option>
-       <option value="5G">5G</option>
-      </select>
-    </div>
+<div class="input-container">
+  <label for="label_Cobertura" id="lbl_label_Cobertura">- Indicador de cobertura:</label>
+  <select id="label_Cobertura" onchange="updateResultadoOutput()">
+    <option value="">Seleccionar</option>
+            <option value="5G">5G</option>
+            <option value="4G">4G</option>
+            <option value="3G">3G (3.5G | H | H+)</option>
+            <option value="E">E</option>
+  </select>
+</div>
 
-    <div class="input-container">
-    <label for="label_BarraSeñal">- Barra de Señal:</label>
-    <input type="text" id="label_BarraSeñal" placeholder="(Lo que figura en la barra)" />
-    </div>
+<div class="input-container">
+<label for="label_BarraSeñal" id="lbl_label_BarraSeñal">- Barra de Señal:</label>
+<input type="text" id="label_BarraSeñal" oninput="updateResultadoOutput()" placeholder="(Lo que figura en la barra)" style="color: #007BFF;" />
+</div>
 
-    <div class="input-container">
-      <label for="label_TipoInconveniente">- Tipo de inconveniente:</label>
-      <select id="label_TipoInconveniente">
-        <option value="">Seleccionar</option>
-        <option value="-">-</option>
-        <option value="Internet">Internet</option>
-        <option value="Llamadas">Llamadas</option>
-        <option value="SMS">SMS</option>
-        <option value="Señal">Señal</option>
-      </select>
-    </div>
+<div class="input-container">
+  <label for="label_TipoInconveniente" id="lbl_label_TipoInconveniente">- Tipo de inconveniente:</label>
+  <select id="label_TipoInconveniente" onchange="updateResultadoOutput()">
+    <option value="">Seleccionar</option>
+    <option value="Internet">Internet</option>
+  </select>
+</div>
 
-    <div class="input-container">
-    <label for="label_EstadoLinea">- Estado de línea:</label>
-    <input type="text" id="label_EstadoLinea" />
-    </div>
+<div class="input-container">
+<label for="label_EstadoLinea" id="lbl_label_EstadoLinea">- Estado de línea:</label>
+<input type="text" id="label_EstadoLinea" oninput="updateResultadoOutput()" style="color: #007BFF;" />
+</div>
 
-    <div class="input-container">
-    <label for="label_Parametros">- Parámetros correctos (Barring): </label>
-    <input type="text" id="label_Parametros" placeholder="(Barring)" />
-    </div>
+<div class="input-container">
+<label for="label_Parametros" id="lbl_label_Parametros">- Parámetros correctos (Barring): </label>
+<input type="text" id="label_Parametros" oninput="updateResultadoOutput()" placeholder="(Barring)" style="color: #007BFF;" />
+</div>
 
-    <div class="input-container">
-    <label for="label_Direccion">- Dirección exacta del inconveniente: </label>
-    <input type="text" id="label_Direccion" placeholder="(Departamento, Provincia, Distrito, Dirección del inconveniente)" />
-    </div>
+<div class="input-container">
+<label for="label_Direccion" id="lbl_label_Direccion">- Dirección exacta del inconveniente: </label>
+<input type="text" id="label_Direccion" oninput="updateResultadoOutput()" placeholder="(Departamento, Provincia, Distrito, Dirección del inconveniente)" style="color: #007BFF;" />
+</div>
 
-    <div class="input-container">
-    <label for="label_GoogleEarth">- Coordenadas Google Earth: <a href="#" class="link-ejemplo" onclick="return showPopup('imagePopupMaps')">👉Clic para ver ejemplo👈</a></label>
-    <input type="text" id="label_GoogleEarth" placeholder="(Ejemplo: -12.111846867998418, -77.00713689016001)">
-    </div>
+<div class="input-container">
+<label for="label_GoogleEarth" id="lbl_label_GoogleEarth">- Coordenadas Google Earth: <button type="button" class="btn-accion" onclick="return showPopup('imagePopupMaps')">👉Ver ejemplo👈</button></label>
+<input type="text" id="label_GoogleEarth" oninput="updateResultadoOutput()" placeholder="(Ejemplo: -12.111846867998418, -77.00713689016001)" style="color: #007BFF;">
+</div>
 
-    <div id="imagePopupMaps" class="popup-overlay">
-    <button class="close-button" onclick="hidePopup('imagePopupMaps')">CERRAR</button>
-    <img src="https://i.postimg.cc/fyJXFWkg/Google-Maps.png">
-    </div>
+<div id="imagePopupMaps" class="popup-overlay" role="dialog" aria-modal="true" aria-label="Ejemplo Google Earth">
+<button class="close-button" type="button" onclick="hidePopup('imagePopupMaps')">CERRAR</button>
+<img src="https://i.postimg.cc/fyJXFWkg/Google-Maps.png">
+</div>
 
-    <div class="input-container">
-    <label for="label_DetalleInc">- Detalle del inconveniente: </label>
-    <input type="text" id="label_DetalleInc" placeholder="(Descripción del problema)" />
-    </div>
+<div class="input-container">
+<label for="label_DetalleInc" id="lbl_label_DetalleInc">- Detalle del inconveniente: </label>
+<input type="text" id="label_DetalleInc" oninput="updateResultadoOutput()" placeholder="(Descripción del problema)" style="color: #007BFF;" />
+</div>
 
-    <div class="input-container">
-    <label for="labelID">- ID de llamada:</label>
-    <input type="text" id="labelID" placeholder="(Sin $$_ _&&)" />
-    </div>
 
-    <br>
-    
-    <p id="resultado"></p>
-    <div id="aviso-status"></div>
+<div class="input-container">
+<label for="labelID" id="lbl_labelID">- ID de llamada:</label>
+<input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="(Sin $$_ _&&)" style="color: #007BFF;" />
+</div>
 
-    <button onclick="copiarResultado()">Copiar</button>
-    <button onclick="limpiarInputs()">Borrar</button>
+<p id="resultado" class="dark-mode-text" onselectstart="return false;"></p>
+<div id="aviso-status"></div>
 
-    <br />
-    <br />
+<button onclick="copiarResultado()">Copiar</button>
+<button onclick="limpiarInputs()">Borrar</button>
 
-    <label style="color: red; font-size: 1.1rem;"><strong>2. Tipificación:</strong></label>
+<br />
+<br />
 
-    <div class="ruta-container">
-    - <strong>Address:</strong> DIRECCIÓN DEL PROBLEMA, REFERENCIA DEL PROBLEMA, LUG@R: DEPARTAMENTO - PROVINCIA - DISTRITO - PERÚ
-    <br><br>
-    - <strong>Ruta:</strong> Other / Pedido SGU / Pedido SGU / Problemas SGU / Calidad / Sin servicio y está al día en sus pagos (con check a BO ✅)
-    </div>
+<h3 class="section-title">2. Tipificación:</h3>
 
-    <br />
-    <hr />
-    <br />
+<div class="ruta-container">
+- <strong>Address:</strong> DIRECCIÓN DEL PROBLEMA, REFERENCIA DEL PROBLEMA, LUG@R: DEPARTAMENTO - PROVINCIA - DISTRITO - PERÚ
+<br><br>
+- <strong>Ruta:</strong> Other / Pedido SGU / Pedido SGU / Problemas SGU / Calidad / Sin servicio y está al día en sus pagos (con check a BO ✅)
+</div>
 
-    <label style="color: red; font-size: 1.1rem;"><strong>3. Speech:</strong></label>
-    <p style="margin-top: 5px;"><strong><span style="color: #0c477e">🎧 Agente: </span></strong><span style="color: #0c477e">(Nombre del cliente)</span>, le confirmamos que hemos recibido y registrado su pedido con el código <span style="color: #0c477e">(CASSXXXXXXXXXX) o (CAPVXXXXXXXXXX)</span>. El plazo estimado de atención es de 03 días calendario. Nuestra respuesta será enviada vía mensaje de texto en 1 día hábil luego del plazo de atención.</p>
 
-    <label style="color: red; font-size: 1.1rem;"><strong>4. Despedida:</strong></label>
-    <p style="margin-top: 5px;"><strong><span style="color: #0c477e">🎧 Agente: </span></strong>Eso sería todo de mi parte, Muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada. </p>
+<h3 class="section-title">3. Speech:</h3>
+<p><strong><span style="color: #01768b">🎧 Agente: </span></strong><span style="color: #007BFF">(Nombre del cliente)</span>, le confirmamos que hemos recibido y registrado su pedido con el código <span style="color: #007BFF">(CASSXXXXXXXXXX) o (CAPVXXXXXXXXXX)</span>. El plazo estimado de atención es de 03 días calendario. Nuestra respuesta será enviada vía mensaje de texto en 1 día hábil luego del plazo de atención.</p>
 
-    <br><br>
-    <strong>Ejemplo de código para Pedido SGU:</strong>
-    <br><br>
-    <img src="https://i.postimg.cc/Y2FYwHwH/COD-Pedido-SGU.png" style="max-width: 100%; border-radius: 8px;">
+<h3 class="section-title">4. Despedida:</h3>
+<p><strong><span style="color: #01768b">🎧 Agente: </span></strong>Eso sería todo de mi parte, Muchas gracias por comunicarse con Bitel. En breve recibirá un mensaje para calificar la atención brindada. </p>
 
-    <br><br><br><br>
-    <div class="footer-autor">
-    Developed by <strong>Cristhian Francia</strong> &copy; 2026 | All rights reserved.
-    </div>
-  </div>
+<br><br>
+<strong>Ejemplo de código para Pedido SGU:</strong>
+<br><br>
+<img src="https://i.postimg.cc/Y2FYwHwH/COD-Pedido-SGU.png" style="max-width:100%;height:auto;border-radius:8px;">
+<br><br>
 
-  <script>
-    // Protecciones
-    document.addEventListener('contextmenu', event => {
-        event.preventDefault();
-        alert('El menú contextual (clic derecho) está deshabilitado.'); 
-    });
 
-    document.onkeydown = function(e) {
-        if (e.key === 'F12' || e.keyCode === 123) {
-            alert('Las herramientas de desarrollador están deshabilitadas.'); 
-            return false;
+<div class="footer-autor">
+Developed by <strong>Cristhian Francia</strong> &copy; 2026 | All rights reserved.
+</div>
+</div>
+
+<script>
+window.addEventListener('load', () => {
+  const fechaLimite = new Date('2026-12-30T23:59:59');
+  if (new Date() > fechaLimite) {
+    document.body.innerHTML = "<h1 style='text-align:center;color:red;margin-top:20%;font-family:Calibri,sans-serif'>Revisar la variable de mantenimiento</h1><h5 style='text-align:center;color:red'>(Requiere actualización)</h5>";
+  } else { cargarUbigeo(); }
+});
+    // Datos de tu Google Sheets y Apps Script
+    const SHEET_ID_UBIGEO = "153CjvlmWPMsBZbAxoDhcfpxQJ_mm9li26JTQjB3s9bA";
+    const NOMBRE_HOJA_UBIGEO = "Ubigeo";
+    const CONST_URL_WEB_APP = "https://script.google.com/macros/s/AKfycbzHHcr6MJDtbcbc3tJiO1hGESMdf9NZDagTAPuDJuWgyg_AiYqxCL3k_wLVdZu3PlLCsQ/exec";
+
+    // Enlace del listado (Excel en Google Sheets) de zonas 3G
+    const URL_LISTADO_3G = 'https://docs.google.com/spreadsheets/d/1oLxGsVnzkwRxWpPB5I2Rp3L6UBWCaeRV/edit?usp=sharing&ouid=103539618879236828134&rtpof=true&sd=true';
+
+    /* ====================================================
+       CONEXIÓN HÍBRIDA AL EXCEL ONLINE PARA UBIGEO
+       ==================================================== */
+    var ubigeoData = [];
+    var mapaUbigeo = {};
+    var ubigeoCargado = false;
+
+    function getUpperValue(id) {
+        var el = document.getElementById(id);
+        if (!el) return '';
+        el.value = (el.value || '').toUpperCase();
+        return el.value.trim();
+    }
+
+    window.googleSheetUbigeoCallback = function(json) {
+        if (ubigeoCargado || !json || !json.table || !json.table.rows) return;
+        var rows = json.table.rows;
+        var result = [];
+        for (var i = 0; i < rows.length; i++) {
+            var c = rows[i].c;
+            if (!c) continue;
+            var dep = (c[0] && c[0].v) ? String(c[0].v) : '';
+            var prov = (c[1] && c[1].v) ? String(c[1].v) : '';
+            var dist = (c[2] && c[2].v) ? String(c[2].v) : '';
+            if (dep.toUpperCase() === 'DEPARTAMENTO') continue;
+            if (dep && prov && dist) {
+                result.push({ dep: dep, prov: prov, dist: dist });
+            }
         }
-        if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I' || e.keyCode === 74 || e.key === 'J' || e.keyCode === 67 || e.key === 'C')) {
-            return false;
-        }
-        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
-            return false;
+        if (result.length > 0) {
+            ubigeoCargado = true;
+            initUbigeo(result);
         }
     };
 
-    window.onload = function() {
-        let fechaLimite = new Date("2026-12-30T23:59:59");
-        let fechaActual = new Date();
-        if (fechaActual > fechaLimite) {
-            document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%; font-family: Calibri, sans-serif;'>Revisar la variable de mantenimiento<br></h1><h5 style='text-align:center; color:red; font-family: Calibri, sans-serif;'>(Requiere actualización)</h5>";
+    function callBackendUbigeo(onSuccess, onError) {
+        if (typeof google !== 'undefined' && google.script && google.script.run) {
+            google.script.run.withSuccessHandler(function(res) {
+                ubigeoCargado = true;
+                onSuccess(res);
+            }).getUbigeoData();
+            return;
         }
-    };
 
-    // Arreglo con los 15 inputs exactos para esta plantilla
-    const inputsArray = [
-        document.querySelector("#label0"),
-        document.querySelector("#label0_1"),
-        document.querySelector("#label_Linea"),
-        document.querySelector("#label_Plan"),
-        document.querySelector("#label_FechaHora"),
-        document.querySelector("#label_Cobertura"),
-        document.querySelector("#label_BarraSeñal"),
-        document.querySelector("#label_TipoInconveniente"),
-        document.querySelector("#label_EstadoLinea"),
-        document.querySelector("#label_Parametros"),
-        document.querySelector("#label_Direccion"),
-        document.querySelector("#label_GoogleEarth"),
-        document.querySelector("#label_DetalleInc"),
-        document.querySelector("#labelID")
-    ];
+        var script = document.createElement('script');
+        script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID_UBIGEO}/gviz/tq?tqx=responseHandler:googleSheetUbigeoCallback&sheet=${encodeURIComponent(NOMBRE_HOJA_UBIGEO)}`;
+        document.body.appendChild(script);
 
-    const resultadoOutput = document.querySelector("#resultado");
-    const avisoStatus = document.querySelector("#aviso-status");
+        fetch(CONST_URL_WEB_APP, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: 'getUbigeoData' }),
+            redirect: 'follow'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!ubigeoCargado && data && data.result && data.result.length > 0) {
+                ubigeoCargado = true;
+                onSuccess(data.result);
+            }
+        })
+        .catch(err => {
+            if (onError) onError(err);
+        });
+    }
 
-    // Asignar eventos globales a todos los campos
-    inputsArray.forEach(input => {
-        const updateEvent = input.tagName === 'SELECT' ? 'change' : 'input';
-        
-        input.addEventListener(updateEvent, function() {
-            this.classList.remove('input-error'); 
-            updateResultadoOutput(); 
+    function poblarDatalist(id, opts) {
+        var dl = document.getElementById(id);
+        if (!dl) return;
+        dl.innerHTML = '';
+        var ph = (id === 'listaDepartamento') ? 'NO BRINDA DEPARTAMENTO' :
+                 (id === 'listaProvincia' ? 'NO BRINDA PROVINCIA' : 'NO BRINDA DISTRITO');
+        var opt0 = document.createElement('option');
+        opt0.value = ph;
+        dl.appendChild(opt0);
+
+        (opts || []).forEach(t => {
+            var o = document.createElement('option');
+            o.value = t;
+            dl.appendChild(o);
+        });
+    }
+
+    function initUbigeo(data) {
+        ubigeoData = data || [];
+        mapaUbigeo = {};
+        ubigeoData.forEach(r => {
+            var d = (r.dep || '').toUpperCase().trim(),
+                p = (r.prov || '').toUpperCase().trim(),
+                di = (r.dist || '').toUpperCase().trim();
+            if (!d || !p || !di) return;
+            if (!mapaUbigeo[d]) mapaUbigeo[d] = {};
+            if (!mapaUbigeo[d][p]) mapaUbigeo[d][p] = [];
+            if (mapaUbigeo[d][p].indexOf(di) === -1) mapaUbigeo[d][p].push(di);
+        });
+        poblarDatalist('listaDepartamento', Object.keys(mapaUbigeo).sort());
+        document.getElementById('addr_departamento').placeholder = "Departamento";
+    }
+
+    function onDepartamentoChange() {
+        var d = getUpperValue('addr_departamento');
+        var provs = (d && mapaUbigeo[d]) ? Object.keys(mapaUbigeo[d]).sort() : [];
+        document.getElementById('addr_provincia').value = '';
+        document.getElementById('addr_distrito').value = '';
+        poblarDatalist('listaProvincia', provs);
+        poblarDatalist('listaDistrito', []);
+        updateAddressOutput();
+    }
+
+    function onProvinciaChange() {
+        var d = getUpperValue('addr_departamento'),
+            p = getUpperValue('addr_provincia');
+        var dists = (d && p && mapaUbigeo[d] && mapaUbigeo[d][p]) ? mapaUbigeo[d][p].slice().sort() : [];
+        document.getElementById('addr_distrito').value = '';
+        poblarDatalist('listaDistrito', dists);
+        updateAddressOutput();
+    }
+
+    function cargarUbigeo() {
+        callBackendUbigeo(initUbigeo, function(err) {
+            console.log("Aviso Ubigeo:", err);
+            document.getElementById('addr_departamento').placeholder = "Departamento";
+        });
+        setTimeout(() => {
+            document.getElementById('addr_departamento').placeholder = "Departamento";
+        }, 4000);
+    }
+
+    /* ====================================================
+       LÓGICA EN TIEMPO REAL PARA LLENADO DE ADDRESS
+       ==================================================== */
+    document.querySelectorAll('.addr-input').forEach(input => {
+        input.addEventListener('input', function() {
+            this.classList.remove('input-error');
+            avisoAddress.style.display = 'none';
+            updateAddressOutput();
         });
     });
 
-    // Funciones de Formateo
-    function capitalizeFirstLetter(string) {
-      if (!string) return "";
-      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-    }
-
-    function capitalizeName(input) {
-      if (!input) return "";
-      return input
-        .toLowerCase()
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
-    }
-
-    function formatDateToDDMMYYYYHHMM(dateString) {
-      if (!dateString) return "";
-      const dateParts = dateString.split("T"); 
-      const date = dateParts[0];
-      const time = dateParts[1] ? dateParts[1].slice(0, 5) : ""; 
-      const datePartsFormatted = date.split("-");
-      if (datePartsFormatted.length < 3) return dateString; // Fallback
-      const day = datePartsFormatted[2];
-      const month = datePartsFormatted[1];
-      const year = datePartsFormatted[0];
-      return `${day}/${month}/${year} ${time}`;
-    }
-
-    function updateResultadoOutput() {
-        const label0 = inputsArray[0].value;
-        const label0_1 = capitalizeFirstLetter(inputsArray[1].value);
-        const label_Linea = inputsArray[2].value;
-        const label_Plan = capitalizeName(inputsArray[3].value);
-        const label_FechaHora = formatDateToDDMMYYYYHHMM(inputsArray[4].value);
-        const label_Cobertura = inputsArray[5].value;
-        const label_BarraSeñal = inputsArray[6].value;
-        const label_TipoInconveniente = inputsArray[7].value;
-        const label_EstadoLinea = inputsArray[8].value;
-        const label_Parametros = inputsArray[9].value;
-        const label_Direccion = inputsArray[10].value;
-        const label_GoogleEarth = inputsArray[11].value;
-        const label_DetalleInc = inputsArray[12].value;
-        const labelID = inputsArray[13].value;
-
-        resultadoOutput.innerHTML =`<span class="resultado-label">${label0}</span> // <span class="resultado-label">${label0_1}</span> // Se genera Pedido SGU
-
-- Línea: <span class="resultado-label">${label_Linea}</span>
-- Plan: <span class="resultado-label">${label_Plan}</span>
-- Fecha y hora del inconveniente: <span class="resultado-label">${label_FechaHora}</span>
-- Indicador de cobertura (3G/4G): <span class="resultado-label">${label_Cobertura}</span>
-- Barras de señal: <span class="resultado-label">${label_BarraSeñal}</span>
-- Tipo de inconveniente: <span class="resultado-label">${label_TipoInconveniente}</span>
-- Estado de línea: <span class="resultado-label">${label_EstadoLinea}</span>
-- Parámetros correctos (Barring): <span class="resultado-label">${label_Parametros}</span>
-- Dirección exacta del inconveniente: <span class="resultado-label">${label_Direccion}</span>
-- Coordenadas Google Earth: <span class="resultado-label">${label_GoogleEarth}</span>
-- Detalle del inconveniente: <span class="resultado-label">${label_DetalleInc}</span>
-- $$_<span class="resultado-label">${labelID}</span>_&&`;
-    }
-
-      function checkLength(input) {
-        if (input.value.length > 9) {
-          input.value = input.value.slice(0, 9);
+    document.getElementById('addr_departamento').addEventListener('input', function() {
+        var d = getUpperValue('addr_departamento');
+        if (mapaUbigeo[d]) {
+            poblarDatalist('listaProvincia', Object.keys(mapaUbigeo[d]).sort());
         }
-      }
+    });
+    document.getElementById('addr_departamento').addEventListener('change', onDepartamentoChange);
 
-      /* --- FUNCIÓN COPIAR CON VALIDACIÓN Y RESALTADO DE ERRORES --- */
-      function copiarResultado() {
-          let hayErrores = false;
+    document.getElementById('addr_provincia').addEventListener('input', function() {
+        var d = getUpperValue('addr_departamento');
+        var p = getUpperValue('addr_provincia');
+        if (mapaUbigeo[d] && mapaUbigeo[d][p]) {
+            poblarDatalist('listaDistrito', mapaUbigeo[d][p].slice().sort());
+        }
+    });
+    document.getElementById('addr_provincia').addEventListener('change', onProvinciaChange);
 
-          // Revisamos cada input, si está vacío le ponemos la clase roja
-          inputsArray.forEach(input => {
-              if (!input.value.trim()) {
-                  input.classList.add('input-error');
-                  hayErrores = true;
-              } else {
-                  input.classList.remove('input-error');
-              }
-          });
+    const resultadoAddressOutput = document.querySelector("#resultado-address");
+    const avisoAddress = document.querySelector("#aviso-address");
 
-          if (hayErrores) {
-              avisoStatus.textContent = "❌ Error: Faltan datos obligatorios. Por favor completa los campos resaltados en rojo.";
-              avisoStatus.className = "aviso-error";
-              avisoStatus.style.display = "block";
-              return;
-          }
+    function updateAddressOutput() {
+        const dir = getUpperValue('addr_direccion');
+        const ref = getUpperValue('addr_referencia');
+        const dep = getUpperValue('addr_departamento');
+        const prov = getUpperValue('addr_provincia');
+        const dist = getUpperValue('addr_distrito');
 
-          const resultadoTexto = resultadoOutput.innerText.trim();
-          const textarea = document.createElement("textarea");
-          textarea.value = resultadoTexto;
-          document.body.appendChild(textarea);
-          textarea.select();
-          document.execCommand("copy");
-          document.body.removeChild(textarea);
-          
-          avisoStatus.textContent = "✅ ¡Copiado excelente! Los datos se han estructurado de forma correcta en el portapapeles.";
-          avisoStatus.className = "aviso-exito";
-          avisoStatus.style.display = "block";
-      }
+        if (!dir && !ref && !dep && !prov && !dist) {
+            resultadoAddressOutput.textContent = "Resultado aparecerá aquí...";
+            return;
+        }
 
-      function limpiarInputs() {
-        inputsArray.forEach(input => {
+        resultadoAddressOutput.textContent = `${dir}, ${ref}, LUG@R: ${dep} - ${prov} - ${dist} - PERÚ`;
+    }
+
+    function copiarAddress() {
+        let faltanDatos = false;
+        const addrInputs = document.querySelectorAll('.addr-input');
+
+        addrInputs.forEach(input => {
+            if (!input.value.trim()) {
+                input.classList.add('input-error');
+                faltanDatos = true;
+            } else {
+                input.classList.remove('input-error');
+            }
+        });
+
+        if (faltanDatos) {
+            avisoAddress.textContent = "❌ Error: Completa todos los campos de Address resaltados en rojo.";
+            avisoAddress.className = "aviso-error";
+            avisoAddress.style.display = "block";
+            return;
+        }
+
+        const textoACopiar = resultadoAddressOutput.textContent.trim();
+        const textarea = document.createElement("textarea");
+        textarea.value = textoACopiar;
+        document.body.appendChild(textarea);
+        textarea.select();
+        const copiado = document.execCommand("copy");
+        document.body.removeChild(textarea);
+        if (!copiado) {
+            avisoAddress.textContent = "❌ No se pudo copiar Address. Intenta nuevamente.";
+            avisoAddress.className = "aviso-error";
+            avisoAddress.style.display = "block";
+            return;
+        }
+
+        avisoAddress.textContent = "✅ ¡Address copiado correctamente al portapapeles!";
+        avisoAddress.className = "aviso-exito";
+        avisoAddress.style.display = "block";
+    }
+
+    function limpiarAddress() {
+        document.querySelectorAll('.addr-input').forEach(input => {
             input.value = "";
-            input.classList.remove('input-error'); 
+            input.classList.remove('input-error');
         });
-        
-        resultadoOutput.innerHTML = "";
-        avisoStatus.style.display = "none";
-        avisoStatus.innerHTML = "";
-      }
+        poblarDatalist('listaProvincia', []);
+        poblarDatalist('listaDistrito', []);
+        resultadoAddressOutput.textContent = "Resultado aparecerá aquí...";
+        avisoAddress.style.display = "none";
+        avisoAddress.innerHTML = "";
+    }
 
-  /* --- FUNCIÓN UNIFICADA DE POPUPS --- */
-  function showPopup(id) {
-    event.preventDefault();
-    document.getElementById(id).style.display = "block";
-    return false;
-  }
-  function hidePopup(id) {
-    document.getElementById(id).style.display = "none";
-  }
 
-  </script>
+
+const resultadoOutput = document.getElementById('resultado');
+const avisoStatus = document.getElementById('aviso-status');
+const fields = [
+ ['label0','Número del que llama'],['label0_1','Problema del cliente'],
+ ['label_Linea','Línea'],['label_Plan','Plan'],['label_FechaHora','Fecha y hora del inconveniente'],
+ ['label_Cobertura','Indicador de cobertura'],['label_BarraSeñal','Barra de Señal'],
+ ['label_TipoInconveniente','Tipo de inconveniente'],['label_EstadoLinea','Estado de línea'],
+ ['label_Parametros','Parámetros correctos (Barring)'],['label_Direccion','Dirección exacta del inconveniente'],
+ ['label_GoogleEarth','Coordenadas Google Earth'],['label_DetalleInc','Detalle del inconveniente'],['labelID','ID de llamada']
+];
+function val(id) {return document.getElementById(id)?.value.trim() || '';}
+function safe(value) {return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function vHTML(id, value) {return `<span class="resultado-label">${safe(value === undefined ? val(id) : value)}</span>`;}
+function capitalizeFirstLetter(s) {return s ? s[0].toUpperCase()+s.slice(1).toLowerCase() : '';}
+function capitalizeName(s) {return s.toLowerCase().split(' ').map(w => w ? w[0].toUpperCase()+w.slice(1):'').join(' ');}
+function formatDateToDDMMYYYYHHMM(s) {if(!s)return '';const [d,t='']=s.split('T');const [y,m,day]=d.split('-');return `${day}/${m}/${y} ${t.slice(0,5)}`;}
+let plantillaIniciada = false;
+function updateResultadoOutput() {
+ // El resultado se activa únicamente cuando el agente interactúa con un campo.
+ if (!plantillaIniciada || !fields.some(([id]) => val(id) !== '')) {
+  resultadoOutput.textContent = '';
+  return;
+ }
+ const rows = [
+ ['Línea',vHTML('label_Linea')],['Plan',vHTML('label_Plan',capitalizeName(val('label_Plan')))],
+ ['Fecha y hora del inconveniente',vHTML('label_FechaHora',formatDateToDDMMYYYYHHMM(val('label_FechaHora')))],
+ ['Indicador de cobertura (3G/4G)',vHTML('label_Cobertura')],
+ ['Barras de señal',vHTML('label_BarraSeñal')],['Tipo de inconveniente',vHTML('label_TipoInconveniente')],
+ ['Estado de línea',vHTML('label_EstadoLinea')],['Parámetros correctos (Barring)',vHTML('label_Parametros')],
+ ['Dirección exacta del inconveniente',vHTML('label_Direccion')],
+ ['Coordenadas Google Earth',vHTML('label_GoogleEarth')],['Detalle del inconveniente',vHTML('label_DetalleInc')]
+ ];
+ resultadoOutput.innerHTML = `${vHTML('label0')} // ${vHTML('label0_1',capitalizeFirstLetter(val('label0_1')))} // Se genera Pedido SGU\n\n` +
+ rows.map(([label,value])=>`- ${label}: ${value}`).join('\n') + `\n$$_${vHTML('labelID')}_&&`;
+}
+function checkLength(input) {if(input.value.length>9) input.value=input.value.slice(0,9); plantillaIniciada = true; updateResultadoOutput();}
+fields.forEach(([id]) => {
+ const el=document.getElementById(id); if(!el)return;
+ ['input','change'].forEach(ev=>el.addEventListener(ev,()=>{el.classList.remove('input-error');document.getElementById('lbl_'+id)?.classList.remove('label-error');plantillaIniciada = true;updateResultadoOutput();}));
+});
+function aviso(msg, ok) {avisoStatus.textContent=msg;avisoStatus.className=ok?'aviso-exito':'aviso-error';avisoStatus.style.display='block';}
+async function copiarTexto(text) {
+ if(navigator.clipboard && window.isSecureContext) {try {await navigator.clipboard.writeText(text);return true;}catch(e){}}
+ const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+ let ok=false;try{ok=document.execCommand('copy');}catch(e){}ta.remove();return ok;
+}
+async function copiarResultado() {
+ let missing=[];
+ fields.forEach(([id,name])=>{
+  const el=document.getElementById(id);if(!el)return;
+  const bad=!el.value.trim();el.classList.toggle('input-error',bad);
+  document.getElementById('lbl_'+id)?.classList.toggle('label-error',bad);
+  if(bad)missing.push(name);
+ });
+ if(missing.length){aviso('❌ Faltan campos obligatorios: '+missing.join(', '),false);return;}
+ const ok=await copiarTexto(resultadoOutput.innerText.trim());
+ aviso(ok?'✅ ¡Resultado copiado exitosamente!':'❌ No se pudo copiar. Intenta nuevamente.',ok);
+}
+function limpiarInputs() {
+ fields.forEach(([id])=>{const el=document.getElementById(id);if(el){el.value='';el.classList.remove('input-error');}document.getElementById('lbl_'+id)?.classList.remove('label-error');});
+ plantillaIniciada = false;resultadoOutput.textContent='';avisoStatus.style.display='none';
+}
+function showPopup(id) {const p=document.getElementById(id);if(!p)return false;document.querySelectorAll('.popup-overlay').forEach(x=>x.style.display='none');p.style.display='block';document.body.style.overflow='hidden';p.querySelector('.close-button')?.focus({preventScroll:true});return false;}
+function hidePopup(id) {const p=document.getElementById(id);if(p)p.style.display='none';document.body.style.overflow='';}
+document.querySelectorAll('.popup-overlay').forEach(p=>p.addEventListener('click',e=>{if(e.target===p)hidePopup(p.id);}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.popup-overlay').forEach(p=>hidePopup(p.id));});
+</script>
 </body>
 </html>

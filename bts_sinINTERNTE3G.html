@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta de BTS | Sin Internet 3G</title>
+  <style>
+    :root {
+      --primary-teal: #01768b;
+      --primary-dark: #0c477e;
+      --accent-yellow: #fbf32f;
+      --card-bg: #ffffff;
+      --text-main: #1d1d1f;
+      --text-muted: #86868b;
+      
+      /* Rojo Alerta (Apple System Red) */
+      --alert-bg: #fff2f2;
+      --alert-border: #ff3b30;
+      --alert-text: #c91c14;
+      --alert-icon-bg: #ffe5e5;
+
+      /* Verde Éxito (Apple System Green) */
+      --success-bg: #f2fcf5;
+      --success-border: #34c759;
+      --success-text: #15803d;
+      --success-icon-bg: #dcfce7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      /* Evita que seleccionen o arrastren textos de la interfaz */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* Permite seleccionar y pegar con clic derecho libremente en el buscador */
+    input, textarea {
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+      user-select: text !important;
+    }
+
+    body {
+      background-color: transparent;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 16px;
+    }
+
+    .app-container {
+      background: var(--card-bg);
+      width: 100%;
+      max-width: 760px;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-teal));
+      color: white;
+      padding: 18px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title h1 {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+
+    .header-title p {
+      font-size: 12.5px;
+      opacity: 0.9;
+      margin-top: 3px;
+      font-weight: 400;
+    }
+
+    .btn-base {
+      background-color: var(--accent-yellow);
+      color: var(--primary-dark);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 12.5px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      white-space: nowrap;
+    }
+
+    .btn-base:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    }
+
+    .content {
+      padding: 24px 28px;
+    }
+
+    .search-group {
+      margin-bottom: 6px;
+    }
+
+    .search-label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .input-wrapper {
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 11px 16px;
+      font-size: 14.5px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background-color: #fbfbfd;
+      border: 1px solid #d2d2d7;
+      border-radius: 10px;
+      outline: none;
+      transition: all 0.2s ease;
+      color: var(--text-main);
+    }
+
+    .search-input:focus {
+      background-color: #ffffff;
+      border-color: var(--primary-teal);
+      box-shadow: 0 0 0 3px rgba(1, 118, 139, 0.12);
+    }
+
+    .search-input::placeholder {
+      font-weight: 400;
+      letter-spacing: normal;
+      color: #a1a1a6;
+      text-transform: none;
+    }
+
+    .btn-clear {
+      background: #f2f2f7;
+      border: 1px solid #e5e5ea;
+      color: #48484a;
+      padding: 0 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-clear:hover {
+      background: #e5e5ea;
+      color: var(--text-main);
+    }
+
+    .helper-text {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 18px;
+    }
+
+    .detected-badge {
+      font-weight: 600;
+      color: var(--primary-teal);
+      background: rgba(1, 118, 139, 0.08);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    /* Tarjetas de Resultado */
+    .result-card {
+      display: none;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-top: 8px;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Estilo Alerta Roja */
+    .result-found {
+      background-color: var(--alert-bg);
+      border: 1px solid rgba(255, 59, 48, 0.35);
+    }
+
+    /* Estilo Verde Libre */
+    .result-not-found {
+      background-color: var(--success-bg);
+      border: 1px solid rgba(52, 199, 89, 0.35);
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .status-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .result-found .status-icon {
+      background-color: var(--alert-icon-bg);
+      color: var(--alert-text);
+    }
+
+    .result-not-found .status-icon {
+      background-color: var(--success-icon-bg);
+      color: var(--success-text);
+    }
+
+    .result-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.1px;
+    }
+
+    .result-subtitle {
+      font-size: 12px;
+      margin-top: 1px;
+    }
+
+    .result-found .result-title { color: var(--alert-text); }
+    .result-found .result-subtitle { color: #e11d48; opacity: 0.85; }
+
+    .result-not-found .result-title { color: var(--success-text); }
+    .result-not-found .result-subtitle { color: #059669; opacity: 0.85; }
+
+    .action-box {
+      background: rgba(255, 255, 255, 0.92);
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: var(--text-main);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .meta-item {
+      background: rgba(255, 255, 255, 0.88);
+      padding: 9px 12px;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .meta-item span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    .meta-item strong {
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .status-loader {
+      font-size: 11.5px;
+      text-align: right;
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <div class="header">
+    <div class="header-title">
+      <h1>Consulta de BTS | Sin Internet 3G</h1>
+      <p>*Voz y SMS sobre 3G siguen funcionando con normalidad.</p>
+    </div>
+    <a id="btnVerBase" href="#" target="_blank" class="btn-base">
+      📊 Ver Base
+    </a>
+  </div>
+
+  <div class="content">
+    <div class="search-group">
+      <label class="search-label" for="btsInput">BTS</label>
+      <div class="input-wrapper">
+        <input type="text" id="btsInput" class="search-input" placeholder="Pega el código aquí (ej. LIC0074B3G11)" autocomplete="off">
+        <button class="btn-clear" id="btnClear" title="Limpiar búsqueda">Limpiar</button>
+      </div>
+    </div>
+    
+    <div class="helper-text">
+      <span>Se evalúan automáticamente los 7 primeros caracteres de la BTS.</span>
+      <span id="detectedCode" class="detected-badge" style="display: none;"></span>
+    </div>
+
+    <!-- Resultado: ALERTA ROJA - SI ESTÁ EN LA BASE -->
+    <div id="cardFound" class="result-card result-found">
+      <div class="result-header">
+        <div class="status-icon">🚨</div>
+        <div>
+          <div class="result-title">BTS ENCONTRADA EN LA BASE</div>
+          <div class="result-subtitle">Zona con desactivación del servicio de internet 3G</div>
+        </div>
+      </div>
+      <div class="action-box">
+        👉 <strong>Acción a seguir:</strong> Realizar descarte de <strong>"Cambio de red"</strong>.
+      </div>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span>BTS Coincidente</span>
+          <strong id="metaBts">-</strong>
+        </div>
+        <div class="meta-item">
+          <span>Área / Zona</span>
+          <strong id="metaArea">-</strong>
+        </div>
+        <div class="meta-item">
+          <span>Fila del Excel</span>
+          <strong id="metaRow">-</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultado: VERDE - NO ESTÁ EN LA BASE -->
+    <div id="cardNotFound" class="result-card result-not-found">
+      <div class="result-header">
+        <div class="status-icon">✅</div>
+        <div>
+          <div class="result-title">BTS NO REGISTRADA EN LA BASE</div>
+          <div class="result-subtitle">Sin afectación de apagado 3G en esta antena</div>
+        </div>
+      </div>
+      <div class="action-box">
+        👉 <strong>Acción a seguir:</strong> Puedes <strong>continuar con el siguiente descarte del proceso</strong> sin problemas.
+      </div>
+    </div>
+
+    <div id="loaderStatus" class="status-loader">Conectando con la base...</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // 1. Bloqueo de teclas de inspección, consola, guardado y código fuente (Clic derecho queda libre)
+  document.addEventListener('keydown', function(e) {
+    const k = e.key ? e.key.toUpperCase() : '';
+    const c = e.keyCode || e.which;
+    const ctrlOrCmd = e.ctrlKey || e.metaKey;
+
+    // F12
+    if (c === 123 || k === 'F12') {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+    // Ctrl+Shift+I / J / C / K (DevTools & Inspector)
+    if (ctrlOrCmd && e.shiftKey && ['I', 'J', 'C', 'K'].includes(k)) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+    // Ctrl+U (Ver fuente), Ctrl+S (Guardar), Ctrl+P (Imprimir)
+    if (ctrlOrCmd && ['U', 'S', 'P'].includes(k)) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+    // Bloquear Ctrl+C / Ctrl+A fuera del input de búsqueda
+    if (ctrlOrCmd && ['C', 'A', 'X'].includes(k) && document.activeElement !== document.getElementById('btsInput')) {
+      e.preventDefault();
+      return false;
+    }
+  }, true);
+
+  // 2. Impedir copiar o arrastrar contenido fuera del input
+  document.addEventListener('copy', function(e) {
+    if (document.activeElement !== document.getElementById('btsInput')) {
+      e.preventDefault();
+      return false;
+    }
+  });
+  document.addEventListener('dragstart', function(e) {
+    e.preventDefault();
+    return false;
+  });
+
+  // 3. Protección activa contra consola abierta (Anti-Debugging & Limpieza)
+  setInterval(function() {
+    const t0 = performance.now();
+    (function(){}).constructor("debugger")();
+    if (performance.now() - t0 > 100) {
+      console.clear();
+    }
+  }, 1500);
+
+  // 4. Lógica de negocio ofuscada
+  const _0x1a = atob('aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2Qv') + '\x31\x6f\x4c\x78\x47\x73\x56\x6e\x7a\x6b\x77\x52\x78\x57\x70\x50\x42\x35\x49\x32\x52\x70\x33\x4c\x36\x55\x42\x57\x43\x61\x65\x52\x56';
+  const _0x1b = _0x1a + atob('L2d2aXovdHE/dHF4PW91dDpqc29u');
+  document.getElementById('btnVerBase').href = _0x1a + atob('L2VkaXQ/dXNwPXNoYXJpbmc=');
+
+  let _db = [];
+  const _in = document.getElementById('btsInput');
+  const _cl = document.getElementById('btnClear');
+  const _dc = document.getElementById('detectedCode');
+  const _cf = document.getElementById('cardFound');
+  const _cnf = document.getElementById('cardNotFound');
+  const _ls = document.getElementById('loaderStatus');
+
+  async function _init() {
+    try {
+      const _r = await fetch(_0x1b);
+      const _t = await _r.text();
+      const _j = JSON.parse(_t.substring(_t.indexOf('{'), _t.lastIndexOf('}') + 1));
+      _db = _j.table.rows.map((r, i) => ({
+        s: r.c[0] && r.c[0].v ? String(r.c[0].v).trim().toUpperCase() : '',
+        a: r.c[1] && r.c[1].v ? String(r.c[1].v).trim() : 'LIMA',
+        z: r.c[2] && r.c[2].v ? String(r.c[2].v).trim() : 'LIMA',
+        w: i + 2
+      })).filter(x => x.s !== '' && x.s !== '2215' && x.s !== 'SITE NAME 3G');
+      _ls.textContent = `🟢 Base sincronizada (${_db.length} registros)`;
+    } catch (_e) {
+      _ls.innerHTML = `🔴 Error de lectura: Verifica que el archivo tenga permisos de visualización abiertos.`;
+    }
+  }
+
+  function _eval() {
+    const _v = _in.value.trim().toUpperCase();
+    if (_v.length < 3) {
+      _cf.style.display = 'none';
+      _cnf.style.display = 'none';
+      _dc.style.display = 'none';
+      return;
+    }
+    const _p7 = _v.substring(0, 7);
+    _dc.style.display = 'inline-block';
+    _dc.textContent = `Filtro: ${_p7}`;
+
+    const _m = _db.find(x => x.s.substring(0, 7) === _p7 || x.s === _v);
+    if (_m) {
+      document.getElementById('metaBts').textContent = _m.s;
+      document.getElementById('metaArea').textContent = `${_m.a} (${_m.z})`;
+      document.getElementById('metaRow').textContent = `Fila #${_m.w}`;
+      _cf.style.display = 'block';
+      _cnf.style.display = 'none';
+    } else {
+      _cf.style.display = 'none';
+      _cnf.style.display = 'block';
+    }
+  }
+
+  _in.addEventListener('input', _eval);
+  _cl.addEventListener('click', () => {
+    _in.value = '';
+    _eval();
+    _in.focus();
+  });
+
+  _init();
+})();
+</script>
+
+</body>
+</html>

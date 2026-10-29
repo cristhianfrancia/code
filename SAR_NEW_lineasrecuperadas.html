@@ -567,13 +567,14 @@
             if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) { return false; }
         };
 
-        // La vigencia la controla vigencia.js (una sola fecha para todas las páginas).
-        // Si no carga (por ejemplo, la página se copió a otro sitio), también se bloquea.
-        window.addEventListener("load", function () {
-            if (window.CP_VIGENCIA && window.CP_VIGENCIA.ok) return;
-            document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Actualización en proceso)</h5>";
-            document.body.style.visibility = "visible";
-        });
+// Vigencia: la decide vigencia.js (fecha, bloqueos y pantalla de mantenimiento de todas las páginas).
+window.addEventListener("load", function () {
+    if (!window.CP_VIGENCIA) {   // vigencia.js no cargó (por ejemplo, la página se copió a otro sitio)
+        document.body.innerHTML = "<p style='font:16px system-ui,sans-serif;text-align:center;margin-top:20vh;color:#334155'>Esta herramienta no está disponible en este momento.</p>";
+        return;
+    }
+    if (!window.CP_VIGENCIA.ok) return;   // vigencia.js ya muestra la pantalla de mantenimiento
+});
 
         function mostrarFormulario() {
             let seleccion = document.getElementById("tipoRecarga").value;

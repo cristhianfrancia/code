@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="vigencia.js"></script>
   <title>Compensación de GB - Señal</title>
     <style>
         /* --- REGLA MAESTRA PARA ALINEACIÓN PERFECTA --- */
@@ -645,14 +646,14 @@
         }
     };
 
-    window.onload = function() {
-        let fechaLimite = new Date("2026-10-30T23:59:59");
-        let fechaActual = new Date();
-
-        if (fechaActual > fechaLimite) {
-            document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%; font-family: Calibri, sans-serif;'>Revisar la variable de mantenimiento<br></h1><h5 style='text-align:center; color:red; font-family: Calibri, sans-serif;'>(Requiere actualización)</h5>";
-        }
-    };
+    // Vigencia: la decide vigencia.js (fecha, bloqueos y pantalla de mantenimiento de todas las páginas).
+window.addEventListener("load", function () {
+    if (!window.CP_VIGENCIA) {   // vigencia.js no cargó (por ejemplo, la página se copió a otro sitio)
+        document.body.innerHTML = "<p style='font:16px system-ui,sans-serif;text-align:center;margin-top:20vh;color:#334155'>Esta herramienta no está disponible en este momento.</p>";
+        return;
+    }
+    if (!window.CP_VIGENCIA.ok) return;   // vigencia.js ya muestra la pantalla de mantenimiento
+});
 
       const label0Input = document.querySelector("#label0");
       const label_1Input = document.querySelector("#label_1");

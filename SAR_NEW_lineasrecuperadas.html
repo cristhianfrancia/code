@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="vigencia.js"></script>
   <title>Plantillas - SAR - Líneas recuperadas</title>
     <style>
         body {
@@ -566,13 +567,13 @@
             if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) { return false; }
         };
 
-        window.onload = function() {
-            let fechaLimite = new Date("2026-10-30T23:59:59");
-            let fechaActual = new Date();
-            if (fechaActual > fechaLimite) {
-                document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Actualización en proceso)</h5>";
-            }
-        };
+        // La vigencia la controla vigencia.js (una sola fecha para todas las páginas).
+        // Si no carga (por ejemplo, la página se copió a otro sitio), también se bloquea.
+        window.addEventListener("load", function () {
+            if (window.CP_VIGENCIA && window.CP_VIGENCIA.ok) return;
+            document.body.innerHTML = "<h1 style='text-align:center; color:red; margin-top:20%;'>Apartado requiere mantenimiento<br></h1><h5 style='text-align:center; color:red'>(Actualización en proceso)</h5>";
+            document.body.style.visibility = "visible";
+        });
 
         function mostrarFormulario() {
             let seleccion = document.getElementById("tipoRecarga").value;
@@ -630,20 +631,16 @@
                 .replace(/(^|\s)([a-záéíóúñÁÉÍÓÚÑ])/g, (match) => match.toUpperCase());
         }
 
-        // --- CONSULTA DE NÓMINA PARA LOS DATOS DEL AGENTE ---
-        const NOMINA_SPREADSHEET_ID = "1-7YNq-lpnY3N0dTIKRJpdqcYfuDt8BIkTflDy5NvKxY";
-        const NOMINA_HOJA = "Activos";
+        // --- CONSULTA DE NÓMINA (servicio de evaluaciones; la hoja ya no necesita ser pública) ---
+        // Devuelve solo apellidos y nombres del personal en Activos, con el usuario o DNI exacto.
+        const CONSULTA_PERSONAL_URL = "https://exam-api-prod-1095942458279.us-central1.run.app/v1/public/personal";
         let consultaNominaEnCurso = false;
-        let consultaNominaScript = null;
-        let consultaNominaTimeout = null;
-        let consultaNominaFallback = "";
         let posicionScrollConsultaPersonal = 0;
 
         function abrirConsultaPersonal() {
             posicionScrollConsultaPersonal = window.scrollY || document.documentElement.scrollTop || 0;
             document.getElementById("popupOverlayPersonal").style.display = "block";
             document.getElementById("popupConsultaPersonal").style.display = "block";
-            document.getElementById("popupConsultaPersonal").style.top = "28px";
             cambiarEstadoNomina("", "");
             setTimeout(() => {
                 document.getElementById("busquedaPersonal").focus({ preventScroll: true });
@@ -654,7 +651,11 @@
         function cerrarConsultaPersonal() {
             document.getElementById("popupOverlayPersonal").style.display = "none";
             document.getElementById("popupConsultaPersonal").style.display = "none";
-            window.scrollTo({ top: posicionScrollConsultaPersonal, left: 0, behavior: "smooth" });
+            window.scrollTo({
+                top: posicionScrollConsultaPersonal,
+                left: 0,
+                behavior: "smooth"
+            });
         }
 
         function cambiarEstadoNomina(tipo, mensaje) {
@@ -663,15 +664,7 @@
             estado.textContent = mensaje || "";
         }
 
-        function limpiarRecursosConsultaNomina() {
-            if (consultaNominaTimeout) clearTimeout(consultaNominaTimeout);
-            if (consultaNominaScript?.parentNode) consultaNominaScript.parentNode.removeChild(consultaNominaScript);
-            consultaNominaTimeout = null;
-            consultaNominaScript = null;
-        }
-
         function finalizarConsultaNomina(tipo, mensaje) {
-            limpiarRecursosConsultaNomina();
             consultaNominaEnCurso = false;
             let boton = document.getElementById("btnConsultarPersonal");
             boton.disabled = false;
@@ -679,78 +672,66 @@
             cambiarEstadoNomina(tipo, mensaje);
         }
 
-        function ejecutarConsultaNomina(consulta, fallback = "") {
-            limpiarRecursosConsultaNomina();
-            consultaNominaFallback = fallback;
-            let parametros = new URLSearchParams({
-                sheet: NOMINA_HOJA,
-                headers: "1",
-                tq: consulta,
-                tqx: "responseHandler:procesarRespuestaNomina",
-                _: Date.now().toString()
-            });
-            consultaNominaScript = document.createElement("script");
-            consultaNominaScript.src = `https://docs.google.com/spreadsheets/d/${NOMINA_SPREADSHEET_ID}/gviz/tq?${parametros.toString()}`;
-            consultaNominaScript.async = true;
-            consultaNominaScript.onerror = () => finalizarConsultaNomina("error", "No se pudo consultar la nómina. Verifica el acceso a la hoja.");
-            document.head.appendChild(consultaNominaScript);
-            consultaNominaTimeout = setTimeout(() => finalizarConsultaNomina("error", "La consulta tardó demasiado. Intenta nuevamente."), 12000);
-        }
-
-        function procesarRespuestaNomina(respuesta) {
-            let filas = respuesta?.table?.rows || [];
-            let respuestaCorrecta = respuesta?.status === "ok";
-            if ((!respuestaCorrecta || filas.length === 0) && consultaNominaFallback) {
-                let fallback = consultaNominaFallback;
-                consultaNominaFallback = "";
-                ejecutarConsultaNomina(fallback);
-                return;
-            }
-            if (!respuestaCorrecta) {
-                finalizarConsultaNomina("error", "No se pudo leer la nómina. Verifica los permisos de la hoja.");
-                return;
-            }
-            if (filas.length === 0) {
-                finalizarConsultaNomina("error", "No se encontró el usuario o documento ingresado.");
-                return;
-            }
-            let celdas = filas[0].c || [];
-            let apellidoPaterno = celdas[0]?.v?.toString().trim() || "";
-            let apellidoMaterno = celdas[1]?.v?.toString().trim() || "";
-            let nombres = celdas[2]?.v?.toString().trim() || "";
-            let nombreCompleto = [nombres, apellidoPaterno, apellidoMaterno].filter(Boolean).join(" ");
-            if (!nombreCompleto) {
-                finalizarConsultaNomina("error", "El registro fue encontrado, pero no tiene nombres completos.");
-                return;
-            }
-            document.getElementById("nombrePersonal").value = formatearNombre(nombreCompleto);
-            document.getElementById("estadoPersonalResumen").textContent = "✓ Personal validado";
-            actualizarResultados();
-            finalizarConsultaNomina("exito", "✓ Personal validado");
-            setTimeout(cerrarConsultaPersonal, 650);
-        }
-
-        function consultarPersonal() {
+        async function consultarPersonal() {
             if (consultaNominaEnCurso) return;
+
             let campoBusqueda = document.getElementById("busquedaPersonal");
             let criterio = campoBusqueda.value.trim();
             if (!criterio) {
+                campoBusqueda.classList.add("input-error");
                 cambiarEstadoNomina("error", "Ingresa un usuario o documento.");
                 campoBusqueda.focus();
                 return;
             }
+
+            campoBusqueda.classList.remove("input-error");
             document.getElementById("nombrePersonal").value = "";
             document.getElementById("estadoPersonalResumen").textContent = "";
+            actualizarResultados();
             consultaNominaEnCurso = true;
             let boton = document.getElementById("btnConsultarPersonal");
             boton.disabled = true;
             boton.textContent = "Consultando...";
             cambiarEstadoNomina("cargando", "Buscando en Activos...");
-            let criterioSeguro = criterio.replace(/'/g, "''");
-            if (/^\d+$/.test(criterio)) {
-                ejecutarConsultaNomina(`select C,D,E where B = ${Number(criterio)} limit 1`, `select C,D,E where B = '${criterioSeguro}' limit 1`);
-            } else {
-                ejecutarConsultaNomina(`select C,D,E where A = '${criterioSeguro.toLowerCase()}' limit 1`);
+
+            let control = new AbortController();
+            let tiempo = setTimeout(() => control.abort(), 12000);
+            try {
+                let respuesta = await fetch(`${CONSULTA_PERSONAL_URL}?q=${encodeURIComponent(criterio)}`, { signal: control.signal });
+                let datos = await respuesta.json().catch(() => ({}));
+                if (respuesta.status === 429) {
+                    finalizarConsultaNomina("error", datos.msg || "Demasiadas consultas. Espera un minuto.");
+                    return;
+                }
+                if (!respuesta.ok) {
+                    finalizarConsultaNomina("error", "No se pudo consultar la nómina. Intenta nuevamente.");
+                    return;
+                }
+                if (!datos.success) {
+                    finalizarConsultaNomina("error", datos.msg || "No se encontró el usuario o documento ingresado.");
+                    return;
+                }
+
+                let nombreCompleto = [datos.nombres, datos.apellidoPaterno, datos.apellidoMaterno]
+                    .map(parte => (parte || "").toString().trim())
+                    .filter(Boolean)
+                    .join(" ");
+                if (!nombreCompleto) {
+                    finalizarConsultaNomina("error", "El registro fue encontrado, pero no tiene nombres completos.");
+                    return;
+                }
+
+                document.getElementById("nombrePersonal").value = formatearNombre(nombreCompleto);
+                document.getElementById("estadoPersonalResumen").textContent = "✓ Personal validado";
+                actualizarResultados();
+                finalizarConsultaNomina("exito", "✓ Personal validado");
+                setTimeout(cerrarConsultaPersonal, 650);
+            } catch (error) {
+                finalizarConsultaNomina("error", error.name === "AbortError"
+                    ? "La consulta tardó demasiado. Intenta nuevamente."
+                    : "No se pudo consultar la nómina. Revisa tu conexión.");
+            } finally {
+                clearTimeout(tiempo);
             }
         }
 

@@ -6,7 +6,7 @@
 (function () {
   var CONFIG = {
     // Hora de Lima (-05:00): no depende de la zona horaria de cada PC.
-    fechaLimite: "2026-11-30T23:59:59-05:00",
+    fechaLimite: "2026-12-30T23:59:59-05:00",
     // true = bloquea todas las páginas de inmediato (sin esperar la fecha).
     bloquearTodo: false,
     // Bloqueos o fechas propias por página, por nombre de archivo. Ejemplos:

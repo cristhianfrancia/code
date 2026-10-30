@@ -1,42 +1,56 @@
+<!-- 
+  Proyecto: Plantillas
+  Creado por: Cristhian Francia
+  Año: 2020
+  Derechos reservados © Cristhian Francia
+-->
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="vigencia.js"></script>
-  <!-- 
-    Proyecto: Plantillas
-    Creado por: Cristhian Francia
-    Año: 2020
-    Derechos reservados © Cristhian Francia
-  -->
+    <meta charset="UTF-8">
     <title>Plantillas - Cancelación</title>
+    <script src="vigencia.js"></script>
     <style>
+        /* --- REGLA MAESTRA PARA ALINEACIÓN PERFECTA --- */
+        *, *::before, *::after {
+            box-sizing: border-box !important;
+            font-family: Calibri, Arial, sans-serif !important;
+        }
+
         body {
-            font-family: Calibri, Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 10px;
         }
 
         .container {
-            width: 95%;
-            max-width: 1000px auto;
-            margin: 10px auto;
+            width: 96%;
+            max-width: 1200px;
+            margin: 0 auto;
             background-color: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
-            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 20px 40px;
             position: relative;
-            transition: box-shadow 0.3s ease;
         }
 
-        .container:hover {
-            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        /* --- TÍTULO PRINCIPAL --- */
+        .elegant-title {
+            text-align: center;
+            color: #1d1d1f;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 25px;
         }
 
         .icon-animation {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 40px;
-            height: 40px;
-            background-color: #007BFF;
+            top: 15px;
+            right: 20px;
+            width: 35px;
+            height: 35px;
+            background-color: #0c477e;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -46,350 +60,443 @@
 
         .icon-animation::before {
             content: "🟡";
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: white;
         }
 
         @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
+        /* --- TÍTULOS DE SECCIÓN HOMOLOGADOS --- */
+        .section-title {
+            color: #0c477e;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 25px 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #dcdcdc;
+        }
 
-
+        /* --- ESPACIADO Y ALINEACIÓN DE CAMPOS --- */
         .input-container {
             display: flex;
             align-items: center;
-            transition: transform 0.3s ease;
-        }
-
-        .input-container:hover {
-            transform: scale(1.00);
+            position: relative;
+            margin-bottom: 6px;
+            width: 100%;
         }
 
         .input-container label {
-            width: 50%;
+            flex: 0 0 45%;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding-right: 10px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
         }
 
-        .input-container input {
-            width: 50%;
-            padding: 4px;
+        .input-container input, .input-container select {
+            flex: 1;
+            padding: 6px 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-size: 0.95rem;
+            color: #0c477e;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
         }
 
-        .input-container input:focus {
-            border-color: #007BFF;
+        .input-container input:focus, .input-container select:focus, .inline-input:focus {
+            border-color: #0c477e;
             outline: none;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            box-shadow: 0 0 5px rgba(12, 71, 126, 0.4);
         }
 
+        .inline-input {
+            color: #0c477e;
+            font-weight: bold;
+            padding: 5px 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
 
-        /* Estilos responsive */
+        /* --- RESALTE DE ERRORES EN ROJO --- */
+        .input-error {
+            border: 1px solid #d93025 !important;
+            background-color: #fce8e6 !important;
+            box-shadow: 0 0 4px rgba(217, 48, 37, 0.3) !important;
+        }
+
         @media screen and (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+            }
             .input-container {
                 flex-direction: column;
+                align-items: flex-start;
             }
-            .input-container label, .input-container input {
+            .input-container label {
+                flex: none;
+                width: 100%;
+                margin-bottom: 4px;
+                padding-right: 0;
+            }
+            .input-container input, .input-container select {
+                flex: none;
                 width: 100%;
             }
         }
 
-
         .resultado-label {
-            color: 007BFF;
+            color: #0c477e;
+            font-weight: bold;
         }
 
-
         .ruta-container {
-            background-color: #fff5e9;
-            padding: 10px;
-            border-radius: 4px;
+            background-color: #fffde7;
+            padding: 12px 15px;
+            border-radius: 6px;
             margin: 10px 0;
-            border-left: 4px solid #e67a00;
-            font-size: 0.9rem;
-            color: #333;
+            border-left: 4px solid #0c477e;
+            font-size: 0.92rem;
+            color: #1d1d1f;
+            line-height: 1.45;
         }
 
         hr {
-            border: 1px solid #e67a00;
-            margin: 10px 0;
+            border: 0;
+            border-top: 1px solid #dcdcdc;
+            margin: 15px 0;
         }
 
-        button {
-            background-color: #e67a00;
+        .code-container p {
+            margin: 5px 0 15px 0;
+            font-size: 0.95rem;
+            line-height: 2;
+        }
+
+        /* --- BOTONES PRINCIPALES --- */
+        .btn-principal {
+            background-color: #0c477e;
             color: white;
-            padding: 10px 15px;
+            padding: 8px 18px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            margin: 5px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 5px 5px 5px 0;
         }
 
-        button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
+        .btn-principal:hover {
+            background-color: #08325a;
+            transform: translateY(-1px);
         }
 
-        button:active {
-            background-color: #004085;
-            transform: scale(0.98);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .btn-principal:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        button:focus {
-            outline: none;
+        .btn-secundario {
+            background-color: #f1f3f4;
+            color: #0c477e;
+            border: 1px solid #0c477e;
+        }
+
+        .btn-secundario:hover {
+            background-color: #e2e6ea;
         }
 
         #resultado {
-            margin: 15px 0;
-            font-size: 0.9rem;
-            background-color: #fff5e9;
-            padding: 10px;
-            border-left: 4px solid #e67a00;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            background-color: #fffde7;
+            padding: 12px;
+            border-left: 4px solid #0c477e;
+            border-radius: 0 6px 6px 0;
             white-space: pre-line;
-            min-height: 50px;
-            transition: background-color 0.3s ease;
+            min-height: 40px;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
-    /* === Tarjetas de imágenes visibles === */
-    .imagenes-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      justify-content: center;
-      margin-top: 18px;
-    }
+        /* --- BANNERS DE ESTADO --- */
+        .aviso-status {
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .aviso-exito {
+            background-color: #e6f4ea;
+            color: #137333;
+            border: 1px solid #137333;
+        }
+        .aviso-error {
+            background-color: #fce8e6;
+            color: #c5221f;
+            border: 1px solid #c5221f;
+        }
 
-    .imagen-box {
-      flex: 1 1 45%;
-      background: #f9f9f9;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-      padding: 14px;
-      text-align: center;
-      transition: transform 0.28s ease, box-shadow 0.28s ease;
-      min-width: 260px;
-    }
+        /* === Tarjetas de imágenes visibles === */
+        .imagenes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            justify-content: center;
+            margin-top: 18px;
+        }
 
-    .imagen-box:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 14px 36px rgba(0,0,0,0.12);
-    }
+        .imagen-box {
+            flex: 1 1 45%;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 16px;
+            text-align: center;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            min-width: 260px;
+        }
 
-    .imagen-box h3 {
-      color: #007BFF;
-      margin-bottom: 10px;
-      font-size: 1rem;
-    }
+        .imagen-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(12, 71, 126, 0.12);
+        }
 
-    .imagen-box img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      display: block;
-      margin: 0 auto;
-    }
+        .imagen-box h3 {
+            color: #0c477e;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
 
-    @media (max-width: 820px) {
-      .imagen-box { flex: 1 1 100%; }
-      .input-container { flex-direction: column; }
-      .input-container label, .input-container input, .input-container select { width: 100%; }
-    }
+        .imagen-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+        }
 
+        @media (max-width: 820px) {
+            .imagen-box { flex: 1 1 100%; }
+        }
 
-    .footer-autor {
-      text-align: center;
-      margin-top: 30px;
-      padding: 15px;
-      font-size: 0.8rem;
-      color: #aaa;
-      border-top: 1px solid #eee;
-      user-select: none;
-    }
-    .footer-autor strong {
-      color: var(--bitel-blue);
-    }
+        /* FOOTER DE AUTORÍA */
+        .footer-autor {
+            text-align: center;
+            margin-top: 30px;
+            padding: 12px;
+            font-size: 0.8rem;
+            color: #888;
+            border-top: 1px solid #eee;
+            user-select: none;
+        }
+        .footer-autor strong {
+            color: #0c477e;
+        }
     </style>
 </head>
-<body oncontextmenu="return false"> <div class="container">
+<body oncontextmenu="return false">
 
-    <div class="icon-animation"></div>
+    <div class="container">
+        <div class="icon-animation"></div>
 
-    <label style="color: red;"><strong>1. Plantilla:</strong></label>
-    <p></p>
+        <h2 class="elegant-title">Cancelación de Línea</h2>
 
-    <center class="code-container">
-        <input type="number" id="label0" oninput="limitDigits(event)" placeholder="Número del que llama" style="color: #007BFF;" />
+        <!-- ==========================================
+             SECCIÓN 1: PLANTILLA
+             ========================================== -->
+        <h3 class="section-title" style="margin-top: 0;">1. Plantilla:</h3>
 
-        //
+        <center class="code-container">
+            <p>
+                <input type="number" id="label0" class="inline-input" oninput="limitDigits(event)" placeholder="Número del que llama" style="text-align: center; width: 170px;" />
+                // Cliente desea cancelar
+                <input type="text" id="label0_1" class="inline-input" placeholder="(Motivo de la baja)" style="width: 220px;" />
+                // Se brinda consideraciones de cancelación y se transfiere
+            </p>
+        </center>
 
-        Cliente desea cancelar <input type="text" id="label0_1" oninput="updateResultadoOutput()" placeholder="(Motivo de la baja)" span style="color: #007BFF;">
+        <div class="input-container">
+            <label for="label1">- Plan actual:</label>
+            <input type="text" id="label1" placeholder="(Se tomará de los datos de Customer Care)" />
+        </div>
 
-        // Se brinda consideraciones de cancelación y se transfiere
-    </p>
-    </center>
+        <div class="input-container">
+            <label for="labelID">- ID de llamada:</label>
+            <input type="text" id="labelID" placeholder="Solo ID, sin $$_ _&&" />
+        </div>
 
-    <br />
+        <br>
+        <p id="resultado"></p>
+        <div id="aviso-status" class="aviso-status"></div>
 
-    <div class="input-container">
-        <label for="label1">- Plan actual:</label>
-        <input type="text" id="label1" oninput="updateResultadoOutput()" placeholder="(Se tomará de los datos de Customer Care)" style="color: #007BFF;" />
+        <button type="button" class="btn-principal" onclick="copiarResultado()">📋 Copiar</button>
+        <button type="button" class="btn-principal btn-secundario" onclick="limpiarInputs()">Borrar</button>
+
+        <!-- ==========================================
+             SECCIÓN 2: TIPIFICACIÓN
+             ========================================== -->
+        <h3 class="section-title">2. Tipificación:</h3>
+
+        <div class="ruta-container">
+            <strong style="color: #0c477e;">PREPAGO:</strong><br>
+            Other / Información / Información / Transferencias / Cancelación de línea - Prepago / (Elegir el motivo).
+            <br><br>
+            <strong style="color: #0c477e;">CONTROL:</strong><br>
+            Other / Información / Información / Transferencias / Cancelación de línea - Control / (Elegir el motivo).
+        </div>
+
+        <!-- ==========================================
+             SECCIÓN 3: SPEECH
+             ========================================== -->
+        <h3 class="section-title">3. Speech:</h3>
+
+        <div class="ruta-container">
+            <strong><span style="color: #0c477e;">🎧 Agente: </span></strong><span style="color: #0c477e;">(Nombre del cliente)</span>, estamos transfiriéndolo al área de cancelación, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada.
+        </div>
+
+        <div class="imagenes-container" aria-live="polite">
+            <div class="imagen-box" title="Transferencia - Cancelaciones">
+                <h3>Transferencia - Cancelaciones</h3>
+                <img src="https://i.postimg.cc/tgrcM0Q3/Cancelacion-my-CC.png"
+                     alt="Transferencia - Cancelaciones"
+                     onerror="this.onerror=null;this.src='https://placehold.co/700x420/fffde7/0c477e?text=Error+al+cargar+imagen';">
+            </div>
+        </div>
+
+        <textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
+
+        <div class="footer-autor">
+            Developed by Cristhian Francia &copy; 2026 | All rights reserved.
+        </div>
     </div>
 
-    <div class="input-container">
-        <label for="labelID">- ID de llamada:</label>
-        <input type="text" id="labelID" oninput="updateResultadoOutput()" placeholder="Solo ID, sin $$_ _&&" style="color: #007BFF;" />
-    </div>
+    <script>
+        document.onkeydown = function(e) {
+            if (e.key === 'F12' || e.keyCode === 123) return false;
+            if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) return false;
+            if (e.ctrlKey && e.key.toUpperCase() === 'U') return false;
 
-<br>
-<p id="resultado" class="dark-mode-text"></p>
-
-<button onclick="copiarResultado()">Copiar</button>
-<button onclick="limpiarInputs()">Borrar</button>
-
-<br />
-<br />
-
-<label style="color: red;"><strong>2. Tipificación:</strong></label>
-
-<div class="ruta-container">
-<strong>PREPAGO</strong><br>
-Other / Información / Información / Transferencias / Cancelación de línea - Prepago / (Elegir el motivo). <br><br>
-
-<strong>CONTROL</strong><br>
-Other / Información / Información / Transferencias / Cancelación de línea - Control / (Elegir el motivo).
-</div>
-
-<br />
-<hr />
-<br />
-
-<label style="color: red;"><strong>3. Speech:</strong></label>
-
-<p><strong><span style="color: #01768b">🎧 Agente: </span></strong><span style="color: #007BFF">(Nombre del cliente)</span>, estamos transfiriéndolo al área de cancelación, esto puede demorar unos minutos, por favor debe mantenerse en espera, no corte la llamada.</p>
-
-<br><br>
-
-    <div class="imagenes-container" aria-live="polite">
-      <div class="imagen-box" title="Transferencia - Cancelaciones">
-        <h3>Transferencia - Cancelaciones</h3>
-        <img src="https://i.postimg.cc/tgrcM0Q3/Cancelacion-my-CC.png"
-             alt="Transferencia - Cancelaciones"
-             onerror="this.onerror=null;this.src='https://placehold.co/700x420/FFDDCC/333333?text=Error+al+cargar+imagen';">
-      </div>
-      </div>
-
-<br><br><br><br><br><br>
-<textarea id="textareaResultado" style="position: absolute; left: -9999px;"></textarea>
-
-<div class="footer-autor">
-      Developed by c&f &copy; 2020 | All rights reserved.
-</div>
-</div>
-
-
-<script>
-    document.onkeydown = function(e) {
-        // 🚫 Bloquea F12, Ctrl+Shift+I/J/C (Dev Tools), Ctrl+U (Ver Fuente)
-        if (e.key === 'F12' || e.keyCode === 123) return false;
-        if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) return false;
-        if (e.ctrlKey && e.key.toUpperCase() === 'U') return false;
-
-        // 🚫 Bloquea impresión (Ctrl+P) y Guardado (Ctrl+S)
-        if (e.ctrlKey && ['P', 'S'].includes(e.key.toUpperCase())) {
-            e.preventDefault();
-            alert('Esa función está deshabilitada.');
-            return false;
-        }
-    };
-
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-    });
-
-    document.addEventListener('dragstart', function(e) {
-        e.preventDefault();
-        return false;
-    });
-
-    window.addEventListener('load', function() {
-        console.clear();
-        console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
-        console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
-    });
-    
-    // Vigencia: la decide vigencia.js (fecha, bloqueos y pantalla de mantenimiento de todas las páginas).
-window.addEventListener("load", function () {
-    if (!window.CP_VIGENCIA) {   // vigencia.js no cargó (por ejemplo, la página se copió a otro sitio)
-        document.body.innerHTML = "<p style='font:16px system-ui,sans-serif;text-align:center;margin-top:20vh;color:#334155'>Esta herramienta no está disponible en este momento.</p>";
-        return;
-    }
-    if (!window.CP_VIGENCIA.ok) return;   // vigencia.js ya muestra la pantalla de mantenimiento
-});
-
-    function updateResultadoOutput() {
-        const label0 = document.querySelector("#label0").value;
-        const label0_1 = document.querySelector("#label0_1").value;
-        const label1 = document.querySelector("#label1").value;
-        const labelID = document.querySelector("#labelID").value;
-
-
-        const resultado = `<span style="color: #007BFF;">${label0}</span> // Cliente desea cancelar <span style="color: #007BFF;">${label0_1}</span> // Se brinda consideraciones de cancelación y se transfiere
-
-- Plan actual: <span style="color: #007BFF;">${label1}</span>
-- $$_<span style="color: #007BFF;">${labelID}</span>_&&`;
-
-
-        document.querySelector("#resultado").innerHTML = resultado.replace(/\n/g, "<br>");
-    }
-
-    function limitDigits(event) {
-        const input = event.target;
-        if (input.value.length > 9) {
-            input.value = input.value.slice(0, 9);
-        }
-        updateResultadoOutput();
-    }
-
-    // Nota: capitalizeWords no está asignada a ningún input en este HTML.
-    function capitalizeWords(event) {
-        const input = event.target;
-        const words = input.value.split(" ");
-        for (let i = 0; i < words.length; i++) {
-            if (words[i]) {
-                words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase();
+            if (e.ctrlKey && ['P', 'S'].includes(e.key.toUpperCase())) {
+                e.preventDefault();
+                alert('Esa función está deshabilitada.');
+                return false;
             }
+        };
+
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        window.addEventListener('load', function() {
+            console.clear();
+            console.log("%c⚠️ ALTO AHÍ ⚠️", "color: red; font-size: 30px; font-weight: bold;");
+            console.log("%cSystem by Cristhian Francia.", "color: #0c477e; font-size: 16px;");
+
+            if (typeof window.CP_VIGENCIA !== "undefined" && !window.CP_VIGENCIA.ok) {
+                return;
+            }
+        });
+
+        const inputsArray = [
+            document.querySelector("#label0"),
+            document.querySelector("#label0_1"),
+            document.querySelector("#label1"),
+            document.querySelector("#labelID")
+        ];
+
+        const avisoStatus = document.querySelector("#aviso-status");
+
+        inputsArray.forEach(input => {
+            input.addEventListener("input", function() {
+                this.classList.remove("input-error");
+                updateResultadoOutput();
+            });
+        });
+
+        function updateResultadoOutput() {
+            const label0 = document.querySelector("#label0").value;
+            const label0_1 = document.querySelector("#label0_1").value;
+            const label1 = document.querySelector("#label1").value;
+            const labelID = document.querySelector("#labelID").value;
+
+            const resultado = `<span class="resultado-label">${label0}</span> // Cliente desea cancelar <span class="resultado-label">${label0_1}</span> // Se brinda consideraciones de cancelación y se transfiere
+
+- Plan actual: <span class="resultado-label">${label1}</span>
+- $$_<span class="resultado-label">${labelID}</span>_&&`;
+
+            document.querySelector("#resultado").innerHTML = resultado;
         }
-        input.value = words.join(" ");
-    }
 
-    function copiarResultado() {
-        const resultado = document.querySelector("#resultado").innerText;
-        const textarea = document.querySelector("#textareaResultado");
-        textarea.value = resultado;
-        textarea.select();
-        document.execCommand("copy");
-        alert("Resultado copiado al portapapeles!");
-    }
+        function limitDigits(event) {
+            const input = event.target;
+            if (input.value.length > 9) {
+                input.value = input.value.slice(0, 9);
+            }
+            updateResultadoOutput();
+        }
 
-    function limpiarInputs() {
-        document.querySelector("#label0").value = '';
-        document.querySelector("#label0_1").value = '';
-        document.querySelector("#label1").value = '';
-        document.querySelector("#labelID").value = '';
-        document.querySelector("#resultado").innerHTML = '';
-    }
-</script>
+        function copiarResultado() {
+            let hayErrores = false;
+
+            inputsArray.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add("input-error");
+                    hayErrores = true;
+                } else {
+                    input.classList.remove("input-error");
+                }
+            });
+
+            if (hayErrores) {
+                avisoStatus.textContent = "❌ Error: Faltan datos obligatorios. Por favor completa los campos resaltados en rojo.";
+                avisoStatus.className = "aviso-status aviso-error";
+                avisoStatus.style.display = "block";
+                return;
+            }
+
+            const resultado = document.querySelector("#resultado").innerText.trim();
+            const textarea = document.querySelector("#textareaResultado");
+            textarea.value = resultado;
+            textarea.select();
+            document.execCommand("copy");
+
+            avisoStatus.textContent = "✅ ¡Copiado excelente! Los datos se han estructurado de forma correcta en el portapapeles.";
+            avisoStatus.className = "aviso-status aviso-exito";
+            avisoStatus.style.display = "block";
+        }
+
+        function limpiarInputs() {
+            inputsArray.forEach(input => {
+                input.value = '';
+                input.classList.remove("input-error");
+            });
+            updateResultadoOutput();
+            avisoStatus.style.display = "none";
+        }
+
+        // Inicializar vista previa al cargar
+        updateResultadoOutput();
+    </script>
 </body>
 </html>
-
-

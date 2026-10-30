@@ -1,435 +1,605 @@
+<!--
+  Proyecto: Plantillas
+  Creado por: Cristhian Francia
+  Año: 2026
+  Derechos reservados © Cristhian Francia
+-->
 <!DOCTYPE html>
 <html>
- <head>
+<head>
+  <meta charset="UTF-8">
+  <title>Plantilla - Bloqueo de Línea y Equipo</title>
   <script src="vigencia.js"></script>
-  <!-- 
-    Proyecto: Plantillas
-    Creado por: Cristhian Francia
-    Año: 2020
-    Derechos reservados © Cristhian Francia
-  -->
-    <style>
-      body {
-        font-family: Calibri, Arial, sans-serif;
-      }
+  <style>
+    /* --- REGLA MAESTRA PARA ALINEACIÓN PERFECTA --- */
+    *, *::before, *::after {
+      box-sizing: border-box !important;
+      font-family: Calibri, Arial, sans-serif !important;
+    }
 
+    body {
+      background-color: #ffffff;
+      margin: 0;
+      padding: 10px;
+    }
+
+    .container {
+      width: 96%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 20px 40px;
+      position: relative;
+    }
+
+    /* --- TÍTULO PRINCIPAL --- */
+    .elegant-title {
+      text-align: center;
+      color: #1d1d1f;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-top: 5px;
+      margin-bottom: 25px;
+    }
+
+    .icon-animation {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      width: 35px;
+      height: 35px;
+      background-color: #0c477e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: spin 2s linear infinite;
+    }
+
+    .icon-animation::before {
+      content: "🟡";
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* --- TÍTULOS DE SECCIÓN HOMOLOGADOS --- */
+    .section-title {
+      color: #0c477e;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 25px 0 12px 0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #dcdcdc;
+    }
+
+    /* --- ESPACIADO Y ALINEACIÓN DE CAMPOS --- */
+    .input-container {
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin-bottom: 6px;
+      width: 100%;
+    }
+
+    .input-container label {
+      flex: 0 0 45%;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding-right: 10px;
+    }
+
+    .input-container input, .input-container select {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      color: #0c477e;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+    .input-container input:focus, .input-container select:focus {
+      border-color: #0c477e;
+      outline: none;
+      box-shadow: 0 0 5px rgba(12, 71, 126, 0.4);
+    }
+
+    /* --- RESALTE DE ERRORES EN ROJO --- */
+    .input-error {
+      border: 1px solid #d93025 !important;
+      background-color: #fce8e6 !important;
+      box-shadow: 0 0 4px rgba(217, 48, 37, 0.3) !important;
+    }
+
+    @media screen and (max-width: 600px) {
       .container {
-        width: 90%;
-        max-width: 1000px;
-        margin: 20px auto;
-        background-color: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        padding: 50px;
-        position: relative;
-        transition: box-shadow 0.3s ease;
+        padding: 20px 15px;
       }
-
-      .container:hover {
-        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
-      }
-
-      .icon-animation {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 40px;
-        height: 40px;
-        background-color: #007BFF;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        animation: spin 2s linear infinite;
-      }
-
-      .icon-animation::before {
-        content: "😎";
-        font-size: 1.5rem;
-        color: white;
-      }
-
-      @keyframes spin {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
       .input-container {
-        display: flex;
-        align-items: center;
-        transition: transform 0.3s ease;
+        flex-direction: column;
+        align-items: flex-start;
       }
-
-      .input-container:hover {
-        transform: scale(1.00);
-      }
-
       .input-container label {
-        width: 50%;
+        flex: none;
+        width: 100%;
+        margin-bottom: 4px;
+        padding-right: 0;
       }
-
-      .input-container input {
-        width: 50%;
-        padding: 4px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      .input-container input, .input-container select {
+        flex: none;
+        width: 100%;
       }
+    }
 
-      .input-container input:focus {
-        border-color: #007BFF;
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-      }
+    .resultado-label {
+      color: #0c477e;
+      font-weight: bold;
+    }
 
-      /* Estilos responsive */
-      @media screen and (max-width: 600px) {
-        .input-container {
-          flex-direction: column;
-        }
-        .input-container label, .input-container input {
-          width: 100%;
-        }
-      }
+    .ruta-container {
+      background-color: #fffde7;
+      padding: 12px 15px;
+      border-radius: 6px;
+      margin: 10px 0;
+      border-left: 4px solid #0c477e;
+      font-size: 0.92rem;
+      color: #1d1d1f;
+    }
 
-      .resultado-label {
-        color: #007BFF;
-        font-weight: bold;
-      }
+    hr {
+      border: 0;
+      border-top: 1px solid #dcdcdc;
+      margin: 15px 0;
+    }
 
-      .ruta-container {
-        background-color: #fff5e9;
-        padding: 10px;
-        border-radius: 4px;
-        margin: 10px 0;
-        border-left: 4px solid #e67a00;
-        font-size: 0.9rem;
-        color: #333;
-      }
+    /* --- BOTONES PRINCIPALES --- */
+    .btn-principal {
+      background-color: #0c477e;
+      color: white;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 5px 5px 5px 0;
+    }
 
-      hr {
-        border: 1px solid #e67a00;
-        margin: 10px 0;
-      }
+    .btn-principal:hover {
+      background-color: #08325a;
+      transform: translateY(-1px);
+    }
 
-      button {
-        background-color: #e67a00;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        margin: 5px;
-      }
+    .btn-principal:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
 
-      button:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-      }
+    .btn-secundario {
+      background-color: #f1f3f4;
+      color: #0c477e;
+      border: 1px solid #0c477e;
+    }
 
-      button:active {
-        background-color: #004085;
-        transform: scale(0.98);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
+    .btn-secundario:hover {
+      background-color: #e2e6ea;
+    }
 
-      button:focus {
-        outline: none;
-      }
+    /* --- BOTONES DE EJEMPLO / VISTA PREVIA --- */
+    .btn-accion {
+      background-color: #f1f3f4;
+      color: #0c477e;
+      border: 1px solid #0c477e;
+      padding: 4px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      margin: 4px 0;
+    }
 
-      #resultado {
-        margin: 15px 0;
-        font-size: 0.9rem;
-        background-color: #fff5e9;
-        padding: 10px;
-        border-left: 4px solid #e67a00;
-        white-space: pre-line;
-        min-height: 50px;
-        transition: background-color 0.3s ease;
-      }
+    .btn-accion:hover {
+      background-color: #0c477e;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
 
-      #resultadoADIC {
-        margin: 15px 0;
-        font-size: 0.9rem;
-        background-color: #fff5e9;
-        padding: 10px;
-        border-left: 4px solid #e67a00;
-        white-space: pre-line;
-        min-height: 50px;
-        transition: background-color 0.3s ease;
-      }
+    #resultado, #resultadoADIC {
+      margin: 10px 0;
+      font-size: 0.95rem;
+      background-color: #fffde7;
+      padding: 12px;
+      border-left: 4px solid #0c477e;
+      border-radius: 0 6px 6px 0;
+      white-space: pre-line;
+      min-height: 40px;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
 
-      /* Estilos para el contenedor de la vista previa */
-      #imagePopup {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.8);
-        text-align: center;
-        z-index: 1000; /* Añadido para asegurar que esté por encima de todo */
-      }
+    /* --- BANNERS DE ESTADO --- */
+    .aviso-status {
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .aviso-exito {
+      background-color: #e6f4ea;
+      color: #137333;
+      border: 1px solid #137333;
+    }
+    .aviso-error {
+      background-color: #fce8e6;
+      color: #c5221f;
+      border: 1px solid #c5221f;
+    }
 
-      /* Estilos para la imagen de la vista previa */
-      #imagePopup img {
-        max-width: 90%; /* Un poco de margen */
-        max-height: 90vh; /* Un poco de margen */
-        margin-top: 5vh; /* Centrado vertical */
-      }
+    /* --- POPUPS DE IMÁGENES --- */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      text-align: center;
+      z-index: 9999;
+      backdrop-filter: blur(4px);
+      padding: 20px;
+    }
 
-      /* Estilos para el botón de cerrar */
-      .close-button {
-        position: absolute;
-        top: 20px;
-        right: 20px; /* Mejor posicionado */
-        background-color: white;
-        color: black;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-      }
+    .popup-overlay img {
+      max-width: 90%;
+      max-height: 85vh;
+      margin-top: 4vh;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
 
-      /* Estilos para el contenedor de la vista previa 2 */
-      #imagePopup2 {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.8);
-        text-align: center;
-        z-index: 1000; /* Añadido para asegurar que esté por encima de todo */
-      }
+    .close-button {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      background-color: #ffffff;
+      color: #c5221f;
+      border: none;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    .close-button:hover {
+      background-color: #fce8e6;
+      transform: scale(1.05);
+    }
 
-      /* Estilos para la imagen de la vista previa 2 */
-      #imagePopup2 img {
-        max-width: 90%; /* Un poco de margen */
-        max-height: 90vh; /* Un poco de margen */
-        margin-top: 5vh; /* Centrado vertical */
-      }
+    .footer-autor {
+      text-align: center;
+      margin-top: 25px;
+      padding: 10px;
+      font-size: 0.8rem;
+      color: #888;
+      border-top: 1px solid #eee;
+      user-select: none;
+    }
+    .footer-autor strong {
+      color: #0c477e;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false">
 
-      /* Estilos para el botón de cerrar 2 */
-      .close-button2 {
-        position: absolute;
-        top: 20px;
-        right: 20px; /* Mejor posicionado */
-        background-color: white;
-        color: black;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-      }
-    </style>
-  </head>
-  <body>
-
-
+  <div class="container">
     <div class="icon-animation"></div>
-    <label style="color: red;"><strong>Plantilla:</strong></label>
-    <p></p>
+
+    <h2 class="elegant-title">Bloqueo de Línea y Equipo</h2>
+
+    <h3 class="section-title" style="margin-top: 0;">1. Datos del Solicitante:</h3>
+
     <div class="input-container">
       <label for="label1">- Solicitante:</label>
-      <select id="label1" onchange="updateResultadoOutput()">
+      <select id="label1">
         <option value="">Seleccionar</option>
         <option value="Titular">Titular</option>
         <option value="Usuario">Usuario</option>
       </select>
     </div>
+
     <div class="input-container">
       <label for="label2">- Nombres y apellidos de solicitante:</label>
-      <input type="text" id="label2" oninput="capitalizeName(this); updateResultadoOutput()" />
+      <input type="text" id="label2" oninput="capitalizeName(this)" placeholder="(Nombres y apellidos completos)" />
     </div>
+
     <div class="input-container">
       <label for="label3">- Documento de identidad del solicitante:</label>
-      <input type="number" id="label3" onchange="updateResultadoOutput()" placeholder="Número de documento" />
+      <input type="number" id="label3" placeholder="Número de documento" />
     </div>
+
     <div class="input-container">
       <label for="label4">- Número desde el cual se reporta la sustracción o pérdida:</label>
-      <input type="number" id="label4" oninput="checkLength(this); updateResultadoOutput()" placeholder="Número del que llama (myCC)" />
+      <input type="number" id="label4" oninput="checkLength(this)" placeholder="Número del que llama (myCC)" />
     </div>
+
     <div class="input-container">
       <label for="label5">- IMEI bloqueado:</label>
-      <input type="number" id="label5" oninput="updateResultadoOutput()" placeholder="Los 14 dígitos del código IMEI (Block Imei/Line)" />
+      <input type="number" id="label5" placeholder="Los 14 dígitos del código IMEI (Block Imei/Line)" />
     </div>
+
     <div class="input-container">
       <label for="label6">- Equipo a bloquear:</label>
-      <select id="label6" onchange="updateResultadoOutput()">
+      <select id="label6">
         <option value="">Seleccionar</option>
         <option value="Último">Último</option>
         <option value="Inmediato Anterior">Inmediato Anterior</option>
       </select>
     </div>
+
     <div class="input-container">
       <label for="label7">- ID de llamada:</label>
-      <input type="text" id="label7" placeholder="Solo ID, sin $$_ _&&" oninput="updateResultadoOutput()" />
+      <input type="text" id="label7" placeholder="Solo ID, sin $$_ _&&" />
     </div>
+
     <br />
-    <hr />
+
+    <!-- ==========================================
+         SECCIÓN 2: EJECUCIÓN DE BLOQUEO (UTILITY)
+         ========================================== -->
+    <h3 class="section-title">2. Plantilla para Ejecutar Bloqueo (Utility - Sin ID de llamada):</h3>
+    
+    <div>
+      <button type="button" class="btn-accion" onclick="abrirPopup('imagePopup')">👉 ¿Dónde pegar plantilla? (Ver ejemplo)</button>
+    </div>
+
+    <p id="resultado"></p>
+    <div id="aviso-status-1" class="aviso-status"></div>
+
+    <p>
+      <button type="button" class="btn-principal" onclick="copiarResultado()">📋 Copiar para Utility (Sin ID)</button>
+      <button type="button" class="btn-principal btn-secundario" onclick="limpiarInputs()">Borrar todo</button>
+    </p>
+
+    <div id="imagePopup" class="popup-overlay" onclick="cerrarPopupFondo(event, 'imagePopup')">
+      <button type="button" class="close-button" onclick="cerrarPopup('imagePopup')">CERRAR ✖</button>
+      <img src="https://i.postimg.cc/NGTmwnPW/Proceso-bloqueo-actionlink.png" alt="Ejemplo donde pegar plantilla Utility">
+    </div>
+
     <br />
-    <label style="color: red;"><strong>Plantilla - Para ejecutar bloqueo (Sin ID de llamada):</strong></label>
-    <a href="#" onclick="return showImagePopup(event)">¿Donde pegar plantilla?</a>
-    <p id="resultado" class="dark-mode-text"></p>
-    <p><button onclick="copiarResultado()">Copiar - Exclusiva para ejecutar bloqueo - Utility (Sin ID de llamada)</button><button onclick="limpiarInputs()">Borrar</button></p>
-    <div id="imagePopup">
-      <button class="close-button" onclick="hideImagePopup()">Cerrar</button>
-      <img src="https://i.postimg.cc/NGTmwnPW/Proceso-bloqueo-actionlink.png" alt="Imagen de vista previa 1">
+
+    <!-- ==========================================
+         SECCIÓN 3: TIPIFICACIÓN
+         ========================================== -->
+    <h3 class="section-title">3. Plantilla para Tipificación (Con ID de llamada):</h3>
+
+    <div class="ruta-container">
+      - <strong>Tipificación por sustracción:</strong> Other / Operación / Operación / Transacciones de la línea / Bloqueo por sustracción / Bloqueo por sustracción de línea y equipo (❌ Sin check)
+      <br><br>
+      - <strong>Tipificación por pérdida:</strong> Other / Operación / Operación / Transacciones de la línea / Bloqueo por pérdida / Bloqueo por pérdida de línea y equipo (❌ Sin check)
+      <br><br>
+      <button type="button" class="btn-accion" onclick="abrirPopup('imagePopup2')">👉 ¿Dónde pegar plantilla en Tipificación? (Ver ejemplo)</button>
     </div>
-<br>
-    <label style="color: red;"><strong>Plantilla - Para tipificación - (Con ID de llamada):</strong></label>
-    <a href="#" onclick="return showImagePopup2(event)">¿Donde pegar plantilla?</a>
 
-<p><strong>- Tipificación por sustracción:</strong> Other / Operación / Operación / Transacciones de la línea / Bloqueo por sustracción / Bloqueo por sustracción de línea y equipo (❌Sin check)</p>
-<p><strong>- Tipificación por pérdida:</strong> Other / Operación / Operación / Transacciones de la línea / Bloqueo por pérdida / Bloqueo por pérdida de línea y equipo (❌Sin check)</p>
+    <p id="resultadoADIC"></p>
+    <div id="aviso-status-2" class="aviso-status"></div>
 
+    <p>
+      <button type="button" class="btn-principal" onclick="copiarResultadoADIC()">📋 Copiar para Tipificación (Con ID)</button>
+      <button type="button" class="btn-principal btn-secundario" onclick="limpiarInputs()">Borrar todo</button>
+    </p>
 
-    <p id="resultadoADIC" class="dark-mode-text"></p>
-    <p><button onclick="copiarResultadoADIC()">Copiar - Exclusiva para notas de tipificación - (Con ID de llamada)</button><button onclick="limpiarInputs()">Borrar</button></p>
-    <div id="imagePopup2">
-      <button class="close-button2" onclick="hideImagePopup2()">Cerrar</button>
-      <img src="https://i.postimg.cc/tJwQzH6Q/Block-Con-ID.png" alt="Imagen de vista previa 2">
+    <div id="imagePopup2" class="popup-overlay" onclick="cerrarPopupFondo(event, 'imagePopup2')">
+      <button type="button" class="close-button" onclick="cerrarPopup('imagePopup2')">CERRAR ✖</button>
+      <img src="https://i.postimg.cc/tJwQzH6Q/Block-Con-ID.png" alt="Ejemplo donde pegar plantilla en Tipificación">
     </div>
-    <hr />
 
-<script>
-  // Vigencia: la decide vigencia.js (fecha, bloqueos y pantalla de mantenimiento de todas las páginas).
-window.addEventListener("load", function () {
-    if (!window.CP_VIGENCIA) {   // vigencia.js no cargó (por ejemplo, la página se copió a otro sitio)
-        document.body.innerHTML = "<p style='font:16px system-ui,sans-serif;text-align:center;margin-top:20vh;color:#334155'>Esta herramienta no está disponible en este momento.</p>";
+    <div class="footer-autor">
+      Developed by Cristhian Francia &copy; 2026 | All rights reserved.
+    </div>
+  </div>
+
+  <script>
+    // Protecciones
+    document.addEventListener('contextmenu', event => {
+      event.preventDefault();
+      alert('El menú contextual (clic derecho) está deshabilitado.');
+    });
+
+    document.onkeydown = function(e) {
+      if (e.key === 'Escape') {
+        cerrarPopup('imagePopup');
+        cerrarPopup('imagePopup2');
+      }
+      if (e.key === 'F12' || e.keyCode === 123) {
+        alert('Las herramientas de desarrollador están deshabilitadas.');
+        return false;
+      }
+      if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I' || e.keyCode === 74 || e.key === 'J' || e.keyCode === 67 || e.key === 'C')) {
+        return false;
+      }
+      if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+        return false;
+      }
+    };
+
+    window.addEventListener("load", function () {
+      if (typeof window.CP_VIGENCIA !== "undefined" && !window.CP_VIGENCIA.ok) {
         return;
+      }
+    });
+
+    const inputsBloqueo = [
+      document.querySelector("#label1"),
+      document.querySelector("#label2"),
+      document.querySelector("#label3"),
+      document.querySelector("#label4"),
+      document.querySelector("#label5"),
+      document.querySelector("#label6")
+    ];
+
+    const inputID = document.querySelector("#label7");
+    const resultadoOutput = document.querySelector("#resultado");
+    const resultadoOutputADIC = document.querySelector("#resultadoADIC");
+    const aviso1 = document.querySelector("#aviso-status-1");
+    const aviso2 = document.querySelector("#aviso-status-2");
+
+    // Asignar listeners dinámicos para actualización en vivo y limpiar errores en rojo
+    [...inputsBloqueo, inputID].forEach(input => {
+      const eventType = input.tagName === 'SELECT' ? 'change' : 'input';
+      input.addEventListener(eventType, function() {
+        this.classList.remove('input-error');
+        updateResultadoOutput();
+      });
+    });
+
+    function updateResultadoOutput() {
+      const l1 = inputsBloqueo[0].value;
+      const l2 = inputsBloqueo[1].value;
+      const l3 = inputsBloqueo[2].value;
+      const l4 = inputsBloqueo[3].value;
+      const l5 = inputsBloqueo[4].value;
+      const l6 = inputsBloqueo[5].value;
+      const l7 = inputID.value;
+
+      resultadoOutput.innerHTML = `- Solicitante: <span class="resultado-label">${l1}</span>
+- Nombres y apellidos de solicitante: <span class="resultado-label">${l2}</span>
+- Documento de identidad del solicitante: <span class="resultado-label">${l3}</span>
+- Número desde el cual se reporta la sustracción o pérdida: <span class="resultado-label">${l4}</span>
+- IMEI bloqueado: <span class="resultado-label">${l5}</span>
+- Equipo a bloquear: <span class="resultado-label">${l6}</span>`;
+
+      resultadoOutputADIC.innerHTML = `- Solicitante: <span class="resultado-label">${l1}</span>
+- Nombres y apellidos de solicitante: <span class="resultado-label">${l2}</span>
+- Documento de identidad del solicitante: <span class="resultado-label">${l3}</span>
+- Número desde el cual se reporta la sustracción o pérdida: <span class="resultado-label">${l4}</span>
+- IMEI bloqueado: <span class="resultado-label">${l5}</span>
+- Equipo a bloquear: <span class="resultado-label">${l6}</span>
+- ID: $$_<span class="resultado-label">${l7}</span>_&&`;
     }
-    if (!window.CP_VIGENCIA.ok) return;   // vigencia.js ya muestra la pantalla de mantenimiento
-});
 
-  const label1Input = document.querySelector("#label1");
-  const label2Input = document.querySelector("#label2");
-  const label3Input = document.querySelector("#label3");
-  const label4Input = document.querySelector("#label4");
-  const label5Input = document.querySelector("#label5");
-  const label6Input = document.querySelector("#label6");
-  const label7Input = document.querySelector("#label7");
-  const resultadoOutput = document.querySelector("#resultado");
-  const resultadoOutputADIC = document.querySelector("#resultadoADIC");
-
-  function updateResultadoOutput() {
-    const label1 = label1Input.options[label1Input.selectedIndex].value;
-    const label2 = label2Input.value;
-    const label3 = label3Input.value;
-    const label4 = label4Input.value;
-    const label5 = label5Input.value;
-    const label6 = label6Input.options[label6Input.selectedIndex].value;
-    const label7 = label7Input.value;
-
-    resultadoOutput.innerHTML = `- Solicitante: <span class="resultado-label">${label1}</span>
-- Nombres y apellidos de solicitante: <span class="resultado-label">${label2}</span>
-- Documento de identidad del solicitante: <span class="resultado-label">${label3}</span>
-- Número desde el cual se reporta la sustracción o pérdida: <span class="resultado-label">${label4}</span>
-- IMEI bloqueado: <span class="resultado-label">${label5}</span>
-- Equipo a bloquear: <span class="resultado-label">${label6}</span>`;
-
-    resultadoOutputADIC.innerHTML = `- Solicitante: <span class="resultado-label">${label1}</span>
-- Nombres y apellidos de solicitante: <span class="resultado-label">${label2}</span>
-- Documento de identidad del solicitante: <span class="resultado-label">${label3}</span>
-- Número desde el cual se reporta la sustracción o pérdida: <span class="resultado-label">${label4}</span>
-- IMEI bloqueado: <span class="resultado-label">${label5}</span>
-- Equipo a bloquear: <span class="resultado-label">${label6}</span>
-- ID: $$_<span class="resultado-label">${label7}</span>_&&`;
-  }
-  
-  label1Input.addEventListener("change", updateResultadoOutput);
-  label2Input.addEventListener("input", updateResultadoOutput);
-  label3Input.addEventListener("input", updateResultadoOutput);
-  label4Input.addEventListener("input", updateResultadoOutput);
-  label5Input.addEventListener("input", updateResultadoOutput);
-  label6Input.addEventListener("change", updateResultadoOutput);
-  label7Input.addEventListener("input", updateResultadoOutput);
-
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-  }
-
-  function capitalizeName(inputElement) {
-    const words = inputElement.value.split(" ");
-    const capitalizedWords = words.map((word) => capitalizeFirstLetter(word));
-    inputElement.value = capitalizedWords.join(" ");
-  }
-
-  function checkLength(input) {
-    if (input.value.length > 9) {
-      input.value = input.value.slice(0, 9);
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
     }
-  }
 
-  // --- FUNCIÓN DE COPIAR CORREGIDA ---
-  function copiarResultado() {
-    const resultadoTexto = resultadoOutput.innerText.trim();
-    const textarea = document.createElement("textarea");
-    textarea.value = resultadoTexto;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-    alert("Resultado copiado al portapapeles");
-  }
+    function capitalizeName(inputElement) {
+      const words = inputElement.value.split(" ");
+      const capitalizedWords = words.map(word => capitalizeFirstLetter(word));
+      inputElement.value = capitalizedWords.join(" ");
+    }
 
-  // --- FUNCIÓN DE COPIAR ADICIONAL CORREGIDA ---
-  function copiarResultadoADIC() {
-    const resultadoTextoADIC = resultadoOutputADIC.innerText.trim();
-    const textareaADIC = document.createElement("textarea");
-    textareaADIC.value = resultadoTextoADIC;
-    document.body.appendChild(textareaADIC);
-    textareaADIC.select();
-    document.execCommand("copy");
-    document.body.removeChild(textareaADIC);
-    alert("Resultado ADIC copiado al portapapeles");
-  }
+    function checkLength(input) {
+      if (input.value.length > 9) {
+        input.value = input.value.slice(0, 9);
+      }
+    }
 
-  function limpiarInputs() {
-    label1Input.value = "";
-    label2Input.value = "";
-    label3Input.value = "";
-    label4Input.value = "";
-    label5Input.value = "";
-    label6Input.value = "";
-    label7Input.value = "";
+    function copiarTextoGenerico(texto) {
+      const textarea = document.createElement("textarea");
+      textarea.value = texto;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
+
+    function copiarResultado() {
+      let hayErrores = false;
+      inputsBloqueo.forEach(inp => {
+        if (!inp.value.trim()) {
+          inp.classList.add('input-error');
+          hayErrores = true;
+        } else {
+          inp.classList.remove('input-error');
+        }
+      });
+
+      if (hayErrores) {
+        aviso1.textContent = "❌ Error: Completa los campos resaltados en rojo.";
+        aviso1.className = "aviso-status aviso-error";
+        aviso1.style.display = "block";
+        return;
+      }
+
+      copiarTextoGenerico(resultadoOutput.innerText.trim());
+      aviso1.textContent = "✅ ¡Plantilla para Utility copiada al portapapeles!";
+      aviso1.className = "aviso-status aviso-exito";
+      aviso1.style.display = "block";
+    }
+
+    function copiarResultadoADIC() {
+      let hayErrores = false;
+      [...inputsBloqueo, inputID].forEach(inp => {
+        if (!inp.value.trim()) {
+          inp.classList.add('input-error');
+          hayErrores = true;
+        } else {
+          inp.classList.remove('input-error');
+        }
+      });
+
+      if (hayErrores) {
+        aviso2.textContent = "❌ Error: Faltan datos (incluyendo el ID de llamada). Revisa los campos en rojo.";
+        aviso2.className = "aviso-status aviso-error";
+        aviso2.style.display = "block";
+        return;
+      }
+
+      copiarTextoGenerico(resultadoOutputADIC.innerText.trim());
+      aviso2.textContent = "✅ ¡Plantilla para Tipificación copiada al portapapeles!";
+      aviso2.className = "aviso-status aviso-exito";
+      aviso2.style.display = "block";
+    }
+
+    function limpiarInputs() {
+      [...inputsBloqueo, inputID].forEach(input => {
+        input.value = "";
+        input.classList.remove('input-error');
+      });
+
+      updateResultadoOutput();
+
+      aviso1.style.display = "none";
+      aviso2.style.display = "none";
+    }
+
+    /* --- FUNCIONES DE POPUP SEGURAS --- */
+    function abrirPopup(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = "block";
+    }
+
+    function cerrarPopup(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = "none";
+    }
+
+    function cerrarPopupFondo(event, id) {
+      if (event.target.id === id) {
+        cerrarPopup(id);
+      }
+    }
+
+    // Inicializar previsualización vacía ordenada
     updateResultadoOutput();
-  }
-
-  function showImagePopup(event) {
-    event.preventDefault();
-    const imagePopup = document.getElementById("imagePopup");
-    imagePopup.style.display = "block";
-    return false;
-  }
-
-  function hideImagePopup() {
-    const imagePopup = document.getElementById("imagePopup");
-    imagePopup.style.display = "none";
-  }
-
-  function showImagePopup2(event) {
-    event.preventDefault();
-    const imagePopup2 = document.getElementById("imagePopup2");
-    imagePopup2.style.display = "block";
-    return false;
-  }
-
-  function hideImagePopup2() {
-    const imagePopup2 = document.getElementById("imagePopup2");
-    imagePopup2.style.display = "none";
-  }
-</script>
-
-
-
+  </script>
+</body>
+</html>

@@ -307,6 +307,26 @@
       word-break: break-word;
     }
 
+    /* Estilo Neutro (cargando / error / código incompleto) */
+    .result-wait {
+      background-color: #f5f5f7;
+      border: 1px solid #e5e5ea;
+      margin-bottom: 0;
+    }
+    .result-wait .result-header { margin-bottom: 0; }
+    .result-wait .status-icon { background-color: #e5e5ea; }
+    .result-wait .result-title { color: #48484a; }
+    .result-wait .result-subtitle { color: var(--text-muted); }
+
+    .meta-item strong.multi { font-size: 12px; line-height: 1.4; }
+
+    @media (max-width: 560px) {
+      .header { padding: 16px; flex-wrap: wrap; gap: 10px; }
+      .content { padding: 18px 16px; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .helper-text { flex-wrap: wrap; gap: 6px; }
+    }
+
     .status-loader {
       font-size: 11.5px;
       text-align: right;
@@ -360,7 +380,7 @@
           <strong id="metaBts">-</strong>
         </div>
         <div class="meta-item">
-          <span>Dpto. / Prov. / Dist.</span>
+          <span>Zona / Prov. / Dist.</span>
           <strong id="metaArea">-</strong>
         </div>
         <div class="meta-item">
@@ -381,6 +401,17 @@
       </div>
       <div class="action-box">
         👉 <strong>Acción a seguir:</strong> Puedes <strong>continuar con el siguiente descarte del proceso</strong> sin problemas.
+      </div>
+    </div>
+
+    <!-- Resultado: NEUTRO - CARGANDO / ERROR / CÓDIGO INCOMPLETO -->
+    <div id="cardWait" class="result-card result-wait">
+      <div class="result-header">
+        <div class="status-icon" id="waitIcon">⏳</div>
+        <div>
+          <div class="result-title" id="waitTitle">CARGANDO LA BASE</div>
+          <div class="result-subtitle" id="waitText">El resultado aparecerá en cuanto termine la sincronización.</div>
+        </div>
       </div>
     </div>
 
@@ -448,44 +479,91 @@
   document.getElementById('btnVerBase').href = _0x1a + atob('L2VkaXQ/dXNwPXNoYXJpbmc=');
 
   let _db = [];
+  let _idx = new Map();      // prefijo de 7 caracteres -> lista de filas
+  let _estado = 'cargando';  // 'cargando' | 'ok' | 'error'
+  let _cargando = false;
   const _in = document.getElementById('btsInput');
   const _cl = document.getElementById('btnClear');
   const _dc = document.getElementById('detectedCode');
   const _cf = document.getElementById('cardFound');
   const _cnf = document.getElementById('cardNotFound');
+  const _cw = document.getElementById('cardWait');
   const _ls = document.getElementById('loaderStatus');
 
+  const _txt = (c) => (c && c.v != null ? String(c.v).trim() : '');
+  // Normaliza el código: mayúsculas y sin espacios ni separadores
+  const _norm = (v) => String(v || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+
   async function _init() {
+    if (_cargando) return;
+    _cargando = true;
     try {
-      const _r = await fetch(_0x1b);
+      // "no-store" + marca de tiempo: siempre trae la versión vigente de la hoja
+      const _r = await fetch(_0x1b + '&_=' + Date.now(), { cache: 'no-store' });
+      if (!_r.ok) throw new Error('HTTP ' + _r.status);
       const _t = await _r.text();
       const _j = JSON.parse(_t.substring(_t.indexOf('{'), _t.lastIndexOf('}') + 1));
-      
-      // Si la primera fila viene incluida como datos en lugar de cabecera en gviz, ajustamos el índice de fila
-      const _hasHeaderInRows = _j.table.rows.length > 0 && 
-                               _j.table.rows[0].c[1] && 
-                               String(_j.table.rows[0].c[1].v).trim().toUpperCase() === 'SITE NAME 3G';
+      if (_j.status === 'error' || !_j.table) throw new Error('gviz');
+
+      // Si la cabecera llega como primera fila de datos, la numeración empieza en 1
+      const _hasHeaderInRows = _j.table.rows.length > 0 && _j.table.rows[0].c &&
+                               _norm(_txt(_j.table.rows[0].c[1])) === 'SITENAME3G';
       const _rowOffset = _hasHeaderInRows ? 1 : 2;
 
-      _db = _j.table.rows.map((r, i) => ({
-        s: r.c[1] && r.c[1].v != null ? String(r.c[1].v).trim().toUpperCase() : '', // Col B: Site name 3G
-        z: r.c[2] && r.c[2].v != null && String(r.c[2].v).trim() !== '' ? String(r.c[2].v).trim() : '-', // Col C: Zone (Departamento)
-        p: r.c[3] && r.c[3].v != null && String(r.c[3].v).trim() !== '' ? String(r.c[3].v).trim() : '-', // Col D: Province (Provincia)
-        d: r.c[4] && r.c[4].v != null && String(r.c[4].v).trim() !== '' ? String(r.c[4].v).trim() : '-', // Col E: District (Distrito)
-        w: i + _rowOffset
-      })).filter(x => x.s !== '' && x.s !== 'SITE NAME 3G');
+      const _nuevo = [];
+      _j.table.rows.forEach((r, i) => {
+        const c = r.c || [];
+        const s = _norm(_txt(c[1]));                    // Col B: Site name 3G
+        if (!s || s === 'SITENAME3G') return;
+        _nuevo.push({
+          s,
+          z: _txt(c[2]),                                // Col C: Zone
+          p: _txt(c[3]),                                // Col D: Province
+          d: _txt(c[4]),                                // Col E: District
+          w: i + _rowOffset
+        });
+      });
+      if (!_nuevo.length) throw new Error('vacia');
 
-      _ls.textContent = `🟢 Base sincronizada (${_db.length} registros)`;
+      const _m = new Map();
+      _nuevo.forEach(x => {
+        const k = x.s.substring(0, 7);
+        if (!_m.has(k)) _m.set(k, []);
+        _m.get(k).push(x);
+      });
+      _db = _nuevo;
+      _idx = _m;
+      _estado = 'ok';
+      const _hora = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+      _ls.textContent = `🟢 Base sincronizada (${_idx.size.toLocaleString('es-PE')} BTS · ${_db.length.toLocaleString('es-PE')} filas) · ${_hora}`;
     } catch (_e) {
-      _ls.innerHTML = `🔴 Error de lectura: Verifica que el archivo tenga permisos de visualización abiertos.`;
+      if (_estado !== 'ok') _estado = 'error';   // si ya había datos, se siguen usando
+      _ls.textContent = _estado === 'ok'
+        ? '🟠 No se pudo actualizar; se usa la última base cargada.'
+        : '🔴 Error de lectura: verifica que el archivo tenga permisos de visualización abiertos.';
+    } finally {
+      _cargando = false;
+      _eval();
     }
   }
 
+  function _show(card) {
+    [_cf, _cnf, _cw].forEach(el => { el.style.display = el === card ? 'block' : 'none'; });
+  }
+
+  function _wait(icon, title, text) {
+    document.getElementById('waitIcon').textContent = icon;
+    document.getElementById('waitTitle').textContent = title;
+    document.getElementById('waitText').textContent = text;
+    _show(_cw);
+  }
+
+  const _uniq = (arr) => [...new Set(arr.filter(Boolean))];
+
   function _eval() {
-    const _v = _in.value.trim().toUpperCase();
-    if (_v.length < 3) {
-      _cf.style.display = 'none';
-      _cnf.style.display = 'none';
+    const _v = _norm(_in.value);
+    if (!_v) {
+      _show(null);
       _dc.style.display = 'none';
       return;
     }
@@ -493,16 +571,34 @@
     _dc.style.display = 'inline-block';
     _dc.textContent = `Filtro: ${_p7}`;
 
-    const _m = _db.find(x => x.s.substring(0, 7) === _p7 || x.s === _v);
-    if (_m) {
-      document.getElementById('metaBts').textContent = _m.s;
-      document.getElementById('metaArea').textContent = `${_m.z} / ${_m.p} / ${_m.d}`;
-      document.getElementById('metaRow').textContent = `Fila #${_m.w}`;
-      _cf.style.display = 'block';
-      _cnf.style.display = 'none';
+    if (_v.length < 7) {
+      _wait('✏️', 'CÓDIGO INCOMPLETO', 'Ingresa al menos 7 caracteres de la BTS (ej. LIC2100).');
+      return;
+    }
+    if (_estado === 'cargando') {
+      _wait('⏳', 'CARGANDO LA BASE', 'El resultado aparecerá en cuanto termine la sincronización.');
+      return;
+    }
+    if (_estado === 'error') {
+      _wait('⚠️', 'NO SE PUDO LEER LA BASE', 'No es posible confirmar el resultado. Recarga la página o revisa con el botón "Ver Base".');
+      return;
+    }
+
+    const _ms = _idx.get(_p7) || [];
+    if (_ms.length) {
+      const _bts = _uniq(_ms.map(x => x.s));
+      const _areas = _uniq(_ms.map(x => [x.z, x.p, x.d].filter(Boolean).join(' / ')));
+      const _filas = _ms.map(x => '#' + x.w);
+      const _mb = document.getElementById('metaBts');
+      const _ma = document.getElementById('metaArea');
+      const _mr = document.getElementById('metaRow');
+      _mb.textContent = _bts.join(', ');
+      _ma.textContent = _areas.length ? _areas.join(' · ') : 'Sin dato';
+      _mr.textContent = (_filas.length > 1 ? 'Filas ' : 'Fila ') + _filas.join(', ');
+      [_mb, _ma, _mr].forEach(el => el.classList.toggle('multi', _ms.length > 1));
+      _show(_cf);
     } else {
-      _cf.style.display = 'none';
-      _cnf.style.display = 'block';
+      _show(_cnf);
     }
   }
 
@@ -512,6 +608,10 @@
     _eval();
     _in.focus();
   });
+
+  // Mantiene la base al día: cada 5 minutos y al volver a la pestaña
+  setInterval(_init, 5 * 60 * 1000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) _init(); });
 
   _init();
 })();

@@ -535,7 +535,7 @@
       _idx = _m;
       _estado = 'ok';
       const _hora = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
-      _ls.textContent = `🟢 Base sincronizada (${_idx.size.toLocaleString('es-PE')} BTS · ${_db.length.toLocaleString('es-PE')} filas) · ${_hora}`;
+      _ls.textContent = `🟢 Base sincronizada (${_db.length.toLocaleString('es-PE')} registros) · ${_hora}`;
     } catch (_e) {
       if (_estado !== 'ok') _estado = 'error';   // si ya había datos, se siguen usando
       _ls.textContent = _estado === 'ok'
